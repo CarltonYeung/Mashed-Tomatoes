@@ -1,0 +1,19 @@
+{
+  "name": "mashed-tomatoes",
+  "version": "0.0.1",
+  "description": "A better Rotten Tomatoes",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/mashedtomatoes/web-app.git"
+  },
+  "author": "Aarin Park, Carlton Yeung, Ethan Park, Yaneury Fermin",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/mashedtomatoes/web-app#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-file-include": "^2.0.1",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-webserver": "^0.9.1"
+  }
+}

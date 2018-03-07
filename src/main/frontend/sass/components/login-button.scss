@@ -1,0 +1,7 @@
+@import 'modules/colors';
+
+.login-button {
+    background-color: $login-btn-bg-color;
+    border-color: $login-btn-bg-color;
+    color: $login-btn-fg-color;
+}
