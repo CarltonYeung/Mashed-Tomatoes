@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 @Controller
-@EnableAutoConfiguration
 public class AppController {
     @Value("${application.message:Hello World}")
 	private String message = "Hello World";

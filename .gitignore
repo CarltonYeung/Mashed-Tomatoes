@@ -33,6 +33,7 @@ target
 out
 build
 bin
+src/main/resources/static
 
 # JS
 *node_modules
