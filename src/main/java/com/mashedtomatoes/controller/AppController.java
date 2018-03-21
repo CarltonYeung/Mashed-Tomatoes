@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.stereotype.*;
-import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
 

@@ -16,7 +16,7 @@ public class MovieViewController {
 
     @GetMapping("/movie")
     public String getMovies(Model m) {
-        m.addAttribute("movies", movieService.getAllMovies());
+        m.addAttribute("movies", movieService.getAllMovies(null));
         return "movies";
     }
 
