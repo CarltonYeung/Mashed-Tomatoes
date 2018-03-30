@@ -1,23 +1,15 @@
 package com.mashedtomatoes.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Entity
-public class Movie /* extends Media */ {
-
-    @Id
-    @GeneratedValue
-    @Column
-    private Long Id;
-
+public class Movie extends Media {
     @Column
     private String title;
 
     @Column
     private String slug;
+
 
     public Movie() {}
 

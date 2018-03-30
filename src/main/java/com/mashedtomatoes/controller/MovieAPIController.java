@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.mashedtomatoes.model.Movie;
-import com.mashedtomatoes.repository.CelebrityRepository;
-import com.mashedtomatoes.model.Celebrity;
 import com.mashedtomatoes.service.MovieService;
 
 @RestController
@@ -22,26 +20,9 @@ public class MovieAPIController {
     @Autowired
     MovieService movieService;
 
-    @Autowired
-    CelebrityRepository celebRepo;
-
     @GetMapping("/api/movie")
     public Iterable<Movie> getMovies(
         @RequestParam(value = "expr", required = false) String expr) {
-        // return movieService.getAllMovies(expr);
-        Movie m = new Movie();
-        m.setSlug("foo");
-        m.setTitle("Foo");
-        movieService.updateMovie(m);
-
-        Celebrity c = new Celebrity((long) 1, "Mila Kunis");
-        // Rating r = new Rating(m, LocalDateTime.now());
-        celebRepo.save(c);
-        // ratingRepo.save(r);
-        // m.getCelebrities().add(c);
-        // m.getRatings().add(r);
-
-        movieService.updateMovie(m);
         return movieService.getAllMovies(expr);
     }
 
