@@ -3,12 +3,7 @@ package com.mashedtomatoes.model;
 import javax.persistence.*;
 
 @Entity
-public class Movie {
-    @Id
-    @GeneratedValue
-    @Column
-    private Long ID;
-
+public class Movie extends Media {
     @Column
     private String title;
 
@@ -17,20 +12,12 @@ public class Movie {
 
     public Movie() {}
 
-    public Long getID() {
-        return ID;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public String getSlug() {
         return slug;
-    }
-
-    public void setId(Long ID) {
-        this.ID = ID;
     }
 
     public void setTitle(String title) {
