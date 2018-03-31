@@ -3,12 +3,8 @@ package com.mashedtomatoes.controller;
 import java.util.Date;
 import java.util.Map;
 
-import com.mashedtomatoes.model.Audience;
-import com.mashedtomatoes.repository.AudienceRepository;
-
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 

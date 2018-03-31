@@ -1,5 +1,6 @@
 package com.mashedtomatoes.model;
 
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -8,39 +9,19 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Media {
+
     @Id
     @GeneratedValue
-    @Column
-    protected Long Id;
+    protected Long id;
 
     @Column(nullable = false)
     protected String description;
 
-    @OneToMany()
-    @JoinTable(name="medias_ratings")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "media")
     protected Set<Rating> ratings = new HashSet<>();
 
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(Set<Rating> ratings) {
-        this.ratings = ratings;
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "media")
+    protected Set<Character> characters = new HashSet<>();
 }
+
+// ref: https://stackoverflow.com/questions/11938253/jpa-joincolumn-vs-mappedby/11938290

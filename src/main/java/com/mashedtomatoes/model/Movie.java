@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 @Entity
 public class Movie extends Media {
+
     @Column
     private String title;
 
     @Column
     private String slug;
-
 
     public Movie() {}
 

@@ -1,23 +1,40 @@
 package com.mashedtomatoes.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
+    public enum Type {
+        Audience,
+        Critic,
+        Admin
+    }
+
     @Id
     @GeneratedValue
-    @Column
-    private Long Id;
+    private Long id;
 
-    @Column
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false)
     private String email;
 
-    @Column
-    private String type;
+    @Column(nullable = false)
+    private String passwordHash;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    @Column(nullable = false)
+    private LocalDateTime created;
+
+    @Column(nullable = false)
+    private LocalDate birthDate;
+
+    @Column(nullable = false)
+    private Boolean verified;
 }

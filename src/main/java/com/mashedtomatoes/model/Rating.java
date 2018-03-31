@@ -1,66 +1,27 @@
 package com.mashedtomatoes.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Rating {
+
     @Id
     @GeneratedValue
-    @Column
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer rating;
+    private Integer score;
 
     @Column
     private String review;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="media_id", nullable = false)
-    private Media target;
+    private Media media;
 
-    public Rating() {
-    }
+    @Column(nullable = false)
+    private LocalDate updatedAt;
 
-    public Rating(Integer rating, String review) {
-        this.rating = rating;
-        this.review = review;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
-    }
-
-    /*
-    public Media getTarget() {
-        return target;
-    }
-
-    public void setTarget(Media target) {
-        this.target = target;
-    }
-    */
-
-    //- date: int
-//- linkToCriticReview: URL
+    public Rating() {}
 }

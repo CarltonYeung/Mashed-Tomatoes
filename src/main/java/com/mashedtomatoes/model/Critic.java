@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Critic extends User {
+
     @Column
     private String publication;
 
