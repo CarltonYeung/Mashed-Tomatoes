@@ -1,8 +1,6 @@
 package com.mashedtomatoes.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "Celebrities")
 public class Celebrity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private long ID;
 
@@ -43,7 +41,11 @@ public class Celebrity {
     @Getter @Setter
     private Set<Media> media = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "playedBy")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "playedBy", cascade = CascadeType.ALL)
     @Getter @Setter
     private Set<Character> characters = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "directedBy", cascade = CascadeType.ALL)
+    @Getter @Setter
+    protected Set<Media> directorOf = new HashSet<>();
 }

@@ -16,7 +16,7 @@ public abstract class User {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private long ID;
 

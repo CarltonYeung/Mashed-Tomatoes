@@ -13,20 +13,37 @@ import javax.persistence.*;
 @Table(name = "Media")
 public abstract class Media {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     protected long ID;
 
     @Column(nullable = false)
     @Getter @Setter
+    private String title;
+
+    @Column(nullable = false)
+    @Getter @Setter
+    private String slug;
+
+    @Column
+    @Getter @Setter
     protected String description;
 
-    @ManyToMany
+    @Column
+    @Getter @Setter
+    protected long releaseDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "directorID")
+    @Getter @Setter
+    protected Celebrity directedBy;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
     @Getter @Setter
-    private Set<Celebrity> celebrities = new HashSet<>();
+    protected Set<Celebrity> celebrities = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "forMedia")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "forMedia", cascade = CascadeType.ALL)
     @Getter @Setter
     protected Set<Rating> ratings = new HashSet<>();
 }
