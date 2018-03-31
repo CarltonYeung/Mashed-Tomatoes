@@ -1,31 +1,22 @@
 package com.mashedtomatoes.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@Table(name = "Movies")
+@ToString(callSuper = true)
 public class Movie extends Media {
-
     @Column
+    @Getter @Setter
     private String title;
 
     @Column
+    @Getter @Setter
     private String slug;
-
-    public Movie() {}
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
 }

@@ -1,28 +1,36 @@
 package com.mashedtomatoes.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "MT_Character")
+@NoArgsConstructor
+@Table(name = "Characters")
 public class Character {
-
     @Id
     @GeneratedValue
-    private Long id;
+    @Getter @Setter
+    private long ID;
 
     @Column(nullable = false)
+    @Getter @Setter
     private String name;
 
+    /*
+     * In the "Characters" table, there will be a "celebrityID" column.
+     * Many Character can reference the same Celebrity and have the same value for the "celebrityID" column.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="media_id", nullable = false)
-    private Media media;
+    @JoinColumn(name = "celebrityID", nullable = false)
+    @Getter @Setter
+    private Celebrity playedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "celebrity_id", nullable = false)
-    private Celebrity celebrity;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "character")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "saidBy")
+    @Getter @Setter
     protected Set<Quote> quotes = new HashSet<>();
 }

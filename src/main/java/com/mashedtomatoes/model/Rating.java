@@ -1,27 +1,42 @@
 package com.mashedtomatoes.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@Table(name = "Ratings")
 public class Rating {
-
     @Id
     @GeneratedValue
-    private Long id;
+    @Getter @Setter
+    private long ID;
 
     @Column(nullable = false)
-    private Integer score;
+    @Getter @Setter
+    private int score;
 
     @Column
-    private String review;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="media_id", nullable = false)
-    private Media media;
+    @Getter @Setter
+    private String review = null;
 
     @Column(nullable = false)
-    private LocalDate updatedAt;
+    @Getter @Setter
+    private long created;
 
-    public Rating() {}
+    @Column(nullable = false)
+    @Getter @Setter
+    private long updated;
+
+    /*
+     * In the "Ratings" table, there will be a "mediaID" column.
+     * Many Rating can reference the same Media and have the same value for the "mediaID" column.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mediaID", nullable = false)
+    @Getter @Setter
+    private Media forMedia;
 }

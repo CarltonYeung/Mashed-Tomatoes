@@ -1,39 +1,49 @@
 package com.mashedtomatoes.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
-import java.time.LocalDate;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@Table(name = "Celebrities")
 public class Celebrity {
-
     @Id
     @GeneratedValue
-    private Long id;
+    @Getter @Setter
+    private long ID;
 
     @Column(nullable = false)
+    @Getter @Setter
     private String name;
 
     @Column
-    private LocalDate birthday;
+    @Getter @Setter
+    private long birthday;
 
     @Column
+    @Getter @Setter
     private String birthplace;
 
     @Column
-    private String description;
-
-    @Column
+    @Getter @Setter
     private String biography;
 
     @Column
+    @Getter @Setter
     private String profileImage;
 
-    @OneToMany()
-    @JoinTable(name="celebrities_character")
-    protected Set<Character> characters = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
+    @Getter @Setter
+    private Set<Media> media = new HashSet<>();
 
-    public Celebrity() {}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "playedBy")
+    @Getter @Setter
+    private Set<Character> characters = new HashSet<>();
 }
