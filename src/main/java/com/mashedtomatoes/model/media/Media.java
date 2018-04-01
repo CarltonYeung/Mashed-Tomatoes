@@ -37,6 +37,12 @@ public abstract class Media {
     @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
 
+    @ElementCollection(targetClass = Genre.class)
+    @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genre", nullable = false, length = 32)
+    private Set<Genre> genres = new HashSet<>();
+
     public long getID() {
         return ID;
     }
@@ -99,6 +105,14 @@ public abstract class Media {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 }
 

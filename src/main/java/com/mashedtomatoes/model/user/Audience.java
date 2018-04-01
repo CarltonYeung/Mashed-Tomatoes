@@ -1,5 +1,6 @@
 package com.mashedtomatoes.model.user;
 
+import com.mashedtomatoes.model.favorite.AudienceFavorite;
 import com.mashedtomatoes.model.media.Media;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,9 @@ public class Audience extends User {
     @JoinTable(name = "AudiencesNotInterestedMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     private Set<Media> notInterested = new HashSet<>();
 
-    private String favoriteShow = null;
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "favoritesID")
+    private AudienceFavorite favorites;
 
     private boolean superReviewer = false;
 

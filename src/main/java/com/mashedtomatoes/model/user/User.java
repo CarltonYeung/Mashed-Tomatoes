@@ -12,12 +12,6 @@ import java.util.Set;
 @Table(name = "Users")
 public abstract class User {
 
-    public enum UserType {
-        Audience,
-        Critic,
-        Administrator
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
@@ -142,11 +136,11 @@ public abstract class User {
         this.banned = banned;
     }
 
-    public Set<Rating> getAuthoredRatings() {
+    public Set<Rating> getRatings() {
         return ratings;
     }
 
-    public void setAuthoredRatings(Set<Rating> authoredRatings) {
-        this.ratings = authoredRatings;
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
     }
 }
