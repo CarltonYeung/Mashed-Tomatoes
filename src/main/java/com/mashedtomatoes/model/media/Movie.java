@@ -1,4 +1,4 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.media;
 
 import lombok.NoArgsConstructor;
 
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "AudienceRatings")
-public class AudienceRating extends Rating {
+@Table(name = "Movies")
+public class Movie extends Media {
 
 }

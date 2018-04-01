@@ -1,10 +1,9 @@
 package com.mashedtomatoes.service;
 
+import com.mashedtomatoes.model.media.Movie;
+import com.mashedtomatoes.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mashedtomatoes.model.Movie;
-import com.mashedtomatoes.repository.MovieRepository;
 
 @Service
 public class MovieService {

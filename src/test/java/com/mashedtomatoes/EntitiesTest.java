@@ -1,6 +1,6 @@
 package com.mashedtomatoes;
 
-import com.mashedtomatoes.model.Movie;
+import com.mashedtomatoes.model.media.Movie;
 import com.mashedtomatoes.service.MovieService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

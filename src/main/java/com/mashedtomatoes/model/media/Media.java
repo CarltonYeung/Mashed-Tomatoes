@@ -1,4 +1,7 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.media;
+
+import com.mashedtomatoes.model.celebrity.Celebrity;
+import com.mashedtomatoes.model.rating.Rating;
 
 import javax.persistence.*;
 import java.util.HashSet;

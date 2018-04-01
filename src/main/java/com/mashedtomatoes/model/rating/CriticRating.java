@@ -1,4 +1,4 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.rating;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

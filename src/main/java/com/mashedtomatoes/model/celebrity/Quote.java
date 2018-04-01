@@ -1,4 +1,4 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.celebrity;
 
 import lombok.Getter;
 import lombok.Setter;

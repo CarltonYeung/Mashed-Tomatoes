@@ -1,5 +1,6 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.celebrity;
 
+import com.mashedtomatoes.model.media.Media;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

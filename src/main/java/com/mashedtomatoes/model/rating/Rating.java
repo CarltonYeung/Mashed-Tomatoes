@@ -1,4 +1,7 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.rating;
+
+import com.mashedtomatoes.model.media.Media;
+import com.mashedtomatoes.model.user.User;
 
 import javax.persistence.*;
 import java.time.Instant;

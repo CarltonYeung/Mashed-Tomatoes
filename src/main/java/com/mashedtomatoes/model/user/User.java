@@ -1,4 +1,6 @@
-package com.mashedtomatoes.model;
+package com.mashedtomatoes.model.user;
+
+import com.mashedtomatoes.model.rating.Rating;
 
 import javax.persistence.*;
 import java.time.Instant;
