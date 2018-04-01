@@ -27,5 +27,11 @@ public class Audience extends User {
     @JoinTable(name = "AudiencesNotInterestedMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     private Set<Media> notInterested = new HashSet<>();
 
-    private String favoriteShow;
+    private String favoriteShow = null;
+
+    private boolean superReviewer = false;
+
+    private boolean publicProfile = true;
+
+
 }

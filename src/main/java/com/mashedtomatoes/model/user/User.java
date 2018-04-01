@@ -46,8 +46,11 @@ public abstract class User {
     @Column(nullable = false)
     private String verificationKey;
 
+    @Column(nullable = false)
+    private boolean banned;
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private Set<Rating> authoredRatings = new HashSet<>();
+    private Set<Rating> ratings = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
@@ -103,6 +106,10 @@ public abstract class User {
         return created;
     }
 
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
     public long getUpdated() {
         return updated;
     }
@@ -125,5 +132,21 @@ public abstract class User {
 
     public void setVerificationKey(String verificationKey) {
         this.verificationKey = verificationKey;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
+    public Set<Rating> getAuthoredRatings() {
+        return ratings;
+    }
+
+    public void setAuthoredRatings(Set<Rating> authoredRatings) {
+        this.ratings = authoredRatings;
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,13 +24,14 @@ public class Celebrity {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
     private long birthday;
 
     private String birthplace;
 
     private String biography;
 
-    private String profileImage;
+    private URL profileImage;
 
     @ManyToMany
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
