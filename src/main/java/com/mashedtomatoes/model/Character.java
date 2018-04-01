@@ -11,7 +11,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "Characters")
-@Getter @Setter
+@Getter
+@Setter
 public class Character {
 
     @Id

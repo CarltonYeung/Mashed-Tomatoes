@@ -10,7 +10,8 @@ import javax.persistence.Table;
 @Entity
 @NoArgsConstructor
 @Table(name = "Critics")
-@Getter @Setter
+@Getter
+@Setter
 public class Critic extends User {
 
     private String firstName;

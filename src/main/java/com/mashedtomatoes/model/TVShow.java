@@ -14,7 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "TVShows")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class TVShow extends Media {
 
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL)

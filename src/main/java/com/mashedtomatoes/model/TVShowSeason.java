@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TVShowSeasons")
-@Getter @Setter
+@Getter
+@Setter
 public class TVShowSeason extends Media {
 
     @ManyToOne

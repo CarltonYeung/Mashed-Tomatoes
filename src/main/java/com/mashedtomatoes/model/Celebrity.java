@@ -11,7 +11,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "Celebrities")
-@Getter @Setter
+@Getter
+@Setter
 public class Celebrity {
 
     @Id

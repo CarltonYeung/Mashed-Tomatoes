@@ -10,7 +10,8 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @Table(name = "Ratings")
-@Getter @Setter
+@Getter
+@Setter
 public class Rating {
 
     @Id

@@ -11,7 +11,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "Audiences")
-@Getter @Setter
+@Getter
+@Setter
 public class Audience extends User {
 
     @Column(nullable = false)

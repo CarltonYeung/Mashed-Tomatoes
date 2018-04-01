@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Quotes")
-@Getter @Setter
+@Getter
+@Setter
 public class Quote {
 
     @Id
@@ -17,6 +18,6 @@ public class Quote {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name="characterID", nullable = false)
+    @JoinColumn(name = "characterID", nullable = false)
     private Character saidBy;
 }
