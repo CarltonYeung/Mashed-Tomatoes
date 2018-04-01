@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "Movies")
-public class Movie extends Media {
+@Table(name = "AudienceRatings")
+public class AudienceRating extends Rating {
 
 }
