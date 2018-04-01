@@ -23,15 +23,15 @@ public abstract class Media {
 
     private long releaseDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "directorID")
     private Celebrity directedBy;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
     private Set<Celebrity> celebrities = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "forMedia", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
 
     public long getID() {

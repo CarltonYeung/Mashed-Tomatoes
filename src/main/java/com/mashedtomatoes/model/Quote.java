@@ -16,11 +16,7 @@ public class Quote {
 
     private String text;
 
-    /*
-     * In the "Quotes" table, there will be a "characterID" column.
-     * Many Quote can reference the same Character and have the same value for the "characterID" column.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="characterID", nullable = false)
     private Character saidBy;
 }

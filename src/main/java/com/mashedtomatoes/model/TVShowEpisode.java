@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class TVShowEpisode extends Media {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "tvShowSeasonID", nullable = false)
     private TVShowSeason tvShowSeason;
 

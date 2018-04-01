@@ -33,9 +33,9 @@ public class Celebrity {
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     private Set<Media> media = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "playedBy", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL)
     private Set<Character> characters = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "directedBy", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL)
     protected Set<Media> directorOf = new HashSet<>();
 }

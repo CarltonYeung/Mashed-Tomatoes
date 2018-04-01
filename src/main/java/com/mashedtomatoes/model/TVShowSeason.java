@@ -12,11 +12,11 @@ import java.util.Set;
 @Getter @Setter
 public class TVShowSeason extends Media {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "tvShowID", nullable = false)
     private TVShow tvShow;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tvShowSeason", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tvShowSeason", cascade = CascadeType.ALL)
     private Set<TVShowEpisode> episodes = new HashSet<>();
 
     @Column(nullable = false)

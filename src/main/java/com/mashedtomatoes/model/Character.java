@@ -21,14 +21,10 @@ public class Character {
     @Column(nullable = false)
     private String name;
 
-    /*
-     * In the "Characters" table, there will be a "celebrityID" column.
-     * Many Character can reference the same Celebrity and have the same value for the "celebrityID" column.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "celebrityID", nullable = false)
     private Celebrity playedBy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "saidBy")
+    @OneToMany(mappedBy = "saidBy")
     protected Set<Quote> quotes = new HashSet<>();
 }

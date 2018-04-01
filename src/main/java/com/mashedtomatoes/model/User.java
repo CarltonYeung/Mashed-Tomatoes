@@ -2,6 +2,8 @@ package com.mashedtomatoes.model;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -41,6 +43,9 @@ public abstract class User {
 
     @Column(nullable = false)
     private String verificationKey;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private Set<Rating> authoredRatings = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

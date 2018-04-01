@@ -28,13 +28,13 @@ public class Rating {
 
     private String review = null;
 
-    /*
-     * In the "Ratings" table, there will be a "mediaID" column.
-     * Many Rating can reference the same Media and have the same value for the "mediaID" column.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "mediaID", nullable = false)
     private Media forMedia;
+
+    @ManyToOne
+    @JoinColumn(name = "authorID", nullable = false)
+    private User author;
 
     @PrePersist
     protected void onCreate() {
