@@ -10,26 +10,22 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @Table(name = "Ratings")
+@Getter @Setter
 public class Rating {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private long ID;
 
     @Column(nullable = false)
-    @Getter @Setter
     private int score;
 
-    @Column(nullable = false)
-    @Getter @Setter
+    @Column(nullable = false, updatable = false)
     private long created;
 
     @Column(nullable = false)
-    @Getter @Setter
     private long updated;
 
-    @Column
-    @Getter @Setter
     private String review = null;
 
     /*
@@ -38,7 +34,6 @@ public class Rating {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mediaID", nullable = false)
-    @Getter @Setter
     private Media forMedia;
 
     @PrePersist

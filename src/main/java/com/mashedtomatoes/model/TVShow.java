@@ -11,8 +11,9 @@ import java.util.Set;
 @Entity
 @Table(name = "TVShows")
 @NoArgsConstructor
+@Getter @Setter
 public class TVShow extends Media {
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "tvShow", cascade = CascadeType.ALL)
-    @Getter @Setter
     private Set<TVShowSeason> seasons = new HashSet<>();
 }

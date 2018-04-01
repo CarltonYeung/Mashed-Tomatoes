@@ -11,14 +11,14 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "Characters")
+@Getter @Setter
 public class Character {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private long ID;
 
     @Column(nullable = false)
-    @Getter @Setter
     private String name;
 
     /*
@@ -27,10 +27,8 @@ public class Character {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "celebrityID", nullable = false)
-    @Getter @Setter
     private Celebrity playedBy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "saidBy")
-    @Getter @Setter
     protected Set<Quote> quotes = new HashSet<>();
 }

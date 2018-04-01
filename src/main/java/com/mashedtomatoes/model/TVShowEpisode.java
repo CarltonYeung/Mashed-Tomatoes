@@ -7,13 +7,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TVShowEpisodes")
+@Getter @Setter
 public class TVShowEpisode extends Media {
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tvShowSeasonID", nullable = false)
-    @Getter @Setter
     private TVShowSeason tvShowSeason;
 
     @Column(nullable = false)
-    @Getter @Setter
     private int episodeNo;
 }

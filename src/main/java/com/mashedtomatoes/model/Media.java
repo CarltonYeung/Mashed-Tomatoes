@@ -1,51 +1,102 @@
 package com.mashedtomatoes.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Set;
-import java.util.HashSet;
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
 public abstract class Media {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
-    protected long ID;
+    private long ID;
 
     @Column(nullable = false)
-    @Getter @Setter
     private String title;
 
     @Column(nullable = false)
-    @Getter @Setter
     private String slug;
 
-    @Column
-    @Getter @Setter
-    protected String description;
+    private String description;
 
-    @Column
-    @Getter @Setter
-    protected long releaseDate;
+    private long releaseDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "directorID")
-    @Getter @Setter
-    protected Celebrity directedBy;
+    private Celebrity directedBy;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
-    @Getter @Setter
-    protected Set<Celebrity> celebrities = new HashSet<>();
+    private Set<Celebrity> celebrities = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "forMedia", cascade = CascadeType.ALL)
-    @Getter @Setter
-    protected Set<Rating> ratings = new HashSet<>();
+    private Set<Rating> ratings = new HashSet<>();
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public long getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(long releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public Celebrity getDirectedBy() {
+        return directedBy;
+    }
+
+    public void setDirectedBy(Celebrity directedBy) {
+        this.directedBy = directedBy;
+    }
+
+    public Set<Celebrity> getCelebrities() {
+        return celebrities;
+    }
+
+    public void setCelebrities(Set<Celebrity> celebrities) {
+        this.celebrities = celebrities;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }
 
 // ref: https://stackoverflow.com/questions/11938253/jpa-joincolumn-vs-mappedby/11938290

@@ -7,14 +7,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Quotes")
+@Getter @Setter
 public class Quote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private long ID;
 
-    @Column
-    @Getter @Setter
     private String text;
 
     /*
@@ -23,6 +22,5 @@ public class Quote {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="characterID", nullable = false)
-    @Getter @Setter
     private Character saidBy;
 }
