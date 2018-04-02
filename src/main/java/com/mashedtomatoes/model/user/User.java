@@ -16,11 +16,13 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @Column(nullable = false)
-    private String email;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private UserCredentials credentials;
 
-    @Column(nullable = false)
-    private String password;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private UserVerification verification;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
@@ -33,12 +35,6 @@ public abstract class User {
 
     @Column(nullable = false)
     private long updated;
-
-    @Column(nullable = false)
-    private boolean verified = false;
-
-    @Column(nullable = false)
-    private String verificationKey;
 
     @Column(nullable = false)
     private boolean banned;
@@ -64,20 +60,20 @@ public abstract class User {
         this.ID = ID;
     }
 
-    public String getEmail() {
-        return email;
+    public UserCredentials getCredentials() {
+        return credentials;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCredentials(UserCredentials credentials) {
+        this.credentials = credentials;
     }
 
-    public String getPassword() {
-        return password;
+    public UserVerification getVerification() {
+        return verification;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setVerification(UserVerification verification) {
+        this.verification = verification;
     }
 
     public UserType getType() {
@@ -110,22 +106,6 @@ public abstract class User {
 
     public void setUpdated(long updated) {
         this.updated = updated;
-    }
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
-    }
-
-    public String getVerificationKey() {
-        return verificationKey;
-    }
-
-    public void setVerificationKey(String verificationKey) {
-        this.verificationKey = verificationKey;
     }
 
     public boolean isBanned() {

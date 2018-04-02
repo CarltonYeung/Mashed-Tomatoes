@@ -29,7 +29,7 @@ public class Audience extends User {
     private Set<Media> notInterested = new HashSet<>();
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "favoritesID")
+    @PrimaryKeyJoinColumn
     private AudienceFavorite favorites;
 
     private boolean superReviewer = false;

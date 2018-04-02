@@ -26,6 +26,8 @@ public abstract class Media {
 
     private long releaseDate;
 
+    private int runningTime;
+
     @ManyToOne
     @JoinColumn(name = "directorID")
     private Celebrity directedBy;
