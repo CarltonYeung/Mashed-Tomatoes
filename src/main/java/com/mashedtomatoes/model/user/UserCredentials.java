@@ -10,7 +10,7 @@ public class UserCredentials {
     private long ID;
 
     @MapsId
-    @OneToOne(mappedBy = "credentials")
+    @OneToOne
     @JoinColumn(name = "userID")
     private User user;
 
@@ -19,4 +19,41 @@ public class UserCredentials {
 
     @Column(nullable = false)
     private char[] password;
+
+    public UserCredentials(String email, char[] password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public char[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
 }

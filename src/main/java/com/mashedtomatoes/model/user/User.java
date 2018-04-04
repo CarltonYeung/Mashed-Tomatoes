@@ -16,11 +16,11 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserCredentials credentials;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserVerification verification;
 
@@ -36,7 +36,7 @@ public abstract class User {
     @Column(nullable = false)
     private long updated;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean banned;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
