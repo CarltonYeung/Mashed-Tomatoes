@@ -1,6 +1,7 @@
 package com.mashedtomatoes.model.user;
 
 import com.mashedtomatoes.model.rating.Rating;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -10,17 +11,18 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
+@ToString(exclude = {"credentials", "verification"})
 public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserCredentials credentials;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserVerification verification;
 
@@ -45,6 +47,7 @@ public abstract class User {
     @PrePersist
     protected void onCreate() {
         this.created = Instant.now().getEpochSecond();
+        this.updated = this.created;
     }
 
     @PreUpdate

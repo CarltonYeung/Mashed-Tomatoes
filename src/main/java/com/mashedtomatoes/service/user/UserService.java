@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public long addAudience(String displayName, String email, char[] password) {
+    public Audience addAudience(String displayName, String email, char[] password) {
         // Create parent and children (see OneToOne relationships in parent class)
         Audience user = new Audience(displayName);
         UserCredentials credentials = new UserCredentials(email, password);
@@ -26,8 +26,6 @@ public class UserService {
         verification.setUser(user);
 
         // Save the parent
-        userRepository.save(user);
-
-        return user.getID();
+        return userRepository.save(user);
     }
 }
