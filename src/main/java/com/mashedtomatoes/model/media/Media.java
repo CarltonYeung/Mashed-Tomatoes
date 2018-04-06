@@ -32,13 +32,14 @@ public abstract class Media {
     @JoinColumn(name = "directorID")
     private Celebrity directedBy;
 
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
     private Set<Celebrity> celebrities = new HashSet<>();
 
     @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
-
+//
     @ElementCollection(targetClass = Genre.class)
     @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
     @Enumerated(EnumType.STRING)
