@@ -37,5 +37,10 @@ public class UserTest {
                     user[PASSWORD].toCharArray());
             System.out.printf("\t%s\n", saved);
         }
+
+        Iterable<Audience> audience = userService.findAllAudience();
+        for (Audience a : audience) {
+            System.out.printf("\t%s\n", a);
+        }
     }
 }

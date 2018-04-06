@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Audiences")
-@ToString(callSuper = true)
 public class Audience extends User {
 
     @Column(nullable = false)
@@ -33,6 +32,10 @@ public class Audience extends User {
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean publicProfile;
+
+    public Audience() {
+
+    }
 
     public Audience(String displayName) {
         this.setType(UserType.AUDIENCE);
@@ -90,5 +93,10 @@ public class Audience extends User {
 
     public void setPublicProfile(boolean publicProfile) {
         this.publicProfile = publicProfile;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.getID());
     }
 }

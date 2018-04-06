@@ -20,6 +20,10 @@ public class UserCredentials {
     @Column(nullable = false)
     private char[] password;
 
+    public UserCredentials() {
+
+    }
+
     public UserCredentials(String email, char[] password) {
         this.email = email;
         this.password = password;

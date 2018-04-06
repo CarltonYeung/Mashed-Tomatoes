@@ -1,8 +1,6 @@
 package com.mashedtomatoes.service.user;
 
-import com.mashedtomatoes.model.user.Audience;
-import com.mashedtomatoes.model.user.UserCredentials;
-import com.mashedtomatoes.model.user.UserVerification;
+import com.mashedtomatoes.model.user.*;
 import com.mashedtomatoes.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +25,13 @@ public class UserService {
 
         // Save the parent
         return userRepository.save(user);
+    }
+
+    public Iterable<Audience> findAllAudience() {
+        return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);
+    }
+
+    private Iterable<? extends User> findAllByType(UserType userType) {
+        return userRepository.findAllByType(userType);
     }
 }
