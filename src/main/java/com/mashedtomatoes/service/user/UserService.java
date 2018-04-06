@@ -2,8 +2,11 @@ package com.mashedtomatoes.service.user;
 
 import com.mashedtomatoes.model.user.*;
 import com.mashedtomatoes.repository.user.UserRepository;
+import com.mashedtomatoes.service.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 public class UserService {
@@ -11,10 +14,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Audience addAudience(String displayName, String email, char[] password) {
+    @Autowired
+    private HashService hashService;
+
+    public Audience addAudience(String displayName, String email, String password) {
         // Create parent and children (see OneToOne relationships in parent class)
         Audience user = new Audience(displayName);
-        UserCredentials credentials = new UserCredentials(email, password);
+        UserCredentials credentials = new UserCredentials(email, hashService.hash(password));
         UserVerification verification = new UserVerification();
 
         // Set the parent/child relationships
@@ -26,6 +32,7 @@ public class UserService {
         // Save the parent
         return userRepository.save(user);
     }
+
 
     public Iterable<Audience> findAllAudience() {
         return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);

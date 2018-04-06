@@ -17,14 +17,14 @@ public class UserCredentials {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private char[] password;
+    @Column(nullable = false, length = 60)
+    private String password;
 
     public UserCredentials() {
 
     }
 
-    public UserCredentials(String email, char[] password) {
+    public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -53,11 +53,11 @@ public class UserCredentials {
         this.email = email;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

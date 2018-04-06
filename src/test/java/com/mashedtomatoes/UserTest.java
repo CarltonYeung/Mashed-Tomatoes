@@ -34,7 +34,7 @@ public class UserTest {
             Audience saved = userService.addAudience(
                     user[DISPLAY_NAME],
                     user[EMAIL],
-                    user[PASSWORD].toCharArray());
+                    user[PASSWORD]);
             System.out.printf("\t%s\n", saved);
         }
 
