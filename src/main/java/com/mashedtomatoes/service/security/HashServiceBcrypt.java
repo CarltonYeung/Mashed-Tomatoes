@@ -8,7 +8,7 @@ public class HashServiceBcrypt implements HashService {
     @Override
     public String hash(String s) {
         String pw_hash= BCrypt.hashpw(s,BCrypt.gensalt());
-        System.err.println(pw_hash);
+//        System.err.println(pw_hash);
         return pw_hash;
     }
 
