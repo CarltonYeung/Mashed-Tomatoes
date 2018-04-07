@@ -1,4 +1,4 @@
-package com.mashedtomatoes.repository;
+package com.mashedtomatoes.repository.media;
 
 import com.mashedtomatoes.model.media.Movie;
 import org.springframework.data.jpa.repository.Query;

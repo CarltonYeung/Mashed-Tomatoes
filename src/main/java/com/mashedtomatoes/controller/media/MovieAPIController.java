@@ -1,4 +1,4 @@
-package com.mashedtomatoes.controller;
+package com.mashedtomatoes.controller.media;
 
 import com.mashedtomatoes.model.media.Movie;
 import com.mashedtomatoes.service.MovieService;

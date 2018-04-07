@@ -3,15 +3,11 @@ package com.mashedtomatoes.model.favorite;
 import com.mashedtomatoes.model.celebrity.Celebrity;
 import com.mashedtomatoes.model.media.*;
 import com.mashedtomatoes.model.user.Audience;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "AudienceFavorites")
-@Getter
-@Setter
 public class AudienceFavorite {
 
     @Id
@@ -45,4 +41,68 @@ public class AudienceFavorite {
     @Column(name = "genre", length = 32)
     @Enumerated(EnumType.STRING)
     private Genre genre;
+
+    public long getID() {
+        return this.ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public Audience getAudience() {
+        return this.audience;
+    }
+
+    public void setAudience(Audience audience) {
+        this.audience = audience;
+    }
+
+    public Movie getMovie() {
+        return this.movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public TVShow getTvShow() {
+        return this.tvShow;
+    }
+
+    public void setTvShow(TVShow tvShow) {
+        this.tvShow = tvShow;
+    }
+
+    public TVShowSeason getTvShowSeason() {
+        return this.tvShowSeason;
+    }
+
+    public void setTvShowSeason(TVShowSeason tvShowSeason) {
+        this.tvShowSeason = tvShowSeason;
+    }
+
+    public TVShowEpisode getTvShowEpisode() {
+        return this.tvShowEpisode;
+    }
+
+    public void setTvShowEpisode(TVShowEpisode tvShowEpisode) {
+        this.tvShowEpisode = tvShowEpisode;
+    }
+
+    public Celebrity getCelebrity() {
+        return this.celebrity;
+    }
+
+    public void setCelebrity(Celebrity celebrity) {
+        this.celebrity = celebrity;
+    }
+
+    public Genre getGenre() {
+        return this.genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
 }

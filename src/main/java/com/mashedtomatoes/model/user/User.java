@@ -1,7 +1,6 @@
 package com.mashedtomatoes.model.user;
 
 import com.mashedtomatoes.model.rating.Rating;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -11,7 +10,6 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-@ToString(exclude = {"credentials", "verification"})
 public abstract class User {
 
     @Id
@@ -125,5 +123,9 @@ public abstract class User {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public String toString() {
+        return "User(ID=" + this.getID() + ", type=" + this.getType() + ", birthDate=" + this.getBirthDate() + ", created=" + this.getCreated() + ", updated=" + this.getUpdated() + ", banned=" + this.isBanned() + ", ratings=" + this.getRatings() + ")";
     }
 }

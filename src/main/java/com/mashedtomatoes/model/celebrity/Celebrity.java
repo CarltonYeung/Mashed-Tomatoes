@@ -28,7 +28,7 @@ public class Celebrity {
     private String biography;
 
     @JsonProperty("profile_path")
-    private String profilePath;
+    private String profileImage;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
@@ -39,6 +39,9 @@ public class Celebrity {
 
     @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Media> directorOf = new HashSet<>();
+
+    public Celebrity() {
+    }
 
     public long getID() {
         return ID;
@@ -80,12 +83,12 @@ public class Celebrity {
         this.biography = biography;
     }
 
-    public String getProfilePath() {
-        return profilePath;
+    public String getProfileImage() {
+        return profileImage;
     }
 
-    public void setProfilePath(String profilePath) {
-        this.profilePath = profilePath;
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public Set<Media> getMedia() {
@@ -110,5 +113,9 @@ public class Celebrity {
 
     public void setDirectorOf(Set<Media> directorOf) {
         this.directorOf = directorOf;
+    }
+
+    public String toString() {
+        return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";
     }
 }

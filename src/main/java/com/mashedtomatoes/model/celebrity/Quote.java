@@ -1,14 +1,9 @@
 package com.mashedtomatoes.model.celebrity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Quotes")
-@Getter
-@Setter
 public class Quote {
 
     @Id
@@ -20,4 +15,28 @@ public class Quote {
     @ManyToOne
     @JoinColumn(name = "characterID", nullable = false)
     private Character saidBy;
+
+    public long getID() {
+        return this.ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Character getSaidBy() {
+        return this.saidBy;
+    }
+
+    public void setSaidBy(Character saidBy) {
+        this.saidBy = saidBy;
+    }
 }

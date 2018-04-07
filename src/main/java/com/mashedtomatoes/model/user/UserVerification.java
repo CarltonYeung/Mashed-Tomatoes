@@ -1,6 +1,7 @@
 package com.mashedtomatoes.model.user;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "UserVerifications")
@@ -22,7 +23,19 @@ public class UserVerification {
 
     public UserVerification() {
         this.verified = false;
-        this.verificationKey = "DUMMY_VERIFICATION_KEY";
+        this.verificationKey = UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public boolean verify(String verificationKey) {
+        if (this.verified) {
+            return false;
+        }
+
+        if (this.verificationKey.equals(verificationKey)) {
+            this.verified = true;
+        }
+
+        return this.verified;
     }
 
     public long getID() {

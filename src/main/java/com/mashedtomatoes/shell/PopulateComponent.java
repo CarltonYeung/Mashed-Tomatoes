@@ -51,7 +51,7 @@ public class PopulateComponent {
         }
 
         if (imgBasePath != null) {
-            httpManager.downloadBinary(httpManager.getProfileImgUrl(celebrity.getProfilePath()), imgBasePath, null);
+            httpManager.downloadBinary(httpManager.getProfileImgUrl(celebrity.getProfileImage()), imgBasePath, null);
             System.out.println("Downloaded profile image for: " + celebrity.getName());
         }
 

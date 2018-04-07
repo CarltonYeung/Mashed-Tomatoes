@@ -2,7 +2,6 @@ package com.mashedtomatoes.model.user;
 
 import com.mashedtomatoes.model.favorite.AudienceFavorite;
 import com.mashedtomatoes.model.media.Media;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,7 +11,7 @@ import java.util.Set;
 @Table(name = "Audiences")
 public class Audience extends User {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String displayName;
 
     @ManyToMany
