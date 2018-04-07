@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AudienceRepository extends CrudRepository<Audience, Long> {
 
-    public boolean existsByDisplayName(String displayName);
+    boolean existsByDisplayName(String displayName);
 }

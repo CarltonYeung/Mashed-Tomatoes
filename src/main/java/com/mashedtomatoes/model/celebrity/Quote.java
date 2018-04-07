@@ -20,20 +20,20 @@ public class Quote {
         return this.ID;
     }
 
-    public String getText() {
-        return this.text;
-    }
-
-    public Character getSaidBy() {
-        return this.saidBy;
-    }
-
     public void setID(long ID) {
         this.ID = ID;
     }
 
+    public String getText() {
+        return this.text;
+    }
+
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Character getSaidBy() {
+        return this.saidBy;
     }
 
     public void setSaidBy(Character saidBy) {

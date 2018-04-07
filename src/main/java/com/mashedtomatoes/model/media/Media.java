@@ -4,6 +4,7 @@ import com.mashedtomatoes.model.celebrity.Celebrity;
 import com.mashedtomatoes.model.rating.Rating;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,11 +23,16 @@ public abstract class Media {
     @Column(nullable = false)
     private String slug;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    private long releaseDate;
+    private Date releaseDate;
 
-    private int runningTime;
+    private int runTime;
+
+    private String backdropPath;
+
+    private String posterPath;
 
     @ManyToOne
     @JoinColumn(name = "directorID")
@@ -39,7 +45,7 @@ public abstract class Media {
 
     @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
-//
+
     @ElementCollection(targetClass = Genre.class)
     @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
     @Enumerated(EnumType.STRING)
@@ -78,11 +84,11 @@ public abstract class Media {
         this.description = description;
     }
 
-    public long getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(long releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -116,6 +122,30 @@ public abstract class Media {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public int getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(int runTime) {
+        this.runTime = runTime;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 }
 

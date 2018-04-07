@@ -17,12 +17,12 @@ public class TVShowEpisode extends Media {
         return this.tvShowSeason;
     }
 
-    public int getEpisodeNo() {
-        return this.episodeNo;
-    }
-
     public void setTvShowSeason(TVShowSeason tvShowSeason) {
         this.tvShowSeason = tvShowSeason;
+    }
+
+    public int getEpisodeNo() {
+        return this.episodeNo;
     }
 
     public void setEpisodeNo(int episodeNo) {

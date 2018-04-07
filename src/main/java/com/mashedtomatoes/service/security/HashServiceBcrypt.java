@@ -14,6 +14,6 @@ public class HashServiceBcrypt implements HashService {
 
     @Override
     public boolean matches(String s, String p) {
-        return BCrypt.checkpw(s,p);
+        return BCrypt.checkpw(s, p);
     }
 }

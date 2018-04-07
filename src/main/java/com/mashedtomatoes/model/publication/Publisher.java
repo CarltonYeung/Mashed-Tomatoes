@@ -26,28 +26,28 @@ public class Publisher {
         return this.ID;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public URL getWebsite() {
-        return this.website;
-    }
-
-    public Set<Publication> getPublications() {
-        return this.publications;
-    }
-
     public void setID(long ID) {
         this.ID = ID;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public URL getWebsite() {
+        return this.website;
+    }
+
     public void setWebsite(URL website) {
         this.website = website;
+    }
+
+    public Set<Publication> getPublications() {
+        return this.publications;
     }
 
     public void setPublications(Set<Publication> publications) {

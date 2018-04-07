@@ -27,6 +27,9 @@ public class Critic extends User {
         this.topCritic = false;
     }
 
+    public Critic() {
+    }
+
     public String getFirstName() {
         return firstName;
     }

@@ -1,12 +1,12 @@
 package com.mashedtomatoes.model;
 
-public class StatusMessage{
+public class StatusMessage {
 
     private boolean status;
 
     private String message;
 
-    public StatusMessage(){
+    public StatusMessage() {
 
     }
 

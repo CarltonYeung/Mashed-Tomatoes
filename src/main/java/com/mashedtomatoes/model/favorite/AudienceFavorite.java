@@ -46,60 +46,60 @@ public class AudienceFavorite {
         return this.ID;
     }
 
-    public Audience getAudience() {
-        return this.audience;
-    }
-
-    public Movie getMovie() {
-        return this.movie;
-    }
-
-    public TVShow getTvShow() {
-        return this.tvShow;
-    }
-
-    public TVShowSeason getTvShowSeason() {
-        return this.tvShowSeason;
-    }
-
-    public TVShowEpisode getTvShowEpisode() {
-        return this.tvShowEpisode;
-    }
-
-    public Celebrity getCelebrity() {
-        return this.celebrity;
-    }
-
-    public Genre getGenre() {
-        return this.genre;
-    }
-
     public void setID(long ID) {
         this.ID = ID;
+    }
+
+    public Audience getAudience() {
+        return this.audience;
     }
 
     public void setAudience(Audience audience) {
         this.audience = audience;
     }
 
+    public Movie getMovie() {
+        return this.movie;
+    }
+
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public TVShow getTvShow() {
+        return this.tvShow;
     }
 
     public void setTvShow(TVShow tvShow) {
         this.tvShow = tvShow;
     }
 
+    public TVShowSeason getTvShowSeason() {
+        return this.tvShowSeason;
+    }
+
     public void setTvShowSeason(TVShowSeason tvShowSeason) {
         this.tvShowSeason = tvShowSeason;
+    }
+
+    public TVShowEpisode getTvShowEpisode() {
+        return this.tvShowEpisode;
     }
 
     public void setTvShowEpisode(TVShowEpisode tvShowEpisode) {
         this.tvShowEpisode = tvShowEpisode;
     }
 
+    public Celebrity getCelebrity() {
+        return this.celebrity;
+    }
+
     public void setCelebrity(Celebrity celebrity) {
         this.celebrity = celebrity;
+    }
+
+    public Genre getGenre() {
+        return this.genre;
     }
 
     public void setGenre(Genre genre) {

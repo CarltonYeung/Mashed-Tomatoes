@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    public Iterable<? extends User> findAllByType(UserType userType);
+    Iterable<? extends User> findAllByType(UserType userType);
 
-    public Optional<User> findFirstByCredentials_Email(String email);
+    Optional<User> findFirstByCredentials_Email(String email);
 
-    public boolean existsByCredentials_Email(String email);
+    boolean existsByCredentials_Email(String email);
 }

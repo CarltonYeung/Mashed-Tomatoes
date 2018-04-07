@@ -81,12 +81,12 @@ public class UserAPIController {
 
         User user = authService.getUserByCredentials(req.getEmail(), req.getPassword());
 
-        if(user == null) {
+        if (user == null) {
             return new StatusMessage(false, "Failure!");
         }
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("User", user);
-        return new StatusMessage(true,"whatever");
+        return new StatusMessage(true, "whatever");
 
 
     }
@@ -100,8 +100,8 @@ public class UserAPIController {
     @GetMapping("/hello")
     public StatusMessage hello(HttpServletRequest httpRequest) {
         HttpSession httpSession = httpRequest.getSession(false);
-        if(httpSession == null){
-            return new StatusMessage(false,"You not logged in you ja");
+        if (httpSession == null) {
+            return new StatusMessage(false, "You not logged in you ja");
         }
         return new StatusMessage(true, "YOure logged in");
     }

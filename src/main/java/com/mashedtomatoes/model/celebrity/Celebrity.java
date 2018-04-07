@@ -1,9 +1,10 @@
 package com.mashedtomatoes.model.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mashedtomatoes.model.media.Media;
 
 import javax.persistence.*;
-import java.net.URL;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,13 +19,16 @@ public class Celebrity {
     @Column(nullable = false)
     private String name;
 
-    private long birthday;
+    private Date birthday;
 
+    @JsonProperty("place_of_birth")
     private String birthplace;
 
+    @Column(columnDefinition = "TEXT")
     private String biography;
 
-    private URL profileImage;
+    @JsonProperty("profile_path")
+    private String profileImage;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
@@ -34,7 +38,7 @@ public class Celebrity {
     private Set<Character> characters = new HashSet<>();
 
     @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected Set<Media> directorOf = new HashSet<>();
+    private Set<Media> directorOf = new HashSet<>();
 
     public Celebrity() {
     }
@@ -55,11 +59,11 @@ public class Celebrity {
         this.name = name;
     }
 
-    public long getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(long birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -79,11 +83,11 @@ public class Celebrity {
         this.biography = biography;
     }
 
-    public URL getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(URL profileImage) {
+    public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 
@@ -110,7 +114,6 @@ public class Celebrity {
     public void setDirectorOf(Set<Media> directorOf) {
         this.directorOf = directorOf;
     }
-
 
     public String toString() {
         return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";

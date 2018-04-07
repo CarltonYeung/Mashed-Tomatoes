@@ -22,20 +22,20 @@ public class TVShowSeason extends Media {
         return this.tvShow;
     }
 
-    public Set<TVShowEpisode> getEpisodes() {
-        return this.episodes;
-    }
-
-    public int getSeasonNo() {
-        return this.seasonNo;
-    }
-
     public void setTvShow(TVShow tvShow) {
         this.tvShow = tvShow;
     }
 
+    public Set<TVShowEpisode> getEpisodes() {
+        return this.episodes;
+    }
+
     public void setEpisodes(Set<TVShowEpisode> episodes) {
         this.episodes = episodes;
+    }
+
+    public int getSeasonNo() {
+        return this.seasonNo;
     }
 
     public void setSeasonNo(int seasonNo) {

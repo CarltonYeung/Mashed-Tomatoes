@@ -17,13 +17,13 @@ public class AuthService {
     private HashService hashService;
 
 
-    public User getUserByCredentials(String email, String password){
+    public User getUserByCredentials(String email, String password) {
         Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
-        if(!optionalUser.isPresent()){
+        if (!optionalUser.isPresent()) {
             return null;
         }
         User u = optionalUser.get();
-        if(!hashService.matches(password,u.getCredentials().getPassword())){
+        if (!hashService.matches(password, u.getCredentials().getPassword())) {
             return null;
         }
         return u;

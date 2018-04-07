@@ -23,6 +23,7 @@ public class UserService {
 
     /**
      * Responsible for creating an Audience and persisting it.
+     *
      * @param displayName
      * @param email
      * @param password
