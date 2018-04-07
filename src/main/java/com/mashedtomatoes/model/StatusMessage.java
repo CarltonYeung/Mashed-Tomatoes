@@ -1,7 +1,5 @@
 package com.mashedtomatoes.model;
 
-import java.io.Serializable;
-
 public class StatusMessage{
 
     private boolean status;

@@ -1,8 +1,5 @@
 package com.mashedtomatoes.model.publication;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.net.URL;
 import java.util.HashSet;
@@ -10,8 +7,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Publishers")
-@Getter
-@Setter
 public class Publisher {
 
     @Id
@@ -26,4 +21,36 @@ public class Publisher {
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
+
+    public long getID() {
+        return this.ID;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public URL getWebsite() {
+        return this.website;
+    }
+
+    public Set<Publication> getPublications() {
+        return this.publications;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWebsite(URL website) {
+        this.website = website;
+    }
+
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
+    }
 }

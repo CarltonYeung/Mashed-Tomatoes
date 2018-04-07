@@ -2,11 +2,9 @@ package com.mashedtomatoes.service.user;
 
 import com.mashedtomatoes.model.user.*;
 import com.mashedtomatoes.repository.user.UserRepository;
-import com.mashedtomatoes.service.HashService;
+import com.mashedtomatoes.service.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpSession;
 
 @Service
 public class UserService {

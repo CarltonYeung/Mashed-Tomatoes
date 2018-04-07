@@ -1,14 +1,9 @@
 package com.mashedtomatoes.model.media;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TVShowEpisodes")
-@Getter
-@Setter
 public class TVShowEpisode extends Media {
 
     @ManyToOne
@@ -17,4 +12,20 @@ public class TVShowEpisode extends Media {
 
     @Column(nullable = false)
     private int episodeNo;
+
+    public TVShowSeason getTvShowSeason() {
+        return this.tvShowSeason;
+    }
+
+    public int getEpisodeNo() {
+        return this.episodeNo;
+    }
+
+    public void setTvShowSeason(TVShowSeason tvShowSeason) {
+        this.tvShowSeason = tvShowSeason;
+    }
+
+    public void setEpisodeNo(int episodeNo) {
+        this.episodeNo = episodeNo;
+    }
 }

@@ -2,7 +2,6 @@ package com.mashedtomatoes.model.user;
 
 import com.mashedtomatoes.model.favorite.AudienceFavorite;
 import com.mashedtomatoes.model.media.Media;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;

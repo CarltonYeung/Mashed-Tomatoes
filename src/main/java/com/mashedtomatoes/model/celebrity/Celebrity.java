@@ -1,10 +1,6 @@
 package com.mashedtomatoes.model.celebrity;
 
 import com.mashedtomatoes.model.media.Media;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -12,9 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "Celebrities")
-@ToString
 public class Celebrity {
 
     @Id
@@ -41,6 +35,9 @@ public class Celebrity {
 
     @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected Set<Media> directorOf = new HashSet<>();
+
+    public Celebrity() {
+    }
 
     public long getID() {
         return ID;
@@ -115,4 +112,7 @@ public class Celebrity {
     }
 
 
+    public String toString() {
+        return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";
+    }
 }

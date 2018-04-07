@@ -4,12 +4,13 @@ import com.mashedtomatoes.http.LoginRequestBody;
 import com.mashedtomatoes.http.RegisterRequestBody;
 import com.mashedtomatoes.model.StatusMessage;
 import com.mashedtomatoes.model.user.User;
-import com.mashedtomatoes.service.AuthService;
+import com.mashedtomatoes.service.security.AuthService;
 import com.mashedtomatoes.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +26,9 @@ public class UserAPIController {
     AuthService authService;
 
     @PostMapping("/register")
-    public StatusMessage register(@RequestBody RegisterRequestBody req){
-        //Add Checking later!!!
+    public StatusMessage register(@RequestBody RegisterRequestBody req) {
         userService.addAudience(req.getDisplayName(),req.getEmail(), req.getPassword());
         return new StatusMessage(true, "Good job!");
-
     }
 
     @PostMapping("/login")

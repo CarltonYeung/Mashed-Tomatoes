@@ -1,4 +1,4 @@
-package com.mashedtomatoes.service;
+package com.mashedtomatoes.service.security;
 
 public interface HashService {
     String hash(String s);

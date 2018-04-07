@@ -1,18 +1,11 @@
 package com.mashedtomatoes.model.celebrity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "Characters")
-@Getter
-@Setter
 public class Character {
 
     @Id
@@ -28,4 +21,39 @@ public class Character {
 
     @OneToMany(mappedBy = "saidBy")
     protected Set<Quote> quotes = new HashSet<>();
+
+    public Character() {
+    }
+
+    public long getID() {
+        return this.ID;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Celebrity getPlayedBy() {
+        return this.playedBy;
+    }
+
+    public Set<Quote> getQuotes() {
+        return this.quotes;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPlayedBy(Celebrity playedBy) {
+        this.playedBy = playedBy;
+    }
+
+    public void setQuotes(Set<Quote> quotes) {
+        this.quotes = quotes;
+    }
 }

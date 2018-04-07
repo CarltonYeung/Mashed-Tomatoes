@@ -1,6 +1,5 @@
 package com.mashedtomatoes.http;
 
-
 public class LoginRequestBody {
 
     private String email;
@@ -8,7 +7,6 @@ public class LoginRequestBody {
     private String password;
 
     public LoginRequestBody(){
-
 
     }
 
