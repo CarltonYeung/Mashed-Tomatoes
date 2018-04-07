@@ -1,20 +1,15 @@
 package com.mashedtomatoes.model.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mashedtomatoes.model.media.Media;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.net.URL;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "Celebrities")
-@ToString
 public class Celebrity {
 
     @Id
@@ -24,13 +19,16 @@ public class Celebrity {
     @Column(nullable = false)
     private String name;
 
-    private long birthday;
+    private Date birthday;
 
+    @JsonProperty("place_of_birth")
     private String birthplace;
 
+    @Column(columnDefinition = "TEXT")
     private String biography;
 
-    private URL profileImage;
+    @JsonProperty("profile_path")
+    private String profilePath;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
@@ -40,7 +38,7 @@ public class Celebrity {
     private Set<Character> characters = new HashSet<>();
 
     @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected Set<Media> directorOf = new HashSet<>();
+    private Set<Media> directorOf = new HashSet<>();
 
     public long getID() {
         return ID;
@@ -58,11 +56,11 @@ public class Celebrity {
         this.name = name;
     }
 
-    public long getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(long birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -82,12 +80,12 @@ public class Celebrity {
         this.biography = biography;
     }
 
-    public URL getProfileImage() {
-        return profileImage;
+    public String getProfilePath() {
+        return profilePath;
     }
 
-    public void setProfileImage(URL profileImage) {
-        this.profileImage = profileImage;
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
     }
 
     public Set<Media> getMedia() {
@@ -113,6 +111,4 @@ public class Celebrity {
     public void setDirectorOf(Set<Media> directorOf) {
         this.directorOf = directorOf;
     }
-
-
 }
