@@ -1,4 +1,4 @@
-package com.mashedtomatoes.controller;
+package com.mashedtomatoes.controller.media;
 
 import com.mashedtomatoes.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;

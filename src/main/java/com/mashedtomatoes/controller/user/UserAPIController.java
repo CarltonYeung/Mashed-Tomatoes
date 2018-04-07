@@ -1,16 +1,14 @@
-package com.mashedtomatoes.controller;
+package com.mashedtomatoes.controller.user;
 
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.model.StatusMessage;
+import com.mashedtomatoes.model.user.Audience;
 import com.mashedtomatoes.model.user.User;
 import com.mashedtomatoes.service.security.AuthService;
 import com.mashedtomatoes.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,14 +26,36 @@ public class UserAPIController {
 
     @PostMapping("/register")
     public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
+        Audience user = null;
+
+        // Add user to database
         try {
-            userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
+            user = userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
         } catch (Exception e) {
             return new StatusMessage(false, e.getMessage());
         }
 
+        // Send email verification
+        System.out.println(user.getVerification().getVerificationKey());
+
         return new StatusMessage(true, "Good job!");
     }
+
+    @GetMapping("/verify")
+    public StatusMessage verify(@RequestParam("email") String email,
+                                @RequestParam("key") String key) {
+        boolean success = userService.verifyEmail(email, key);
+        String message;
+
+        if (success) {
+            message = "Verification successful.";
+        } else {
+            message = "Verification failed.";
+        }
+
+        return new StatusMessage(success, message);
+    }
+
 
     @PostMapping("/login")
     public StatusMessage login(@RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
@@ -43,7 +63,7 @@ public class UserAPIController {
 
         User user = authService.getUserByCredentials(req.getEmail(), req.getPassword());
 
-        if(user == null){
+        if(user == null) {
             return new StatusMessage(false, "Failure!");
         }
         HttpSession httpSession = httpServletRequest.getSession(true);

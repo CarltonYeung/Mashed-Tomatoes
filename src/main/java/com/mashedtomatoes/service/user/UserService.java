@@ -7,6 +7,8 @@ import com.mashedtomatoes.service.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -19,6 +21,14 @@ public class UserService {
     @Autowired
     private HashService hashService;
 
+    /**
+     * Responsible for creating an Audience and persisting it.
+     * @param displayName
+     * @param email
+     * @param password
+     * @return
+     * @throws Exception
+     */
     public Audience addAudience(String displayName, String email, String password) throws Exception {
         if (audienceRepository.existsByDisplayName(displayName)) {
             throw new Exception("This display name already exists.");
@@ -43,6 +53,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public boolean verifyEmail(String email, String verificationKey) {
+        Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
+
+        if (!optionalUser.isPresent()) {
+            return false;
+        }
+
+        User user = optionalUser.get();
+        UserVerification verification = user.getVerification();
+
+        if (verification.verify(verificationKey)) {
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
 
     public Iterable<Audience> findAllAudience() {
         return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);
