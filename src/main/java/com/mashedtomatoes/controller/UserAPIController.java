@@ -1,7 +1,7 @@
 package com.mashedtomatoes.controller;
 
-import com.mashedtomatoes.http.LoginRequestBody;
-import com.mashedtomatoes.http.RegisterRequestBody;
+import com.mashedtomatoes.http.LoginRequest;
+import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.model.StatusMessage;
 import com.mashedtomatoes.model.user.User;
 import com.mashedtomatoes.service.security.AuthService;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RestController
 public class UserAPIController {
@@ -26,16 +27,21 @@ public class UserAPIController {
     AuthService authService;
 
     @PostMapping("/register")
-    public StatusMessage register(@RequestBody RegisterRequestBody req) {
-        userService.addAudience(req.getDisplayName(),req.getEmail(), req.getPassword());
+    public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
+        try {
+            userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
+        } catch (Exception e) {
+            return new StatusMessage(false, e.getMessage());
+        }
+
         return new StatusMessage(true, "Good job!");
     }
 
     @PostMapping("/login")
-    public StatusMessage login(@RequestBody LoginRequestBody req, HttpServletRequest httpServletRequest){
+    public StatusMessage login(@RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
         //Error checking later
 
-        User user = authService.getUserByCredentials(req.getEmail(),req.getPassword());
+        User user = authService.getUserByCredentials(req.getEmail(), req.getPassword());
 
         if(user == null){
             return new StatusMessage(false, "Failure!");
@@ -48,13 +54,13 @@ public class UserAPIController {
     }
 
     @PostMapping("/logout")
-    public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+    public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         httpServletRequest.getSession(false).invalidate();
         httpServletResponse.setStatus(204);
     }
 
     @GetMapping("/hello")
-    public StatusMessage hello(HttpServletRequest httpRequest){
+    public StatusMessage hello(HttpServletRequest httpRequest) {
         HttpSession httpSession = httpRequest.getSession(false);
         if(httpSession == null){
             return new StatusMessage(false,"You not logged in you ja");

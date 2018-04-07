@@ -1,4 +1,4 @@
-package com.mashedtomatoes.repository;
+package com.mashedtomatoes.repository.celebrity;
 
 import com.mashedtomatoes.model.celebrity.Celebrity;
 import org.springframework.data.repository.CrudRepository;

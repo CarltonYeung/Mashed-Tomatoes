@@ -31,10 +31,17 @@ public class UserTest {
         }
 
         for (String[] user : users) {
-            Audience saved = userService.addAudience(
-                    user[DISPLAY_NAME],
-                    user[EMAIL],
-                    user[PASSWORD]);
+            Audience saved = null;
+
+            try {
+                saved = userService.addAudience(
+                        user[DISPLAY_NAME],
+                        user[EMAIL],
+                        user[PASSWORD]);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
             System.out.printf("\t%s\n", saved);
         }
 

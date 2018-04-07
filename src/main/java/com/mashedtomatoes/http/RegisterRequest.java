@@ -1,14 +1,25 @@
 package com.mashedtomatoes.http;
 
-public class RegisterRequestBody {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+public class RegisterRequest {
+
+    @NotEmpty
+    @Size(max = 255)
+    @Email
     private String email;
 
+    @NotEmpty
     private String password;
 
+    @NotBlank
+    @Size(max = 255)
     private String displayName;
 
-    public RegisterRequestBody(){
+    public RegisterRequest() {
 
     }
 

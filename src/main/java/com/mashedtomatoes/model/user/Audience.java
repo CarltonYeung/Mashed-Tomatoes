@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "Audiences")
 public class Audience extends User {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String displayName;
 
     @ManyToMany

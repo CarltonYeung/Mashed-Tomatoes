@@ -1,6 +1,7 @@
 package com.mashedtomatoes.service.user;
 
 import com.mashedtomatoes.model.user.*;
+import com.mashedtomatoes.repository.user.AudienceRepository;
 import com.mashedtomatoes.repository.user.UserRepository;
 import com.mashedtomatoes.service.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,20 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private AudienceRepository audienceRepository;
+
+    @Autowired
     private HashService hashService;
 
-    public Audience addAudience(String displayName, String email, String password) {
+    public Audience addAudience(String displayName, String email, String password) throws Exception {
+        if (audienceRepository.existsByDisplayName(displayName)) {
+            throw new Exception("This display name already exists.");
+        }
+
+        if (userRepository.existsByCredentials_Email(email)) {
+            throw new Exception("This email already exists.");
+        }
+
         // Create parent and children (see OneToOne relationships in parent class)
         Audience user = new Audience(displayName);
         UserCredentials credentials = new UserCredentials(email, hashService.hash(password));

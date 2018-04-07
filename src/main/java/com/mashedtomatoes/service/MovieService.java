@@ -1,7 +1,7 @@
 package com.mashedtomatoes.service;
 
 import com.mashedtomatoes.model.media.Movie;
-import com.mashedtomatoes.repository.MovieRepository;
+import com.mashedtomatoes.repository.media.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

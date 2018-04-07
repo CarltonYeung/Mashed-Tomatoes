@@ -2,7 +2,7 @@ package com.mashedtomatoes.shell;
 
 import com.mashedtomatoes.model.media.Genre;
 import com.mashedtomatoes.model.media.Movie;
-import com.mashedtomatoes.repository.MovieRepository;
+import com.mashedtomatoes.repository.media.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
