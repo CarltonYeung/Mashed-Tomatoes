@@ -1,6 +1,6 @@
 const $ = require('jquery');
 
-const init = () => {
+module.exports.init = () => {
   $(window).scroll(function () {
     if ($(document).scrollTop() > 150) {
       $("#nav").css("position", "fixed");
@@ -26,11 +26,6 @@ const init = () => {
     }
   });
 };
-
-module.exports = {
-  init: init
-};
-
 /* 
 
 Ethan's Legacy Code

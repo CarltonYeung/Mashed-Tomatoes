@@ -1,24 +1,23 @@
 'use strict';
 
 const gulp = require('gulp');
+const gutil = require("gulp-util");
+const fileinclude = require('gulp-file-include');
 const htmlbeautify = require('gulp-html-beautify');
 const sass = require('gulp-sass');
+const webpack = require('webpack');
 const jshint = require('gulp-jshint');
 const image = require('gulp-image')
-const fileinclude = require('gulp-file-include');
-const webpack = require('webpack-stream');
 
 const srcHTMLRoot = 'templates/**/*.html'
 const srcHTMLPartialsRoot = 'templates/partials'
 const srcSASSMain = 'sass/main.scss';
 const srcSASSGlob = 'sass/**/*.scss';
-const srcJSMain = 'js/main.js';
 const srcJSGlob = 'js/**/*.js';
 const srcImageGlob = 'img/*';
 const distRoot = '../resources/static';
 const distCSS = '../resources/static/css'
 const distImage = '../resources/static/img';
-const distJS = '../resources/static/js';
 const distHTML = '../resources/templates';
 const port = process.env.GULP_PORT || 3000;
 const isProduction = process.env.ENV == 'PROD';
@@ -30,7 +29,7 @@ gulp.task('html', () => {
       prefix: '@@',
       basepath: srcHTMLPartialsRoot,
       context: {
-        usingThymeleaf: isProduction || usingThymeleaf 
+        usingThymeleaf: isProduction || usingThymeleaf
       }
     }))
     .pipe(htmlbeautify())
@@ -44,15 +43,15 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(distCSS));
 });
 
-gulp.task('js', () => {
-  return gulp.src(srcJSMain)
-    .pipe(webpack({
-      output: {
-        filename: "bundle.js"
-      },
-      devtool: 'source-map',
-    }))
-    .pipe(gulp.dest(distJS));
+gulp.task('js', done => {
+  webpack(require('./webpack.config'), (err, stats) => {
+    if (err) {
+      throw new gutil.PluginError("js", err);
+    } else {
+      gutil.log("[webpack]", stats.toString());
+    }
+    done();
+  });
 });
 
 gulp.task('lint', function () {
@@ -73,6 +72,7 @@ gulp.task('image', () => {
 });
 
 gulp.task('watch', () => {
+  gulp.watch(srcHTMLRoot, ['html']);
   gulp.watch(srcSASSGlob, ['sass']);
   gulp.watch(srcImageGlob, ['image']);
   gulp.watch(srcJSGlob, ['lint', 'js']);
@@ -85,10 +85,10 @@ if (isProduction) {
 }
 
 gulp.task('serve', () => {
-   const app = require('./app');
-   app.listen(port, () => {
-      console.log(`Server listening on port ${port}`);
-   });
+  const app = require('./app');
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
 });
 
 gulp.task('default', ['build', 'serve']);
