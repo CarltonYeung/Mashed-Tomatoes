@@ -52,7 +52,7 @@ gulp.task('image', () => {
 gulp.task('watch', () => {
   gulp.watch(srcSASSGlob, ['sass']);
   gulp.watch(srcImageGlob, ['image']);
-  gulp.watch(srcJSGlob, ['lint', 'scripts']);
+  gulp.watch(srcJSGlob, ['lint', 'js']);
 });
 
 gulp.task('build', ['sass', 'js', 'image']);

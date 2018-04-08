@@ -34099,6 +34099,8 @@ window.onscroll = function() {
 
 */
 
+// foo
+
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map
