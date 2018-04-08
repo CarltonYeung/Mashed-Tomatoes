@@ -21,15 +21,6 @@ public class UserService {
     @Autowired
     private HashService hashService;
 
-    /**
-     * Responsible for creating an Audience and persisting it.
-     *
-     * @param displayName
-     * @param email
-     * @param password
-     * @return
-     * @throws Exception
-     */
     public Audience addAudience(String displayName, String email, String password) throws Exception {
         if (audienceRepository.existsByDisplayName(displayName)) {
             throw new Exception("This display name already exists.");
@@ -39,18 +30,15 @@ public class UserService {
             throw new Exception("This email already exists.");
         }
 
-        // Create parent and children (see OneToOne relationships in parent class)
         Audience user = new Audience(displayName);
         UserCredentials credentials = new UserCredentials(email, hashService.hash(password));
         UserVerification verification = new UserVerification();
 
-        // Set the parent/child relationships
         user.setCredentials(credentials);
         user.setVerification(verification);
         credentials.setUser(user);
         verification.setUser(user);
 
-        // Save the parent
         return userRepository.save(user);
     }
 
@@ -70,6 +58,22 @@ public class UserService {
         }
 
         return false;
+    }
+
+    public User getUserByCredentials(String email, String plaintextPassword) {
+        Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
+
+        if (!optionalUser.isPresent()) {
+            return null;
+        }
+
+        User user = optionalUser.get();
+
+        if (!hashService.matches(plaintextPassword, user.getCredentials().getPassword())) {
+            return null;
+        }
+
+        return user;
     }
 
     public Iterable<Audience> findAllAudience() {

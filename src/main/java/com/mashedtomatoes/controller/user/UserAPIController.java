@@ -5,27 +5,29 @@ import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.model.StatusMessage;
 import com.mashedtomatoes.model.user.Audience;
 import com.mashedtomatoes.model.user.User;
-import com.mashedtomatoes.service.security.AuthService;
+import com.mashedtomatoes.service.mail.MailService;
 import com.mashedtomatoes.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.UnknownHostException;
 
 @RestController
 public class UserAPIController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    AuthService authService;
+    private MailService mailService;
 
     @PostMapping("/register")
-    public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
+    public StatusMessage register(@Valid @RequestBody RegisterRequest req) throws UnknownHostException {
         Audience user = null;
 
         // Add user to database
@@ -37,6 +39,18 @@ public class UserAPIController {
 
         // Send email verification
         System.out.println(user.getVerification().getVerificationKey());
+        String email = user.getCredentials().getEmail();
+        String key = user.getVerification().getVerificationKey();
+        String message = "Please follow the link to verify your email.\n"
+                + "http://localhost:8080/verify?email=" + email
+                + "&key=" + key;
+
+        try {
+            this.mailService.send(user.getCredentials().getEmail(), message);
+        } catch (MailException e) {
+            System.err.println(e.getMessage());
+            return new StatusMessage(false, "Failed to send verification email.");
+        }
 
         return new StatusMessage(true, "Good job!");
     }
@@ -58,19 +72,21 @@ public class UserAPIController {
 
 
     @PostMapping("/login")
-    public StatusMessage login(@RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
-        //Error checking later
-
-        User user = authService.getUserByCredentials(req.getEmail(), req.getPassword());
+    public StatusMessage login(@Valid @RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
+        User user = userService.getUserByCredentials(req.getEmail(), req.getPassword());
 
         if (user == null) {
-            return new StatusMessage(false, "Failure!");
+            return new StatusMessage(false, "Login failed.");
         }
+
+        if (!user.getVerification().isVerified()) {
+            return new StatusMessage(false, "Please verify your email.");
+        }
+
         HttpSession httpSession = httpServletRequest.getSession(true);
         httpSession.setAttribute("User", user);
-        return new StatusMessage(true, "whatever");
 
-
+        return new StatusMessage(true, "Login successful.");
     }
 
     @PostMapping("/logout")
@@ -82,10 +98,12 @@ public class UserAPIController {
     @GetMapping("/hello")
     public StatusMessage hello(HttpServletRequest httpRequest) {
         HttpSession httpSession = httpRequest.getSession(false);
+
         if (httpSession == null) {
-            return new StatusMessage(false, "You not logged in you ja");
+            return new StatusMessage(false, "You are not logged in.");
         }
-        return new StatusMessage(true, "YOure logged in");
+
+        return new StatusMessage(true, "You are logged in.");
     }
 
 }
