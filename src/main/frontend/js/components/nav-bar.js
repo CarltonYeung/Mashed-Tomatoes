@@ -25,7 +25,7 @@ const init = () => {
       // $("#nav").removeClass("shrink");
     }
   });
-}
+};
 
 module.exports = {
   init: init

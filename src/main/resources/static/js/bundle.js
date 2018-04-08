@@ -10476,8 +10476,8 @@ const components = [
 window.onload = () => {
   _.forEach(components, component => {
     component.init();
-  }) 
-}
+  });
+};
 
 /***/ }),
 /* 3 */
@@ -34072,7 +34072,7 @@ const init = () => {
       // $("#nav").removeClass("shrink");
     }
   });
-}
+};
 
 module.exports = {
   init: init
@@ -34098,8 +34098,6 @@ window.onscroll = function() {
 };
 
 */
-
-// foo
 
 /***/ })
 /******/ ]);

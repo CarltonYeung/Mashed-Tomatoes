@@ -37,7 +37,7 @@ public class MailService {
         msg.setTo(to);
         msg.setSubject("Verify your Mashed Tomatoes email");
         msg.setText(body);
-        this.mailSender.send(msg);
+       // this.mailSender.send(msg);
     }
 
     private void configure() {

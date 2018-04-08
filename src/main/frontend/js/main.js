@@ -9,5 +9,5 @@ const components = [
 window.onload = () => {
   _.forEach(components, component => {
     component.init();
-  }) 
-}
+  });
+};
