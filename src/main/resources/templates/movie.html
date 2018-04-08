@@ -56,7 +56,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" th:data-media-slug="${movie.slug}">
     <section class="media-section">
       <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
       <div class="d-flex justify-content-between">
@@ -378,7 +378,7 @@
         </div>
       </div>
       <div id="rating-form" class="mt-3">
-        <h2 class="media-section -secondary-title" th:data-media-slug="${movie.slug}">Add your rating</h2>
+        <h2 class="media-section -secondary-title">Add your rating</h2>
         <div class="row mt-2">
           <fieldset class="mx-auto star-rating-bar">
             <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -27537,7 +27537,7 @@ return jQuery;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(7)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)(module)))
 
 /***/ }),
 /* 2 */
@@ -33511,26 +33511,57 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  buildUpdateList: () => {
+    return "/api/user/list";
+  },
+  buildCreateRating: (movieSlug) => {
+    return "/api/movie/" + movieSlug + "/rating";
+  },
+}
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 
+const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 
 const components = [
-  __webpack_require__(8),
   __webpack_require__(9),
-  __webpack_require__(10)
+  __webpack_require__(10),
+  __webpack_require__(11)
 ];
+
+const areDepsMet = deps => {
+  const missingDeps = _.filter(deps, dep => {
+    return $(dep).length == 0;
+  });
+
+  if (!_.isEmpty(missingDeps)) {
+    console.log('Missing deps');
+    console.log(missingDeps);
+    return false;
+  }
+
+  return true;
+}
 
 window.onload = () => {
   _.forEach(components, component => {
-    _.has(component, 'init') && component.init();
+    _.has(component, 'deps') &&
+      areDepsMet(component.deps) &&
+      _.has(component, 'init') &&
+      component.init();
   });
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -33539,7 +33570,7 @@ window.onload = () => {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(0), __webpack_require__(6)) :
+	 true ? factory(exports, __webpack_require__(0), __webpack_require__(7)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
 	(factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -37430,7 +37461,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39959,7 +39990,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -39987,7 +40018,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40040,13 +40071,20 @@ window.onscroll = function() {
 */
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const ko = __webpack_require__(3);
+const urlBuilder = __webpack_require__(4);
 
+module.exports.deps = [
+  '[data-media-slug]',
+  '#rating-form-post-btn',
+  '#rating-form-comment-box',
+  'input[name=rating-form-star-rating]'
+];
 
 module.exports.init = () => {
   const movieSlug = $('[data-media-slug]').attr('data-media-slug');
@@ -40068,7 +40106,7 @@ module.exports.init = () => {
       }
 
       $.ajax(
-        "/api/movie/" + movieSlug + "/rating",
+        urlBuilder.buildCreateRating(movieSlug),
         {
           method: "POST",
           data: data,
@@ -40088,12 +40126,37 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const ko = __webpack_require__(3);
+const urlBuilder = __webpack_require__(4);
+
+const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+
+const updateList = (isWantToSee) => {
+  $.ajax(
+    urlBuilder.buildUpdateList(),
+    {
+      method: "PATCH",
+      data: {
+        movieSlug: movieSlug,
+        isWantToSee: isWantToSee
+      },
+      contentType: "application/json",
+      dataType: "application/json",
+      success: res => {
+        if (res.status == 204) {
+          console.log('List updated');
+        }
+      },
+      error: res => {
+        console.error(res.status);
+      }
+    });
+}
 
 class ViewModel {
   constructor(inNI, inWTS) {
@@ -40116,9 +40179,9 @@ class ViewModel {
   }
 
   onAddToNI() {
-    console.log(this.inNI);
     if (!this.inNI()) {
       this.inNI(true);
+      updateList(false);
       if (this.inWTS()) {
         this.inWTS(false);
       }
@@ -40128,6 +40191,7 @@ class ViewModel {
   onAddToWTS() {
     if (!this.inWTS()) {
       this.inWTS(true);
+      updateList(true);
       if (this.inNI()) {
         this.inNI(false);
       }
@@ -40135,6 +40199,10 @@ class ViewModel {
   }
 }
 
+module.exports.deps = [
+  '#media-update-list',
+  '[data-media-slug]'
+];
 
 module.exports.init = () => {
   const inNI = $('.-ni').length > 0;

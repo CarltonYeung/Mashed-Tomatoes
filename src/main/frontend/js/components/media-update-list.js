@@ -1,6 +1,31 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const ko = require('knockout');
+const urlBuilder = require('../url-builder');
+
+const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+
+const updateList = (isWantToSee) => {
+  $.ajax(
+    urlBuilder.buildUpdateList(),
+    {
+      method: "PATCH",
+      data: {
+        movieSlug: movieSlug,
+        isWantToSee: isWantToSee
+      },
+      contentType: "application/json",
+      dataType: "application/json",
+      success: res => {
+        if (res.status == 204) {
+          console.log('List updated');
+        }
+      },
+      error: res => {
+        console.error(res.status);
+      }
+    });
+}
 
 class ViewModel {
   constructor(inNI, inWTS) {
@@ -23,9 +48,9 @@ class ViewModel {
   }
 
   onAddToNI() {
-    console.log(this.inNI);
     if (!this.inNI()) {
       this.inNI(true);
+      updateList(false);
       if (this.inWTS()) {
         this.inWTS(false);
       }
@@ -35,6 +60,7 @@ class ViewModel {
   onAddToWTS() {
     if (!this.inWTS()) {
       this.inWTS(true);
+      updateList(true);
       if (this.inNI()) {
         this.inNI(false);
       }
@@ -42,6 +68,10 @@ class ViewModel {
   }
 }
 
+module.exports.deps = [
+  '#media-update-list',
+  '[data-media-slug]'
+];
 
 module.exports.init = () => {
   const inNI = $('.-ni').length > 0;

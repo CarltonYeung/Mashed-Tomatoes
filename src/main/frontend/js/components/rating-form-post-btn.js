@@ -1,7 +1,14 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const ko = require('knockout');
+const urlBuilder = require('../url-builder');
 
+module.exports.deps = [
+  '[data-media-slug]',
+  '#rating-form-post-btn',
+  '#rating-form-comment-box',
+  'input[name=rating-form-star-rating]'
+];
 
 module.exports.init = () => {
   const movieSlug = $('[data-media-slug]').attr('data-media-slug');
@@ -23,7 +30,7 @@ module.exports.init = () => {
       }
 
       $.ajax(
-        "/api/movie/" + movieSlug + "/rating",
+        urlBuilder.buildCreateRating(movieSlug),
         {
           method: "POST",
           data: data,

@@ -1,5 +1,6 @@
 require('bootstrap');
 
+const $ = require('jquery');
 const _ = require('lodash');
 
 const components = [
@@ -8,8 +9,25 @@ const components = [
   require('./components/media-update-list')
 ];
 
+const areDepsMet = deps => {
+  const missingDeps = _.filter(deps, dep => {
+    return $(dep).length == 0;
+  });
+
+  if (!_.isEmpty(missingDeps)) {
+    console.log('Missing deps');
+    console.log(missingDeps);
+    return false;
+  }
+
+  return true;
+}
+
 window.onload = () => {
   _.forEach(components, component => {
-    _.has(component, 'init') && component.init();
+    _.has(component, 'deps') &&
+      areDepsMet(component.deps) &&
+      _.has(component, 'init') &&
+      component.init();
   });
 };
