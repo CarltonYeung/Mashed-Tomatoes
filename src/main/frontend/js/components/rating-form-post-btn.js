@@ -1,5 +1,6 @@
 const $ = require('jquery');
 const _ = require('lodash');
+const ko = require('knockout');
 
 
 module.exports.init = () => {
@@ -29,16 +30,14 @@ module.exports.init = () => {
           contentType: "application/json",
           dataType: "application/json",
           success: res => {
-            console.log(res);
+            if (res.status == 204) {
+              console.log('Review added');
+            }
           },
-          fail: err => {
-            console.error(err);
+          error: res => {
+            console.error(res.status);
           }
       });
     }
   });
-};
-
-module.exports.mockInit = () => {
-
 };

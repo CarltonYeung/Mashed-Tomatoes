@@ -368,14 +368,16 @@
     </section>
     <section class="mt-4 media-section">
       <h1 class="media-section -title">Your Thoughts</h1>
-      <div class="mt-3">
+      <div id="media-update-list" class="mt-3">
         <h2 class="media-section -secondary-title">Save This Movie</h2>
         <div class="d-flex justify-content-center">
-          <button class="mr-5 btn list-btn -ni">- Not Interested</button>
-          <button class="ml-5 btn list-btn -wts">+ Want To See</button>
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested == null || !inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+          <button class="ml-5 btn list-btn" th:if="${inWantToSee == null || !inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
         </div>
       </div>
-      <div class="mt-3">
+      <div id="rating-form" class="mt-3">
         <h2 class="media-section -secondary-title" th:data-media-slug="${movie.slug}">Add your rating</h2>
         <div class="row mt-2">
           <fieldset class="mx-auto star-rating-bar">
