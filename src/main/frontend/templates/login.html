@@ -8,13 +8,7 @@
 </head>
 
 <body>
-  @@if (usingThymeleaf) {
-    <h1>Using Thymeleaf</h1>
-  }
-
-  @@if (!usingThymeleaf) {
-    @@include('header.html')
-  }
+  @@include('header.html')
   <div class="container my-3 vertical-center">
     <div class="container" id="contents-container">
       <div class="m-5">
