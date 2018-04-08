@@ -1,7 +1,7 @@
 package com.mashedtomatoes;
 
-import com.mashedtomatoes.model.user.Audience;
-import com.mashedtomatoes.service.user.UserService;
+import com.mashedtomatoes.user.Audience;
+import com.mashedtomatoes.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

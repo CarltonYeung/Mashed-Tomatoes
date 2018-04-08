@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.mashedtomatoes.model.celebrity.Character;
+import com.mashedtomatoes.celebrity.Character;
 
 import java.io.IOException;
 import java.util.stream.StreamSupport;

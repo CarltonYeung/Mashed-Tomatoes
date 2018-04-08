@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.mashedtomatoes.model.media.Genre;
-import com.mashedtomatoes.model.media.Movie;
+import com.mashedtomatoes.media.Genre;
+import com.mashedtomatoes.media.Movie;
 
 import java.io.IOException;
 import java.text.DateFormat;

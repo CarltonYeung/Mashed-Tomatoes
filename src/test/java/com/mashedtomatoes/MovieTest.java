@@ -1,10 +1,10 @@
 package com.mashedtomatoes;
 
-import com.mashedtomatoes.model.celebrity.Celebrity;
-import com.mashedtomatoes.model.media.Genre;
-import com.mashedtomatoes.model.media.Movie;
-import com.mashedtomatoes.repository.celebrity.CelebrityRepository;
-import com.mashedtomatoes.repository.media.MovieRepository;
+import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.CelebrityRepository;
+import com.mashedtomatoes.media.Genre;
+import com.mashedtomatoes.media.Movie;
+import com.mashedtomatoes.media.MovieRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

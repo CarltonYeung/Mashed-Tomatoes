@@ -1,8 +1,8 @@
 package com.mashedtomatoes.shell;
 
-import com.mashedtomatoes.repository.celebrity.CelebrityRepository;
-import com.mashedtomatoes.repository.celebrity.CharacterRepository;
-import com.mashedtomatoes.repository.media.MovieRepository;
+import com.mashedtomatoes.celebrity.CelebrityRepository;
+import com.mashedtomatoes.celebrity.CharacterRepository;
+import com.mashedtomatoes.media.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

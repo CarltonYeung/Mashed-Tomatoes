@@ -1,6 +1,6 @@
 package com.mashedtomatoes.shell.deserializer;
 
-import com.mashedtomatoes.model.celebrity.Character;
+import com.mashedtomatoes.celebrity.Character;
 
 public class CharacterTalentId {
     private Character character;
