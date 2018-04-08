@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    @@include('meta.html')
+    <title>Mashed Tomatoes | Article Name</title>
+    @@include('style.html')
+</head>
+
+<body>
+    @@include('header.html')
+    <div class="container my-3 vertical-center">
+        <div class="row">
+            <div class="col-8">
+                <div class="m-5">
+                    <h1>
+                        <a href="index.html">
+                            <img src="img/logo.png" class="about-logo">
+                        </a>News
+                    </h1>
+                    <h2 class="my-5">BEST MOVIES OFF THE RADAR 2017</h2>
+                    <h3>A SELECTION OF 12 STAFF FAVORITES THAT MIGHT NOT HAVE PLAYED AT YOUR LOCAL MULTIPLEX.</h3>
+                </div>
+                <p class="about-body">Rotten Tomatoes® and the Tomatometer® score are the most trusted recommendation sources for quality entertainment.
+                    As the leading online aggregator of movie and TV show reviews from professional critics, Rotten Tomatoes
+                    offers the most comprehensive guide to what's Fresh. The world famous Tomatometer score represents the
+                    percentage of positive professional reviews for films and TV shows and is used by millions of fans to
+                    help with their viewing decisions. Rotten Tomatoes designates the best-reviewed movies and TV shows as
+                    Certified Fresh™. That accolade is awarded with a Tomatometer score of 75% and higher and a required
+                    minimum number of reviews.
+                    <p>
+                        <p class="my-2 about-body">In 2016, Flixster and Rotten Tomatoes became part of Fandango's portfolio of digital properties,
+                            serving moviegoers and entertainment fans.</p>
+            </div>
+            <div class="col-4">
+                <div class="my-5 mx-2">
+                    <h2>Contact</h2>
+                </div>
+                <h3>Customer Support</h3>
+                <p class="my-1 about-contact-body">
+                    Visit our FAQs or fill out our Email Form.
+                </p>
+                <h3>Licensing or Partnership Inquiries</h3>
+                <p class="my-1 about-contact-body">
+                    Visit our FAQs or fill out our Email Form.
+                </p>
+                <h3>Submit Movie Information</h3>
+                <p class="my-1 about-contact-body">
+                    Tell us about missing or incorrect movie or TV information.
+                </p>
+                <h3>Advertise</h3>
+                <p class="my-1 about-contact-body">
+                    Review Fandango Advertising Opportunities.
+                </p>
+
+            </div>
+        </div>
+    </div>
+    @@include('footer.html') @@include('script.html')
+</body>
+
+</html>

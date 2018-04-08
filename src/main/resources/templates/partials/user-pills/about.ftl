@@ -1,0 +1,21 @@
+<h1 class="user-pane -title">About John Doe</h1>
+<div class="user-pane -about-item">
+    <p class="user-pane -about-item -label">Member Since</p>
+    <p class="user-pane -about-item -text">February 2003</p>
+</div>
+<div class="user-pane -about-item">
+    <p class="user-pane -about-item -label">Current Location</p>
+    <p class="user-pane -about-item -text">Stony Brook, New York</p>
+</div>
+<div class="user-pane -about-item">
+    <p class="user-pane -about-item -label">Hometown</p>
+    <p class="user-pane -about-item -text">Miami, Florida</p>
+</div>
+<div class="user-pane -about-item">
+    <p class="user-pane -about-item -label">Favorite Line From A Movie</p>
+    <p class="user-pane -about-item -text">Say hello to my lil' friend!</p>
+</div>
+<div class="user-pane -about-item">
+    <p class="user-pane -about-item -label">Favorite Movie</p>
+    <p class="user-pane -about-item -text">The Notebook</p>
+</div>

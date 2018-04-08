@@ -1,0 +1,11 @@
+.review-card {
+    width: 18rem;
+    &.-tomato {
+        height: 36px;
+        width: 36px;
+    }
+    &.-text {
+        font-size: 16px;
+    }
+    &.-link {}
+}

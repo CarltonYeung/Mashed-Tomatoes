@@ -1,12 +1,10 @@
 @import 'modules/colors';
 @import 'modules/fonts';
-
 .search-form {
-    > .field {
+    >.field {
         font-family: $search-form-field-font;
     }
-
-    > .action {
+    >.action {
         background-color: $search-form-action-bg-color;
         border-color: $search-form-action-bg-color;
         color: $search-form-action-fg-color;

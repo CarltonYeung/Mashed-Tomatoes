@@ -1,0 +1,18 @@
+@import 'modules/fonts';
+
+.login-body {
+
+    margin: 0 auto;
+}
+
+.login-page-btn{
+    font-size: $login-page-btn-font-size;
+}
+
+.login-forgot-recover{
+    font-size: $login-forgot-recover-font-size;
+}
+
+.login-logo{
+    max-width:150px;
+}

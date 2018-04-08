@@ -1,0 +1,18 @@
+.media-score {
+    &.-label {
+        font-size: 16px;
+    }
+
+    &.-icon {
+        height: 112px;
+        width: 112px;
+    }
+
+    &.-value {
+        font-size: 32px;
+    }
+
+    &.-stat {
+        font-size: 12px;
+    }
+}

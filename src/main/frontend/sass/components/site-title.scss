@@ -1,8 +1,7 @@
 @import 'modules/colors';
 @import 'modules/fonts';
-
 .site-title {
-    > .text {
+    >.text {
         font-family: $site-title-text-font;
         font-size: $site-title-text-font-size;
         color: $site-title-text-color;

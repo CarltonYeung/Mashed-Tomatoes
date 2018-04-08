@@ -3,7 +3,16 @@
 @import 'components/all';
 
 * {
-    font-family: $text-font; 
+    font-family: $body-typeface;
+}
+
+main {
+    width: 85%!important;
+}
+
+.main-title {
+    font-size: 36px;
+    text-align: center;
 }
 
 .nav-item,
@@ -13,17 +22,12 @@ h1,
 label,
 h3,
 h5 {
-    font-family: $header-font;
+    font-family: $header-typeface;
 }
 
 .nav-item {
     font-size: 18px;
     color: yellow !important;
-}
-
-#menubar {
-    width: 100%;
-    margin: 0 auto;
 }
 
 .nav-link {
@@ -45,11 +49,11 @@ h5 {
     padding-top: 1px;
     margin-bottom: -60px;
     padding-bottom: 40px;
-    background-color: #BDCCB8 !important;
+    /* background-color: #BDCCB8 !important; */
 }
 
 #card-container {
-    background-color: #BDCCB8;
+    /* background-color: #BDCCB8;*/
 }
 
 .jumbotron {

@@ -1,0 +1,29 @@
+@import 'modules/fonts';
+
+.rating-item {
+    display: flex;
+    justify-content: space-around;
+
+    >.action {
+        >.thumbnail {}
+    }
+
+    >.title-rating-box {
+        width: 75%;
+
+        >.title {
+            font-size: $rating-item-title-font-size;
+        }
+
+        >.stars {
+        }
+
+        >.review {
+            font-size: $rating-item-review-font-size;
+        }
+    }
+
+    >.date {
+        font-size: $rating-item-date-font-size;
+    }
+}

@@ -1,0 +1,20 @@
+.media-info {
+    padding-bottom: 10px;
+
+    &.-poster {
+        width: 300px;
+        height: 400px;
+    }
+
+    &.-key {
+        display: table-cell;
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+
+    &.-value {
+        display: table-cell;
+        padding: 0 10px;
+    }
+}

@@ -21,7 +21,7 @@ public class MovieViewController {
 
     @GetMapping("/movie/{slug}")
     public String getMovie(@PathVariable String slug, Model m) {
-        m.addAttribute("movie", movieService.getMovieBySlug(slug));
+        // m.addAttribute("movie", movieService.getMovieBySlug(slug));
         return "movie";
     }
 }

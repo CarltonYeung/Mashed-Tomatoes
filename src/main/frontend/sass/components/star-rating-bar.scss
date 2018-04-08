@@ -1,0 +1,37 @@
+.star-rating-bar {
+    border: none;
+    float: left;
+    >input {
+        display: none;
+    }
+    >label:before {
+        margin: 5px;
+        font-size: 2.0em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+    >.half:before {
+        content: "\f089";
+        position: absolute;
+    }
+    >label {
+        color: #ddd;
+        float: right;
+    }
+}
+
+.star-rating-bar>input:checked~label,
+.star-rating-bar:not(:checked)>label:hover,
+.star-rating-bar:not(:checked)>label:hover~label {
+    color: #FFD700;
+}
+
+.star-rating-bar>input:checked+label:hover,
+.star-rating-bar>input:checked~label:hover,
+.star-rating-bar>label:hover~input:checked~label,
+.star-rating-bar>input:checked~label:hover~label {
+    color: #FFED85;
+}
+
+// Attribution: https://codepen.io/jamesbarnett/pen/vlpkh?editors=1100
