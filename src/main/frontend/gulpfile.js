@@ -6,7 +6,6 @@ const sass = require('gulp-sass');
 const jshint = require('gulp-jshint');
 const image = require('gulp-image')
 const fileinclude = require('gulp-file-include');
-const webserver = require('gulp-webserver');
 const webpack = require('webpack-stream');
 
 const srcSASSMain = 'sass/main.scss';
@@ -18,6 +17,7 @@ const distRoot = '../resources/static';
 const distCSS = '../resources/static/css'
 const distImage = '../resources/static/img';
 const distJS = '../resources/static/js';
+const port = process.env.GULP_PORT || 3000;
 
 gulp.task('sass', () => {
   return gulp.src(srcSASSMain)
@@ -60,11 +60,10 @@ gulp.task('build', ['sass', 'js', 'image']);
 gulp.task('default', ['build']);
 
 gulp.task('serve', () => {
-  gulp.src('dist')
-    .pipe(webserver({
-      livereload: true,
-      open: true
-    }));
+   const app = require('./app');
+   app.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+   });
 });
 
 
