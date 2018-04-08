@@ -1,8 +1,7 @@
 package com.mashedtomatoes;
 
-import com.mashedtomatoes.controller.AppController;
-import com.mashedtomatoes.controller.media.MovieAPIController;
-import com.mashedtomatoes.controller.media.MovieViewController;
+import com.mashedtomatoes.media.MovieAPIController;
+import com.mashedtomatoes.media.MovieViewController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

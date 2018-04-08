@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.mashape.unirest.http.Unirest;
-import com.mashedtomatoes.model.media.Movie;
+import com.mashedtomatoes.media.Movie;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package com.mashedtomatoes.shell;
 
-import com.mashedtomatoes.model.celebrity.Celebrity;
-import com.mashedtomatoes.model.celebrity.Character;
-import com.mashedtomatoes.model.media.Movie;
+import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
+import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.shell.deserializer.CharacterTalentId;
 import com.mashedtomatoes.shell.deserializer.SerializationManager;
 import org.springframework.beans.factory.annotation.Autowired;
