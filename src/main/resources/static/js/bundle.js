@@ -33520,7 +33520,7 @@ module.exports = {
   buildCreateRating: (movieSlug) => {
     return "/api/movie/" + movieSlug + "/rating";
   },
-}
+};
 
 /***/ }),
 /* 5 */
@@ -33549,14 +33549,19 @@ const areDepsMet = deps => {
   }
 
   return true;
-}
+};
 
 window.onload = () => {
+
+  // init components if all deps are met or if no deps are given
   _.forEach(components, component => {
-    _.has(component, 'deps') &&
-      areDepsMet(component.deps) &&
-      _.has(component, 'init') &&
-      component.init();
+    if (_.has(component, 'deps')) {
+      if (areDepsMet(component.deps) && _.has(component, 'init')) {
+        component.init();
+      }
+    } else if (_.has(component, 'init')) {
+        component.init();
+    } 
   });
 };
 
@@ -40156,7 +40161,7 @@ const updateList = (isWantToSee) => {
         console.error(res.status);
       }
     });
-}
+};
 
 class ViewModel {
   constructor(inNI, inWTS) {
@@ -40168,7 +40173,7 @@ class ViewModel {
         return '-ni';
       }
       return '';
-    })
+    });
 
     this.wtsCSS = ko.computed(() => {
       if (this.inWTS()) {

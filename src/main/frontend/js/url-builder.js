@@ -5,4 +5,4 @@ module.exports = {
   buildCreateRating: (movieSlug) => {
     return "/api/movie/" + movieSlug + "/rating";
   },
-}
+};

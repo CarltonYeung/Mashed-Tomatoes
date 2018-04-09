@@ -25,7 +25,7 @@ const updateList = (isWantToSee) => {
         console.error(res.status);
       }
     });
-}
+};
 
 class ViewModel {
   constructor(inNI, inWTS) {
@@ -37,7 +37,7 @@ class ViewModel {
         return '-ni';
       }
       return '';
-    })
+    });
 
     this.wtsCSS = ko.computed(() => {
       if (this.inWTS()) {

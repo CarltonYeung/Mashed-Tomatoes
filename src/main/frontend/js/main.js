@@ -21,13 +21,18 @@ const areDepsMet = deps => {
   }
 
   return true;
-}
+};
 
 window.onload = () => {
+
+  // init components if all deps are met or if no deps are given
   _.forEach(components, component => {
-    _.has(component, 'deps') &&
-      areDepsMet(component.deps) &&
-      _.has(component, 'init') &&
-      component.init();
+    if (_.has(component, 'deps')) {
+      if (areDepsMet(component.deps) && _.has(component, 'init')) {
+        component.init();
+      }
+    } else if (_.has(component, 'init')) {
+        component.init();
+    } 
   });
 };
