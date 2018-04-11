@@ -40083,61 +40083,6 @@ const _ = __webpack_require__(1);
 const ko = __webpack_require__(3);
 const urlBuilder = __webpack_require__(4);
 
-module.exports.deps = [
-  '[data-media-slug]',
-  '#rating-form-post-btn',
-  '#rating-form-comment-box',
-  'input[name=rating-form-star-rating]'
-];
-
-module.exports.init = () => {
-  const movieSlug = $('[data-media-slug]').attr('data-media-slug');
-
-  $('#rating-form-post-btn').on('click', () => {
-    const commentBoxSelector = $('#rating-form-comment-box');
-    const checkedStarSelector = $('input[name=rating-form-star-rating]:checked');
-    if (_.isNil(checkedStarSelector.val())) {
-      console.log("No rating picked");
-    } else {
-      const comment = commentBoxSelector.val();
-      const rating = parseInt(checkedStarSelector.val());
-      let data = {
-        rating
-      };
-
-      if (!_.isEmpty(comment)) {
-        data.comment = comment;
-      }
-
-      $.ajax(
-        urlBuilder.buildCreateRating(movieSlug),
-        {
-          method: "POST",
-          data: data,
-          contentType: "application/json",
-          dataType: "application/json",
-          success: res => {
-            if (res.status == 204) {
-              console.log('Review added');
-            }
-          },
-          error: res => {
-            console.error(res.status);
-          }
-      });
-    }
-  });
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0);
-const _ = __webpack_require__(1);
-const ko = __webpack_require__(3);
-const urlBuilder = __webpack_require__(4);
-
 const movieSlug = $('[data-media-slug]').attr('data-media-slug');
 
 const updateList = (isWantToSee) => {
@@ -40213,6 +40158,61 @@ module.exports.init = () => {
   const inWTS = $('.-wts').length > 0;
   let vm = new ViewModel(inNI, inWTS);
   ko.applyBindings(vm, document.getElementById('media-update-list'));
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const ko = __webpack_require__(3);
+const urlBuilder = __webpack_require__(4);
+
+module.exports.deps = [
+  '[data-media-slug]',
+  '#rating-form-post-btn',
+  '#rating-form-comment-box',
+  'input[name=rating-form-star-rating]'
+];
+
+module.exports.init = () => {
+  const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+
+  $('#rating-form-post-btn').on('click', () => {
+    const commentBoxSelector = $('#rating-form-comment-box');
+    const checkedStarSelector = $('input[name=rating-form-star-rating]:checked');
+    if (_.isNil(checkedStarSelector.val())) {
+      console.log("No rating picked");
+    } else {
+      const comment = commentBoxSelector.val();
+      const rating = parseInt(checkedStarSelector.val());
+      let data = {
+        rating
+      };
+
+      if (!_.isEmpty(comment)) {
+        data.comment = comment;
+      }
+
+      $.ajax(
+        urlBuilder.buildCreateRating(movieSlug),
+        {
+          method: "POST",
+          data: data,
+          contentType: "application/json",
+          dataType: "application/json",
+          success: res => {
+            if (res.status == 204) {
+              console.log('Review added');
+            }
+          },
+          error: res => {
+            console.error(res.status);
+          }
+      });
+    }
+  });
 };
 
 /***/ })
