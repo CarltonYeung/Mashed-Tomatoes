@@ -9,7 +9,7 @@ const fileinclude = require('gulp-file-include');
 const webpack = require('webpack-stream');
 
 const srcHTMLGlob = 'templates/**/*.html'
-const srcHTMLPartialsRoot = 'templates/partials'
+const srcHTMLPartialsRoot = 'templates/partials';
 const srcSASSMain = 'sass/main.scss';
 const srcSASSGlob = 'sass/**/*.scss';
 const srcJSMain = 'js/main.js';

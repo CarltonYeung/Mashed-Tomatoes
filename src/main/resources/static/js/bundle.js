@@ -33552,7 +33552,6 @@ const areDepsMet = deps => {
 };
 
 window.onload = () => {
-
   // init components if all deps are met or if no deps are given
   _.forEach(components, component => {
     if (_.has(component, 'deps')) {

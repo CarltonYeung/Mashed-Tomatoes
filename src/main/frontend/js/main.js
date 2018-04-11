@@ -4,9 +4,9 @@ const $ = require('jquery');
 const _ = require('lodash');
 
 const components = [
-  require('./components/nav-bar.js'),
-  require('./components/rating-form-post-btn.js'),
-  require('./components/media-update-list')
+  require('./base/nav-bar'),
+  require('./media/rating-form-post-btn'),
+  require('./media/media-update-list')
 ];
 
 const areDepsMet = deps => {
@@ -24,7 +24,6 @@ const areDepsMet = deps => {
 };
 
 window.onload = () => {
-
   // init components if all deps are met or if no deps are given
   _.forEach(components, component => {
     if (_.has(component, 'deps')) {

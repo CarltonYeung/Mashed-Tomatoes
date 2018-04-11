@@ -1,6 +1,11 @@
 @import 'partials/all';
 @import 'modules/all';
-@import 'components/all';
+@import 'base/all';
+@import 'celebrity/all';
+@import 'media/all';
+@import 'publication/all';
+@import 'rating/all';
+@import 'user/all';
 
 * {
     font-family: $body-typeface;
