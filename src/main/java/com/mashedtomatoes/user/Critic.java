@@ -21,6 +21,8 @@ public class Critic extends User {
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean topCritic;
 
+    private String slug;
+
     public Critic(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
