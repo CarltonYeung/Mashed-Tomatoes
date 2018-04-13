@@ -1,0 +1,13 @@
+@import 'modules/fonts';
+
+.profile-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+
+    > .fullname {
+        font-size: $profile-container-fullname-font-size;
+    }
+}

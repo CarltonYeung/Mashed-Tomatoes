@@ -1,0 +1,98 @@
+*{
+  font-family: 'Lato', sans-serif;
+}
+.nav-item, .btn, .form-control, h1, h2, label,h3,h5 {
+    font-family: 'Concert One', cursive;
+
+}
+
+.nav-item{
+    font-size: 18px;
+    color: yellow !important;
+}
+
+#menubar {
+  width:100%;
+  margin:0 auto;
+}
+
+#loginbtn{
+  background-color: #DBBD2D !important;
+  border-color: #DBBD2D !important;
+}
+#dropdownMenuButton{
+  background-color: #4D9632 !important;
+  border-color: #4D9632 !important;
+  border-width: 0;
+}
+
+.nav-link{
+  align-items: center;
+  text-align:center;
+}
+
+.bg-success {
+  background-color: #4D9632 !important;
+}
+
+.btn-danger {
+  background-color: #D8746A !important;
+  border-color: #D8746A !important;
+}
+
+.dropdown, .nav-link{
+  margin: auto;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown:hover {
+}
+
+.carousel {
+  margin: auto;
+  border-radius: 55px 55px 55px 55px;
+  overflow: hidden;
+}
+
+.card {
+  background-color: #BDDAB2;
+}
+
+#contents-container {
+  padding-top: 1px;
+  margin-bottom: -60px;
+  padding-bottom: 40px;
+  background-color: #BDCCB8 !important;
+}
+
+#card-container {
+  background-color: #BDCCB8;
+}
+
+.jumbotron {
+  margin-bottom: -5px;
+}
+
+label {
+  font-size: 25px;
+}
+
+.left_col {
+  align: left;
+}
+
+.right_col {
+  align: right;
+}
+
+td {
+  text-align:center;
+}
+
+td a {
+  text-decoration: none !important;
+  color: black;
+}

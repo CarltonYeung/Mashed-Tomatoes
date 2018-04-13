@@ -1,0 +1,16 @@
+@import 'modules/colors';
+
+#nav { 
+    width: 100%;
+}
+
+// .navbar.shrink {
+//     min-height: 35px;
+//   }
+
+.navbar{
+    background-color: $nav-bar-bg-color;
+    // Animation
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}

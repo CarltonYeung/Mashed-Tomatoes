@@ -1,9 +1,60 @@
-@import url('https://fonts.googleapis.com/css?family=Concert+One|Lato');
+$display-typeface: 'Lato', sans-serif;
+$body-typeface: Arial, Helvetica, sans-serif;
 
+$header-typeface: 'Concert One', cursive;
 $text-font: 'Lato', sans-serif;
-$header-font: 'Concert One', cursive;
 
-$site-title-text-font: $header-font;
+$site-title-text-font: $header-typeface;
 $site-title-text-font-size: 48px;
 
-$search-form-field-font: Arial, Helvetica, sans-serif;
+$search-form-field-font: $display-typeface; /*Arial, Helvetica, sans-serif;*/
+
+$profile-container-fullname-font-size: 48px;
+
+$about-item-label-font-size: 28px;
+$about-item-text-font-size: 14px;
+
+$account-item-label-font-size: 28px;
+$account-item-action-font-size: 24px;
+$account-item-description-font-size: 12px;
+
+$rating-item-title-font-size: 18px;
+$rating-item-review-font-size: 12px;
+$rating-item-date-font-size: 12px;
+
+$list-title-font-size: 24px;
+$list-item-caption-font-size: 16px;
+$display-typeface: 'Lato', sans-serif;
+$body-typeface: Arial, Helvetica, sans-serif;
+
+$header-typeface: 'Concert One', cursive;
+
+$h1-font-size: 50px;
+$h2-font-size: 40px;
+$h2-font-family: 'Concert One', cursive;
+
+$text-font: 'Lato', sans-serif;
+
+$site-title-text-font: $header-typeface;
+$site-title-text-font-size: 48px;
+
+$search-form-field-font: $display-typeface; /*Arial, Helvetica, sans-serif;*/
+
+$about-body-font-size: 19px;
+
+$login-page-btn-font-size: 30px;
+$login-forgot-recover-font-size: 20px;
+$profile-container-fullname-font-size: 48px;
+
+$about-item-label-font-size: 28px;
+$about-item-text-font-size: 14px;
+
+$account-item-label-font-size: 28px;
+$account-item-action-font-size: 24px;
+$account-item-description-font-size: 12px;
+
+$rating-item-title-font-size: 18px;
+$rating-item-review-font-size: 12px;
+$rating-item-date-font-size: 12px;
+
+

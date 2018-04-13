@@ -1,0 +1,12 @@
+@import 'modules/mixins';
+
+.media-info {
+    padding-bottom: 10px;
+
+    &.-poster {
+        width: 300px;
+        height: 400px;
+    }
+
+    @include info-key-value();
+}

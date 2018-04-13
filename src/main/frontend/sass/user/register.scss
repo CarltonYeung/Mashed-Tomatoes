@@ -1,0 +1,22 @@
+@import 'modules/fonts';
+
+.register-body {
+
+    margin: 0 auto;
+}
+
+.register-page-btn{
+    font-size: $login-page-btn-font-size;
+}
+
+.register-forgot-recover{
+    font-size: $login-forgot-recover-font-size;
+}
+
+.register-logo{
+    max-width:150px;
+}
+
+.register-agree-already{
+    text-align: center;
+}

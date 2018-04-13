@@ -1,0 +1,5 @@
+@import 'modules/mixins';
+
+.media-section {
+    @include section();
+}

@@ -1,0 +1,11 @@
+.list-btn {
+    &.-ni {
+        background-color: red;
+    }
+    &.-wts {
+        background-color: green;
+    }
+    &.-inactive {
+        background-color: gray;
+    }
+}
