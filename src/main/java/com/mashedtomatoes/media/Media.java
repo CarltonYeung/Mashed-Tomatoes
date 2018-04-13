@@ -1,5 +1,8 @@
 package com.mashedtomatoes.media;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.rating.Rating;
 
@@ -10,8 +13,10 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Media {
 
+    @JsonProperty("id")
     protected long ID;
     protected String title;
     protected String slug;
