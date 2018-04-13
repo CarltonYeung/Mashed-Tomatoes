@@ -8,37 +8,35 @@ import java.util.Set;
 @Table(name = "TVShowSeasons")
 public class TVShowSeason extends Media {
 
+    private TVShow tvShow;
+    private Set<TVShowEpisode> episodes = new HashSet<>();
+    private int seasonNumber;
+
     @ManyToOne
     @JoinColumn(name = "tvShowID", nullable = false)
-    private TVShow tvShow;
+    public TVShow getTvShow() {
+        return tvShow;
+    }
 
     @OneToMany(mappedBy = "tvShowSeason", cascade = CascadeType.ALL)
-    private Set<TVShowEpisode> episodes = new HashSet<>();
+    public Set<TVShowEpisode> getEpisodes() {
+        return episodes;
+    }
 
     @Column(nullable = false)
-    private int seasonNo;
-
-    public TVShow getTvShow() {
-        return this.tvShow;
+    public int getSeasonNumber() {
+        return seasonNumber;
     }
 
     public void setTvShow(TVShow tvShow) {
         this.tvShow = tvShow;
     }
 
-    public Set<TVShowEpisode> getEpisodes() {
-        return this.episodes;
-    }
-
     public void setEpisodes(Set<TVShowEpisode> episodes) {
         this.episodes = episodes;
     }
 
-    public int getSeasonNo() {
-        return this.seasonNo;
-    }
-
-    public void setSeasonNo(int seasonNo) {
-        this.seasonNo = seasonNo;
+    public void setSeasonNumber(int seasonNumber) {
+        this.seasonNumber = seasonNumber;
     }
 }

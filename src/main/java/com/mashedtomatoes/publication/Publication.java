@@ -10,80 +10,74 @@ import java.net.URL;
 @Table(name = "Publications")
 public abstract class Publication {
 
+    private long ID;
+    private Publisher publisher;
+    private User author;
+    private String title;
+    private URL link;
+    private long created;
+    private long updated;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    public long getID() {
+        return ID;
+    }
 
     @ManyToOne
     @JoinColumn(name = "publisherID", nullable = false)
-    private Publisher publisher;
+    public Publisher getPublisher() {
+        return publisher;
+    }
 
     @ManyToOne
     @JoinColumn(name = "authorID", nullable = false)
-    private User author;
+    public User getAuthor() {
+        return author;
+    }
 
     @Column(nullable = false)
-    private String title;
+    public String getTitle() {
+        return title;
+    }
 
     @Column(nullable = false)
-    private URL link;
+    public URL getLink() {
+        return link;
+    }
 
     @Column(nullable = false)
-    private long created;
+    public long getCreated() {
+        return created;
+    }
 
     @Column(nullable = false)
-    private long updated;
-
-    public long getID() {
-        return ID;
+    public long getUpdated() {
+        return updated;
     }
 
     public void setID(long ID) {
         this.ID = ID;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
-    }
-
-    public User getAuthor() {
-        return author;
     }
 
     public void setAuthor(User author) {
         this.author = author;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public URL getLink() {
-        return link;
     }
 
     public void setLink(URL link) {
         this.link = link;
     }
 
-    public long getCreated() {
-        return created;
-    }
-
     public void setCreated(long created) {
         this.created = created;
-    }
-
-    public long getUpdated() {
-        return updated;
     }
 
     public void setUpdated(long updated) {

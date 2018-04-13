@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends CrudRepository<Movie, Long> {
+
     @Override
     Iterable<Movie> findAll();
 

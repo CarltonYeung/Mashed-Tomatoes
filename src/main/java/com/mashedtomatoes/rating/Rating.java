@@ -11,27 +11,12 @@ import java.time.Instant;
 @Table(name = "Ratings")
 public abstract class Rating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-
-    @Column(nullable = false)
     private int score;
-
-    @Column(nullable = false, updatable = false)
     private long created;
-
-    @Column(nullable = false)
     private long updated;
-
     private String review = null;
-
-    @ManyToOne
-    @JoinColumn(name = "mediaID", nullable = false)
     private Media forMedia;
-
-    @ManyToOne
-    @JoinColumn(name = "authorID", nullable = false)
     private User author;
 
     @PrePersist
@@ -44,56 +29,65 @@ public abstract class Rating {
         this.updated = Instant.now().getEpochSecond();
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getID() {
         return ID;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
+    @Column(nullable = false)
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
+    @Column(nullable = false, updatable = false)
     public long getCreated() {
         return created;
     }
 
-    public void setCreated(long created) {
-        this.created = created;
-    }
-
+    @Column(nullable = false)
     public long getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(long updated) {
-        this.updated = updated;
     }
 
     public String getReview() {
         return review;
     }
 
-    public void setReview(String review) {
-        this.review = review;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "mediaID", nullable = false)
     public Media getForMedia() {
         return forMedia;
     }
 
-    public void setForMedia(Media forMedia) {
-        this.forMedia = forMedia;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "authorID", nullable = false)
     public User getAuthor() {
         return author;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    public void setUpdated(long updated) {
+        this.updated = updated;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public void setForMedia(Media forMedia) {
+        this.forMedia = forMedia;
     }
 
     public void setAuthor(User author) {

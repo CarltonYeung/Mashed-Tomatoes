@@ -6,34 +6,35 @@ import javax.persistence.*;
 @Table(name = "Quotes")
 public class Quote {
 
+    private long ID;
+    private String text;
+    private Character saidBy;
+
+    public Quote() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    public long getID() {
+        return ID;
+    }
 
-    private String text;
+    public String getText() {
+        return text;
+    }
 
     @ManyToOne
     @JoinColumn(name = "characterID", nullable = false)
-    private Character saidBy;
-
-    public long getID() {
-        return this.ID;
+    public Character getSaidBy() {
+        return saidBy;
     }
 
     public void setID(long ID) {
         this.ID = ID;
     }
 
-    public String getText() {
-        return this.text;
-    }
-
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Character getSaidBy() {
-        return this.saidBy;
     }
 
     public void setSaidBy(Character saidBy) {

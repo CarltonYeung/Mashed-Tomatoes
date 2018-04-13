@@ -26,14 +26,12 @@ public class UserAPIController {
     public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
         Audience user;
 
-        // Add user to database
         try {
             user = userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
         } catch (Exception e) {
             return new StatusMessage(false, e.getMessage());
         }
 
-        // Send email verification
         System.out.println(user.getVerification().getVerificationKey());
         String email = user.getCredentials().getEmail();
         String key = user.getVerification().getVerificationKey();
@@ -42,7 +40,7 @@ public class UserAPIController {
                 + "&key=" + key;
 
         try {
-            this.mailService.send(user.getCredentials().getEmail(), message);
+            this.mailService.send(user.getCredentials().getEmail(), "Verify your Mashed Tomatoes email", message);
         } catch (MailException e) {
             System.err.println(e.getMessage());
             return new StatusMessage(false, "Failed to send verification email.");

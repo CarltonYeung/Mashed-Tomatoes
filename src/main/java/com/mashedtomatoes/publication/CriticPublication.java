@@ -10,12 +10,12 @@ import javax.persistence.Table;
 @Table(name = "CriticPublications")
 public class CriticPublication extends Publication {
 
-    @OneToOne(mappedBy = "source")
     private CriticRating rating;
 
     public CriticPublication() {
     }
 
+    @OneToOne(mappedBy = "source")
     public CriticRating getRating() {
         return this.rating;
     }

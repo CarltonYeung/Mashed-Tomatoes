@@ -13,140 +13,126 @@ import java.util.Set;
 @Table(name = "Media")
 public abstract class Media {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-
-    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
     private String slug;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    private Date releaseDate;
-
-    private int runTime;
-
     private String backdropPath;
-
     private String posterPath;
-
-    @ManyToOne
-    @JoinColumn(name = "directorID")
+    private Date releaseDate;
+    private int runTime;
     private Celebrity directedBy;
-
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
     private Set<Celebrity> celebrities = new HashSet<>();
-
-    @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
-
-    @ElementCollection(targetClass = Genre.class)
-    @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
-    @Enumerated(EnumType.STRING)
-    @Column(name = "genre", nullable = false, length = 32)
     private Set<Genre> genres = new HashSet<>();
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getID() {
         return ID;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
+    @Column(nullable = false)
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    @Column(nullable = false)
     public String getSlug() {
         return slug;
     }
 
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public Celebrity getDirectedBy() {
-        return directedBy;
-    }
-
-    public void setDirectedBy(Celebrity directedBy) {
-        this.directedBy = directedBy;
-    }
-
-    public Set<Celebrity> getCelebrities() {
-        return celebrities;
-    }
-
-    public void setCelebrities(Set<Celebrity> celebrities) {
-        this.celebrities = celebrities;
-    }
-
-    public Set<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(Set<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
-    }
-
     public int getRunTime() {
         return runTime;
-    }
-
-    public void setRunTime(int runTime) {
-        this.runTime = runTime;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
     }
 
     public String getBackdropPath() {
         return backdropPath;
     }
 
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "directorID")
+    public Celebrity getDirectedBy() {
+        return directedBy;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
+    public Set<Celebrity> getCelebrities() {
+        return celebrities;
+    }
+
+    @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    @ElementCollection(targetClass = Genre.class)
+    @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genre", nullable = false, length = 32)
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setRunTime(int runTime) {
+        this.runTime = runTime;
+    }
+
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
     }
-}
 
-// ref: https://stackoverflow.com/questions/11938253/jpa-joincolumn-vs-mappedby/11938290
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public void setDirectedBy(Celebrity directedBy) {
+        this.directedBy = directedBy;
+    }
+
+    public void setCelebrities(Set<Celebrity> celebrities) {
+        this.celebrities = celebrities;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+}

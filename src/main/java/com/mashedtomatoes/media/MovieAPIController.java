@@ -12,8 +12,7 @@ public class MovieAPIController {
     MovieService movieService;
 
     @GetMapping("/api/movie")
-    public Iterable<Movie> getMovies(
-        @RequestParam(value = "expr", required = false) String expr) {
+    public Iterable<Movie> getMovies(@RequestParam(value = "expr", required = false) String expr) {
         return movieService.getAllMovies(expr);
     }
 
@@ -29,10 +28,7 @@ public class MovieAPIController {
     }
 
     @PatchMapping("/api/movie/{slug}/update")
-    public Movie updateMovie(
-            @PathVariable String slug, 
-            @RequestBody Movie movieIn) {
-
+    public Movie updateMovie(@PathVariable String slug, @RequestBody Movie movieIn) {
         Movie movie = movieService.getMovieBySlug(slug);
         movie.setTitle(movieIn.getTitle());
         movieService.updateMovie(movie);

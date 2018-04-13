@@ -6,26 +6,25 @@ import javax.persistence.*;
 @Table(name = "TVShowEpisodes")
 public class TVShowEpisode extends Media {
 
+    private TVShowSeason tvShowSeason;
+    private int episodeNumber;
+
     @ManyToOne
     @JoinColumn(name = "tvShowSeasonID", nullable = false)
-    private TVShowSeason tvShowSeason;
+    public TVShowSeason getTvShowSeason() {
+        return tvShowSeason;
+    }
 
     @Column(nullable = false)
-    private int episodeNo;
-
-    public TVShowSeason getTvShowSeason() {
-        return this.tvShowSeason;
+    public int getEpisodeNumber() {
+        return episodeNumber;
     }
 
     public void setTvShowSeason(TVShowSeason tvShowSeason) {
         this.tvShowSeason = tvShowSeason;
     }
 
-    public int getEpisodeNo() {
-        return this.episodeNo;
-    }
-
-    public void setEpisodeNo(int episodeNo) {
-        this.episodeNo = episodeNo;
+    public void setEpisodeNumber(int episodeNumber) {
+        this.episodeNumber = episodeNumber;
     }
 }

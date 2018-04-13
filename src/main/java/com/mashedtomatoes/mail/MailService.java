@@ -12,6 +12,7 @@ import java.util.Properties;
 public class MailService {
 
     private JavaMailSenderImpl mailSender;
+    private boolean configured;
 
     @Value("${spring.mail.host}")
     private String host;
@@ -27,26 +28,28 @@ public class MailService {
 
     public MailService(JavaMailSenderImpl mailSender) {
         this.mailSender = mailSender;
+        this.configured = false;
     }
 
-    public void send(String to, String body) throws MailException {
+    public void send(String to, String subject, String body) throws MailException {
         configure();
-
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom("noreply@mashedtomatoes.cse308");
+        msg.setFrom("noreply@mashedtomatoes.com");
         msg.setTo(to);
-        msg.setSubject("Verify your Mashed Tomatoes email");
+        msg.setSubject(subject);
         msg.setText(body);
         this.mailSender.send(msg);
     }
 
     private void configure() {
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
+        if (!configured) {
+            mailSender.setHost(host);
+            mailSender.setPort(port);
+            mailSender.setUsername(username);
+            mailSender.setPassword(password);
+            Properties props = mailSender.getJavaMailProperties();
+            props.put("mail.transport.protocol", "smtp");
+            configured = true;
+        }
     }
 }

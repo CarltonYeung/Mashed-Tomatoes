@@ -3,17 +3,14 @@ package com.mashedtomatoes.http;
 public class StatusMessage {
 
     private boolean status;
-
     private String message;
 
     public StatusMessage() {
-
     }
 
-    public StatusMessage(boolean status, String message){
+    public StatusMessage(boolean status, String message) {
         this.status = status;
         this.message = message;
-
     }
 
     public boolean isStatus() {

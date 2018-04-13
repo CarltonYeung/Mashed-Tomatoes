@@ -3,7 +3,6 @@ package com.mashedtomatoes.media;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
-import com.mashedtomatoes.user.Critic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

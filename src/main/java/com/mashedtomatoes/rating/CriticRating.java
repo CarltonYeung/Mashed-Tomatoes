@@ -11,13 +11,13 @@ import javax.persistence.Table;
 @Table(name = "CriticRatings")
 public class CriticRating extends Rating {
 
-    @OneToOne
-    @JoinColumn(name = "publicationID", nullable = false)
     private CriticPublication source;
 
     public CriticRating() {
     }
 
+    @OneToOne
+    @JoinColumn(name = "publicationID", nullable = false)
     public CriticPublication getSource() {
         return this.source;
     }
