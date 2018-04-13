@@ -11,7 +11,6 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Quote {
 
-    @JsonProperty("id")
     private long ID;
     private String text;
     private Character saidBy;
@@ -21,6 +20,7 @@ public class Quote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }

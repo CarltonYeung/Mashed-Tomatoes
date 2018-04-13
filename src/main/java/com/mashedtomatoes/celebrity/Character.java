@@ -13,7 +13,6 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
 
-    @JsonProperty("id")
     private long ID;
     private String name;
     private Celebrity playedBy;
@@ -26,6 +25,7 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }

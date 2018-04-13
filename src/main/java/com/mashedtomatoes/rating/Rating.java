@@ -15,7 +15,6 @@ import java.time.Instant;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Rating {
 
-    @JsonProperty("id")
     private long ID;
     private int score;
     private long created;
@@ -36,6 +35,7 @@ public abstract class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }

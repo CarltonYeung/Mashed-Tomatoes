@@ -16,7 +16,6 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Media {
 
-    @JsonProperty("id")
     protected long ID;
     protected String title;
     protected String slug;
@@ -32,6 +31,7 @@ public abstract class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }
