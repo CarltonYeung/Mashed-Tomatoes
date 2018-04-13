@@ -18,13 +18,22 @@ public class AudienceFavorite {
     private Celebrity celebrity;
     private Genre genre;
 
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    AudienceFavorite() {}
+
+    AudienceFavorite(Audience audience) {
+        this.audience = audience;
+    }
+
     @Id
     public long getID() {
         return ID;
     }
 
     @MapsId
-    @OneToOne(mappedBy = "favorites")
+    @OneToOne
     @JoinColumn(name = "audienceID")
     public Audience getAudience() {
         return audience;

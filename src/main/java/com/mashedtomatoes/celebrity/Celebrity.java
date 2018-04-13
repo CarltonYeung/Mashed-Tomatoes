@@ -18,11 +18,14 @@ public class Celebrity {
     private String birthplace;
     private String biography;
     private String profileImage;
-    private Set<Media> media = new HashSet<>();
-    private Set<Character> characters = new HashSet<>();
-    private Set<Media> directorOf = new HashSet<>();
+    private Set<Media> media;
+    private Set<Character> characters;
+    private Set<Media> directorOf;
 
     public Celebrity() {
+        this.media = new HashSet<>();
+        this.characters = new HashSet<>();
+        this.directorOf = new HashSet<>();
     }
 
     public String toString() {

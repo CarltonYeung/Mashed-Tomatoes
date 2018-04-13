@@ -12,9 +12,10 @@ public class Character {
     private String name;
     private Celebrity playedBy;
     private int castOrder;
-    protected Set<Quote> quotes = new HashSet<>();
+    protected Set<Quote> quotes;
 
     public Character() {
+        this.quotes = new HashSet<>();
     }
 
     @Id

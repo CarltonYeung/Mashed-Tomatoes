@@ -1,30 +1,24 @@
 package com.mashedtomatoes.media;
 
+import java.util.Collection;
+
 public enum Genre {
-    ACTION,
-    ADVENTURE,
-    ANIMATION,
-    BIOGRAPHY,
-    COMEDY,
-    CRIME,
-    DOCUMENTARY,
-    DRAMA,
-    FAMILY,
-    FANTASY,
-    GAMESHOW,
-    HISTORY,
-    HORROR,
-    MUSIC,
-    MUSICAL,
-    MYSTERY,
-    NEWS,
-    REALITYTV,
-    ROMANCE,
-    SCIFI,
-    SHORT,
-    SPORT,
-    TALKSHOW,
-    THRILLER,
-    WAR,
-    WESTERN,
+    ACTION("Action"),
+    ADVENTURE("Adventure"),
+    DRAMA("Drama");
+
+    private String name;
+
+    Genre(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public static String toComma(Collection<Genre> genres) {
+        return "genres, genres,";
+    }
+
 }

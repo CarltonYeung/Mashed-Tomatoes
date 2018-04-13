@@ -14,13 +14,16 @@ public class Critic extends User {
     private boolean topCritic;
     private String slug;
 
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    public Critic() {}
+
     public Critic(String firstName, String lastName) {
+        super(UserType.CRITIC);
         this.firstName = firstName;
         this.lastName = lastName;
         this.topCritic = false;
-    }
-
-    public Critic() {
     }
 
     @Column(nullable = false)

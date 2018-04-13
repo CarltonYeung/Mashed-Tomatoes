@@ -85,7 +85,10 @@ public class UserAPIController {
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        httpServletRequest.getSession(false).invalidate();
+        HttpSession session = httpServletRequest.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         httpServletResponse.setStatus(204);
     }
 

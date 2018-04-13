@@ -15,7 +15,7 @@ public abstract class Rating {
     private int score;
     private long created;
     private long updated;
-    private String review = null;
+    private String review;
     private Media forMedia;
     private User author;
 

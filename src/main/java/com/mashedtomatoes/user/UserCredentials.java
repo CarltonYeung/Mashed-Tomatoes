@@ -11,12 +11,13 @@ public class UserCredentials {
     private String email;
     private String password;
 
-    public UserCredentials() {
-    }
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    UserCredentials() {}
 
-    public UserCredentials(String email, String password) {
-        this.email = email;
-        this.password = password;
+    UserCredentials(User user) {
+        this.user = user;
     }
 
     @Id

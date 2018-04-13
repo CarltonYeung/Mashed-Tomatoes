@@ -9,8 +9,15 @@ import java.util.Set;
 public class TVShowSeason extends Media {
 
     private TVShow tvShow;
-    private Set<TVShowEpisode> episodes = new HashSet<>();
+    private Set<TVShowEpisode> episodes;
     private int seasonNumber;
+
+    public TVShowSeason() {
+        super.celebrities = new HashSet<>();
+        super.ratings = new HashSet<>();
+        super.genres = new HashSet<>();
+        this.episodes = new HashSet<>();
+    }
 
     @ManyToOne
     @JoinColumn(name = "tvShowID", nullable = false)

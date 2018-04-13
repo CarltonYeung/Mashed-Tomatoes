@@ -12,7 +12,11 @@ public class Publisher {
     private long ID;
     private String name;
     private URL website;
-    private Set<Publication> publications = new HashSet<>();
+    private Set<Publication> publications;
+
+    public Publisher() {
+        this.publications = new HashSet<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

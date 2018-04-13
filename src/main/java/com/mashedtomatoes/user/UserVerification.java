@@ -12,9 +12,15 @@ public class UserVerification {
     private boolean verified;
     private String verificationKey;
 
-    public UserVerification() {
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    UserVerification() {}
+
+    UserVerification(User user) {
+        this.user = user;
         this.verified = false;
-        this.verificationKey = UUID.randomUUID().toString().replace("-", "");
+        this.verificationKey = generateKey();
     }
 
     public boolean verify(String verificationKey) {
@@ -27,6 +33,10 @@ public class UserVerification {
         }
 
         return this.verified;
+    }
+
+    private String generateKey() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
     @Id
