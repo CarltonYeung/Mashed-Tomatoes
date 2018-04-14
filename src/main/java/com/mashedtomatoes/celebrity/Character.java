@@ -1,5 +1,6 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

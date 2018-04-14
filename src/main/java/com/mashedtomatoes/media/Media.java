@@ -1,6 +1,8 @@
 package com.mashedtomatoes.media;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
@@ -22,7 +24,9 @@ public abstract class Media {
     private Date releaseDate;
     private int runTime;
     private Celebrity directedBy;
-    private Set<Celebrity> celebrities = new HashSet<>();
+    private Celebrity producedBy;
+    private Set<Celebrity> writtenBy = new HashSet<>();
+    private Set<Character> characters = new HashSet<>();
     private Set<Rating> ratings = new HashSet<>();
     private Set<Genre> genres = new HashSet<>();
 
@@ -69,10 +73,22 @@ public abstract class Media {
         return directedBy;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "producerID")
+    public Celebrity getProducedBy() {
+        return producedBy;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
-    public Set<Celebrity> getCelebrities() {
-        return celebrities;
+    @JoinTable(name = "MediaWriters", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
+    public Set<Celebrity> getWrittenBy() {
+        return writtenBy;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "MediaCharacters", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "characterID")})
+    public Set<Character> getCharacters() {
+        return characters;
     }
 
     @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
@@ -124,8 +140,16 @@ public abstract class Media {
         this.directedBy = directedBy;
     }
 
-    public void setCelebrities(Set<Celebrity> celebrities) {
-        this.celebrities = celebrities;
+    public void setProducedBy(Celebrity producedBy) {
+        this.producedBy = producedBy;
+    }
+
+    public void setWrittenBy(Set<Celebrity> writtenBy) {
+        this.writtenBy = writtenBy;
+    }
+
+    public void setCharacters(Set<Character> characters) {
+        this.characters = characters;
     }
 
     public void setRatings(Set<Rating> ratings) {
@@ -135,4 +159,6 @@ public abstract class Media {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
+
+
 }

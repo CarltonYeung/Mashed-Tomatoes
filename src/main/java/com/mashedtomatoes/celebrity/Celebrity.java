@@ -1,5 +1,6 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mashedtomatoes.media.Media;
 
@@ -21,6 +22,7 @@ public class Celebrity {
     private Set<Media> media = new HashSet<>();
     private Set<Character> characters = new HashSet<>();
     private Set<Media> directorOf = new HashSet<>();
+    private Set<Media> writerOf = new HashSet<>();
 
     public Celebrity() {
     }
@@ -75,6 +77,11 @@ public class Celebrity {
         return directorOf;
     }
 
+    @OneToMany(mappedBy = "writtenBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Set<Media> getWriterOf() {
+        return writerOf;
+    }
+
     public void setID(long ID) {
         this.ID = ID;
     }
@@ -109,5 +116,9 @@ public class Celebrity {
 
     public void setDirectorOf(Set<Media> directorOf) {
         this.directorOf = directorOf;
+    }
+
+    public void setWriterOf(Set<Media> writerOf) {
+        this.writerOf = writerOf;
     }
 }

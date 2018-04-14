@@ -1,5 +1,6 @@
 package com.mashedtomatoes.media;
 
+import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,12 @@ public class MovieAPIController {
 
     @GetMapping("/api/movie/{slug}")
     public Movie getMovie(@PathVariable String slug) {
-        return movieService.getMovieBySlug(slug);
+        Movie m = movieService.getMovieBySlug(slug);
+        m.getCelebrities().forEach(c -> {
+            c.setMedia(null);
+        });
+        // m.setCelebrities(new HashSet<>());
+        return m;
     }
 
     @DeleteMapping("/api/movie/{slug}/delete")

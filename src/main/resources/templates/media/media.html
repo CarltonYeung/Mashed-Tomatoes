@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title th:text="${media.title}">Movie Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <header id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="grid w-100">
+      <div class="row">
+        <a href="index.html" class="ml-3 navbar-brand ">
+                <img src="/img/base/logo.png" class="icon">
+            </a>
+        <form id="search-bar" class="mx-3 my-auto d-inline w-75">
+          <div class="input-group search-form ">
+            <input type="text" class="form-control field " placeholder="Search?">
+            <button class="btn action" onclick="location.href = 'search.html';">Search</button>
+          </div>
+        </form>
+        <button id="login-btn" class="ml-4 my-4 h-50 btn login-button" onclick="location.href = 'login.html';">Login</button>
+      </div>
+      <div id="menus" class="collapse navbar-collapse">
+        <ul class="w-100 m-auto navbar-nav menu-bar">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Movies
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>Movie Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        TV Shows
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>TV Show Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        News
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>News Megamenu</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" th:data-media-slug="${media.slug}">
+    <section class="media-section">
+      <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
+      <div class="d-flex justify-content-between">
+        <img class="media-info -poster" th:src="${movie.posterPath}">
+        <div class="col-md-8">
+          <p class="row media-info" th:text="${movie.description}">
+            In the year 2045, people can escape their harsh reality in the OASIS, an immersive virtual world where you can go anywhere, do anything, be anyone-the only limits are your own imagination. OASIS creator James Halliday left his immense fortune and control of the Oasis to the winner of a contest designed to find a worthy heir. When unlikely hero Wade Watts conquers the first challenge of the reality-bending treasure hunt, he and his friends-known as the High Five-are hurled into a fantastical universe of discovery and danger to save the OASIS and their world.
+          </p>
+          <div class="row mt-2">
+            <div class="col-md-7 px-0">
+              <div class="media-info">
+                <p class="media-info -key">Rating:</p>
+                <p class="media-info -value" th:text="${movie.rating}"></p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Genre: </p>
+                <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Directed By: </p>
+                <p class="media-info -value" th:text="${movie.director.name}"></p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Written By: </p>
+                <p class="media-info -value" th:text="${movie.commaSeperatedWriters}"></p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Release Date: </p>
+                <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Studio: </p>
+                <p class="media-info -value" th:text="${movie.studio}"></p>
+              </div>
+
+            </div>
+            <div class="row col-md-5 px-0">
+              <div class="col-md-6">
+                <p class="text-center media-score -label">MashoMeter!</p>
+                <div class="row">
+                  <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
+                </div>
+                <p class="text-center media-score -value"><span th:text="${movie.averageCriticRating} * 100"></span>%</p>
+                <p class="text-center media-score -stat">Total Reviews: <span th:text="${movie.totalCriticRating}"></span></p>
+                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageCriticRating}"></span>/10</p>
+                <p class="text-center media-score -stat">Smash: <span th:text="${movie.smashCount}"></span></p>
+                <p class="text-center media-score -stat">Pass: <span th:text="${movie.passCount}"></span></p>
+              </div>
+              <div class="col-md-6">
+                <p class="text-center media-score -label">Audience Score</p>
+                <div class="row">
+                  <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
+                </div>
+                <p class="text-center media-score -value"><span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
+                <p class="text-center media-score -stat">Total Ratings: <span th:text="${movie.totalAudienceRating}"></span></p>
+                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageAudienceRating}"></span>/5</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Photos</h1>
+      <div class="d-flex justify-content-between">
+        <img class="media-section -photo" th:each="photo: ${movie.photos}" th:src="${photo}">
+      </div>
+      <a class="mt-2 float-right" th:if="${#lists.size(movie.photos) > 4}" th:href="@{/movie/{slug}/photo(slug=${movie.slug})}">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Videos</h1>
+      <div class="d-flex justify-content-between">
+        <div class="media-section -video-thumbnail" th:each="video: ${movie.videos}">
+          <a th:href="${video.videoPath}">
+                        <img th:src="${video.thumbnailPath}">
+                    </a>
+        </div>
+      </div>
+      <a class="mt-2 float-right" th:if="${#lists.size(movie.videos) > 4}" th:href="@{/movie/{slug}/video(slug=${movie.slug})}">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Cast</h1>
+      <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
+        <div class="talent-box" th:each="character: ${movie.characters}">
+          <img class="talent-box -profile" th:src="${character.playedBy.profileImage}">
+          <p class="talent-box -celebrity" th:text="${character.playedBy.name}"></p>
+          <p class="talent-box -character">as <span th:text="${character.name}"></span></p>
+        </div>
+      </div>
+      <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
+      <div class="text-center" th:if="${#lists.isEmpty(movie.characters)}">
+        <h3>No characters? What is this...</h3>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Critic Reviews</h1>
+      <div class="card-columns" th:if="${not #lists.isEmpty(movie.criticRatings)}">
+        <div class="card bg-light" th:each="rating: ${movie.criticRatings}">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
+                                <a th:href="@{/critic/{slug}(slug=${rating.author.slug})}" th:text="${rating.author.name}"></a> in
+                                <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <a class="float-right" th:if="${not #lists.isEmpty(movie.criticRatings) && #lists.size(movie.criticRatings) > 8}" th:href="@{/movie/{slug}/critic-rating(slug=${movie.slug})}">See more</a>
+      <div class="text-center" th:if="${#lists.isEmpty(movie.criticRatings)}">
+        <h3>No reviews posted. Not many fans of this stuff huh?</h3>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Audience Reviews</h1>
+      <div class="card-columns" th:if="${not #lists.isEmpty(movie.audienceRatings)}">
+        <div class="card bg-light">
+          <div class="card-body" th:each="rating: ${movie.audienceRatings}">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
+                                <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <a class="float-right" th:if="${not #lists.isEmpty(movie.audienceRatings) && #lists.size(movie.audienceRatings) > 8}" th:href="@{/movie/{slug}/audience-rating(slug=${movie.slug})}">See more</a>
+      <div class="text-center" th:if="${#lists.isEmpty(movie.audienceRatings)}">
+        <h3>No ratings posted.</h3>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Your Thoughts</h1>
+      <div id="media-update-list" class="mt-3">
+        <h2 class="media-section -secondary-title">Save This Movie</h2>
+        <div class="d-flex justify-content-center">
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested == null || !inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+          <button class="ml-5 btn list-btn" th:if="${inWantToSee == null || !inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+        </div>
+      </div>
+      <div id="rating-form" class="mt-3">
+        <h2 class="media-section -secondary-title">Add your rating</h2>
+        <div class="row mt-2">
+          <fieldset class="mx-auto star-rating-bar">
+            <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
+            <label class="full" for="star5"></label>
+            <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
+            <label class="full" for="star4"></label>
+            <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
+            <label class="full" for="star3"></label>
+            <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
+            <label class="full" for="star2"></label>
+            <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
+            <label class="full" for="star1"></label>
+          </fieldset>
+        </div>
+        <div class="row mt-2">
+          <textarea id="rating-form-comment-box" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
+        </div>
+        <div class="row mt-2">
+          <button id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</button>
+        </div>
+    </section>
+    <br />
+    <br />
+  </main>
+  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="collapse navbar-collapse">
+      <div class="mx-3 w-100 navbar-nav menu-bar">
+        <a class="nav-item nav-link col-lg" href="about.html">
+                About
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="feedback.html">
+                Feedback
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
+                Critic Submission
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
+                Join the Newsletter!
+                <span class="sr-only"></span>
+            </a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/bundle.js"></script>
+
+</body>
+
+</html>
