@@ -1,6 +1,8 @@
 package com.mashedtomatoes.user;
 
 import javax.persistence.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -11,6 +13,7 @@ public class UserVerification {
     private User user;
     private boolean verified;
     private String verificationKey;
+    private long expiration;
 
     UserVerification() {
     }
@@ -19,6 +22,10 @@ public class UserVerification {
         this.user = user;
         this.verified = false;
         this.verificationKey = generateKey();
+
+        Duration duration = new Duration();
+
+        this.expiration = Instant.now().getEpochSecond();
     }
 
     public boolean verify(String verificationKey) {

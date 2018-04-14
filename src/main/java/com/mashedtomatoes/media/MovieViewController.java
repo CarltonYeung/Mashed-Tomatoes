@@ -45,14 +45,13 @@ public class MovieViewController {
         private String studio;
 
         public ViewModel(Movie movie) {
-            super.setID(movie.getID());
+            super.setId(movie.getId());
             super.setTitle(movie.getTitle());
             super.setSlug(movie.getSlug());
             super.setGenres(movie.getGenres());
             super.setDescription(movie.getDescription());
             super.setReleaseDate(movie.getReleaseDate());
             super.setRunTime(movie.getRunTime());
-            super.setBackdropPath("/img/fight-club-backdrop.jpg"); // concat from base image path here
             super.setPosterPath("/img/fight-club-poster.jpg"); // concat from base image path here
             super.setBoxOffice(movie.getBoxOffice());
         }

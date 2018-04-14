@@ -3,51 +3,39 @@ package com.mashedtomatoes.celebrity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.mashedtomatoes.media.Media;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Celebrities")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Celebrity {
 
-    private long ID;
+    private long id;
     private String name;
     private Date birthday;
     private String birthplace;
     private String biography;
     private String profileImage;
-    private Set<Media> media;
-    private Set<Character> characters;
-    private Set<Media> directorOf;
 
     public Celebrity() {
-        this.media = new HashSet<>();
-        this.characters = new HashSet<>();
-        this.directorOf = new HashSet<>();
     }
 
     public String toString() {
-        return "Celebrity(ID=" + this.getID()
+        return "Celebrity(id=" + this.getId()
                 + ", name=" + this.getName()
                 + ", birthday=" + this.getBirthday()
                 + ", birthplace=" + this.getBirthplace()
                 + ", biography=" + this.getBiography()
-                + ", profileImage=" + this.getProfileImage()
-                + ", media=" + this.getMedia()
-                + ", characters=" + this.getCharacters()
-                + ", directorOf=" + this.getDirectorOf() + ")";
+                + ", profileImage=" + this.getProfileImage() + ")";
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     @Column(nullable = false)
@@ -74,26 +62,8 @@ public class Celebrity {
         return profileImage;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "MediaCelebrities",
-            joinColumns = {@JoinColumn(name = "celebrityID")},
-            inverseJoinColumns = {@JoinColumn(name = "mediaID")})
-    public Set<Media> getMedia() {
-        return media;
-    }
-
-    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Character> getCharacters() {
-        return characters;
-    }
-
-    @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Media> getDirectorOf() {
-        return directorOf;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -114,17 +84,5 @@ public class Celebrity {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public void setMedia(Set<Media> media) {
-        this.media = media;
-    }
-
-    public void setCharacters(Set<Character> characters) {
-        this.characters = characters;
-    }
-
-    public void setDirectorOf(Set<Media> directorOf) {
-        this.directorOf = directorOf;
     }
 }

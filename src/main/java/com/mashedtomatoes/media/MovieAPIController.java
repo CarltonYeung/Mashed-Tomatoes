@@ -33,7 +33,6 @@ public class MovieAPIController {
     public Movie getMovie(@PathVariable String slug) {
 
         Movie movie = movieService.getMovieBySlug(slug);
-        movie.setCelebrities(null);
         return movie;
     }
 

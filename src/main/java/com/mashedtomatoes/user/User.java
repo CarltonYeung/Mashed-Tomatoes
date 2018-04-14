@@ -12,15 +12,16 @@ import java.util.Set;
 @Table(name = "Users")
 public abstract class User {
 
-    protected long ID;
+    protected long id;
     protected UserCredentials credentials;
     protected UserVerification verification;
     protected UserType type;
     protected long birthDate;
     protected long created;
     protected long updated;
-    protected boolean banned;
     protected Set<Rating> ratings;
+    private Set<User> following;
+    private Set<User> followers;
 
     public User() {
     }
@@ -29,7 +30,6 @@ public abstract class User {
         this.credentials = new UserCredentials(this);
         this.verification = new UserVerification(this);
         this.ratings = new HashSet<>();
-        this.banned = false;
         this.type = type;
     }
 
@@ -45,19 +45,18 @@ public abstract class User {
     }
 
     public String toString() {
-        return "User(ID=" + this.getID()
+        return "User(id=" + this.getId()
                 + ", type=" + this.getType()
                 + ", birthDate=" + this.getBirthDate()
                 + ", created=" + this.getCreated()
                 + ", updated=" + this.getUpdated()
-                + ", banned=" + this.isBanned()
                 + ", ratings=" + this.getRatings() + ")";
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -92,18 +91,13 @@ public abstract class User {
         return updated;
     }
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    public boolean isBanned() {
-        return banned;
-    }
-
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Rating> getRatings() {
         return ratings;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setCredentials(UserCredentials credentials) {
@@ -130,11 +124,33 @@ public abstract class User {
         this.updated = updated;
     }
 
-    public void setBanned(boolean banned) {
-        this.banned = banned;
-    }
-
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="followerId"),
+            inverseJoinColumns=@JoinColumn(name="followingId"))
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="followingId"),
+            inverseJoinColumns=@JoinColumn(name="followerId"))
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
     }
 }

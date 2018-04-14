@@ -9,9 +9,10 @@ import java.util.HashSet;
 public class Movie extends Media {
 
     private double boxOffice;
+    private double budget;
+    private String trailerPath;
 
     public Movie() {
-        this.celebrities = new HashSet<>();
         this.ratings = new HashSet<>();
         this.genres = new HashSet<>();
     }
@@ -20,7 +21,23 @@ public class Movie extends Media {
         return this.boxOffice;
     }
 
+    public double getBudget() {
+        return budget;
+    }
+
     public void setBoxOffice(double boxOffice) {
         this.boxOffice = boxOffice;
     }
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public String getTrailerPath() {
+        return trailerPath;
+    }
+
+    public void setTrailerPath(String trailerPath) {
+        this.trailerPath = trailerPath;
+    }
+
 }

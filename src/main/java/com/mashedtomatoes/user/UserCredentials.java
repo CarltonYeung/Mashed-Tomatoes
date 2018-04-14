@@ -1,6 +1,7 @@
 package com.mashedtomatoes.user;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "UserCredentials")
@@ -10,12 +11,18 @@ public class UserCredentials {
     private User user;
     private String email;
     private String password;
+    private String forgetPasswordKey;
 
     UserCredentials() {
     }
 
     UserCredentials(User user) {
         this.user = user;
+    }
+
+    public String generateForgetPasswordKey() {
+        this.forgetPasswordKey = UUID.randomUUID().toString().replace("-", "");
+        return this.forgetPasswordKey;
     }
 
     @Id
@@ -54,5 +61,13 @@ public class UserCredentials {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getForgetPasswordKey() {
+        return forgetPasswordKey;
+    }
+
+    public void setForgetPasswordKey(String forgetPasswordKey) {
+        this.forgetPasswordKey = forgetPasswordKey;
     }
 }

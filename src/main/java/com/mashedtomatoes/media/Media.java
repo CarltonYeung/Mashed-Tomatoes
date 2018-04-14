@@ -17,16 +17,17 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Media {
 
-    protected long ID;
+    protected long id;
     protected String title;
     protected String slug;
     protected String description;
-    protected String backdropPath;
     protected String posterPath;
     protected Date releaseDate;
     protected int runTime;
-    protected Celebrity directedBy;
-    protected Set<Celebrity> celebrities;
+    protected Celebrity director;
+    protected Celebrity producer;
+    protected String productionCompany;
+    protected Celebrity writer;
     protected Set<Character> characters;
     protected Set<Rating> ratings;
     protected Set<Genre> genres;
@@ -34,8 +35,8 @@ public abstract class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     @Column(nullable = false)
@@ -61,26 +62,14 @@ public abstract class Media {
         return runTime;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
     public String getPosterPath() {
         return posterPath;
     }
 
     @ManyToOne
-    @JoinColumn(name = "directorID")
-    public Celebrity getDirectedBy() {
-        return directedBy;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "MediaCelebrities",
-            joinColumns = {@JoinColumn(name = "mediaID")},
-            inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
-    public Set<Celebrity> getCelebrities() {
-        return celebrities;
+    @JoinColumn(name = "directorID", nullable = false)
+    public Celebrity getDirector() {
+        return director;
     }
 
     @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
@@ -102,8 +91,8 @@ public abstract class Media {
         return characters;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
@@ -126,20 +115,12 @@ public abstract class Media {
         this.runTime = runTime;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
     }
 
-    public void setDirectedBy(Celebrity directedBy) {
-        this.directedBy = directedBy;
-    }
-
-    public void setCelebrities(Set<Celebrity> celebrities) {
-        this.celebrities = celebrities;
+    public void setDirector(Celebrity director) {
+        this.director = director;
     }
 
     public void setRatings(Set<Rating> ratings) {
@@ -152,5 +133,38 @@ public abstract class Media {
 
     public void setCharacters(Set<Character> characters) {
         this.characters = characters;
+    }
+
+
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "producerID", nullable = false)
+    public Celebrity getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Celebrity producer) {
+        this.producer = producer;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "writerID", nullable = false)
+    public Celebrity getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Celebrity writer) {
+        this.writer = writer;
+    }
+
+    public String getProductionCompany() {
+        return productionCompany;
+    }
+
+    public void setProductionCompany(String productionCompany) {
+        this.productionCompany = productionCompany;
     }
 }

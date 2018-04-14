@@ -141,8 +141,8 @@
       <h1 class="media-section -title">Cast</h1>
       <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
         <div class="talent-box" th:each="character: ${movie.characters}">
-          <img class="talent-box -profile" th:src="${character.playedBy.profileImage}">
-          <p class="talent-box -celebrity" th:text="${character.playedBy.name}"></p>
+          <img class="talent-box -profile" th:src="${character.celebrity.profileImage}">
+          <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
           <p class="talent-box -character">as <span th:text="${character.name}"></span></p>
         </div>
       </div>

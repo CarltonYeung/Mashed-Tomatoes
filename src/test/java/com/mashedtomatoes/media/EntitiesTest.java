@@ -35,7 +35,7 @@ public class EntitiesTest {
             Movie out = movieService.getMovieBySlug(in.getSlug());
 
             assertNotNull(out);
-            assertEquals(in.getID(), out.getID());
+            assertEquals(in.getId(), out.getId());
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.mashedtomatoes.publication;
 
+import com.mashedtomatoes.rating.CriticRating;
+
 import javax.persistence.*;
 import java.net.URL;
 import java.util.HashSet;
@@ -12,10 +14,10 @@ public class Publisher {
     private long ID;
     private String name;
     private URL website;
-    private Set<Publication> publications;
+    private Set<CriticRating> ratings;
 
     public Publisher() {
-        this.publications = new HashSet<>();
+        this.ratings = new HashSet<>();
     }
 
     @Id
@@ -35,8 +37,8 @@ public class Publisher {
     }
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
-    public Set<Publication> getPublications() {
-        return publications;
+    public Set<CriticRating> getRatings() {
+        return ratings;
     }
 
     public void setID(long ID) {
@@ -51,7 +53,7 @@ public class Publisher {
         this.website = website;
     }
 
-    public void setPublications(Set<Publication> publications) {
-        this.publications = publications;
+    public void setRatings(Set<CriticRating> ratings) {
+        this.ratings = ratings;
     }
 }

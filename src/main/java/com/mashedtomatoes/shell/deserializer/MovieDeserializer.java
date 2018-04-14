@@ -41,7 +41,7 @@ public class MovieDeserializer extends StdDeserializer<Movie> {
                     .forEach(node -> {
                         m.getGenres().add(Genre.valueOf(node.get("name").asText().toUpperCase()));
                     });
-            m.setBackdropPath(rootNode.get("backdrop_path").asText());
+//            m.setBackdropPath(rootNode.get("backdrop_path").asText());
             m.setPosterPath(rootNode.get("poster_path").asText());
             m.setReleaseDate(df.parse(rootNode.get("release_date").asText()));
         } catch (ParseException ex) {

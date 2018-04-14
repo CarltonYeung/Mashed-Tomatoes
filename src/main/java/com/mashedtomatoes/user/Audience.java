@@ -33,7 +33,7 @@ public class Audience extends User {
 
     @Override
     public String toString() {
-        return String.valueOf(this.getID());
+        return String.valueOf(this.getId());
     }
 
     @Column(nullable = false, unique = true)

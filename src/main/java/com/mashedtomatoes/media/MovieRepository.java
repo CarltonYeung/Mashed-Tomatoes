@@ -20,4 +20,10 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m WHERE m.title LIKE :expr")
     Iterable<Movie> findSimilarMovies(@Param("expr") String expr);
+
+    Iterable<Movie> findAllByWriter_Id(long id);
+
+    Iterable<Movie> findAllByDirector_Id(long id);
+
+    Iterable<Movie> findAllByProducer_Id(long id);
 }

@@ -1,8 +1,5 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.media.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,12 +8,10 @@ public class AudienceFavorite {
 
     private long ID;
     private Audience audience;
-    private Movie movie;
-    private TVShow tvShow;
-    private TVShowSeason tvShowSeason;
-    private TVShowEpisode tvShowEpisode;
-    private Celebrity celebrity;
-    private Genre genre;
+    private String movie;
+    private String tvShow;
+    private String celebrity;
+    private String genre;
 
     AudienceFavorite() {}
 
@@ -36,39 +31,19 @@ public class AudienceFavorite {
         return audience;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "movie")
-    public Movie getMovie() {
+    public String getMovie() {
         return movie;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "tvShow")
-    public TVShow getTvShow() {
+    public String getTvShow() {
         return tvShow;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "tvShowSeason")
-    public TVShowSeason getTvShowSeason() {
-        return tvShowSeason;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tvShowEpisode")
-    public TVShowEpisode getTvShowEpisode() {
-        return tvShowEpisode;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "celebrity")
-    public Celebrity getCelebrity() {
+    public String getCelebrity() {
         return celebrity;
     }
 
-    @Column(name = "genre", length = 32)
-    @Enumerated(EnumType.STRING)
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
@@ -80,27 +55,19 @@ public class AudienceFavorite {
         this.audience = audience;
     }
 
-    public void setMovie(Movie movie) {
+    public void setMovie(String movie) {
         this.movie = movie;
     }
 
-    public void setTvShow(TVShow tvShow) {
+    public void setTvShow(String tvShow) {
         this.tvShow = tvShow;
     }
 
-    public void setTvShowSeason(TVShowSeason tvShowSeason) {
-        this.tvShowSeason = tvShowSeason;
-    }
-
-    public void setTvShowEpisode(TVShowEpisode tvShowEpisode) {
-        this.tvShowEpisode = tvShowEpisode;
-    }
-
-    public void setCelebrity(Celebrity celebrity) {
+    public void setCelebrity(String celebrity) {
         this.celebrity = celebrity;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 }

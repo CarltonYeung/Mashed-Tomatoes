@@ -6,30 +6,26 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.media.Media;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Characters")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
 
-    private long ID;
+    private long id;
     private String name;
-    private Celebrity playedBy;
+    private Celebrity celebrity;
     private int castOrder;
-    protected Set<Quote> quotes;
     private Media forMedia;
 
     public Character() {
-        this.quotes = new HashSet<>();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     @Column(nullable = false)
@@ -39,18 +35,13 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "celebrityID", nullable = false)
-    public Celebrity getPlayedBy() {
-        return playedBy;
+    public Celebrity getCelebrity() {
+        return celebrity;
     }
 
     @Column(nullable = false)
     public int getCastOrder() {
         return castOrder;
-    }
-
-    @OneToMany(mappedBy = "saidBy")
-    public Set<Quote> getQuotes() {
-        return quotes;
     }
 
     @ManyToOne
@@ -59,24 +50,20 @@ public class Character {
         return forMedia;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPlayedBy(Celebrity playedBy) {
-        this.playedBy = playedBy;
+    public void setCelebrity(Celebrity celebrity) {
+        this.celebrity = celebrity;
     }
 
     public void setCastOrder(int castOrder) {
         this.castOrder = castOrder;
-    }
-
-    public void setQuotes(Set<Quote> quotes) {
-        this.quotes = quotes;
     }
 
     public void setForMedia(Media forMedia) {
