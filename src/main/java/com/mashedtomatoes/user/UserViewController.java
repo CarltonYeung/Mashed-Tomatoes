@@ -10,4 +10,14 @@ public class UserViewController {
     public String login() {
         return "user/login";
     }
+
+    @GetMapping("/register.html")
+    public String register() {
+        return "user/register";
+    }
+
+    @GetMapping("/recover.html")
+    public String recover() {
+        return "user/recover";
+    }
 }
