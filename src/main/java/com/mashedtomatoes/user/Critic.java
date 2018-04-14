@@ -1,6 +1,6 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.publication.Publisher;
+import com.mashedtomatoes.rating.Publisher;
 
 import javax.persistence.*;
 
@@ -14,13 +14,13 @@ public class Critic extends User {
     private boolean topCritic;
     private String slug;
 
+    public Critic() {}
+
     public Critic(String firstName, String lastName) {
+        super(UserType.CRITIC);
         this.firstName = firstName;
         this.lastName = lastName;
         this.topCritic = false;
-    }
-
-    public Critic() {
     }
 
     @Column(nullable = false)
@@ -28,9 +28,17 @@ public class Critic extends User {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     @Column(nullable = false)
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @ManyToOne
@@ -39,29 +47,21 @@ public class Critic extends User {
         return publisher;
     }
 
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     public boolean isTopCritic() {
         return topCritic;
     }
 
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
-
     public void setTopCritic(boolean topCritic) {
         this.topCritic = topCritic;
+    }
+
+    public String getSlug() {
+        return slug;
     }
 
     public void setSlug(String slug) {

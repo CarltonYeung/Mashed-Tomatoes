@@ -26,6 +26,12 @@ public class MailService {
     @Value("${spring.mail.password}")
     private String password;
 
+    @Value("${mt.mail.from}")
+    private String from;
+
+    @Value("${mt.mail.transport.protocol}")
+    private String protocol;
+
     public MailService(JavaMailSenderImpl mailSender) {
         this.mailSender = mailSender;
         this.configured = false;
@@ -34,7 +40,7 @@ public class MailService {
     public void send(String to, String subject, String body) throws MailException {
         configure();
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom("noreply@mashedtomatoes.com");
+        msg.setFrom(from);
         msg.setTo(to);
         msg.setSubject(subject);
         msg.setText(body);
@@ -48,7 +54,7 @@ public class MailService {
             mailSender.setUsername(username);
             mailSender.setPassword(password);
             Properties props = mailSender.getJavaMailProperties();
-            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.transport.protocol", protocol);
             configured = true;
         }
     }

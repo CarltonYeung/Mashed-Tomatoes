@@ -81,7 +81,6 @@ public class MovieDeserializer extends StdDeserializer<Movie> {
               // skip unsupported genre
             }
           });
-      movie.setBackdropPath(rootNode.get(MovieDBKey.BackdropPath.toString()).asText());
       movie.setPosterPath(rootNode.get(MovieDBKey.PosterPath.toString()).asText());
       movie.setReleaseDate(df.parse(rootNode.get(MovieDBKey.ReleaseDate.toString()).asText()));
       movie.setBoxOffice(rootNode.get(MovieDBKey.BoxOffice.toString()).asInt());

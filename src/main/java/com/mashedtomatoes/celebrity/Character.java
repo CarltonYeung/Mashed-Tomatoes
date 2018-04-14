@@ -1,27 +1,35 @@
 package com.mashedtomatoes.celebrity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.mashedtomatoes.media.Media;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Characters")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
 
-    private long ID;
+    private long id;
     private String name;
-    private Celebrity playedBy;
+    private Celebrity celebrity;
     private int castOrder;
-    protected Set<Quote> quotes = new HashSet<>();
+    private Media media;
 
     public Character() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    @JsonProperty("id")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(nullable = false)
@@ -29,10 +37,18 @@ public class Character {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @ManyToOne
     @JoinColumn(name = "celebrityID", nullable = false)
-    public Celebrity getPlayedBy() {
-        return playedBy;
+    public Celebrity getCelebrity() {
+        return celebrity;
+    }
+
+    public void setCelebrity(Celebrity celebrity) {
+        this.celebrity = celebrity;
     }
 
     @Column(nullable = false)
@@ -40,28 +56,17 @@ public class Character {
         return castOrder;
     }
 
-    @OneToMany(mappedBy = "saidBy")
-    public Set<Quote> getQuotes() {
-        return quotes;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPlayedBy(Celebrity playedBy) {
-        this.playedBy = playedBy;
-    }
-
     public void setCastOrder(int castOrder) {
         this.castOrder = castOrder;
     }
 
-    public void setQuotes(Set<Quote> quotes) {
-        this.quotes = quotes;
+    @ManyToOne
+    @JoinColumn(name = "mediaID")
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
     }
 }

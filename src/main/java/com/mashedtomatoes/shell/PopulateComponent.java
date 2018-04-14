@@ -88,7 +88,7 @@ public class PopulateComponent {
       Celebrity celebrity = addCelebrity(castMember.getTalentId(), imgBasePath);
       Character character = castMember.getCharacter();
       if (celebrity != null && !inSet(celebrity, celebrities)) {
-        character.setPlayedBy(celebrity);
+        character.setCelebrity(celebrity);
         databaseManager.getCharacterRepository().save(character);
         System.out.println("Saved character: " + character.getName());
         celebrities.add(celebrity);
@@ -160,7 +160,6 @@ public class PopulateComponent {
 
     if (imgBasePath != null) {
       String[] urls = {
-          httpManager.getBackdropImgUrl(movie.getBackdropPath()),
           httpManager.getPosterImgUrl(movie.getPosterPath())
       };
       for (String url : urls) {
@@ -177,6 +176,7 @@ public class PopulateComponent {
     }
 
     MediaCredits mediaCredits = httpManager.getMediaCredits(movieId);
+    /*
     movie.setCelebrities(addCast(mediaCredits.getCast(), imgBasePath));
     movie.setDirectedBy(addDirector(mediaCredits.getCrew(), imgBasePath));
     Celebrity producer = addProducer(mediaCredits.getCrew(), imgBasePath);
@@ -194,6 +194,7 @@ public class PopulateComponent {
 
     System.out.println("Saved movie: " + movie.getTitle());
     movie = databaseManager.getMovieRepository().save(movie);
+    */
 
     return movie;
   }

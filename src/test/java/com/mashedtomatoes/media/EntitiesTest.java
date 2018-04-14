@@ -1,7 +1,5 @@
-package com.mashedtomatoes;
+package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.media.Movie;
-import com.mashedtomatoes.media.MovieService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ public class EntitiesTest {
             Movie out = movieService.getMovieBySlug(in.getSlug());
 
             assertNotNull(out);
-            assertEquals(in.getID(), out.getID());
+            assertEquals(in.getId(), out.getId());
         }
     }
 }

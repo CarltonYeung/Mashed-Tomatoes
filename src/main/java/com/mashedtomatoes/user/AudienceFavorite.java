@@ -1,100 +1,73 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.media.*;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "AudienceFavorites")
 public class AudienceFavorite {
 
-    private long ID;
+    private long id;
     private Audience audience;
-    private Movie movie;
-    private TVShow tvShow;
-    private TVShowSeason tvShowSeason;
-    private TVShowEpisode tvShowEpisode;
-    private Celebrity celebrity;
-    private Genre genre;
+    private String movie;
+    private String tvShow;
+    private String celebrity;
+    private String genre;
+
+    AudienceFavorite() {}
+
+    AudienceFavorite(Audience audience) {
+        this.audience = audience;
+    }
 
     @Id
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @MapsId
-    @OneToOne(mappedBy = "favorites")
+    @OneToOne
     @JoinColumn(name = "audienceID")
     public Audience getAudience() {
         return audience;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "movie")
-    public Movie getMovie() {
-        return movie;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tvShow")
-    public TVShow getTvShow() {
-        return tvShow;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tvShowSeason")
-    public TVShowSeason getTvShowSeason() {
-        return tvShowSeason;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tvShowEpisode")
-    public TVShowEpisode getTvShowEpisode() {
-        return tvShowEpisode;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "celebrity")
-    public Celebrity getCelebrity() {
-        return celebrity;
-    }
-
-    @Column(name = "genre", length = 32)
-    @Enumerated(EnumType.STRING)
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
     }
 
     public void setAudience(Audience audience) {
         this.audience = audience;
     }
 
-    public void setMovie(Movie movie) {
+    public String getMovie() {
+        return movie;
+    }
+
+    public void setMovie(String movie) {
         this.movie = movie;
     }
 
-    public void setTvShow(TVShow tvShow) {
+    public String getTvShow() {
+        return tvShow;
+    }
+
+    public void setTvShow(String tvShow) {
         this.tvShow = tvShow;
     }
 
-    public void setTvShowSeason(TVShowSeason tvShowSeason) {
-        this.tvShowSeason = tvShowSeason;
+    public String getCelebrity() {
+        return celebrity;
     }
 
-    public void setTvShowEpisode(TVShowEpisode tvShowEpisode) {
-        this.tvShowEpisode = tvShowEpisode;
-    }
-
-    public void setCelebrity(Celebrity celebrity) {
+    public void setCelebrity(String celebrity) {
         this.celebrity = celebrity;
     }
 
-    public void setGenre(Genre genre) {
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 }

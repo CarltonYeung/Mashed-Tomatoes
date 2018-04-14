@@ -4,6 +4,7 @@ import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,15 +13,26 @@ import java.util.Set;
 @Table(name = "Users")
 public abstract class User {
 
-    private long ID;
-    private UserCredentials credentials;
-    private UserVerification verification;
-    private UserType type;
-    private long birthDate;
-    private long created;
-    private long updated;
-    private boolean banned;
-    private Set<Rating> ratings = new HashSet<>();
+    protected long id;
+    protected UserCredentials credentials;
+    protected UserVerification verification;
+    protected UserType type;
+    protected Date birthDate;
+    protected Set<Rating> ratings;
+    protected Set<User> following;
+    protected Set<User> followers;
+    protected long created;
+    protected long updated;
+
+    public User() {
+    }
+
+    public User(UserType type) {
+        this.credentials = new UserCredentials(this);
+        this.verification = new UserVerification(this);
+        this.ratings = new HashSet<>();
+        this.type = type;
+    }
 
     @PrePersist
     protected void onCreate() {
@@ -34,13 +46,22 @@ public abstract class User {
     }
 
     public String toString() {
-        return "User(ID=" + this.getID() + ", type=" + this.getType() + ", birthDate=" + this.getBirthDate() + ", created=" + this.getCreated() + ", updated=" + this.getUpdated() + ", banned=" + this.isBanned() + ", ratings=" + this.getRatings() + ")";
+        return "User(id=" + this.getId()
+                + ", type=" + this.getType()
+                + ", birthDate=" + this.getBirthDate()
+                + ", created=" + this.getCreated()
+                + ", updated=" + this.getUpdated()
+                + ", ratings=" + this.getRatings() + ")";
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -49,10 +70,18 @@ public abstract class User {
         return credentials;
     }
 
+    public void setCredentials(UserCredentials credentials) {
+        this.credentials = credentials;
+    }
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public UserVerification getVerification() {
         return verification;
+    }
+
+    public void setVerification(UserVerification verification) {
+        this.verification = verification;
     }
 
     @Enumerated(EnumType.STRING)
@@ -61,8 +90,49 @@ public abstract class User {
         return type;
     }
 
-    public long getBirthDate() {
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+    public Date getBirthDate() {
         return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="followerId"),
+            inverseJoinColumns=@JoinColumn(name="followingId"))
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
+
+    @ManyToMany
+    @JoinTable(name="Follows",
+            joinColumns=@JoinColumn(name="followingId"),
+            inverseJoinColumns=@JoinColumn(name="followerId"))
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
     }
 
     @Column(nullable = false, updatable = false)
@@ -70,54 +140,16 @@ public abstract class User {
         return created;
     }
 
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
     @Column(nullable = false)
     public long getUpdated() {
         return updated;
     }
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    public boolean isBanned() {
-        return banned;
-    }
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    public Set<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setCredentials(UserCredentials credentials) {
-        this.credentials = credentials;
-    }
-
-    public void setVerification(UserVerification verification) {
-        this.verification = verification;
-    }
-
-    public void setType(UserType type) {
-        this.type = type;
-    }
-
-    public void setBirthDate(long birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setCreated(long created) {
-        this.created = created;
-    }
-
     public void setUpdated(long updated) {
         this.updated = updated;
-    }
-
-    public void setBanned(boolean banned) {
-        this.banned = banned;
-    }
-
-    public void setRatings(Set<Rating> ratings) {
-        this.ratings = ratings;
     }
 }

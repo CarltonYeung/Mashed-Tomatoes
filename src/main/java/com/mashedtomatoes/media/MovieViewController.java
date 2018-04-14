@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 public class MovieViewController {
 
-  @Autowired
-  MovieService movieService;
+  @Autowired MovieService movieService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
@@ -55,60 +53,19 @@ public class MovieViewController {
     private String studio;
 
     public ViewModel(Movie movie) {
-      super.setID(movie.getID());
+      super.setId(movie.getId());
       super.setTitle(movie.getTitle());
       super.setSlug(movie.getSlug());
       super.setGenres(movie.getGenres());
       super.setDescription(movie.getDescription());
       super.setReleaseDate(movie.getReleaseDate());
       super.setRunTime(movie.getRunTime());
-      super.setBackdropPath("/img/fight-club-backdrop.jpg"); // concat from base image path here
       super.setPosterPath("/img/fight-club-poster.jpg"); // concat from base image path here
       super.setBoxOffice(movie.getBoxOffice());
     }
 
     public Double getAverageCriticRating() {
       return 0.0;
-    }
-
-    public void setAverageCriticRating(Double averageCriticRating) {
-      this.averageCriticRating = averageCriticRating;
-    }
-
-    public Integer getTotalCriticRating() {
-      return 0;
-    }
-
-    public void setTotalCriticRating(Integer totalCriticRating) {
-      this.totalCriticRating = totalCriticRating;
-    }
-
-    public Integer getSmashCount() {
-      return 0;
-    }
-
-    public void setSmashCount(Integer smashCount) {
-      this.smashCount = smashCount;
-    }
-
-    public Integer getPassCount() {
-      return 0;
-    }
-
-    public void setPassCount(Integer passCount) {
-      this.passCount = passCount;
-    }
-
-    public Double getAverageAudienceRating() {
-      return 0.0;
-    }
-
-    public void setAverageAudienceRating(Double averageAudienceRating) {
-      this.averageAudienceRating = averageAudienceRating;
-    }
-
-    public Integer getTotalAudienceRating() {
-      return 0;
     }
 
     public void setTotalAudienceRating(Integer totalAudienceRating) {
@@ -146,7 +103,8 @@ public class MovieViewController {
     }
 
     public String getCommaSeperatedGenres() {
-      return getGenres().stream()
+      return getGenres()
+          .stream()
           .map(g -> StringUtils.capitalize(g.toString().toLowerCase()))
           .collect(Collectors.joining(","));
     }
@@ -155,28 +113,18 @@ public class MovieViewController {
       return "John Doe, Jane Doe";
     }
 
-    public String getRating() {
-      return "PG-13"; // stub method for now; movie entity should store this
-    }
-
     public List<String> getPhotos() {
       return Arrays.asList(
           "/img/fight-club-backdrop.jpg",
           "/img/fight-club-backdrop.jpg",
-          "/img/fight-club-backdrop.jpg"
-      );
+          "/img/fight-club-backdrop.jpg");
     }
 
     public List<Video> getVideos() {
       return Arrays.asList(
           new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"),
           new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"),
-          new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4")
-      );
-    }
-
-    public List<Character> getCharacters() {
-      return new ArrayList<>();
+          new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"));
     }
 
     public List<CriticRating> getCriticRatings() {
