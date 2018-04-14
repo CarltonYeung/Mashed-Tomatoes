@@ -32,7 +32,6 @@ target
 # Build
 out
 build
-bin
 
 # JS
 *node_modules
