@@ -3,6 +3,7 @@ package com.mashedtomatoes.celebrity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.mashedtomatoes.media.Media;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ public class Character {
     private Celebrity playedBy;
     private int castOrder;
     protected Set<Quote> quotes;
+    private Media forMedia;
 
     public Character() {
         this.quotes = new HashSet<>();
@@ -51,6 +53,12 @@ public class Character {
         return quotes;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "mediaID")
+    public Media getForMedia() {
+        return forMedia;
+    }
+
     public void setID(long ID) {
         this.ID = ID;
     }
@@ -69,5 +77,9 @@ public class Character {
 
     public void setQuotes(Set<Quote> quotes) {
         this.quotes = quotes;
+    }
+
+    public void setForMedia(Media forMedia) {
+        this.forMedia = forMedia;
     }
 }

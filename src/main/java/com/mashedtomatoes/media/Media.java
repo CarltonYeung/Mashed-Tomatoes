@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public abstract class Media {
     protected int runTime;
     protected Celebrity directedBy;
     protected Set<Celebrity> celebrities;
+    protected Set<Character> characters;
     protected Set<Rating> ratings;
     protected Set<Genre> genres;
 
@@ -92,6 +94,11 @@ public abstract class Media {
         return genres;
     }
 
+    @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
+    public Set<Character> getCharacters() {
+        return characters;
+    }
+
     public void setID(long ID) {
         this.ID = ID;
     }
@@ -138,5 +145,9 @@ public abstract class Media {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public void setCharacters(Set<Character> characters) {
+        this.characters = characters;
     }
 }

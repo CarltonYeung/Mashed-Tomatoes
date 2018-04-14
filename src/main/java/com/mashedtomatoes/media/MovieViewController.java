@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -166,8 +165,8 @@ public class MovieViewController {
             );
         }
 
-        public List<Character> getCharacters() {
-            return new ArrayList<>();
+        public Set<Character> getCharacters() {
+            return new HashSet<>();
         }
 
         public List<CriticRating> getCriticRatings() {
