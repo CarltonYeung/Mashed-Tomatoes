@@ -80,7 +80,7 @@ public abstract class User {
         return banned;
     }
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Rating> getRatings() {
         return ratings;
     }

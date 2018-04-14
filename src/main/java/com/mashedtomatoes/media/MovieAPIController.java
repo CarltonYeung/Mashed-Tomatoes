@@ -1,15 +1,27 @@
 package com.mashedtomatoes.media;
 
+import com.mashedtomatoes.http.RateRequest;
+import com.mashedtomatoes.rating.RatingService;
+import com.mashedtomatoes.user.User;
+import com.mashedtomatoes.user.UserType;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class MovieAPIController {
 
     @Autowired
     MovieService movieService;
+
+    @Autowired
+    RatingService ratingService;
 
     @GetMapping("/api/movie")
     public Iterable<Movie> getMovies(@RequestParam(value = "expr", required = false) String expr) {
@@ -18,7 +30,10 @@ public class MovieAPIController {
 
     @GetMapping("/api/movie/{slug}")
     public Movie getMovie(@PathVariable String slug) {
-        return movieService.getMovieBySlug(slug);
+
+        Movie movie = movieService.getMovieBySlug(slug);
+        movie.setCelebrities(null);
+        return movie;
     }
 
     @DeleteMapping("/api/movie/{slug}/delete")
@@ -34,4 +49,63 @@ public class MovieAPIController {
         movieService.updateMovie(movie);
         return movie;
     }
+
+    @PostMapping("/api/movie/{slug}/rate")
+    public void submitRating(@PathVariable String slug, @RequestBody RateRequest rateReq,
+                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
+        HttpSession httpSession = httpServReq.getSession(false);
+        Movie movie = movieService.getMovieBySlug(slug);
+        if(httpSession == null){
+            httpServResp.setStatus(HttpStatus.SC_UNAUTHORIZED);
+            return;
+        }
+        else if(movie == null){
+            httpServResp.setStatus(HttpStatus.SC_NOT_FOUND);
+            return;
+        }
+        User user = (User)httpSession.getAttribute("User");
+        if(user.getType() != UserType.AUDIENCE){
+            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+            return;
+        }
+        ratingService.submitAudienceRating(movie,user,rateReq.getRating(),rateReq.getReview());
+       // movieService.updateMovie(movie);
+        httpServResp.setStatus(HttpStatus.SC_OK);
+
+
+    }
+
+    @PatchMapping("/api/movie/{slug}/rate/update/{ratingID}")
+    public void updateRating(@PathVariable String slug,@PathVariable int ratingID, @RequestBody RateRequest rateReq,
+                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
+
+    }
+    @DeleteMapping("/api/movie/{slug}/rate/delete/{ratingID}")
+    public void deleteRating(@PathVariable String slug, @PathVariable int ratingID,
+                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
+        HttpSession httpSession = httpServReq.getSession(false);
+        Movie movie = movieService.getMovieBySlug(slug);
+        if(httpSession == null){
+            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+            return;
+        }
+        else if(movie == null){
+            httpServResp.setStatus(HttpStatus.SC_NOT_FOUND);
+            return;
+        }
+        User user = (User)httpSession.getAttribute("User");
+        if(user.getType() != UserType.AUDIENCE){
+            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+            return;
+        }
+        boolean wasDeleted = ratingService.deleteAudienceRating(movie,user,ratingID);
+        if(wasDeleted){
+            movieService.updateMovie(movie);
+            httpServResp.setStatus(HttpStatus.SC_OK);
+        }
+        else{
+            httpServResp.setStatus(HttpStatus.SC_BAD_REQUEST);
+        }
+    }
+
 }

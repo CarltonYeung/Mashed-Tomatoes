@@ -11,7 +11,7 @@ import java.time.Instant;
 @Table(name = "Ratings")
 public abstract class Rating {
 
-    private long ID;
+    private long id;
     private int score;
     private long created;
     private long updated;
@@ -31,8 +31,8 @@ public abstract class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
     @Column(nullable = false)
@@ -66,8 +66,8 @@ public abstract class Rating {
         return author;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setScore(int score) {
