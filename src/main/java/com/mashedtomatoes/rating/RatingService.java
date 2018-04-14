@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
-import java.util.Set;
 
 @Service
 public class RatingService {
@@ -34,26 +33,26 @@ public class RatingService {
 
     public boolean deleteAudienceRating(Movie movie, User user, int ratingId){
         AudienceRating audienceRating = audRatingRepository.findFirstById((long)ratingId);
-        if(audienceRating == null){
+        if (audienceRating == null) {
             return false;
         }
         Iterator<Rating> userRatingsIterator = user.getRatings().iterator();
-        while(userRatingsIterator.hasNext()){
+        while (userRatingsIterator.hasNext()) {
             Rating userRating = userRatingsIterator.next();
-            if(userRating.getId() == ratingId){
+            if (userRating.getId() == ratingId) {
                 user.getRatings().remove(userRating);
                 break;
             }
         }
         Iterator<Rating> movieRatingsIterator = movie.getRatings().iterator();
-        while(movieRatingsIterator.hasNext()){
+        while (movieRatingsIterator.hasNext()) {
             Rating movieRating = movieRatingsIterator.next();
-            if(movieRating.getId() == ratingId){
+            if (movieRating.getId() == ratingId) {
                 movie.getRatings().remove(movieRating);
                 break;
             }
         }
-        //audienceRating.setReview("Saved worked FUCK");
+        //audienceRating.setReview("Saved worked");
         audRatingRepository.deleteAudienceRating(audienceRating.getId());
         ratingRepository.deleteRating(audienceRating.getId());
         //ratingRepository.deleteFirstById(audienceRating.getId());

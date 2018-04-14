@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
@@ -18,7 +17,7 @@ public interface AudienceRatingRepository extends CrudRepository<AudienceRating,
 
     @Transactional
     @Modifying
-    @Query("delete from AudienceRating ar where ar.id like ?1")
+    @Query("DELETE FROM AudienceRating ar WHERE ar.id LIKE ?1")
     void deleteAudienceRating(@Param("expr") long expr);
 
 }

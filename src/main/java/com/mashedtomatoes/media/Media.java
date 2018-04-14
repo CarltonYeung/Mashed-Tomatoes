@@ -76,7 +76,9 @@ public abstract class Media {
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
+    @JoinTable(name = "MediaCelebrities",
+            joinColumns = {@JoinColumn(name = "mediaID")},
+            inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
     public Set<Celebrity> getCelebrities() {
         return celebrities;
     }
@@ -87,7 +89,8 @@ public abstract class Media {
     }
 
     @ElementCollection(targetClass = Genre.class)
-    @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
+    @CollectionTable(name = "MediaGenres",
+            joinColumns = {@JoinColumn(name = "mediaID")})
     @Enumerated(EnumType.STRING)
     @Column(name = "genre", nullable = false, length = 32)
     public Set<Genre> getGenres() {

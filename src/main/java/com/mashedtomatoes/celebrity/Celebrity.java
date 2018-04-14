@@ -32,7 +32,15 @@ public class Celebrity {
     }
 
     public String toString() {
-        return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";
+        return "Celebrity(ID=" + this.getID()
+                + ", name=" + this.getName()
+                + ", birthday=" + this.getBirthday()
+                + ", birthplace=" + this.getBirthplace()
+                + ", biography=" + this.getBiography()
+                + ", profileImage=" + this.getProfileImage()
+                + ", media=" + this.getMedia()
+                + ", characters=" + this.getCharacters()
+                + ", directorOf=" + this.getDirectorOf() + ")";
     }
 
     @Id
@@ -67,7 +75,9 @@ public class Celebrity {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
+    @JoinTable(name = "MediaCelebrities",
+            joinColumns = {@JoinColumn(name = "celebrityID")},
+            inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     public Set<Media> getMedia() {
         return media;
     }

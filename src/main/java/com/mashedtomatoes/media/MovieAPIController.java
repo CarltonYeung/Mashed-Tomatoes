@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RestController
 public class MovieAPIController {
@@ -37,7 +38,7 @@ public class MovieAPIController {
     }
 
     @DeleteMapping("/api/movie/{slug}/delete")
-    public RedirectView deleteMovie(@PathVariable String slug, Model m) {
+    public RedirectView deleteMovie(@PathVariable String slug, Model model) {
         movieService.deleteMovieBySlug(slug);
         return new RedirectView("/api/movie");
     }
@@ -51,61 +52,62 @@ public class MovieAPIController {
     }
 
     @PostMapping("/api/movie/{slug}/rate")
-    public void submitRating(@PathVariable String slug, @RequestBody RateRequest rateReq,
-                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
-        HttpSession httpSession = httpServReq.getSession(false);
+    public void submitRating(@PathVariable String slug,
+                             @Valid @RequestBody RateRequest rateRequest,
+                             HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        HttpSession httpSession = httpRequest.getSession(false);
         Movie movie = movieService.getMovieBySlug(slug);
-        if(httpSession == null){
-            httpServResp.setStatus(HttpStatus.SC_UNAUTHORIZED);
+        if (httpSession == null) {
+            httpResponse.setStatus(HttpStatus.SC_UNAUTHORIZED);
             return;
         }
-        else if(movie == null){
-            httpServResp.setStatus(HttpStatus.SC_NOT_FOUND);
+        else if (movie == null) {
+            httpResponse.setStatus(HttpStatus.SC_NOT_FOUND);
             return;
         }
         User user = (User)httpSession.getAttribute("User");
-        if(user.getType() != UserType.AUDIENCE){
-            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+        if (user.getType() != UserType.AUDIENCE) {
+            httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
             return;
         }
-        ratingService.submitAudienceRating(movie,user,rateReq.getRating(),rateReq.getReview());
-       // movieService.updateMovie(movie);
-        httpServResp.setStatus(HttpStatus.SC_OK);
-
-
+        ratingService.submitAudienceRating(movie, user, rateRequest.getRating(), rateRequest.getReview());
+//        movieService.updateMovie(movie);
+        httpResponse.setStatus(HttpStatus.SC_OK);
     }
 
     @PatchMapping("/api/movie/{slug}/rate/update/{ratingID}")
-    public void updateRating(@PathVariable String slug,@PathVariable int ratingID, @RequestBody RateRequest rateReq,
-                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
+    public void updateRating(@PathVariable String slug, @PathVariable int ratingID,
+                             @Valid @RequestBody RateRequest rateRequest,
+                             HttpServletRequest httpRequest, HttpServletResponse httpResponse){
 
     }
+
     @DeleteMapping("/api/movie/{slug}/rate/delete/{ratingID}")
-    public void deleteRating(@PathVariable String slug, @PathVariable int ratingID,
-                             HttpServletRequest httpServReq, HttpServletResponse httpServResp){
-        HttpSession httpSession = httpServReq.getSession(false);
+    public void deleteRating(@PathVariable String slug,
+                             @PathVariable int ratingID,
+                             HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        HttpSession httpSession = httpRequest.getSession(false);
         Movie movie = movieService.getMovieBySlug(slug);
-        if(httpSession == null){
-            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+        if (httpSession == null) {
+            httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
             return;
         }
-        else if(movie == null){
-            httpServResp.setStatus(HttpStatus.SC_NOT_FOUND);
+        else if (movie == null) {
+            httpResponse.setStatus(HttpStatus.SC_NOT_FOUND);
             return;
         }
         User user = (User)httpSession.getAttribute("User");
-        if(user.getType() != UserType.AUDIENCE){
-            httpServResp.setStatus(HttpStatus.SC_FORBIDDEN);
+        if (user.getType() != UserType.AUDIENCE) {
+            httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
             return;
         }
-        boolean wasDeleted = ratingService.deleteAudienceRating(movie,user,ratingID);
-        if(wasDeleted){
+        boolean wasDeleted = ratingService.deleteAudienceRating(movie, user, ratingID);
+        if (wasDeleted) {
             movieService.updateMovie(movie);
-            httpServResp.setStatus(HttpStatus.SC_OK);
+            httpResponse.setStatus(HttpStatus.SC_OK);
         }
-        else{
-            httpServResp.setStatus(HttpStatus.SC_BAD_REQUEST);
+        else {
+            httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
         }
     }
-
 }

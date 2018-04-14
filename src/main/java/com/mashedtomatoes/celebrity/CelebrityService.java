@@ -11,7 +11,7 @@ public class CelebrityService {
     @Autowired
     CelebrityRepository celebrityRepository;
 
-    public Celebrity getCelebrityByID(long ID) {
+    Celebrity getCelebrityByID(long ID) {
         Optional<Celebrity> optional = celebrityRepository.findById(ID);
         if (optional.isPresent()) {
             return optional.get();

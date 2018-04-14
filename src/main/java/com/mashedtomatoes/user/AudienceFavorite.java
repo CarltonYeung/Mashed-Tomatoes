@@ -18,9 +18,6 @@ public class AudienceFavorite {
     private Celebrity celebrity;
     private Genre genre;
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
     AudienceFavorite() {}
 
     AudienceFavorite(Audience audience) {

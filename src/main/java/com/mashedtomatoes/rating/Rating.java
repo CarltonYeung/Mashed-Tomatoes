@@ -17,11 +17,11 @@ public abstract class Rating {
 
     private long id;
     private int score;
-    private long created;
-    private long updated;
     private String review;
     private Media forMedia;
     private User author;
+    private long created;
+    private long updated;
 
     @PrePersist
     protected void onCreate() {

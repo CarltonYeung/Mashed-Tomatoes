@@ -12,10 +12,8 @@ public class UserVerification {
     private boolean verified;
     private String verificationKey;
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
-    UserVerification() {}
+    UserVerification() {
+    }
 
     UserVerification(User user) {
         this.user = user;
@@ -27,11 +25,9 @@ public class UserVerification {
         if (this.verified) {
             return false;
         }
-
         if (this.verificationKey.equals(verificationKey)) {
             this.verified = true;
         }
-
         return this.verified;
     }
 

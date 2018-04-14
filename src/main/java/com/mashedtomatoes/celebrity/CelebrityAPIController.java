@@ -1,7 +1,5 @@
-package com.mashedtomatoes.media;
+package com.mashedtomatoes.celebrity;
 
-import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.celebrity.CelebrityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +13,9 @@ public class CelebrityAPIController {
 
     @GetMapping("/api/celebrity/{ID}")
     public Celebrity getMovie(@PathVariable long ID) {
-        for (Media m : celebrityService.getCelebrityByID(ID).getMedia()) {
-            System.out.println(m.title);
-        }
+//        for (Media m : celebrityService.getCelebrityByID(ID).getMedia()) {
+//            System.out.println(m.getTitle());
+//        }
         return celebrityService.getCelebrityByID(ID);
     }
 }

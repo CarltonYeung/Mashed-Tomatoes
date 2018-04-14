@@ -17,9 +17,6 @@ public class Audience extends User {
     private boolean superReviewer;
     private boolean publicProfile;
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
     public Audience() {}
 
     public Audience(String displayName, String email, String hashedPassword) {
@@ -45,13 +42,17 @@ public class Audience extends User {
     }
 
     @ManyToMany
-    @JoinTable(name = "AudiencesWantToSeeMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
+    @JoinTable(name = "AudiencesWantToSeeMedia",
+            joinColumns = {@JoinColumn(name = "audienceID")},
+            inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     public Set<Media> getWantToSee() {
         return wantToSee;
     }
 
     @ManyToMany
-    @JoinTable(name = "AudiencesNotInterestedMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
+    @JoinTable(name = "AudiencesNotInterestedMedia",
+            joinColumns = {@JoinColumn(name = "audienceID")},
+            inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     public Set<Media> getNotInterested() {
         return notInterested;
     }

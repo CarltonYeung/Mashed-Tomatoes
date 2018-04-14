@@ -22,10 +22,8 @@ public abstract class User {
     protected boolean banned;
     protected Set<Rating> ratings;
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
-    public User() {}
+    public User() {
+    }
 
     public User(UserType type) {
         this.credentials = new UserCredentials(this);
@@ -47,7 +45,13 @@ public abstract class User {
     }
 
     public String toString() {
-        return "User(ID=" + this.getID() + ", type=" + this.getType() + ", birthDate=" + this.getBirthDate() + ", created=" + this.getCreated() + ", updated=" + this.getUpdated() + ", banned=" + this.isBanned() + ", ratings=" + this.getRatings() + ")";
+        return "User(ID=" + this.getID()
+                + ", type=" + this.getType()
+                + ", birthDate=" + this.getBirthDate()
+                + ", created=" + this.getCreated()
+                + ", updated=" + this.getUpdated()
+                + ", banned=" + this.isBanned()
+                + ", ratings=" + this.getRatings() + ")";
     }
 
     @Id
