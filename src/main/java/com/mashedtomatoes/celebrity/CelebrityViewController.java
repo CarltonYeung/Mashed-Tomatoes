@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class CelebrityViewController {
+  @Autowired
+  CelebrityService celebrityService;
 
-    @Autowired
-    CelebrityService celebrityService;
+  @Autowired
+  MovieRepository movieRepository;
 
-    @Autowired
-    MovieRepository movieRepository;
+  @Autowired
+  CharacterRepository characterRepository;
 
-    @Autowired
-    CharacterRepository characterRepository;
+  @GetMapping("/celebrity/{ID}")
+  public String getMovie(@PathVariable long ID, Model model) {
+    Celebrity c = celebrityService.getCelebrityByID(ID);
+    Iterable<Character> characters = characterRepository.findAllByCelebrity_Id(c.getId());
+    Iterable<Movie> directed = movieRepository.findAllByDirector_Id(c.getId());
 
-    @GetMapping("/celebrity/{ID}")
-    public String getMovie(@PathVariable long ID, Model model) {
-        Celebrity c = celebrityService.getCelebrityByID(ID);
-        Iterable<Character> characters = characterRepository.findAllByCelebrity_Id(c.getId());
-        Iterable<Movie> directed = movieRepository.findAllByDirector_Id(c.getId());
+    model.addAttribute("celebrity", c);
+    model.addAttribute("characters", characters);
+    model.addAttribute("directed", directed);
 
-        model.addAttribute("celebrity", c);
-        model.addAttribute("characters", characters);
-        model.addAttribute("directed", directed);
-
-        return "celebrity/celebrity";
-    }
+    return "celebrity/celebrity";
+  }
 }

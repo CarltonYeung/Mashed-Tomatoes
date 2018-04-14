@@ -8,14 +8,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface RatingRepository extends CrudRepository<Rating,Long> {
+public interface RatingRepository extends CrudRepository<Rating, Long> {
 
-    @Transactional
-    void deleteFirstById(Long id);
+  @Transactional
+  void deleteFirstById(Long id);
 
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Rating r WHERE r.id LIKE ?1")
-    void deleteRating(@Param("expr") long expr);
-
+  @Transactional
+  @Modifying
+  @Query("DELETE FROM Rating r WHERE r.id LIKE ?1")
+  void deleteRating(@Param("expr") long expr);
 }

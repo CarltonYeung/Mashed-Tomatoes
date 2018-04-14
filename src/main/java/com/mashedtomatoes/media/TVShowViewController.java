@@ -1,5 +1,3 @@
 package com.mashedtomatoes.media;
 
-public class TVShowViewController {
-
-}
+public class TVShowViewController {}

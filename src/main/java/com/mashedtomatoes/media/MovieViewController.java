@@ -1,9 +1,12 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 @Controller
 public class MovieViewController {
-
   @Autowired MovieService movieService;
 
   @GetMapping("/movie")
@@ -120,11 +119,8 @@ public class MovieViewController {
           "/img/fight-club-backdrop.jpg");
     }
 
-    public List<Video> getVideos() {
-      return Arrays.asList(
-          new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"),
-          new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"),
-          new Video("/img/fight-club-backdrop.jpg", "/vid/jellyfish.mp4"));
+    public List<String> getVideos() {
+      return Arrays.asList("/vid/jellyfish.mp4", "/vid/jellyfish.mp4", "/vid/jellyfish.mp4");
     }
 
     public List<CriticRating> getCriticRatings() {
