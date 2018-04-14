@@ -1,33 +1,37 @@
 package com.mashedtomatoes.media;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Media {
 
-    private long ID;
-    private String title;
-    private String slug;
-    private String description;
-    private String backdropPath;
-    private String posterPath;
-    private Date releaseDate;
-    private int runTime;
-    private Celebrity directedBy;
-    private Set<Celebrity> celebrities = new HashSet<>();
-    private Set<Rating> ratings = new HashSet<>();
-    private Set<Genre> genres = new HashSet<>();
+    protected long ID;
+    protected String title;
+    protected String slug;
+    protected String description;
+    protected String backdropPath;
+    protected String posterPath;
+    protected Date releaseDate;
+    protected int runTime;
+    protected Celebrity directedBy;
+    protected Set<Celebrity> celebrities;
+    protected Set<Rating> ratings;
+    protected Set<Genre> genres;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }

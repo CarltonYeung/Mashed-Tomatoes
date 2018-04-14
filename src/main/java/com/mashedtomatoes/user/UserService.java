@@ -9,14 +9,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private AudienceRepository audienceRepository;
+    private HashService hashService;
 
     @Autowired
-    private HashService hashService;
+    public UserService(UserRepository userRepository,
+                       AudienceRepository audienceRepository,
+                       HashService hashService) {
+        this.userRepository = userRepository;
+        this.audienceRepository = audienceRepository;
+        this.hashService = hashService;
+    }
 
     public Audience addAudience(String displayName, String email, String password) throws Exception {
         if (audienceRepository.existsByDisplayName(displayName)) {
@@ -27,19 +31,11 @@ public class UserService {
             throw new Exception("This email already exists.");
         }
 
-        Audience user = new Audience(displayName);
-        UserCredentials credentials = new UserCredentials(email, hashService.hash(password));
-        UserVerification verification = new UserVerification();
-
-        user.setCredentials(credentials);
-        user.setVerification(verification);
-        credentials.setUser(user);
-        verification.setUser(user);
-
+        Audience user = new Audience(displayName, email, hashService.hash(password));
         return userRepository.save(user);
     }
 
-    public boolean verifyEmail(String email, String verificationKey) {
+    boolean verifyEmail(String email, String verificationKey) {
         Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
 
         if (!optionalUser.isPresent()) {
@@ -57,7 +53,7 @@ public class UserService {
         return false;
     }
 
-    public User getUserByCredentials(String email, String plaintextPassword) {
+    User getUserByCredentials(String email, String plaintextPassword) {
         Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
 
         if (!optionalUser.isPresent()) {

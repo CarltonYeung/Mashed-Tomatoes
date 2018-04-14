@@ -17,17 +17,21 @@ public class Audience extends User {
     private boolean superReviewer;
     private boolean publicProfile;
 
-    public Audience() {
-    }
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    public Audience() {}
 
-    public Audience(String displayName) {
-        this.setType(UserType.AUDIENCE);
-        this.setBanned(false);
+    public Audience(String displayName, String email, String hashedPassword) {
+        super(UserType.AUDIENCE);
+        super.getCredentials().setEmail(email);
+        super.getCredentials().setPassword(hashedPassword);
         this.displayName = displayName;
         this.wantToSee = new HashSet<>();
         this.notInterested = new HashSet<>();
+        this.favorites = new AudienceFavorite(this);
         this.superReviewer = false;
-        this.publicProfile = false;
+        this.publicProfile = true;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class Audience extends User {
         return notInterested;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "audience", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public AudienceFavorite getFavorites() {
         return favorites;

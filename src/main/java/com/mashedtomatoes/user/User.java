@@ -12,15 +12,28 @@ import java.util.Set;
 @Table(name = "Users")
 public abstract class User {
 
-    private long ID;
-    private UserCredentials credentials;
-    private UserVerification verification;
-    private UserType type;
-    private long birthDate;
-    private long created;
-    private long updated;
-    private boolean banned;
-    private Set<Rating> ratings = new HashSet<>();
+    protected long ID;
+    protected UserCredentials credentials;
+    protected UserVerification verification;
+    protected UserType type;
+    protected long birthDate;
+    protected long created;
+    protected long updated;
+    protected boolean banned;
+    protected Set<Rating> ratings;
+
+    /**
+     * Hibernate needs default constructor for entities.
+     */
+    public User() {}
+
+    public User(UserType type) {
+        this.credentials = new UserCredentials(this);
+        this.verification = new UserVerification(this);
+        this.ratings = new HashSet<>();
+        this.banned = false;
+        this.type = type;
+    }
 
     @PrePersist
     protected void onCreate() {

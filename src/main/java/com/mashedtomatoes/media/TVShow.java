@@ -11,9 +11,13 @@ import java.util.Set;
 @Table(name = "TVShows")
 public class TVShow extends Media {
 
-    private Set<TVShowSeason> seasons = new HashSet<>();
+    private Set<TVShowSeason> seasons;
 
     public TVShow() {
+        super.celebrities = new HashSet<>();
+        super.ratings = new HashSet<>();
+        super.genres = new HashSet<>();
+        this.seasons = new HashSet<>();
     }
 
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL)

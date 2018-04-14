@@ -1,5 +1,8 @@
 package com.mashedtomatoes.rating;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.user.User;
 
@@ -9,13 +12,14 @@ import java.time.Instant;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Ratings")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Rating {
 
     private long id;
     private int score;
     private long created;
     private long updated;
-    private String review = null;
+    private String review;
     private Media forMedia;
     private User author;
 
@@ -31,6 +35,7 @@ public abstract class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getId() {
         return id;
     }

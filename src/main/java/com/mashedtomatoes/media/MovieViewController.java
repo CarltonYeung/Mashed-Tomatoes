@@ -36,21 +36,13 @@ public class MovieViewController {
 
     static class ViewModel extends Movie {
         private Double averageCriticRating;
-
         private Integer totalCriticRating;
-
         private Integer smashCount;
-
         private Integer passCount;
-
         private Double averageAudienceRating;
-
         private Integer totalAudienceRating;
-
         private Celebrity director;
-
         private List<Celebrity> writers;
-
         private String studio;
 
         public ViewModel(Movie movie) {

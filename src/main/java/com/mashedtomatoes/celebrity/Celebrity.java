@@ -1,6 +1,8 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.media.Media;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Celebrities")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Celebrity {
 
     private long ID;
@@ -18,11 +21,14 @@ public class Celebrity {
     private String birthplace;
     private String biography;
     private String profileImage;
-    private Set<Media> media = new HashSet<>();
-    private Set<Character> characters = new HashSet<>();
-    private Set<Media> directorOf = new HashSet<>();
+    private Set<Media> media;
+    private Set<Character> characters;
+    private Set<Media> directorOf;
 
     public Celebrity() {
+        this.media = new HashSet<>();
+        this.characters = new HashSet<>();
+        this.directorOf = new HashSet<>();
     }
 
     public String toString() {
@@ -31,6 +37,7 @@ public class Celebrity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     public long getID() {
         return ID;
     }
