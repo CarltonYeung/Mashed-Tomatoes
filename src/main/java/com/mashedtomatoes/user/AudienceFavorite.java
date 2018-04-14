@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "AudienceFavorites")
 public class AudienceFavorite {
 
-    private long ID;
+    private long id;
     private Audience audience;
     private String movie;
     private String tvShow;
@@ -20,8 +20,12 @@ public class AudienceFavorite {
     }
 
     @Id
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @MapsId
@@ -31,40 +35,36 @@ public class AudienceFavorite {
         return audience;
     }
 
-    public String getMovie() {
-        return movie;
-    }
-
-    public String getTvShow() {
-        return tvShow;
-    }
-
-    public String getCelebrity() {
-        return celebrity;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
     public void setAudience(Audience audience) {
         this.audience = audience;
+    }
+
+    public String getMovie() {
+        return movie;
     }
 
     public void setMovie(String movie) {
         this.movie = movie;
     }
 
+    public String getTvShow() {
+        return tvShow;
+    }
+
     public void setTvShow(String tvShow) {
         this.tvShow = tvShow;
     }
 
+    public String getCelebrity() {
+        return celebrity;
+    }
+
     public void setCelebrity(String celebrity) {
         this.celebrity = celebrity;
+    }
+
+    public String getGenre() {
+        return genre;
     }
 
     public void setGenre(String genre) {

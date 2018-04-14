@@ -7,12 +7,12 @@ import java.util.Date;
 @Table(name = "CriticApplications")
 public class CriticApplication {
 
-    long id;
-    Audience applicant;
-    String firstName;
-    String lastName;
-    String body;
-    Date applied;
+    private long id;
+    private Audience applicant;
+    private String firstName;
+    private String lastName;
+    private String body;
+    private Date applied;
 
     public CriticApplication() {
     }

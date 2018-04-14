@@ -1,6 +1,4 @@
-package com.mashedtomatoes.publication;
-
-import com.mashedtomatoes.rating.CriticRating;
+package com.mashedtomatoes.rating;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -11,7 +9,7 @@ import java.util.Set;
 @Table(name = "Publishers")
 public class Publisher {
 
-    private long ID;
+    private long id;
     private String name;
     private URL website;
     private Set<CriticRating> ratings;
@@ -22,8 +20,12 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(nullable = false)
@@ -31,26 +33,22 @@ public class Publisher {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Column(nullable = false)
     public URL getWebsite() {
         return website;
     }
 
+    public void setWebsite(URL website) {
+        this.website = website;
+    }
+
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
     public Set<CriticRating> getRatings() {
         return ratings;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setWebsite(URL website) {
-        this.website = website;
     }
 
     public void setRatings(Set<CriticRating> ratings) {

@@ -1,8 +1,8 @@
 package com.mashedtomatoes.user;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Entity
@@ -21,15 +21,14 @@ public class UserVerification {
     UserVerification(User user) {
         this.user = user;
         this.verified = false;
-        this.verificationKey = generateKey();
-
-        Duration duration = new Duration();
-
-        this.expiration = Instant.now().getEpochSecond();
+        generateKey();
     }
 
     public boolean verify(String verificationKey) {
         if (this.verified) {
+            return false;
+        }
+        if (Instant.now().isAfter(Instant.ofEpochSecond(this.expiration))) {
             return false;
         }
         if (this.verificationKey.equals(verificationKey)) {
@@ -38,13 +37,19 @@ public class UserVerification {
         return this.verified;
     }
 
-    private String generateKey() {
-        return UUID.randomUUID().toString().replace("-", "");
+    String generateKey() {
+        expiration = Instant.now().plus(1, ChronoUnit.DAYS).getEpochSecond();
+        verificationKey = UUID.randomUUID().toString().replace("-", "");
+        return verificationKey;
     }
 
     @Id
     public long getID() {
         return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     @MapsId
@@ -54,9 +59,17 @@ public class UserVerification {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     public boolean isVerified() {
         return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Column(nullable = false)
@@ -64,19 +77,16 @@ public class UserVerification {
         return verificationKey;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
-    }
-
     public void setVerificationKey(String verificationKey) {
         this.verificationKey = verificationKey;
+    }
+
+    @Column(nullable = false)
+    public long getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(long expiration) {
+        this.expiration = expiration;
     }
 }

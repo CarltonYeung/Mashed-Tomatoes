@@ -41,12 +41,20 @@ public class Audience extends User {
         return displayName;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     @ManyToMany
     @JoinTable(name = "AudiencesWantToSeeMedia",
             joinColumns = {@JoinColumn(name = "audienceID")},
             inverseJoinColumns = {@JoinColumn(name = "mediaID")})
     public Set<Media> getWantToSee() {
         return wantToSee;
+    }
+
+    public void setWantToSee(Set<Media> wantToSee) {
+        this.wantToSee = wantToSee;
     }
 
     @ManyToMany
@@ -57,10 +65,18 @@ public class Audience extends User {
         return notInterested;
     }
 
+    public void setNotInterested(Set<Media> notInterested) {
+        this.notInterested = notInterested;
+    }
+
     @OneToOne(mappedBy = "audience", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public AudienceFavorite getFavorites() {
         return favorites;
+    }
+
+    public void setFavorites(AudienceFavorite favorites) {
+        this.favorites = favorites;
     }
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
@@ -68,29 +84,13 @@ public class Audience extends User {
         return superReviewer;
     }
 
+    public void setSuperReviewer(boolean superReviewer) {
+        this.superReviewer = superReviewer;
+    }
+
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     public boolean isPublicProfile() {
         return publicProfile;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public void setWantToSee(Set<Media> wantToSee) {
-        this.wantToSee = wantToSee;
-    }
-
-    public void setNotInterested(Set<Media> notInterested) {
-        this.notInterested = notInterested;
-    }
-
-    public void setFavorites(AudienceFavorite favorites) {
-        this.favorites = favorites;
-    }
-
-    public void setSuperReviewer(boolean superReviewer) {
-        this.superReviewer = superReviewer;
     }
 
     public void setPublicProfile(boolean publicProfile) {

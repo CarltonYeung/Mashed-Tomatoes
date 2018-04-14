@@ -18,16 +18,17 @@ public class Movie extends Media {
     }
 
     public double getBoxOffice() {
-        return this.boxOffice;
+        return boxOffice;
+    }
+
+    public void setBoxOffice(double boxOffice) {
+        this.boxOffice = boxOffice;
     }
 
     public double getBudget() {
         return budget;
     }
 
-    public void setBoxOffice(double boxOffice) {
-        this.boxOffice = boxOffice;
-    }
     public void setBudget(double budget) {
         this.budget = budget;
     }
@@ -39,5 +40,4 @@ public class Movie extends Media {
     public void setTrailerPath(String trailerPath) {
         this.trailerPath = trailerPath;
     }
-
 }

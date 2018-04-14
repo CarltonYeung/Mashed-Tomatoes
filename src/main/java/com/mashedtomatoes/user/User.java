@@ -4,6 +4,7 @@ import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,12 +17,12 @@ public abstract class User {
     protected UserCredentials credentials;
     protected UserVerification verification;
     protected UserType type;
-    protected long birthDate;
+    protected Date birthDate;
+    protected Set<Rating> ratings;
+    protected Set<User> following;
+    protected Set<User> followers;
     protected long created;
     protected long updated;
-    protected Set<Rating> ratings;
-    private Set<User> following;
-    private Set<User> followers;
 
     public User() {
     }
@@ -59,10 +60,18 @@ public abstract class User {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public UserCredentials getCredentials() {
         return credentials;
+    }
+
+    public void setCredentials(UserCredentials credentials) {
+        this.credentials = credentials;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -71,24 +80,26 @@ public abstract class User {
         return verification;
     }
 
+    public void setVerification(UserVerification verification) {
+        this.verification = verification;
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     public UserType getType() {
         return type;
     }
 
-    public long getBirthDate() {
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    @Column(nullable = false, updatable = false)
-    public long getCreated() {
-        return created;
-    }
-
-    @Column(nullable = false)
-    public long getUpdated() {
-        return updated;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -96,38 +107,9 @@ public abstract class User {
         return ratings;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setCredentials(UserCredentials credentials) {
-        this.credentials = credentials;
-    }
-
-    public void setVerification(UserVerification verification) {
-        this.verification = verification;
-    }
-
-    public void setType(UserType type) {
-        this.type = type;
-    }
-
-    public void setBirthDate(long birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setCreated(long created) {
-        this.created = created;
-    }
-
-    public void setUpdated(long updated) {
-        this.updated = updated;
-    }
-
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
     }
-
 
     @ManyToMany
     @JoinTable(name="Follows",
@@ -137,6 +119,9 @@ public abstract class User {
         return following;
     }
 
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
 
     @ManyToMany
     @JoinTable(name="Follows",
@@ -146,11 +131,25 @@ public abstract class User {
         return followers;
     }
 
-    public void setFollowing(Set<User> following) {
-        this.following = following;
-    }
-
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
+    }
+
+    @Column(nullable = false, updatable = false)
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
+    }
+
+    @Column(nullable = false)
+    public long getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(long updated) {
+        this.updated = updated;
     }
 }

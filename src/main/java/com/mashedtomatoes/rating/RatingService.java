@@ -24,7 +24,7 @@ public class RatingService {
         AudienceRating audienceRating = new AudienceRating();
         audienceRating.setScore(rating);
         audienceRating.setReview(review);
-        audienceRating.setForMedia(movie);
+        audienceRating.setMedia(movie);
         audienceRating.setAuthor(user);
         user.getRatings().add(audienceRating);
         movie.getRatings().add(audienceRating);

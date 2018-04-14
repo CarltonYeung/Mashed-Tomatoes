@@ -1,7 +1,5 @@
 package com.mashedtomatoes.rating;
 
-import com.mashedtomatoes.publication.Publisher;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

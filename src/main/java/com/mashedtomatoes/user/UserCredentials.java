@@ -11,7 +11,7 @@ public class UserCredentials {
     private User user;
     private String email;
     private String password;
-    private String forgetPasswordKey;
+    private String resetKey;
 
     UserCredentials() {
     }
@@ -20,14 +20,18 @@ public class UserCredentials {
         this.user = user;
     }
 
-    public String generateForgetPasswordKey() {
-        this.forgetPasswordKey = UUID.randomUUID().toString().replace("-", "");
-        return this.forgetPasswordKey;
+    public String generateKey() {
+        this.resetKey = UUID.randomUUID().toString().replace("-", "");
+        return this.resetKey;
     }
 
     @Id
     public long getID() {
         return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     @MapsId
@@ -37,9 +41,17 @@ public class UserCredentials {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Column(nullable = false, unique = true)
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Column(nullable = false, length = 60)
@@ -47,27 +59,15 @@ public class UserCredentials {
         return password;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getForgetPasswordKey() {
-        return forgetPasswordKey;
+    public String getResetKey() {
+        return resetKey;
     }
 
-    public void setForgetPasswordKey(String forgetPasswordKey) {
-        this.forgetPasswordKey = forgetPasswordKey;
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
     }
 }

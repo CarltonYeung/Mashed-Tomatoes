@@ -31,7 +31,6 @@ public class MovieAPIController {
 
     @GetMapping("/api/movie/{slug}")
     public Movie getMovie(@PathVariable String slug) {
-
         Movie movie = movieService.getMovieBySlug(slug);
         return movie;
     }
