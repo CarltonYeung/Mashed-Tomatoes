@@ -8,29 +8,31 @@ module.exports.deps = [
 
 module.exports.init = () => {
   $('#registration-form').submit(function (e) {
-    const displayNameSelector = $('#input-register-display-name');
-    const emailSelector = $('#input-register-email');
-    const pwdSelector = $('#input-register-pwd');
-    const displayName = displayNameSelector.val();
-    const email = emailSelector.val();
-    const password = pwdSelector.val();
+    const displayNameSelector = $('#register-display-name');
+    console.log(displayNameSelector.val());
+    const emailSelector = $('#register-email');
+    console.log(emailSelector.val());
+    const passwordSelector = $('#register-password');
+    console.log(passwordSelector);
+    console.log(passwordSelector.val());
+
     const data = {
-      displayName, email, password
+      displayName: displayNameSelector.val(),
+      email: emailSelector.val(),
+      password: passwordSelector.val()
     };
 
     console.log(data);
+    
     $.ajax(
       urlBuilder.buildRegister(),
       {
         method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        dataType: "application/json",
         success: res => {
-          if (res.status == 204) {
-            console.log('Register Success');
-            window.location = '/';
-          }
+          console.log('...redirecting...');
+          window.location.href = '/';
         },
         error: res => {
           console.error(res.status);

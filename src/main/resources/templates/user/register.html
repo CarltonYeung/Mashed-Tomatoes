@@ -62,70 +62,64 @@
         <h1>Register</h1>
       </div>
       <div class="row">
-        <a href="index.html" class="register-body center">
+        <a href="/" class="register-body center">
           <img src="/img/base/logo.png" class="register-logo">
         </a>
       </div>
 
-      <form id="registration-form" method="post" action="">
+      <form id="registration-form">
+        <div class="register-body form-group my-3 w-50">
+          <label class="register-display-name" for="register-email">Display Name:</label>
+          <input id="register-display-name" class="form-control" name="displayName" required="required" />
+        </div>
+        <div class="register-body form-group my-3 w-50">
+          <label class="register-email" for="register-email">Email Address:</label>
+          <input id="register-email" type="email" class="form-control" name="email" required="required" />
+        </div>
+        <div class="register-body form-group my-3 w-50">
+          <label for="register-password">Password:</label>
+          <input id="register-password" type="password" class="form-control" name="password" required="required" />
+        </div>
+        <p class="register-agree-already">
+          By clicking "Sign up", I agree to the
+          <a href="/terms">Terms of Service</a> and
+          <a href="/privacy">Privacy Policy</a>.
+        </p>
         <div class="row">
-          <div class="register-body form-group my-3 w-50">
-            <label class="input-register-display-name" for="usr">Display Name:</label>
-            <input id="input-register-display-name" class="form-control" name="displayName" required="required" />
-          </div>
-          <div class="row">
-            <div class="register-body form-group my-3 w-50">
-              <label class="input-register-email" for="usr">Email Address:</label>
-              <input id="input-register-email" type="email" class="form-control" name="email" required="required" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="register-body form-group my-3 w-50">
-              <label for="input-register-pwd">Password:</label>
-              <input id="input-register-pwd" type="password" class="form-control" name="password" required="required" />
-            </div>
-          </div>
-          <p class="register-agree-already">
-            By clicking "Sign up", I agree to the
-            <a href="terms.html">Terms of Service</a> and
-            <a href="privacy.html">Privacy Policy</a>.
-          </p>
-          <div class="row">
-            <input id="register-btn" type="submit" value="SIGN UP" class="register-body login-page-btn btn btn-warning my-4" />
-            <!-- <a href="index.html" id="register-btn" class="register-body login-page-btn btn btn-warning my-4">SIGN UP</a> -->
-          </div>
+          <input id="register-btn" type="submit" value="SIGN UP" class="register-body login-page-btn btn btn-warning my-4" />
+        </div>
       </form>
 
       <div class="mb-5">
         <p class="register-agree-already">Already have an account?
-          <a href="login.html">Log in here</a>
+          <a href="/login">Log in here</a>
         </p>
       </div>
-      </div>
     </div>
-    <footer class="navbar navbar-expand-sm navbar-dark bg-success">
-      <div class="collapse navbar-collapse">
-        <div class="mx-3 w-100 navbar-nav menu-bar">
-          <a class="nav-item nav-link col-lg" href="about.html">
+  </div>
+  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="collapse navbar-collapse">
+      <div class="mx-3 w-100 navbar-nav menu-bar">
+        <a class="nav-item nav-link col-lg" href="about.html">
                 About
                 <span class="sr-only"></span>
             </a>
-          <a class="nav-item nav-link col-lg" href="feedback.html">
+        <a class="nav-item nav-link col-lg" href="feedback.html">
                 Feedback
                 <span class="sr-only"></span>
             </a>
-          <a class="nav-item nav-link col-lg" href="criticsubmission.html">
+        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
                 Critic Submission
                 <span class="sr-only"></span>
             </a>
-          <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
+        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
                 Join the Newsletter!
                 <span class="sr-only"></span>
             </a>
-        </div>
       </div>
-    </footer>
-    <script src="/js/bundle.js"></script>
+    </div>
+  </footer>
+  <script src="/js/bundle.js"></script>
 
 </body>
 
