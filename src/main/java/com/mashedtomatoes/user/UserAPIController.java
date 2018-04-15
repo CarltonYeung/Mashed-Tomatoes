@@ -22,31 +22,27 @@ public class UserAPIController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/register.html")
-    public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
+    @PostMapping("/register")
+    public StatusMessage register(@Valid @RequestBody RegisterRequest request) {
         Audience user;
-        
         try {
-            user = userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
+            user = userService.addAudience(request.getDisplayName(), request.getEmail(), request.getPassword());
         } catch (Exception e) {
             return new StatusMessage(false, e.getMessage());
         }
-
         System.out.println(user.getVerification().getVerificationKey());
         String email = user.getCredentials().getEmail();
         String key = user.getVerification().getVerificationKey();
         String message = "Please follow the link to verify your email.\n"
                 + "http://localhost:8080/verify?email=" + email
                 + "&key=" + key;
-
         try {
             this.mailService.send(user.getCredentials().getEmail(), "Verify your Mashed Tomatoes email", message);
         } catch (MailException e) {
             System.err.println(e.getMessage());
             return new StatusMessage(false, "Failed to send verification email.");
         }
-
-        return new StatusMessage(true, "Good job!");
+        return new StatusMessage(true, "Success! Please check your email for verification details.");
     }
 
     @GetMapping("/verify")
@@ -54,19 +50,18 @@ public class UserAPIController {
                                 @RequestParam("key") String key) {
         boolean success = userService.verifyEmail(email, key);
         String message;
-
         if (success) {
             message = "Verification successful.";
         } else {
             message = "Verification failed.";
         }
-
         return new StatusMessage(success, message);
     }
 
 
     @PostMapping("/login")
-    public StatusMessage login(@Valid @RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
+    public StatusMessage login(@Valid @RequestBody LoginRequest req,
+                               HttpServletRequest httpServletRequest) {
         User user = userService.getUserByCredentials(req.getEmail(), req.getPassword());
 
         if (user == null) {
@@ -85,8 +80,13 @@ public class UserAPIController {
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        httpServletRequest.getSession(false).invalidate();
-        httpServletResponse.setStatus(204);
+        HttpSession session = httpServletRequest.getSession(false);
+        if (session == null) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        session.invalidate();
+        httpServletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
     }
 
     @GetMapping("/hello")

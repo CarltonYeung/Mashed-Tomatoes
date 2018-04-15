@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title th:text="${movie.title}">Movie Page</title>
+  <title th:text="${media.title}">Movie Page</title>
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/main.css">
@@ -56,7 +56,7 @@
     </div>
   </header>
 
-  <main class="container" th:data-media-slug="${movie.slug}">
+  <main class="container" th:data-media-slug="${media.slug}">
     <section class="media-section">
       <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
       <div class="d-flex justify-content-between">
@@ -141,8 +141,8 @@
       <h1 class="media-section -title">Cast</h1>
       <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
         <div class="talent-box" th:each="character: ${movie.characters}">
-          <img class="talent-box -profile" th:src="${character.celebrity.profileImage}">
-          <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
+          <img class="talent-box -profile" th:src="${character.playedBy.profileImage}">
+          <p class="talent-box -celebrity" th:text="${character.playedBy.name}"></p>
           <p class="talent-box -character">as <span th:text="${character.name}"></span></p>
         </div>
       </div>

@@ -3,7 +3,6 @@ package com.mashedtomatoes.http;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 public class RegisterRequest {
 
@@ -15,7 +14,6 @@ public class RegisterRequest {
     }
 
     @NotEmpty
-    @Size(max = 255)
     @Email
     public String getEmail() {
         return email;
@@ -27,7 +25,6 @@ public class RegisterRequest {
     }
 
     @NotBlank
-    @Size(max = 255)
     public String getDisplayName() {
         return displayName;
     }

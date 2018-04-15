@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 public class Video {
+
     private String thumbnailPath;
     private String videoPath;
 

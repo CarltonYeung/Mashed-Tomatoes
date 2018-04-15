@@ -1,35 +1,46 @@
 package com.mashedtomatoes.media;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Media {
 
-    private long ID;
-    private String title;
-    private String slug;
-    private String description;
-    private String backdropPath;
-    private String posterPath;
-    private Date releaseDate;
-    private int runTime;
-    private Celebrity directedBy;
-    private Set<Celebrity> celebrities = new HashSet<>();
-    private Set<Rating> ratings = new HashSet<>();
-    private Set<Genre> genres = new HashSet<>();
+    protected long id;
+    protected String title;
+    protected String slug;
+    protected String description;
+    protected String posterPath;
+    protected Date releaseDate;
+    protected int runTime;
+    protected Celebrity director;
+    protected Celebrity producer;
+    protected String productionCompany;
+    protected Celebrity writer;
+    protected Set<Character> characters;
+    protected Set<Rating> ratings;
+    protected Set<Genre> genres;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    @JsonProperty("id")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(nullable = false)
@@ -37,9 +48,17 @@ public abstract class Media {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Column(nullable = false)
     public String getSlug() {
         return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     @Column(columnDefinition = "TEXT")
@@ -47,92 +66,102 @@ public abstract class Media {
         return description;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public int getRunTime() {
-        return runTime;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPosterPath() {
         return posterPath;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "directorID")
-    public Celebrity getDirectedBy() {
-        return directedBy;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "mediaID")}, inverseJoinColumns = {@JoinColumn(name = "celebrityID")})
-    public Set<Celebrity> getCelebrities() {
-        return celebrities;
-    }
-
-    @OneToMany(mappedBy = "forMedia", cascade = CascadeType.ALL)
-    public Set<Rating> getRatings() {
-        return ratings;
-    }
-
-    @ElementCollection(targetClass = Genre.class)
-    @CollectionTable(name = "MediaGenres", joinColumns = {@JoinColumn(name = "mediaID")})
-    @Enumerated(EnumType.STRING)
-    @Column(name = "genre", nullable = false, length = 32)
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
+    public int getRunTime() {
+        return runTime;
+    }
+
     public void setRunTime(int runTime) {
         this.runTime = runTime;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
+    @ManyToOne
+    @JoinColumn(name = "directorID", nullable = false)
+    public Celebrity getDirector() {
+        return director;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setDirector(Celebrity director) {
+        this.director = director;
     }
 
-    public void setDirectedBy(Celebrity directedBy) {
-        this.directedBy = directedBy;
+    @ManyToOne
+    @JoinColumn(name = "producerID", nullable = false)
+    public Celebrity getProducer() {
+        return producer;
     }
 
-    public void setCelebrities(Set<Celebrity> celebrities) {
-        this.celebrities = celebrities;
+    public void setProducer(Celebrity producer) {
+        this.producer = producer;
+    }
+
+    public String getProductionCompany() {
+        return productionCompany;
+    }
+
+    public void setProductionCompany(String productionCompany) {
+        this.productionCompany = productionCompany;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "writerID", nullable = false)
+    public Celebrity getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Celebrity writer) {
+        this.writer = writer;
+    }
+
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    public Set<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(Set<Character> characters) {
+        this.characters = characters;
+    }
+
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    public Set<Rating> getRatings() {
+        return ratings;
     }
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
     }
 
+    @ElementCollection(targetClass = Genre.class)
+    @CollectionTable(name = "MediaGenres",
+            joinColumns = {@JoinColumn(name = "mediaID")})
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genre", nullable = false, length = 32)
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
+
+
 }

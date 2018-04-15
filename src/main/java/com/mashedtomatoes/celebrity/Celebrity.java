@@ -1,38 +1,45 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mashedtomatoes.media.Media;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Celebrities")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Celebrity {
 
-    private long ID;
+    private long id;
     private String name;
     private Date birthday;
     private String birthplace;
     private String biography;
     private String profileImage;
-    private Set<Media> media = new HashSet<>();
-    private Set<Character> characters = new HashSet<>();
-    private Set<Media> directorOf = new HashSet<>();
 
     public Celebrity() {
     }
 
     public String toString() {
-        return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";
+        return "Celebrity(id=" + this.getId()
+                + ", name=" + this.getName()
+                + ", birthday=" + this.getBirthday()
+                + ", birthplace=" + this.getBirthplace()
+                + ", biography=" + this.getBiography()
+                + ", profileImage=" + this.getProfileImage() + ")";
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
+    @JsonProperty("id")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(nullable = false)
@@ -40,8 +47,16 @@ public class Celebrity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getBirthday() {
         return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     @JsonProperty("place_of_birth")
@@ -49,9 +64,17 @@ public class Celebrity {
         return birthplace;
     }
 
+    public void setBirthplace(String birthplace) {
+        this.birthplace = birthplace;
+    }
+
     @Column(columnDefinition = "TEXT")
     public String getBiography() {
         return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     @JsonProperty("profile_path")
@@ -59,55 +82,7 @@ public class Celebrity {
         return profileImage;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
-    public Set<Media> getMedia() {
-        return media;
-    }
-
-    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Character> getCharacters() {
-        return characters;
-    }
-
-    @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Media> getDirectorOf() {
-        return directorOf;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setBirthplace(String birthplace) {
-        this.birthplace = birthplace;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
-
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public void setMedia(Set<Media> media) {
-        this.media = media;
-    }
-
-    public void setCharacters(Set<Character> characters) {
-        this.characters = characters;
-    }
-
-    public void setDirectorOf(Set<Media> directorOf) {
-        this.directorOf = directorOf;
     }
 }

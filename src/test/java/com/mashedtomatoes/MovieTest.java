@@ -44,14 +44,14 @@ public class MovieTest {
         HashSet<Celebrity> celebs = new HashSet<>();
         celebs.add(bradPitt);
 
-        movie.setCelebrities(celebs);
+//        movie.setCelebrities(celebs);
         movieRepository.save(movie);
 
         System.err.println(bradPitt);
-        System.err.println(bradPitt.getMedia().size());
-        bradPitt = celebrityRepository.findById(bradPitt.getID()).get();
+//        System.err.println(bradPitt.getMedia().size());
+        bradPitt = celebrityRepository.findById(bradPitt.getId()).get();
         System.err.println(bradPitt);
-        System.err.println(bradPitt.getMedia().size());
+//        System.err.println(bradPitt.getMedia().size());
 
     }
 
