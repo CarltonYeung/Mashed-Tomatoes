@@ -85,6 +85,6 @@ if __name__ == '__main__':
                         help='Amount of movies to store per year (default: 15)')
 
     args = parser.parse_args()
-    store_movies(start_year=args.start_year, end_year=args.end_year,
-                 limit=args.limit, basepath=args.basepath)
+    store_movies(start_year=int(args.start_year), end_year=int(args.end_year),
+                 limit=int(args.limit), basepath=args.basepath)
     db.close()
