@@ -1,7 +1,6 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.security.HashService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,18 +11,19 @@ public class UserService {
   private AudienceRepository audienceRepository;
   private HashService hashService;
 
-  @Autowired
   public UserService(UserRepository userRepository,
                      AudienceRepository audienceRepository,
                      HashService hashService) {
-    
+
     this.userRepository = userRepository;
     this.audienceRepository = audienceRepository;
     this.hashService = hashService;
-
   }
 
-  public Audience addAudience(String displayName, String email, String password) throws Exception {
+  public Audience addAudience(String displayName,
+                              String email,
+                              String password) throws Exception {
+
     if (audienceRepository.existsByDisplayName(displayName)) {
       throw new Exception("This display name already exists.");
     }
@@ -36,37 +36,32 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  boolean verifyEmail(String email, String verificationKey) {
-    Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
+  boolean verifyEmail(String email,
+                      String verificationKey) {
 
+    Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
       return false;
     }
-
     User user = optionalUser.get();
     UserVerification verification = user.getVerification();
-
     if (verification.verify(verificationKey)) {
       userRepository.save(user);
-      return true;
     }
-
-    return false;
+    return verification.isVerified();
   }
 
-  User getUserByCredentials(String email, String plaintextPassword) {
-    Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
+  User getUserByCredentials(String email,
+                            String plaintextPassword) {
 
+    Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
       return null;
     }
-
     User user = optionalUser.get();
-
     if (!hashService.matches(plaintextPassword, user.getCredentials().getPassword())) {
       return null;
     }
-
     return user;
   }
 

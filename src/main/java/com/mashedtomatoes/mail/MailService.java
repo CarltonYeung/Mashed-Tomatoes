@@ -1,6 +1,5 @@
 package com.mashedtomatoes.mail;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,38 +13,22 @@ import java.util.Properties;
 
 @Service
 public class MailService {
+  @Value("${spring.mail.host}")           private String host;
+  @Value("${spring.mail.port}")           private int port;
+  @Value("${spring.mail.username}")       private String username;
+  @Value("${spring.mail.password}")       private String password;
+  @Value("${mt.mail.from}")               private String from;
+  @Value("${mt.mail.transport.protocol}") private String protocol;
+  @Value("${mt.server.host}")             private String serverHost;
+  @Value("${mt.server.port}")             private int serverPort;
+
   private JavaMailSenderImpl mailSender;
+  private TemplateEngine templateEngine;
   private boolean configured;
 
-  @Value("${spring.mail.host}")
-  private String host;
-
-  @Value("${spring.mail.port}")
-  private int port;
-
-  @Value("${spring.mail.username}")
-  private String username;
-
-  @Value("${spring.mail.password}")
-  private String password;
-
-  @Value("${mt.mail.from}")
-  private String from;
-
-  @Value("${mt.mail.transport.protocol}")
-  private String protocol;
-
-  @Value("${mt.server.host}")
-  private String serverHost;
-
-  @Value("${mt.server.port}")
-  private int serverPort;
-
-  @Autowired
-  private TemplateEngine templateEngine;
-
-  public MailService(JavaMailSenderImpl mailSender) {
+  public MailService(JavaMailSenderImpl mailSender, TemplateEngine templateEngine) {
     this.mailSender = mailSender;
+    this.templateEngine = templateEngine;
     this.configured = false;
   }
 
@@ -72,6 +55,10 @@ public class MailService {
     mailSender.send(mail);
   }
 
+  /*
+   * This method should not be called inside the constructor
+   * because the necessary values will not have been injected yet.
+   */
   private void configure() {
     if (!configured) {
       mailSender.setHost(host);

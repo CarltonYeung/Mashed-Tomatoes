@@ -3,7 +3,6 @@ package com.mashedtomatoes.user;
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.mail.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +12,13 @@ import javax.validation.Valid;
 
 @RestController
 public class UserAPIController {
-  @Autowired
   private UserService userService;
-
-  @Autowired
   private MailService mailService;
+
+  public UserAPIController(UserService userService, MailService mailService) {
+    this.userService = userService;
+    this.mailService = mailService;
+  }
 
   @PostMapping("/register")
   public void register(@Valid @RequestBody RegisterRequest request,
@@ -31,13 +32,11 @@ public class UserAPIController {
       response.setHeader("message", e.getMessage());
       return;
     }
-
     String to = user.getCredentials().getEmail();
     String key = user.getVerification().getVerificationKey();
     System.out.println(key);
     mailService.sendVerificationEmail(to, key);
     response.setStatus(HttpServletResponse.SC_CREATED);
-
   }
 
   @GetMapping("/verify")
@@ -50,7 +49,6 @@ public class UserAPIController {
     } else {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
-
   }
 
   @PostMapping("/login")
@@ -59,23 +57,19 @@ public class UserAPIController {
                     HttpServletResponse response) {
 
     User user = userService.getUserByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
-
     if (user == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       response.setHeader("message", "Bad credentials.");
       return;
     }
-
     if (!user.getVerification().isVerified()) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       response.setHeader("message", "Email not verified.");
       return;
     }
-
     HttpSession session = request.getSession(true);
     session.setAttribute("User", user);
     response.setStatus(HttpServletResponse.SC_OK);
-
   }
 
   @PostMapping("/logout")
@@ -83,15 +77,12 @@ public class UserAPIController {
                      HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
-
     if (session == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return;
     }
-
     session.invalidate();
     response.setStatus(HttpServletResponse.SC_OK);
-
   }
 
   @GetMapping("/hello")
@@ -99,13 +90,11 @@ public class UserAPIController {
                     HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
-
     if (session == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     } else {
       response.setStatus(HttpServletResponse.SC_OK);
     }
-
   }
 
 }

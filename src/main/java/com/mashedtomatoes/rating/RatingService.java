@@ -3,17 +3,24 @@ package com.mashedtomatoes.rating;
 import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
-import java.util.Iterator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Iterator;
 
 @Service
 public class RatingService {
-  @Autowired private AudienceRatingRepository audRatingRepository;
+  private AudienceRatingRepository audRatingRepository;
+  private RatingRepository ratingRepository;
+  private UserRepository userRepository;
 
-  @Autowired private RatingRepository ratingRepository;
+  public RatingService(AudienceRatingRepository audRatingRepository,
+                       RatingRepository ratingRepository,
+                       UserRepository userRepository) {
 
-  @Autowired private UserRepository userRepository;
+    this.audRatingRepository = audRatingRepository;
+    this.ratingRepository = ratingRepository;
+    this.userRepository = userRepository;
+  }
 
   public void submitAudienceRating(Movie movie, User user, int rating, String review) {
     AudienceRating audienceRating = new AudienceRating();

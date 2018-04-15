@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CelebrityViewController {
   @Autowired
   CelebrityService celebrityService;
-
   @Autowired
   MovieRepository movieRepository;
-
   @Autowired
   CharacterRepository characterRepository;
 
