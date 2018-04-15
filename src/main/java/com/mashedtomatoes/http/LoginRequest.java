@@ -11,7 +11,7 @@ public class LoginRequest {
   public LoginRequest() {}
 
   @NotEmpty
-  @Size(max = 255)
+  @Size
   @Email
   public String getEmail() {
     return email;
