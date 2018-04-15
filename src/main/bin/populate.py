@@ -51,8 +51,10 @@ def store_movie(api_movie_id, basepath):
         net.download_file(net.get_poster_img_url(movie.poster_path), basepath)
 
     movie_credits = net.get_movie_credits(api_movie_id)
-    writer_id, director_id, producer_id = store_movie_crew(movie_credits, basepath)
+    writer_id, director_id, producer_id = store_movie_crew(
+        movie_credits, basepath)
     movie_id = db.save_movie(movie, writer_id, director_id, producer_id)
+    db.save_media_genres(movie_id, movie.genres)
     for i, cast_member in enumerate(movie_credits.cast, 0):
         if i == MAX_CAST_MEMBERS:
             break

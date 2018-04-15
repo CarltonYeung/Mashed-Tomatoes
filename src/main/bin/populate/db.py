@@ -3,6 +3,36 @@ import mysql.connector
 
 CHARACTER_NAME_WIDTH = 255
 
+VALID_GENRES = [
+    'ACTION',
+    'ADVENTURE',
+    'ANIMATION',
+    'BIOGRAPHY',
+    'COMEDY',
+    'CRIME',
+    'DOCUMENTARY',
+    'DRAMA',
+    'FAMILY',
+    'FANTASY',
+    'GAMESHOW',
+    'HISTORY',
+    'HORROR',
+    'MUSIC',
+    'MUSICAL',
+    'MYSTERY',
+    'NEWS',
+    'REALITYTV',
+    'ROMANCE',
+    'SCIFI',
+    'SHORT',
+    'SPORT',
+    'TALKSHOW',
+    'THRILLER',
+    'WAR',
+    'WESTERN'
+]
+
+
 _cnx = mysql.connector.connect(
     host=os.environ['MT_MYSQL_DB_HOST'],
     user=os.environ['MT_MYSQL_USER'],
@@ -34,7 +64,30 @@ def save_media(media, writer_id, director_id, producer_id):
 
     _cursor.execute(add_media, sql_media)
 
+    _cnx.commit()
+
     return _cursor.lastrowid
+
+
+def save_media_genres(media_id, genres):
+    add_media = ("insert into MediaGenres"
+                 "(mediaID, genre)"
+                 "values (%s, %s)")
+
+    valid_genres = map(lambda genre: genre.upper(), genres)
+    valid_genres = filter(lambda genre: genre in VALID_GENRES, valid_genres)
+    if not valid_genres:
+        valid_genres.append('ACTION') # default genre
+
+    valid_genres = list(set(valid_genres))
+
+    for genre in valid_genres:
+        try:
+            sql_media = (media_id, genre)
+            _cursor.execute(add_media, sql_media)
+            _cnx.commit()
+        except mysql.connector.errors.IntegrityError as e:
+            continue
 
 
 def save_movie(movie, writer_id, director_id, producer_id):

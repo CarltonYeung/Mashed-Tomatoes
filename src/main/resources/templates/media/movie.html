@@ -68,10 +68,6 @@
           <div class="row mt-2">
             <div class="col-md-7 px-0">
               <div class="media-info">
-                <p class="media-info -key">Rating:</p>
-                <p class="media-info -value" th:text="${movie.rating}"></p>
-              </div>
-              <div class="media-info">
                 <p class="media-info -key">Genre: </p>
                 <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
               </div>
@@ -81,15 +77,19 @@
               </div>
               <div class="media-info">
                 <p class="media-info -key">Written By: </p>
-                <p class="media-info -value" th:text="${movie.commaSeperatedWriters}"></p>
+                <p class="media-info -value" th:text="${movie.writer.name}"></p>
+                <div class="media-info">
+                  <p class="media-info -key">Produced By: </p>
+                  <p class="media-info -value" th:text="${movie.producer.name}"></p>
+                </div>
               </div>
               <div class="media-info">
                 <p class="media-info -key">Release Date: </p>
                 <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Studio: </p>
-                <p class="media-info -value" th:text="${movie.studio}"></p>
+                <p class="media-info -key">Production Company: </p>
+                <p class="media-info -value" th:text="${movie.productionCompany}"></p>
               </div>
 
             </div>

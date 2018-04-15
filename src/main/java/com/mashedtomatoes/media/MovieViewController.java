@@ -37,17 +37,17 @@ public class MovieViewController {
 
   static class ViewModel extends Movie {
 
-    private Double averageCriticRating;
+    private Double averageCriticRating = 0.0;
 
-    private Integer totalCriticRating;
+    private Integer totalCriticRating = 0;
 
-    private Integer smashCount;
+    private Integer smashCount = 0;
 
-    private Integer passCount;
+    private Integer passCount = 0;
 
-    private Double averageAudienceRating;
+    private Double averageAudienceRating = 0.0;
 
-    private Integer totalAudienceRating;
+    private Integer totalAudienceRating = 0;
 
     public ViewModel(Movie movie) {
       super.setId(movie.getId());
@@ -58,6 +58,12 @@ public class MovieViewController {
       super.setReleaseDate(movie.getReleaseDate());
       super.setRunTime(movie.getRunTime());
       super.setPosterPath(FILES_URI + movie.getPosterPath());
+      super.setCharacters(movie.getCharacters());
+      super.getCharacters().forEach(character -> {
+      	Celebrity c = character.getCelebrity();
+      	System.out.println(c.getProfilePath());
+      	character.getCelebrity().setProfilePath(FILES_URI + c.getProfilePath());
+      });
 	    super.setDirector(movie.getDirector());
 	    super.setProducer(movie.getProducer());
 	    super.setWriter(movie.getWriter());
@@ -67,10 +73,30 @@ public class MovieViewController {
     }
 
     public Double getAverageCriticRating() {
-      return 0.0;
+    	return averageCriticRating;
     }
 
-    public void setTotalAudienceRating(Integer totalAudienceRating) {
+	  public Integer getTotalCriticRating() {
+    	return totalCriticRating;
+	  }
+
+	  public Integer getSmashCount() {
+		  return smashCount;
+	  }
+
+	  public Integer getPassCount() {
+		  return passCount;
+	  }
+
+	  public Double getAverageAudienceRating() {
+		  return averageAudienceRating;
+	  }
+
+	  public Integer getTotalAudienceRating() {
+		  return totalAudienceRating;
+	  }
+
+	  public void setTotalAudienceRating(Integer totalAudienceRating) {
       this.totalAudienceRating = totalAudienceRating;
     }
 
@@ -96,5 +122,6 @@ public class MovieViewController {
     public List<AudienceRating> getAudienceRatings() {
       return null;
     }
+
   }
 }
