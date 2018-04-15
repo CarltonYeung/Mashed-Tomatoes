@@ -2,12 +2,9 @@ package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
-import com.mashedtomatoes.http.StatusMessage;
 import com.mashedtomatoes.mail.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,82 +12,89 @@ import javax.validation.Valid;
 
 @RestController
 public class UserAPIController {
-  @Autowired
   private UserService userService;
-
-  @Autowired
   private MailService mailService;
 
+  public UserAPIController(UserService userService, MailService mailService) {
+    this.userService = userService;
+    this.mailService = mailService;
+  }
+
   @PostMapping("/register")
-  public StatusMessage register(@Valid @RequestBody RegisterRequest request) {
+  public void register(@Valid @RequestBody RegisterRequest request,
+                       HttpServletResponse response) {
+
     Audience user;
     try {
       user = userService.addAudience(request.getDisplayName(), request.getEmail(), request.getPassword());
     } catch (Exception e) {
-      return new StatusMessage(false, e.getMessage());
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.setHeader("message", e.getMessage());
+      return;
     }
-    System.out.println(user.getVerification().getVerificationKey());
     String to = user.getCredentials().getEmail();
     String key = user.getVerification().getVerificationKey();
-    try {
-      mailService.sendVerificationEmail(to, key);
-    } catch (MessagingException e) {
-      return new StatusMessage(false, "Failed to send verification email.");
-    }
-    return new StatusMessage(true, "Success! Please check your email for verification details.");
+    System.out.println(key);
+    mailService.sendVerificationEmail(to, key);
+    response.setStatus(HttpServletResponse.SC_CREATED);
   }
 
   @GetMapping("/verify")
-  public StatusMessage verify(@RequestParam("email") String email, @RequestParam("key") String key) {
-    boolean success = userService.verifyEmail(email, key);
-    String message;
-    if (success) {
-      message = "Verification successful.";
+  public void verify(@RequestParam("email") String email,
+                     @RequestParam("key") String key,
+                     HttpServletResponse response) {
+
+    if (userService.verifyEmail(email, key)) {
+      response.setStatus(HttpServletResponse.SC_OK);
     } else {
-      message = "Verification failed.";
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
-    return new StatusMessage(success, message);
   }
 
   @PostMapping("/login")
-  public StatusMessage login(
-      @Valid @RequestBody LoginRequest req, HttpServletRequest httpServletRequest) {
-    User user = userService.getUserByCredentials(req.getEmail(), req.getPassword());
+  public void login(@Valid @RequestBody LoginRequest loginRequest,
+                    HttpServletRequest request,
+                    HttpServletResponse response) {
 
+    User user = userService.getUserByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
     if (user == null) {
-      return new StatusMessage(false, "Login failed.");
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setHeader("message", "Bad credentials.");
+      return;
     }
-
     if (!user.getVerification().isVerified()) {
-      return new StatusMessage(false, "Please verify your email.");
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setHeader("message", "Email not verified.");
+      return;
     }
-
-    HttpSession httpSession = httpServletRequest.getSession(true);
-    httpSession.setAttribute("User", user);
-
-    return new StatusMessage(true, "Login successful.");
+    HttpSession session = request.getSession(true);
+    session.setAttribute("User", user);
+    response.setStatus(HttpServletResponse.SC_OK);
   }
 
   @PostMapping("/logout")
-  public void logout(
-      HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-    HttpSession session = httpServletRequest.getSession(false);
+  public void logout(HttpServletRequest request,
+                     HttpServletResponse response) {
+
+    HttpSession session = request.getSession(false);
     if (session == null) {
-      httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return;
     }
     session.invalidate();
-    httpServletResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
+    response.setStatus(HttpServletResponse.SC_OK);
   }
 
   @GetMapping("/hello")
-  public StatusMessage hello(HttpServletRequest httpRequest) {
-    HttpSession httpSession = httpRequest.getSession(false);
+  public void hello(HttpServletRequest request,
+                    HttpServletResponse response) {
 
-    if (httpSession == null) {
-      return new StatusMessage(false, "You are not logged in.");
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    } else {
+      response.setStatus(HttpServletResponse.SC_OK);
     }
-
-    return new StatusMessage(true, "You are logged in.");
   }
+
 }

@@ -1,7 +1,6 @@
 package com.mashedtomatoes.http;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 public class RegisterRequest {
@@ -22,7 +21,7 @@ public class RegisterRequest {
     return password;
   }
 
-  @NotBlank
+  @NotEmpty
   public String getDisplayName() {
     return displayName;
   }

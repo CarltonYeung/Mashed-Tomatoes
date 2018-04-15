@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AppController {
+
   @Value("${mt.title}")
   private String title = "MT!";
 

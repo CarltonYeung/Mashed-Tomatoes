@@ -4,30 +4,25 @@ import com.mashedtomatoes.http.RateRequest;
 import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserType;
+import org.apache.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import org.apache.http.HttpStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 public class MovieAPIController {
-  @Autowired
-  MovieService movieService;
+  private MovieService movieService;
+  private RatingService ratingService;
 
-  @Autowired
-  RatingService ratingService;
+  MovieAPIController(MovieService movieService, RatingService ratingService) {
+    this.movieService = movieService;
+    this.ratingService = ratingService;
+  }
 
   @GetMapping("/api/movie")
   public Iterable<Movie> getMovies(@RequestParam(value = "expr", required = false) String expr) {
@@ -36,8 +31,7 @@ public class MovieAPIController {
 
   @GetMapping("/api/movie/{slug}")
   public Movie getMovie(@PathVariable String slug) {
-    Movie movie = movieService.getMovieBySlug(slug);
-    return movie;
+    return movieService.getMovieBySlug(slug);
   }
 
   @DeleteMapping("/api/movie/{slug}/delete")
@@ -47,7 +41,9 @@ public class MovieAPIController {
   }
 
   @PatchMapping("/api/movie/{slug}/update")
-  public Movie updateMovie(@PathVariable String slug, @RequestBody Movie movieIn) {
+  public Movie updateMovie(@PathVariable String slug,
+                           @RequestBody Movie movieIn) {
+
     Movie movie = movieService.getMovieBySlug(slug);
     movie.setTitle(movieIn.getTitle());
     movieService.updateMovie(movie);
@@ -55,65 +51,62 @@ public class MovieAPIController {
   }
 
   @PostMapping("/api/movie/{slug}/rate")
-  public void submitRating(
-      @PathVariable String slug,
-      @Valid @RequestBody RateRequest rateRequest,
-      HttpServletRequest httpRequest,
-      HttpServletResponse httpResponse) {
-    HttpSession httpSession = httpRequest.getSession(false);
+  public void submitRating(@PathVariable String slug,
+                           @Valid @RequestBody RateRequest rateRequest,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
+
+    HttpSession session = request.getSession(false);
     Movie movie = movieService.getMovieBySlug(slug);
-    if (httpSession == null) {
-      httpResponse.setStatus(HttpStatus.SC_UNAUTHORIZED);
+    if (session == null) {
+      response.setStatus(HttpStatus.SC_UNAUTHORIZED);
       return;
     } else if (movie == null) {
-      httpResponse.setStatus(HttpStatus.SC_NOT_FOUND);
+      response.setStatus(HttpStatus.SC_NOT_FOUND);
       return;
     }
-    User user = (User) httpSession.getAttribute("User");
+    User user = (User) session.getAttribute("User");
     if (user.getType() != UserType.AUDIENCE) {
-      httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
+      response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;
     }
-    ratingService.submitAudienceRating(
-        movie, user, rateRequest.getRating(), rateRequest.getReview());
-    //        movieService.updateMovie(movie);
-    httpResponse.setStatus(HttpStatus.SC_OK);
+    ratingService.submitAudienceRating(movie, user, rateRequest.getRating(), rateRequest.getReview());
+    response.setStatus(HttpStatus.SC_OK);
   }
 
   @PatchMapping("/api/movie/{slug}/rate/update/{ratingID}")
-  public void updateRating(
-      @PathVariable String slug,
-      @PathVariable int ratingID,
-      @Valid @RequestBody RateRequest rateRequest,
-      HttpServletRequest httpRequest,
-      HttpServletResponse httpResponse) {}
+  public void updateRating(@PathVariable String slug,
+                           @PathVariable int ratingID,
+                           @Valid @RequestBody RateRequest rateRequest,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {}
 
   @DeleteMapping("/api/movie/{slug}/rate/delete/{ratingID}")
-  public void deleteRating(
-      @PathVariable String slug,
-      @PathVariable int ratingID,
-      HttpServletRequest httpRequest,
-      HttpServletResponse httpResponse) {
-    HttpSession httpSession = httpRequest.getSession(false);
+  public void deleteRating(@PathVariable String slug,
+                           @PathVariable int ratingID,
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
+
+    HttpSession httpSession = request.getSession(false);
     Movie movie = movieService.getMovieBySlug(slug);
     if (httpSession == null) {
-      httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
+      response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;
     } else if (movie == null) {
-      httpResponse.setStatus(HttpStatus.SC_NOT_FOUND);
+      response.setStatus(HttpStatus.SC_NOT_FOUND);
       return;
     }
     User user = (User) httpSession.getAttribute("User");
     if (user.getType() != UserType.AUDIENCE) {
-      httpResponse.setStatus(HttpStatus.SC_FORBIDDEN);
+      response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;
     }
-    boolean wasDeleted = ratingService.deleteAudienceRating(movie, user, ratingID);
-    if (wasDeleted) {
+    boolean deleted = ratingService.deleteAudienceRating(movie, user, ratingID);
+    if (deleted) {
       movieService.updateMovie(movie);
-      httpResponse.setStatus(HttpStatus.SC_OK);
+      response.setStatus(HttpStatus.SC_OK);
     } else {
-      httpResponse.setStatus(HttpStatus.SC_BAD_REQUEST);
+      response.setStatus(HttpStatus.SC_BAD_REQUEST);
     }
   }
 }

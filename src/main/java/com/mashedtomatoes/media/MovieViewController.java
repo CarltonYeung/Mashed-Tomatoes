@@ -3,10 +3,6 @@ package com.mashedtomatoes.media;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class MovieViewController {
   @Autowired
-  MovieService movieService;
+  private MovieService movieService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
