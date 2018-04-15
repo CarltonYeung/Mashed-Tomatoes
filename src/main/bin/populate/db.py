@@ -16,6 +16,11 @@ def close():
 
 
 def save_media(media, writer_id, director_id, producer_id):
+    _cursor.execute('select id from Media where title = %s', (media.title,))
+    row = _cursor.fetchone()
+    if row:
+        return row[0]
+
     add_media = ("insert into Media "
                  "(description, posterPath, productionCompany, releaseDate, runTime, slug, title, writerId, directorId, producerId)"
                  "values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
@@ -30,11 +35,16 @@ def save_media(media, writer_id, director_id, producer_id):
 
 
 def save_movie(movie, writer_id, director_id, producer_id):
+    media_id = save_media(movie, writer_id, director_id, producer_id)
+
+    _cursor.execute('select id from Movies where id = %s', (media_id,))
+    row = _cursor.fetchone()
+    if row:
+        return row[0]
+
     add_movie = ("insert into Movies "
                  "(id, boxOffice, budget, trailerPath)"
                  "values (%s, %s, %s, %s)")
-
-    media_id = save_media(movie, writer_id, director_id, producer_id)
 
     sql_movie = (media_id, movie.box_office,
                  movie.budget, movie.production_company)
