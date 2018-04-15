@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page Temp</title>
+</head>
+<body>
+<th:block th:each="movie : ${movies}">
+    <tr>
+        <td th:text="${movie.title}">...</td>
+        <td th:text="${movie.slug}">...</td>
+    </tr>
+</th:block>
+
+<th:block th:each="tvshow : ${tvShows}">
+    <tr>
+        <td th:text="${tvshow.title}">...</td>
+        <td th:text="${tvshow.slug}">...</td>
+    </tr>
+</th:block>
+
+<th:block th:each="celeb : ${celebrities}">
+    <tr>
+        <td th:text="${celeb.name}">...</td>
+    </tr>
+</th:block>
+
+</body>
+</html>

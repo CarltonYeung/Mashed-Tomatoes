@@ -32,7 +32,6 @@ target
 # Build
 out
 build
-bin
 
 # JS
 *node_modules
@@ -41,3 +40,4 @@ bin
 *.log
 *.swp
 *.bak
+__pycache__

@@ -1,67 +1,70 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.mashedtomatoes.media.Media;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "Characters")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Character {
+  private long id;
+  private String name;
+  private Celebrity celebrity;
+  private int castOrder;
+  private Media media;
 
-    private long ID;
-    private String name;
-    private Celebrity playedBy;
-    private int castOrder;
-    protected Set<Quote> quotes;
+  public Character() {}
 
-    public Character() {
-        this.quotes = new HashSet<>();
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonProperty("id")
+  public long getId() {
+    return id;
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    @Column(nullable = false)
-    public String getName() {
-        return name;
-    }
+  @Column(nullable = false)
+  public String getName() {
+    return name;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "celebrityID", nullable = false)
-    public Celebrity getPlayedBy() {
-        return playedBy;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @Column(nullable = false)
-    public int getCastOrder() {
-        return castOrder;
-    }
+  @ManyToOne
+  @JoinColumn(name = "celebrityID", nullable = false)
+  public Celebrity getCelebrity() {
+    return celebrity;
+  }
 
-    @OneToMany(mappedBy = "saidBy")
-    public Set<Quote> getQuotes() {
-        return quotes;
-    }
+  public void setCelebrity(Celebrity celebrity) {
+    this.celebrity = celebrity;
+  }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
+  @Column(nullable = false)
+  public int getCastOrder() {
+    return castOrder;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setCastOrder(int castOrder) {
+    this.castOrder = castOrder;
+  }
 
-    public void setPlayedBy(Celebrity playedBy) {
-        this.playedBy = playedBy;
-    }
+  @ManyToOne
+  @JoinColumn(name = "mediaID")
+  public Media getMedia() {
+    return media;
+  }
 
-    public void setCastOrder(int castOrder) {
-        this.castOrder = castOrder;
-    }
-
-    public void setQuotes(Set<Quote> quotes) {
-        this.quotes = quotes;
-    }
+  public void setMedia(Media media) {
+    this.media = media;
+  }
 }

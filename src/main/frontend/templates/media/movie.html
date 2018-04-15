@@ -26,10 +26,6 @@
                     <div class="row mt-2">
                         <div class="col-md-7 px-0">
                             <div class="media-info">
-                                <p class="media-info -key">Rating:</p>
-                                <p class="media-info -value" th:text="${movie.rating}"></p>
-                            </div>
-                            <div class="media-info">
                                 <p class="media-info -key">Genre: </p>
                                 <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
                             </div>
@@ -39,15 +35,19 @@
                             </div>
                             <div class="media-info">
                                 <p class="media-info -key">Written By: </p>
-                                <p class="media-info -value" th:text="${movie.commaSeperatedWriters}"></p>
+                                <p class="media-info -value" th:text="${movie.writer.name}"></p>
+                            <div class="media-info">
+                                <p class="media-info -key">Produced By: </p>
+                                <p class="media-info -value" th:text="${movie.producer.name}"></p>
+                            </div>
                             </div>
                             <div class="media-info">
                                 <p class="media-info -key">Release Date: </p>
                                 <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Studio: </p>
-                                <p class="media-info -value" th:text="${movie.studio}"></p>
+                                <p class="media-info -key">Production Company: </p>
+                                <p class="media-info -value" th:text="${movie.productionCompany}"></p>
                             </div>
 
                         </div>
@@ -99,8 +99,8 @@
             <h1 class="media-section -title">Cast</h1>
             <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
                 <div class="talent-box" th:each="character: ${movie.characters}">
-                    <img class="talent-box -profile" th:src="${character.playedBy.profileImage}">
-                    <p class="talent-box -celebrity" th:text="${character.playedBy.name}"></p>
+                    <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
+                    <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
                     <p class="talent-box -character">as  <span th:text="${character.name}"></span></p>
                 </div>
             </div>

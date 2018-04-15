@@ -1,109 +1,77 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.media.*;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "AudienceFavorites")
 public class AudienceFavorite {
+  private long id;
+  private Audience audience;
+  private String movie;
+  private String tvShow;
+  private String celebrity;
+  private String genre;
 
-    private long ID;
-    private Audience audience;
-    private Movie movie;
-    private TVShow tvShow;
-    private TVShowSeason tvShowSeason;
-    private TVShowEpisode tvShowEpisode;
-    private Celebrity celebrity;
-    private Genre genre;
+  AudienceFavorite() {}
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
-    AudienceFavorite() {}
+  AudienceFavorite(Audience audience) {
+    this.audience = audience;
+  }
 
-    AudienceFavorite(Audience audience) {
-        this.audience = audience;
-    }
+  @Id
+  public long getId() {
+    return id;
+  }
 
-    @Id
-    public long getID() {
-        return ID;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "audienceID")
-    public Audience getAudience() {
-        return audience;
-    }
+  @MapsId
+  @OneToOne
+  @JoinColumn(name = "audienceID")
+  public Audience getAudience() {
+    return audience;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "movie")
-    public Movie getMovie() {
-        return movie;
-    }
+  public void setAudience(Audience audience) {
+    this.audience = audience;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "tvShow")
-    public TVShow getTvShow() {
-        return tvShow;
-    }
+  public String getMovie() {
+    return movie;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "tvShowSeason")
-    public TVShowSeason getTvShowSeason() {
-        return tvShowSeason;
-    }
+  public void setMovie(String movie) {
+    this.movie = movie;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "tvShowEpisode")
-    public TVShowEpisode getTvShowEpisode() {
-        return tvShowEpisode;
-    }
+  public String getTvShow() {
+    return tvShow;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "celebrity")
-    public Celebrity getCelebrity() {
-        return celebrity;
-    }
+  public void setTvShow(String tvShow) {
+    this.tvShow = tvShow;
+  }
 
-    @Column(name = "genre", length = 32)
-    @Enumerated(EnumType.STRING)
-    public Genre getGenre() {
-        return genre;
-    }
+  public String getCelebrity() {
+    return celebrity;
+  }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
+  public void setCelebrity(String celebrity) {
+    this.celebrity = celebrity;
+  }
 
-    public void setAudience(Audience audience) {
-        this.audience = audience;
-    }
+  public String getGenre() {
+    return genre;
+  }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setTvShow(TVShow tvShow) {
-        this.tvShow = tvShow;
-    }
-
-    public void setTvShowSeason(TVShowSeason tvShowSeason) {
-        this.tvShowSeason = tvShowSeason;
-    }
-
-    public void setTvShowEpisode(TVShowEpisode tvShowEpisode) {
-        this.tvShowEpisode = tvShowEpisode;
-    }
-
-    public void setCelebrity(Celebrity celebrity) {
-        this.celebrity = celebrity;
-    }
-
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
+  public void setGenre(String genre) {
+    this.genre = genre;
+  }
 }

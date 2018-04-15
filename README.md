@@ -28,3 +28,6 @@ To start a local Tomcat server run (defaults to port 8080):
 ```
 mvn exec:java
 ```
+
+See this link for changing MySQL server to UTF-8
+https://stackoverflow.com/questions/30061227/mysql-tables-are-not-utf-8-even-though-i-instructed-hibernate-to-do-create-them

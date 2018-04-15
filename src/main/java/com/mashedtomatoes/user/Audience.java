@@ -1,98 +1,109 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.media.Media;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Audiences")
 public class Audience extends User {
+  private String displayName;
+  private Set<Media> wantToSee;
+  private Set<Media> notInterested;
+  private AudienceFavorite favorites;
+  private boolean superReviewer;
+  private boolean publicProfile;
 
-    private String displayName;
-    private Set<Media> wantToSee;
-    private Set<Media> notInterested;
-    private AudienceFavorite favorites;
-    private boolean superReviewer;
-    private boolean publicProfile;
+  public Audience() {}
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
-    public Audience() {}
+  public Audience(String displayName, String email, String hashedPassword) {
+    super(UserType.AUDIENCE);
+    super.getCredentials().setEmail(email);
+    super.getCredentials().setPassword(hashedPassword);
+    this.displayName = displayName;
+    this.wantToSee = new HashSet<>();
+    this.notInterested = new HashSet<>();
+    this.favorites = new AudienceFavorite(this);
+    this.superReviewer = false;
+    this.publicProfile = true;
+  }
 
-    public Audience(String displayName, String email, String hashedPassword) {
-        super(UserType.AUDIENCE);
-        super.getCredentials().setEmail(email);
-        super.getCredentials().setPassword(hashedPassword);
-        this.displayName = displayName;
-        this.wantToSee = new HashSet<>();
-        this.notInterested = new HashSet<>();
-        this.favorites = new AudienceFavorite(this);
-        this.superReviewer = false;
-        this.publicProfile = true;
-    }
+  @Override
+  public String toString() {
+    return String.valueOf(this.getId());
+  }
 
-    @Override
-    public String toString() {
-        return String.valueOf(this.getID());
-    }
+  @Column(nullable = false, unique = true)
+  public String getDisplayName() {
+    return displayName;
+  }
 
-    @Column(nullable = false, unique = true)
-    public String getDisplayName() {
-        return displayName;
-    }
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
 
-    @ManyToMany
-    @JoinTable(name = "AudiencesWantToSeeMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
-    public Set<Media> getWantToSee() {
-        return wantToSee;
-    }
+  @ManyToMany
+  @JoinTable(
+    name = "AudiencesWantToSeeMedia",
+    joinColumns = {@JoinColumn(name = "audienceID")},
+    inverseJoinColumns = {@JoinColumn(name = "mediaID")}
+  )
+  public Set<Media> getWantToSee() {
+    return wantToSee;
+  }
 
-    @ManyToMany
-    @JoinTable(name = "AudiencesNotInterestedMedia", joinColumns = {@JoinColumn(name = "audienceID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
-    public Set<Media> getNotInterested() {
-        return notInterested;
-    }
+  public void setWantToSee(Set<Media> wantToSee) {
+    this.wantToSee = wantToSee;
+  }
 
-    @OneToOne(mappedBy = "audience", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    public AudienceFavorite getFavorites() {
-        return favorites;
-    }
+  @ManyToMany
+  @JoinTable(
+    name = "AudiencesNotInterestedMedia",
+    joinColumns = {@JoinColumn(name = "audienceID")},
+    inverseJoinColumns = {@JoinColumn(name = "mediaID")}
+  )
+  public Set<Media> getNotInterested() {
+    return notInterested;
+  }
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    public boolean isSuperReviewer() {
-        return superReviewer;
-    }
+  public void setNotInterested(Set<Media> notInterested) {
+    this.notInterested = notInterested;
+  }
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    public boolean isPublicProfile() {
-        return publicProfile;
-    }
+  @OneToOne(mappedBy = "audience", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  public AudienceFavorite getFavorites() {
+    return favorites;
+  }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
+  public void setFavorites(AudienceFavorite favorites) {
+    this.favorites = favorites;
+  }
 
-    public void setWantToSee(Set<Media> wantToSee) {
-        this.wantToSee = wantToSee;
-    }
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  public boolean isSuperReviewer() {
+    return superReviewer;
+  }
 
-    public void setNotInterested(Set<Media> notInterested) {
-        this.notInterested = notInterested;
-    }
+  public void setSuperReviewer(boolean superReviewer) {
+    this.superReviewer = superReviewer;
+  }
 
-    public void setFavorites(AudienceFavorite favorites) {
-        this.favorites = favorites;
-    }
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  public boolean isPublicProfile() {
+    return publicProfile;
+  }
 
-    public void setSuperReviewer(boolean superReviewer) {
-        this.superReviewer = superReviewer;
-    }
-
-    public void setPublicProfile(boolean publicProfile) {
-        this.publicProfile = publicProfile;
-    }
+  public void setPublicProfile(boolean publicProfile) {
+    this.publicProfile = publicProfile;
+  }
 }

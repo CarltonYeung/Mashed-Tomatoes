@@ -1,116 +1,79 @@
 package com.mashedtomatoes.celebrity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mashedtomatoes.media.Media;
-
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Celebrities")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Celebrity {
+  private long id;
+  private String name;
+  private Date birthday;
+  private String birthplace;
+  private String biography;
+  private String profilePath;
 
-    private long ID;
-    private String name;
-    private Date birthday;
-    private String birthplace;
-    private String biography;
-    private String profileImage;
-    private Set<Media> media;
-    private Set<Character> characters;
-    private Set<Media> directorOf;
+  public Celebrity() {}
 
-    public Celebrity() {
-        this.media = new HashSet<>();
-        this.characters = new HashSet<>();
-        this.directorOf = new HashSet<>();
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonProperty("id")
+  public long getId() {
+    return id;
+  }
 
-    public String toString() {
-        return "Celebrity(ID=" + this.getID() + ", name=" + this.getName() + ", birthday=" + this.getBirthday() + ", birthplace=" + this.getBirthplace() + ", biography=" + this.getBiography() + ", profileImage=" + this.getProfileImage() + ", media=" + this.getMedia() + ", characters=" + this.getCharacters() + ", directorOf=" + this.getDirectorOf() + ")";
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getID() {
-        return ID;
-    }
+  @Column(nullable = false)
+  public String getName() {
+    return name;
+  }
 
-    @Column(nullable = false)
-    public String getName() {
-        return name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Date getBirthday() {
-        return birthday;
-    }
+  public Date getBirthday() {
+    return birthday;
+  }
 
-    @JsonProperty("place_of_birth")
-    public String getBirthplace() {
-        return birthplace;
-    }
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
 
-    @Column(columnDefinition = "TEXT")
-    public String getBiography() {
-        return biography;
-    }
+  public String getBirthplace() {
+    return birthplace;
+  }
 
-    @JsonProperty("profile_path")
-    public String getProfileImage() {
-        return profileImage;
-    }
+  public void setBirthplace(String birthplace) {
+    this.birthplace = birthplace;
+  }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "MediaCelebrities", joinColumns = {@JoinColumn(name = "celebrityID")}, inverseJoinColumns = {@JoinColumn(name = "mediaID")})
-    public Set<Media> getMedia() {
-        return media;
-    }
+  @Column(columnDefinition = "TEXT")
+  public String getBiography() {
+    return biography;
+  }
 
-    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Character> getCharacters() {
-        return characters;
-    }
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
 
-    @OneToMany(mappedBy = "directedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<Media> getDirectorOf() {
-        return directorOf;
-    }
+  public String getProfilePath() {
+    return profilePath;
+  }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setBirthplace(String birthplace) {
-        this.birthplace = birthplace;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
-
-    public void setMedia(Set<Media> media) {
-        this.media = media;
-    }
-
-    public void setCharacters(Set<Character> characters) {
-        this.characters = characters;
-    }
-
-    public void setDirectorOf(Set<Media> directorOf) {
-        this.directorOf = directorOf;
-    }
+  public void setProfilePath(String profilePath) {
+    this.profilePath = profilePath;
+  }
 }

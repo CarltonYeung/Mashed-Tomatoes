@@ -1,28 +1,43 @@
 package com.mashedtomatoes.rating;
 
-import com.mashedtomatoes.publication.CriticPublication;
-
+import java.net.URL;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CriticRatings")
 public class CriticRating extends Rating {
+  private Publisher publisher;
+  private String title;
+  private URL link;
 
-    private CriticPublication source;
+  public CriticRating() {}
 
-    public CriticRating() {
-    }
+  @ManyToOne
+  @JoinColumn(name = "publisherId")
+  public Publisher getPublisher() {
+    return publisher;
+  }
 
-    @OneToOne
-    @JoinColumn(name = "publicationID", nullable = false)
-    public CriticPublication getSource() {
-        return this.source;
-    }
+  public void setPublisher(Publisher publisher) {
+    this.publisher = publisher;
+  }
 
-    public void setSource(CriticPublication source) {
-        this.source = source;
-    }
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public URL getLink() {
+    return link;
+  }
+
+  public void setLink(URL link) {
+    this.link = link;
+  }
 }

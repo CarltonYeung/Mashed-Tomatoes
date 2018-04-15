@@ -1,73 +1,72 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.publication.Publisher;
-
-import javax.persistence.*;
+import com.mashedtomatoes.rating.Publisher;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Critics")
 public class Critic extends User {
+  private String firstName;
+  private String lastName;
+  private Publisher publisher;
+  private boolean topCritic;
+  private String slug;
 
-    private String firstName;
-    private String lastName;
-    private Publisher publisher;
-    private boolean topCritic;
-    private String slug;
+  public Critic() {}
 
-    /**
-     * Hibernate needs default constructor for entities.
-     */
-    public Critic() {}
+  public Critic(String firstName, String lastName) {
+    super(UserType.CRITIC);
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.topCritic = false;
+  }
 
-    public Critic(String firstName, String lastName) {
-        super(UserType.CRITIC);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.topCritic = false;
-    }
+  @Column(nullable = false)
+  public String getFirstName() {
+    return firstName;
+  }
 
-    @Column(nullable = false)
-    public String getFirstName() {
-        return firstName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    @Column(nullable = false)
-    public String getLastName() {
-        return lastName;
-    }
+  @Column(nullable = false)
+  public String getLastName() {
+    return lastName;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "publisherID", nullable = false)
-    public Publisher getPublisher() {
-        return publisher;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    public boolean isTopCritic() {
-        return topCritic;
-    }
+  @ManyToOne
+  @JoinColumn(name = "publisherID", nullable = false)
+  public Publisher getPublisher() {
+    return publisher;
+  }
 
-    public String getSlug() {
-        return slug;
-    }
+  public void setPublisher(Publisher publisher) {
+    this.publisher = publisher;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  public boolean isTopCritic() {
+    return topCritic;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setTopCritic(boolean topCritic) {
+    this.topCritic = topCritic;
+  }
 
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
+  public String getSlug() {
+    return slug;
+  }
 
-    public void setTopCritic(boolean topCritic) {
-        this.topCritic = topCritic;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
 }
