@@ -22,10 +22,10 @@ public class UserAPIController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/register")
+    @PostMapping("/register.html")
     public StatusMessage register(@Valid @RequestBody RegisterRequest req) {
         Audience user;
-
+        
         try {
             user = userService.addAudience(req.getDisplayName(), req.getEmail(), req.getPassword());
         } catch (Exception e) {

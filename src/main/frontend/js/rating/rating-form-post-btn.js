@@ -1,6 +1,5 @@
 const $ = require('jquery');
 const _ = require('lodash');
-const ko = require('knockout');
 const urlBuilder = require('../url-builder');
 
 module.exports.deps = [

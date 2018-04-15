@@ -6,7 +6,9 @@ const _ = require('lodash');
 const components = [
   require('./base/nav-bar'),
   require('./media/media-update-list'),
-  require('./rating/rating-form-post-btn')
+  require('./rating/rating-form-post-btn'),
+  require('./user/login-btn'),
+  require('./user/register-btn')
 ];
 
 const areDepsMet = deps => {

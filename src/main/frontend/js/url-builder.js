@@ -5,4 +5,10 @@ module.exports = {
   buildCreateRating: (movieSlug) => {
     return "/api/movie/" + movieSlug + "/rating";
   },
+  buildLogin:() => {
+    return "/login";
+  },
+  buildRegister:() => {
+    return "/register.html";
+  }
 };
