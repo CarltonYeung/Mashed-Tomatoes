@@ -4,17 +4,14 @@ import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.http.StatusMessage;
 import com.mashedtomatoes.mail.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserAPIController {
@@ -28,34 +25,23 @@ public class UserAPIController {
   public StatusMessage register(@Valid @RequestBody RegisterRequest request) {
     Audience user;
     try {
-      user =
-          userService.addAudience(
-              request.getDisplayName(), request.getEmail(), request.getPassword());
+      user = userService.addAudience(request.getDisplayName(), request.getEmail(), request.getPassword());
     } catch (Exception e) {
       return new StatusMessage(false, e.getMessage());
     }
     System.out.println(user.getVerification().getVerificationKey());
-    String email = user.getCredentials().getEmail();
+    String to = user.getCredentials().getEmail();
     String key = user.getVerification().getVerificationKey();
-    String message =
-        "Please follow the link to verify your email.\n"
-            + "http://localhost:8080/verify?email="
-            + email
-            + "&key="
-            + key;
     try {
-      this.mailService.send(
-          user.getCredentials().getEmail(), "Verify your Mashed Tomatoes email", message);
-    } catch (MailException e) {
-      System.err.println(e.getMessage());
+      mailService.sendVerificationEmail(to, key);
+    } catch (MessagingException e) {
       return new StatusMessage(false, "Failed to send verification email.");
     }
     return new StatusMessage(true, "Success! Please check your email for verification details.");
   }
 
   @GetMapping("/verify")
-  public StatusMessage verify(
-      @RequestParam("email") String email, @RequestParam("key") String key) {
+  public StatusMessage verify(@RequestParam("email") String email, @RequestParam("key") String key) {
     boolean success = userService.verifyEmail(email, key);
     String message;
     if (success) {
