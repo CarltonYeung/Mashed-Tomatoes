@@ -33,7 +33,7 @@ public class MailService {
     String link = "http://" + serverHost + ":" + serverPort + "/verify?email=" + to + "&key=" + key;
     Context context = new Context();
     context.setVariable("link", link);
-    send(to, "Verify your Mashed Tomatoes email", "emailverification", context);
+    send(to, env.getProperty("mt.verifyEmailSubject"), "emailverification", context);
   }
 
   public void send(String to, String subject, String templateName, Context context) {
