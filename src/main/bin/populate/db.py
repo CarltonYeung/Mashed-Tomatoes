@@ -44,11 +44,10 @@ def save_movie(movie, writer_id, director_id, producer_id):
         return row[0]
 
     add_movie = ("insert into Movies "
-                 "(id, boxOffice, budget, trailerPath)"
-                 "values (%s, %s, %s, %s)")
+                 "(id, boxOffice, budget)"
+                 "values (%s, %s, %s)")
 
-    sql_movie = (media_id, movie.box_office,
-                 movie.budget, movie.production_company)
+    sql_movie = (media_id, movie.box_office, movie.budget)
 
     _cursor.execute(add_movie, sql_movie)
 
@@ -58,7 +57,8 @@ def save_movie(movie, writer_id, director_id, producer_id):
 
 
 def save_celebrity(celebrity):
-    _cursor.execute('select id from Celebrities where name = %s', (celebrity.name,))
+    _cursor.execute(
+        'select id from Celebrities where name = %s', (celebrity.name,))
     row = _cursor.fetchone()
     if row:
         return row[0]

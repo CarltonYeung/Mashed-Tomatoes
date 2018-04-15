@@ -52,12 +52,16 @@ def json_to_media_credits(node):
     return models.MediaCredits(crew=crew, cast=cast)
 
 def json_to_celebrity(node):
+    birthday = None
+    if 'birthday' in node:
+        dateutil.parser.parse(node['birthday'])
+
     return models.Celebrity(
-        biography=node['biography'],
-        birthday=dateutil.parser.parse(getattr(node, 'birthday', '1960')),
+        biography=getattr(node, 'biography', 'None'),
+        birthday=birthday,
         birthplace=getattr(node, 'place_of_birth', 'Unknown'),
         name=node['name'],
-        profile_path=node['profile_path']
+        profile_path=getattr(node, 'profile_path', None)
     )
 
 def json_to_api_movie_ids(node, limit):
