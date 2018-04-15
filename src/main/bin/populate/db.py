@@ -2,6 +2,7 @@ import os
 import mysql.connector
 
 _cnx = mysql.connector.connect(
+    host=os.environ['MT_MYSQL_DB_HOST'],
     user=os.environ['MT_MYSQL_USER'],
     password=os.environ['MT_MYSQL_PASSWORD'],
     database=os.environ['MT_MYSQL_DB_NAME'])
