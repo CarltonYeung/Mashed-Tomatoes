@@ -3,11 +3,11 @@ const _ = require('lodash');
 const urlBuilder = require('../url-builder');
 
 module.exports.deps = [
-  '#register-btn'
+  '#registration-form'
 ];
 
 module.exports.init = () => {
-  $('#registration-form').submit(function (e) {
+  $('#registration-form').submit(evt => {
     const displayNameSelector = $('#register-display-name');
     console.log(displayNameSelector.val());
     const emailSelector = $('#register-email');
