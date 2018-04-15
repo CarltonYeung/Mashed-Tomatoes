@@ -3,6 +3,7 @@ package com.mashedtomatoes.user;
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.mail.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +13,10 @@ import javax.validation.Valid;
 
 @RestController
 public class UserAPIController {
+  @Autowired
   private UserService userService;
+  @Autowired
   private MailService mailService;
-
-  public UserAPIController(UserService userService, MailService mailService) {
-    this.userService = userService;
-    this.mailService = mailService;
-  }
 
   @PostMapping("/register")
   public void register(@Valid @RequestBody RegisterRequest request,

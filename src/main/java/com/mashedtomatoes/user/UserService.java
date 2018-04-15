@@ -1,24 +1,19 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.security.HashService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
+  @Autowired
   private UserRepository userRepository;
+  @Autowired
   private AudienceRepository audienceRepository;
+  @Autowired
   private HashService hashService;
-
-  public UserService(UserRepository userRepository,
-                     AudienceRepository audienceRepository,
-                     HashService hashService) {
-
-    this.userRepository = userRepository;
-    this.audienceRepository = audienceRepository;
-    this.hashService = hashService;
-  }
 
   public Audience addAudience(String displayName,
                               String email,

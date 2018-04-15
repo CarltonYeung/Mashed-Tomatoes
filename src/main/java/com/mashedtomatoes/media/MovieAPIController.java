@@ -5,6 +5,7 @@ import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserType;
 import org.apache.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -16,13 +17,10 @@ import javax.validation.Valid;
 
 @RestController
 public class MovieAPIController {
+  @Autowired
   private MovieService movieService;
+  @Autowired
   private RatingService ratingService;
-
-  MovieAPIController(MovieService movieService, RatingService ratingService) {
-    this.movieService = movieService;
-    this.ratingService = ratingService;
-  }
 
   @GetMapping("/api/movie")
   public Iterable<Movie> getMovies(@RequestParam(value = "expr", required = false) String expr) {
