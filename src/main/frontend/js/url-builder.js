@@ -9,6 +9,6 @@ module.exports = {
     return "/login";
   },
   buildRegister:() => {
-    return "/register.html";
+    return "/register";
   }
 };

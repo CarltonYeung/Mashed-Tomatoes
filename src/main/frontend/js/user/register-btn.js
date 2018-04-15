@@ -43,7 +43,7 @@ module.exports.init = () => {
             success: res => {
               if (res.status == 204) {
                 console.log('Register Success');
-                // window.location = '/';
+                window.location = '/';
               }
             },
             error: res => {
