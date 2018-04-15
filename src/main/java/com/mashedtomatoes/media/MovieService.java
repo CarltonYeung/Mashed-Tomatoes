@@ -1,10 +1,18 @@
 package com.mashedtomatoes.media;
 
+import com.mashedtomatoes.util.FuzzyStringMatchComparator;
+import com.mashedtomatoes.util.RegexBuilder;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {
+  private static final int MAX_MOVIE_SEARCH_COUNT = 10;
+  private static final String URL_SPACE_DELIM = "+";
+
   @Autowired
   MovieRepository movieRepository;
 
@@ -12,7 +20,20 @@ public class MovieService {
     if (expr == null) {
       return movieRepository.findAll();
     }
-    return movieRepository.findSimilarMovies(expr);
+
+    List<String> parts = Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
+    String regex = RegexBuilder.buildMySQLRegex(parts);
+    List<Movie> movies = movieRepository.findSimilarMovies(regex);
+    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
+    FuzzyStringMatchComparator<Movie> movieComparator =
+        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
+    Collections.sort(movies, movieComparator);
+
+    if (movies.size() < MAX_MOVIE_SEARCH_COUNT) {
+      return movies;
+    }
+
+    return movies.subList(0, MAX_MOVIE_SEARCH_COUNT);
   }
 
   Movie getMovieBySlug(String slug) {

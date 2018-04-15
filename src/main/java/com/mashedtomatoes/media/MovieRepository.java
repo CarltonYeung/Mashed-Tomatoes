@@ -1,5 +1,6 @@
 package com.mashedtomatoes.media;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,8 +17,9 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   Movie findFirstBySlug(String slug);
 
-  @Query("SELECT m FROM Movie m WHERE m.title LIKE :expr")
-  Iterable<Movie> findSimilarMovies(@Param("expr") String expr);
+  // select title from Movies, Media where Movies.id = Media.id AND title regexp '.*(a|tr).*';
+  @Query(value = "SELECT * FROM Movies, Media WHERE Movies.id = Media.id AND title REGEXP :expr", nativeQuery = true)
+  List<Movie> findSimilarMovies(@Param("expr") String expr);
 
   Iterable<Movie> findAllByWriter_Id(long id);
 

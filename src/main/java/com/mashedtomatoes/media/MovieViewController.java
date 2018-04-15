@@ -16,7 +16,8 @@ import org.thymeleaf.util.StringUtils;
 
 @Controller
 public class MovieViewController {
-  @Autowired MovieService movieService;
+  @Autowired
+  MovieService movieService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
