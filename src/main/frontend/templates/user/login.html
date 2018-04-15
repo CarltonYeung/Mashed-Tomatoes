@@ -16,24 +16,26 @@
       </div>
       <div class="row">
         <a href="index.html" class="login-body center">
-          <img src="img/logo.png" class="login-logo">
+          <img src="/img/base/logo.png" class="login-logo">
         </a>
       </div>
-      <div class="row">
-        <div class="login-body form-group my-3 w-25">
-          <label class="hi" for="usr">Email Address:</label>
-          <input type="text" class="form-control" id="usr">
+      <form action="" method="post">
+        <div class="row">
+          <div class="login-body form-group my-3 w-25">
+            <label for="usr">Email Address:</label>
+            <input id="input-login-email"type="email" class="form-control" id="usr">
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="login-body form-group my-3 w-25">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd">
+        <div class="row">
+          <div class="login-body form-group my-3 w-25">
+            <label for="pwd">Password:</label>
+            <input id="input-login-pwd"type="password" class="form-control" id="pwd">
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <a href="index.html" class="login-body login-page-btn btn btn-warning my-4">LOGIN</a>
-      </div>
+        <div class="row">
+          <input id="login-btn" type="submit" value="LOGIN" class="login-body login-page-btn btn btn-warning my-4">
+        </div>
+      </form>
       <div class="row">
         <a class="login-body login-forgot-recover my-4" href="recover.html">Forgot your password?</a>
       </div>

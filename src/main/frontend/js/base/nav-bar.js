@@ -5,7 +5,7 @@ module.exports.init = () => {
     if ($(document).scrollTop() > 150) {
       $("#nav").css("position", "fixed");
       $("#nav").css("margin-top", "-17px");
-      $("#content-container").css("padding-top", "133.33px");
+      $("#content-container").css("padding-top", "500px");
       $("#menus").insertBefore("#search-bar");
       $("#menus").css("max-width", "45%");
       $("#menus").css("float", "left");
