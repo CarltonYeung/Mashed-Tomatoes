@@ -1,11 +1,16 @@
 package com.mashedtomatoes.mail;
 
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 @Service
 public class MailService {
@@ -30,19 +35,37 @@ public class MailService {
   @Value("${mt.mail.transport.protocol}")
   private String protocol;
 
+  @Value("${mt.server.host}")
+  private String serverHost;
+
+  @Value("${mt.server.port}")
+  private int serverPort;
+
+  @Autowired
+  private TemplateEngine templateEngine;
+
   public MailService(JavaMailSenderImpl mailSender) {
     this.mailSender = mailSender;
     this.configured = false;
   }
 
-  public void send(String to, String subject, String body) throws MailException {
+  public void sendVerificationEmail(String to, String key) throws MessagingException {
+    String link = "http://" + serverHost + ":" + serverPort + "/verify?email=" + to + "&key=" + key;
+    Context context = new Context();
+    context.setVariable("link", link);
+    send(to, "Verify your Mashed Tomatoes email", "emailverification", context);
+  }
+
+  public void send(String to, String subject, String templateName, Context context) throws MessagingException {
     configure();
-    SimpleMailMessage msg = new SimpleMailMessage();
-    msg.setFrom(from);
-    msg.setTo(to);
-    msg.setSubject(subject);
-    msg.setText(body);
-    this.mailSender.send(msg);
+    MimeMessage mail = mailSender.createMimeMessage();
+    String body = templateEngine.process(templateName, context);
+    MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+    helper.setFrom(this.from);
+    helper.setTo(to);
+    helper.setSubject(subject);
+    helper.setText(body, true);
+    mailSender.send(mail);
   }
 
   private void configure() {
