@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class MovieViewController {
+	private static final String FILES_URI = "/files";
+
   @Autowired
   private MovieService movieService;
 
@@ -47,12 +49,6 @@ public class MovieViewController {
 
     private Integer totalAudienceRating;
 
-    private Celebrity director;
-
-    private List<Celebrity> writers;
-
-    private String studio;
-
     public ViewModel(Movie movie) {
       super.setId(movie.getId());
       super.setTitle(movie.getTitle());
@@ -61,8 +57,13 @@ public class MovieViewController {
       super.setDescription(movie.getDescription());
       super.setReleaseDate(movie.getReleaseDate());
       super.setRunTime(movie.getRunTime());
-      super.setPosterPath("/img/fight-club-poster.jpg"); // concat from base image path here
+      super.setPosterPath(FILES_URI + movie.getPosterPath());
+	    super.setDirector(movie.getDirector());
+	    super.setProducer(movie.getProducer());
+	    super.setWriter(movie.getWriter());
+	    super.setProductionCompany(movie.getProductionCompany());
       super.setBoxOffice(movie.getBoxOffice());
+      super.setBudget(movie.getBudget());
     }
 
     public Double getAverageCriticRating() {
@@ -73,36 +74,6 @@ public class MovieViewController {
       this.totalAudienceRating = totalAudienceRating;
     }
 
-    public Celebrity getDirector() {
-      Celebrity mock = new Celebrity();
-      mock.setName("John Doe");
-      return mock;
-    }
-
-    public void setDirector(Celebrity director) {
-      this.director = director;
-    }
-
-    public List<Celebrity> getWriters() {
-      List<Celebrity> mocks = new ArrayList<>();
-      Celebrity mock = new Celebrity();
-      mock.setName("John Doe");
-      mocks.add(mock);
-      return mocks;
-    }
-
-    public void setWriters(List<Celebrity> writers) {
-      this.writers = writers;
-    }
-
-    public String getStudio() {
-      return "Warner Bros.";
-    }
-
-    public void setStudio(String studio) {
-      this.studio = studio;
-    }
-
     public String getCommaSeperatedGenres() {
       return getGenres()
           .stream()
@@ -110,19 +81,12 @@ public class MovieViewController {
           .collect(Collectors.joining(","));
     }
 
-    public String getCommaSeperatedWriters() {
-      return "John Doe, Jane Doe";
-    }
-
     public List<String> getPhotos() {
-      return Arrays.asList(
-          "/img/fight-club-backdrop.jpg",
-          "/img/fight-club-backdrop.jpg",
-          "/img/fight-club-backdrop.jpg");
+    	return new ArrayList<>();
     }
 
     public List<String> getVideos() {
-      return Arrays.asList("/vid/jellyfish.mp4", "/vid/jellyfish.mp4", "/vid/jellyfish.mp4");
+    	return new ArrayList<>();
     }
 
     public List<CriticRating> getCriticRatings() {
