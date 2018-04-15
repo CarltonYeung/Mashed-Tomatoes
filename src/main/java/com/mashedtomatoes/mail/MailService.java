@@ -49,22 +49,26 @@ public class MailService {
     this.configured = false;
   }
 
-  public void sendVerificationEmail(String to, String key) throws MessagingException {
+  public void sendVerificationEmail(String to, String key) {
     String link = "http://" + serverHost + ":" + serverPort + "/verify?email=" + to + "&key=" + key;
     Context context = new Context();
     context.setVariable("link", link);
     send(to, "Verify your Mashed Tomatoes email", "emailverification", context);
   }
 
-  public void send(String to, String subject, String templateName, Context context) throws MessagingException {
+  public void send(String to, String subject, String templateName, Context context) {
     configure();
     MimeMessage mail = mailSender.createMimeMessage();
     String body = templateEngine.process(templateName, context);
-    MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-    helper.setFrom(this.from);
-    helper.setTo(to);
-    helper.setSubject(subject);
-    helper.setText(body, true);
+    try {
+      MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+      helper.setFrom(this.from);
+      helper.setTo(to);
+      helper.setSubject(subject);
+      helper.setText(body, true);
+    } catch (MessagingException e) {
+      System.err.println("Failed to send email.");
+    }
     mailSender.send(mail);
   }
 
