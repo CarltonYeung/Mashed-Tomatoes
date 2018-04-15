@@ -9,7 +9,10 @@ def json_to_genres(node):
     return list(map(lambda x: x['name'].upper(), node))
 
 def json_to_production_company(node):
-    return list(map(lambda x: x['name'], node))[0]
+    try:
+        return list(map(lambda x: x['name'], node))[0]
+    except IndexError as e:
+        return 'None'
 
 def json_to_movie(node):
     return models.Movie(
