@@ -53,7 +53,7 @@ def json_to_media_credits(node):
 
 def json_to_celebrity(node):
     birthday = None
-    if 'birthday' in node:
+    if 'birthday' in node and node['birthday']:
         dateutil.parser.parse(node['birthday'])
 
     return models.Celebrity(

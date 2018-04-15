@@ -1,6 +1,8 @@
 import os
 import mysql.connector
 
+CHARACTER_NAME_WIDTH = 255
+
 _cnx = mysql.connector.connect(
     host=os.environ['MT_MYSQL_DB_HOST'],
     user=os.environ['MT_MYSQL_USER'],
@@ -86,7 +88,11 @@ def save_character(celebrity_id, media_id, character):
                      "(castOrder, name, celebrityId, mediaId)"
                      "values (%s, %s, %s, %s)")
 
-    sql_character = (character.cast_order, character.name,
+    character_name = character.name
+    if len(character.name) > CHARACTER_NAME_WIDTH:
+        character_name = character.name[:CHARACTER_NAME_WIDTH]
+
+    sql_character = (character.cast_order, character_name,
                      celebrity_id, media_id)
 
     _cursor.execute(add_character, sql_character)
