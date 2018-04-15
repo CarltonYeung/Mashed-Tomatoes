@@ -1,5 +1,6 @@
-import models
 import dateutil.parser
+
+from . import models
 
 def slugify(s):
     return s.lower().replace(' ', '-')
@@ -17,7 +18,7 @@ def json_to_movie(node):
         poster_path=node['poster_path'], 
         release_date=dateutil.parser.parse(node['release_date']),
         run_time=node['runtime'],  box_office=int(node['revenue']),
-        genres=json_to_genres(node['genres']),
+        genres=json_to_genres(node['genres']), budget=int(node['budget']),
         production_company=json_to_production_company(node['production_companies'])
     )
 
@@ -29,8 +30,10 @@ def json_to_media_crew_member(node):
 
 def json_to_media_cast_member(node):
     return models.MediaCastMember(
-        character_name=node['character'],
-        character_order=int(node['order']),
+        character=models.Character(
+            name=node['character'],
+            cast_order=int(node['order']),
+        ),
         talent_id=node['id']
     )
 
@@ -44,3 +47,20 @@ def json_to_media_credits(node):
         cast.append(json_to_media_cast_member(cast_node))
 
     return models.MediaCredits(crew=crew, cast=cast)
+
+def json_to_celebrity(node):
+    return models.Celebrity(
+        biography=node['biography'],
+        birthday=dateutil.parser.parse(getattr(node, 'birthday', '1960')),
+        birthplace=getattr(node, 'place_of_birth', 'Unknown'),
+        name=node['name'],
+        profile_path=node['profile_path']
+    )
+
+def json_to_api_movie_ids(node, limit):
+    ids = []
+    for i, movie_node in enumerate(node['results'], 0):
+        if i == limit:
+            break
+        ids.append(movie_node['id'])
+    return ids

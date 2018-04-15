@@ -20,7 +20,7 @@ public class Celebrity {
   private Date birthday;
   private String birthplace;
   private String biography;
-  private String profileImage;
+  private String profilePath;
 
   public Celebrity() {}
 
@@ -69,11 +69,11 @@ public class Celebrity {
     this.biography = biography;
   }
 
-  public String getProfileImage() {
-    return profileImage;
+  public String getProfilePath() {
+    return profilePath;
   }
 
-  public void setProfileImage(String profileImage) {
-    this.profileImage = profileImage;
+  public void setProfilePath(String profilePath) {
+    this.profilePath = profilePath;
   }
 }

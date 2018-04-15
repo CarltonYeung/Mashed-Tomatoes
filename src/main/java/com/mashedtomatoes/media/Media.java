@@ -108,7 +108,7 @@ public abstract class Media {
   }
 
   @ManyToOne
-  @JoinColumn(name = "directorID", nullable = false)
+  @JoinColumn(name = "directorId")
   public Celebrity getDirector() {
     return director;
   }
@@ -118,7 +118,7 @@ public abstract class Media {
   }
 
   @ManyToOne
-  @JoinColumn(name = "producerID", nullable = false)
+  @JoinColumn(name = "producerId")
   public Celebrity getProducer() {
     return producer;
   }
@@ -136,7 +136,7 @@ public abstract class Media {
   }
 
   @ManyToOne
-  @JoinColumn(name = "writerID", nullable = false)
+  @JoinColumn(name = "writerId")
   public Celebrity getWriter() {
     return writer;
   }
