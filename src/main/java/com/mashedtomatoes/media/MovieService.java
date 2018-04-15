@@ -16,7 +16,7 @@ public class MovieService {
   @Autowired
   MovieRepository movieRepository;
 
-  Iterable<Movie> getAllMovies(String expr) {
+  public Iterable<Movie> getAllMovies(String expr) {
     if (expr == null) {
       return movieRepository.findAll();
     }

@@ -29,4 +29,5 @@ public class CelebrityViewController {
 
     return "celebrity/celebrity";
   }
+
 }
