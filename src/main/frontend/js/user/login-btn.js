@@ -3,44 +3,35 @@ const _ = require('lodash');
 const urlBuilder = require('../url-builder');
 
 module.exports.deps = [
-    '#login-btn'
+  '#login-form'
 ];
 
 module.exports.init = () => {
-  
-    $('#login-btn').on('click', () => {
-      const emailSelector = $('#input-login-email');
-      const pwdSelector = $('#input-login-pwd');
-      if (_.isNil(emailSelector.val())) {
-        console.log("Email is not typed");
-      } else 
-      if (_.isNil(pwdSelector.val())){
-        console.log("Password is not typed");
-      } else {
-        const email = emailSelector.val();
-        const pwd = pwdSelector.val();
-        let data = {
-          email, pwd
-        };
-  
-  
-        $.ajax(
-          urlBuilder.buildLogin(),
-          {
-            method: "POST",
-            data: data,
-            contentType: "application/json",
-            dataType: "application/json",
-            success: res => {
-              if (res.status == 204) {
-                console.log('Login Success');
-                window.location = '/';
-              }
-            },
-            error: res => {
-              console.error(res.status);
-            }
-        });
-      }
-    });
-  };
+  $('#login-form').submit(evt => {
+    const emailSelector = $('#login-email');
+    const passwordSelector = $('#login-password');
+    const data = {
+      email: emailSelector.val(),
+      password: passwordSelector.val()
+    };
+
+    console.log(data);
+    $.ajax(
+      urlBuilder.buildLogin(),
+      {
+        method: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: res => {
+          console.log('...redirecting...');
+          window.location = '/';
+        },
+        error: res => {
+          console.error('...failed...');
+          console.error(res.status);
+        }
+      });
+
+    evt.preventDefault();
+  });
+};

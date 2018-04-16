@@ -9,7 +9,8 @@ const components = [
   require('./rating/rating-form-post-btn'),
   require('./user/login-btn'),
   require('./user/register-btn'),
-  requrie('./search/search-btn')
+  requrie('./search/search-btn'),
+  require('./user/logout-btn'),
 ];
 
 const areDepsMet = deps => {

@@ -1,29 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Search Page Temp</title>
+  <div th:replace="partials/meta :: meta"></div>
+  <title>Mashed Tomatoes</title>
+  <div th:replace="partials/style :: style"></div>
 </head>
+
 <body>
-<th:block th:each="movie : ${movies}">
-    <tr>
-        <td th:text="${movie.title}">...</td>
-        <td th:text="${movie.slug}">...</td>
-    </tr>
-</th:block>
+  <div th:replace="partials/header :: header"></div>
+  <div class="container my-3 vertical-center">
+    <div class="container" id="contents-container">
+      <div class="m-5">
+        <h1 class="search-title">Search Result</h1>
+      </div>
 
-<th:block th:each="tvshow : ${tvShows}">
-    <tr>
-        <td th:text="${tvshow.title}">...</td>
-        <td th:text="${tvshow.slug}">...</td>
-    </tr>
-</th:block>
+        <h2 class="search-category mt-5 mb-4">Movie</h2>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <article class="search-result row">
+                <th:block th:each="movie : ${movies}">
+                    <div class="search-movie-img">
+                        <a href="#" class="thumbnail"><img class="thumbnails" src="/img/CFP3.jpg"   /></a>
+                    </div>
+                    <div class="search-rating">
+                            <div class="search-rating-img"><i></i> <span>RATING</span></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3 th:text="${movie.title}">Movie Name</h3>
+                        <p th:text-"${movie.slug}">Movie Info</p>		
+                    </div>
+                <span class="clearfix border"></span>
+                </th:block>
+            </article>			
+        </section>
 
-<th:block th:each="celeb : ${celebrities}">
-    <tr>
-        <td th:text="${celeb.name}">...</td>
-    </tr>
-</th:block>
+        <h2 class="search-category mt-5 mb-4">TV Show</h2>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <article class="search-result row">
+                <th:block th:each="tvshow : ${tvShows}">
+                    <div class="search-tvshow-img">
+                        <a href="#" class="thumbnail"><img class="thumbnails" src="/img/CFP3.jpg"   /></a>
+                    </div>
+                    <div class="search-rating">
+                            <div class="search-rating-img"><i></i> <span>RATING</span></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3 th:text="${tvshow.title}">TV Show Name</h3>
+                        <p th:text-"${tvshow.slug}">TV Show Info</p>		
+                    </div>
+                <span class="clearfix border"></span>
+                </th:block>
+            </article>			
+        </section>
 
+        <h2 class="search-category mt-5 mb-4">Celebrity</h2>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <article class="search-result row">
+                <th:block th:each="celeb : ${celebrities}">
+                    <div class="search-celeb-img">
+                        <a href="#" class="thumbnail"><img class="thumbnails" src="/img/CFP3.jpg"   /></a>
+                    </div>
+                    <div class="search-rating">
+                            <div class="search-rating-img"><i></i> <span>RATING</span></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3 th:text="${celeb.name}">Celebrity Name</h3>
+                        <p th:text-"${celeb.info}">Celebrity Info</p>		
+                    </div>
+                <span class="clearfix border"></span>
+                </th:block>
+            </article>			
+        </section>
+
+
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <div th:replace="partials/footer :: footer"></div>
+  <div th:replace="partials/script :: script"></div>
 </body>
+
 </html>

@@ -2,69 +2,57 @@
 <html lang="en">
 
 <head>
-  @@include('meta.html')
+  <div th:replace="partials/meta :: meta"></div>
   <title>Mashed Tomatoes</title>
-  @@include('style.html')
+  <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-  @@include('header.html')
+  <div th:replace="partials/header :: header"></div>
   <div class="container my-3 vertical-center">
     <div class="container" id="contents-container">
       <div class="m-5">
         <h1>Register</h1>
       </div>
       <div class="row">
-        <a href="index.html" class="register-body center">
+        <a href="/" class="register-body center">
           <img src="/img/base/logo.png" class="register-logo">
         </a>
       </div>
-      
-      <form action="" method="post">
-        <div class="row">
-          <div class=" w-25"></div>
-          <div class=" form-group my-3 w-25">
-            <label class="hi" for="usr">First Name:</label>
-            <input id="input-register-fname"type="text" class="form-control" required="required" />
-          </div>
-          <div class=" form-group my-3 w-25">
-            <label class="hi" for="usr">Last Name:</label>
-            <input id="input-register-lname"type="text" class="form-control" required="required" />
-          </div>
+
+      <form id="registration-form">
+        <div class="register-body form-group my-3 w-50">
+          <label class="register-display-name" for="register-email">Display Name:</label>
+          <input id="register-display-name" class="form-control" name="displayName" required="required" />
         </div>
-        <div class="row">
-          <div class="register-body form-group my-3 w-50">
-            <label class="hi" for="usr">Email Address:</label>
-            <input id="input-register-email" type="email" class="form-control" required="required" />
-          </div>
+        <div class="register-body form-group my-3 w-50">
+          <label class="register-email" for="register-email">Email Address:</label>
+          <input id="register-email" type="email" class="form-control" name="email" required="required" />
         </div>
-        <div class="row">
-          <div class="register-body form-group my-3 w-50">
-            <label for="pwd">Password:</label>
-            <input id="input-register-pwd"type="password" class="form-control" required="required" />
-          </div>
+        <div class="register-body form-group my-3 w-50">
+          <label for="register-password">Password:</label>
+          <input id="register-password" type="password" class="form-control" name="password" required="required" />
         </div>
         <p class="register-agree-already">
           By clicking "Sign up", I agree to the
-          <a href="terms.html">Terms of Service</a>
+          <a href="/terms">Terms of Service</a>
           and
-          <a href="privacy.html">Privacy Policy</a>.
+          <a href="/privacy">Privacy Policy</a>.
         </p>
         <div class="row">
           <input id="register-btn" type="submit" value="SIGN UP" class="register-body login-page-btn btn btn-warning my-4" />
-          <!-- <a href="index.html" id="register-btn" class="register-body login-page-btn btn btn-warning my-4">SIGN UP</a> -->
         </div>
       </form>
 
       <div class="mb-5">
         <p class="register-agree-already">Already have an account?
-          <a href="login.html">Log in here</a>
+          <a href="/login">Log in here</a>
         </p>
       </div>
     </div>
   </div>
-  @@include('footer.html')
-  @@include('script.html')
+  <div th:replace="partials/footer :: footer"></div>
+  <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>

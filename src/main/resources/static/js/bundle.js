@@ -27553,6 +27553,9 @@ module.exports = {
   buildLogin:() => {
     return "/login";
   },
+  buildLogout:() => {
+    return "/logout";
+  },
   buildRegister:() => {
     return "/register";
   },
@@ -27603,7 +27606,8 @@ const components = [
   __webpack_require__(11),
   __webpack_require__(12),
   __webpack_require__(13),
-  requrie('./search/search-btn')
+  requrie('./search/search-btn'),
+  __webpack_require__(14),
 ];
 
 const areDepsMet = deps => {
@@ -40235,47 +40239,38 @@ const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
 
 module.exports.deps = [
-    '#login-btn'
+  '#login-form'
 ];
 
 module.exports.init = () => {
-  
-    $('#login-btn').on('click', () => {
-      const emailSelector = $('#input-login-email');
-      const pwdSelector = $('#input-login-pwd');
-      if (_.isNil(emailSelector.val())) {
-        console.log("Email is not typed");
-      } else 
-      if (_.isNil(pwdSelector.val())){
-        console.log("Password is not typed");
-      } else {
-        const email = emailSelector.val();
-        const pwd = pwdSelector.val();
-        let data = {
-          email, pwd
-        };
-  
-  
-        $.ajax(
-          urlBuilder.buildLogin(),
-          {
-            method: "POST",
-            data: data,
-            contentType: "application/json",
-            dataType: "application/json",
-            success: res => {
-              if (res.status == 204) {
-                console.log('Login Success');
-                window.location = '/';
-              }
-            },
-            error: res => {
-              console.error(res.status);
-            }
-        });
-      }
-    });
-  };
+  $('#login-form').submit(evt => {
+    const emailSelector = $('#login-email');
+    const passwordSelector = $('#login-password');
+    const data = {
+      email: emailSelector.val(),
+      password: passwordSelector.val()
+    };
+
+    console.log(data);
+    $.ajax(
+      urlBuilder.buildLogin(),
+      {
+        method: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: res => {
+          console.log('...redirecting...');
+          window.location = '/';
+        },
+        error: res => {
+          console.error('...failed...');
+          console.error(res.status);
+        }
+      });
+
+    evt.preventDefault();
+  });
+};
 
 /***/ }),
 /* 13 */
@@ -40286,57 +40281,73 @@ const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
 
 module.exports.deps = [
-    '#register-btn'
+  '#registration-form'
 ];
 
 module.exports.init = () => {
-  
-    $('#register-btn').on('click',function(e){
-      e.preventDefault();
-      const fnameSelector = $('#input-register-fname');
-      const lnameSelector = $('#input-register-lname');
-      const emailSelector = $('#input-register-email');
-      const pwdSelector = $('#input-register-pwd');
-      if (_.isNil(emailSelector.val())) {
-        console.log("Email is not typed");
-      } else 
-      if (_.isNil(fnameSelector.val())){
-        console.log("First name is not typed");
-      } else 
-      if (_.isNil(lnameSelector.val())){
-        console.log("Last name is not typed");
-      } else 
-      if (_.isNil(pwdSelector.val())){
-        console.log("Password is not typed");
-      } else {
-        const displayName = fnameSelector.val() + " " + lnameSelector.val();
-        const email = emailSelector.val();
-        const password = pwdSelector.val();
-        let data = {
-          displayName, email, password
-        };
-        
-        $.ajax(
-          urlBuilder.buildRegister(),
-          {
-            method: "POST",
-            data: data,
-            contentType: "application/json",
-            dataType: "application/json",
-            success: res => {
-              if (res.status == 204) {
-                console.log('Register Success');
-                window.location = '/';
-              }
-            },
-            error: res => {
-              console.error(res.status);
-            }
-        });
-      }
-    });
-  };
+  $('#registration-form').submit(evt => {
+    const displayNameSelector = $('#register-display-name');
+    console.log(displayNameSelector.val());
+    const emailSelector = $('#register-email');
+    console.log(emailSelector.val());
+    const passwordSelector = $('#register-password');
+    console.log(passwordSelector);
+    console.log(passwordSelector.val());
 
+    const data = {
+      displayName: displayNameSelector.val(),
+      email: emailSelector.val(),
+      password: passwordSelector.val()
+    };
+
+    console.log(data);
+    
+    $.ajax(
+      urlBuilder.buildRegister(),
+      {
+        method: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: res => {
+          console.log('...redirecting...');
+          window.location.href = '/';
+        },
+        error: res => {
+          console.error(res.status);
+        }
+      });
+    e.preventDefault();
+  });
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const urlBuilder = __webpack_require__(2);
+
+module.exports.deps = [
+  '#logout-btn',
+];
+
+module.exports.init = () => {
+  $('#logout-btn').on('click', () => {
+    $.ajax(
+      urlBuilder.buildLogout(),
+      {
+        method: "POST",
+        success: res => {
+          window.location.href = "/";
+        },
+        error: res => {
+          console.error(res.status);
+        }
+      });
+  });
+};
 
 /***/ })
 /******/ ]);
