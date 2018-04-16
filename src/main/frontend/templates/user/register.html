@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  @@include('meta.html')
+  <div th:replace="partials/meta :: meta"></div>
   <title>Mashed Tomatoes</title>
-  @@include('style.html')
+  <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-  @@include('header.html')
+  <div th:replace="partials/header :: header"></div>
   <div class="container my-3 vertical-center">
     <div class="container" id="contents-container">
       <div class="m-5">
@@ -51,7 +51,8 @@
       </div>
     </div>
   </div>
-  @@include('footer.html') @@include('script.html')
+  <div th:replace="partials/footer :: footer"></div>
+  <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>

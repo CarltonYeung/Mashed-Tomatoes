@@ -1,10 +1,8 @@
 'use strict';
 
 const gulp = require('gulp');
-const htmlbeautify = require('gulp-html-beautify');
 const sass = require('gulp-sass');
 const jshint = require('gulp-jshint');
-const fileinclude = require('gulp-file-include');
 const webpack = require('webpack-stream');
 const fs = require('fs');
 
@@ -32,11 +30,6 @@ const usingThymeleaf = process.env.USING_THYMELEAF == 'true';
 
 gulp.task('html', () => {
   let stream = gulp.src(srcHTMLGlob)
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: srcHTMLPartialsRoot
-    }))
-    .pipe(htmlbeautify())
     .pipe(gulp.dest(resourceHTML));
   
   if (fs.existsSync(targetHTML)) {

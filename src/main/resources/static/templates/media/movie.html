@@ -2,13 +2,60 @@
 <html>
 
 <head>
-  <div th:replace="partials/meta :: meta"></div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title th:text="${movie.title}">Movie Page</title>
-  <div th:replace="partials/style :: style"></div>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
-  <div th:replace="partials/header :: header"></div>
+  <header id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="grid w-100">
+      <div class="row">
+        <a href="index.html" class="ml-3 navbar-brand ">
+                <img src="/img/base/logo.png" class="icon">
+            </a>
+        <form id="search-bar" class="mx-3 my-auto d-inline w-75">
+          <div class="input-group search-form ">
+            <input type="text" class="form-control field " placeholder="Search?">
+            <button class="btn action" onclick="location.href = 'search.html';">Search</button>
+          </div>
+        </form>
+        <a th:if="${not session.containsKey('user')}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+      </div>
+      <div id="menus" class="collapse navbar-collapse">
+        <ul class="w-100 m-auto navbar-nav menu-bar">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Movies
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>Movie Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        TV Shows
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>TV Show Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        News
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>News Megamenu</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
   <main class="container" th:data-media-slug="${movie.slug}">
     <section class="media-section">
       <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
@@ -52,32 +99,20 @@
                 <div class="row">
                   <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
                 </div>
-                <p class="text-center media-score -value">
-                  <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
-                <p class="text-center media-score -stat">Total Reviews:
-                  <span th:text="${movie.totalCriticRating}"></span>
-                </p>
-                <p class="text-center media-score -stat">Average Rating:
-                  <span th:text="${movie.averageCriticRating}"></span>/10</p>
-                <p class="text-center media-score -stat">Smash:
-                  <span th:text="${movie.smashCount}"></span>
-                </p>
-                <p class="text-center media-score -stat">Pass:
-                  <span th:text="${movie.passCount}"></span>
-                </p>
+                <p class="text-center media-score -value"><span th:text="${movie.averageCriticRating} * 100"></span>%</p>
+                <p class="text-center media-score -stat">Total Reviews: <span th:text="${movie.totalCriticRating}"></span></p>
+                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageCriticRating}"></span>/10</p>
+                <p class="text-center media-score -stat">Smash: <span th:text="${movie.smashCount}"></span></p>
+                <p class="text-center media-score -stat">Pass: <span th:text="${movie.passCount}"></span></p>
               </div>
               <div class="col-md-6">
                 <p class="text-center media-score -label">Audience Score</p>
                 <div class="row">
                   <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
                 </div>
-                <p class="text-center media-score -value">
-                  <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
-                <p class="text-center media-score -stat">Total Ratings:
-                  <span th:text="${movie.totalAudienceRating}"></span>
-                </p>
-                <p class="text-center media-score -stat">Average Rating:
-                  <span th:text="${movie.averageAudienceRating}"></span>/5</p>
+                <p class="text-center media-score -value"><span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
+                <p class="text-center media-score -stat">Total Ratings: <span th:text="${movie.totalAudienceRating}"></span></p>
+                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageAudienceRating}"></span>/5</p>
               </div>
             </div>
           </div>
@@ -108,9 +143,7 @@
         <div class="talent-box" th:each="character: ${movie.characters}">
           <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
           <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
-          <p class="talent-box -character">as
-            <span th:text="${character.name}"></span>
-          </p>
+          <p class="talent-box -character">as <span th:text="${character.name}"></span></p>
         </div>
       </div>
       <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
@@ -127,9 +160,7 @@
             <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
             <footer class="blockquote-footer">
               <small class="text-muted">
-                                <p>Last updated on
-                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-                                </p>
+                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
                                 <a th:href="@{/critic/{slug}(slug=${rating.author.slug})}" th:text="${rating.author.name}"></a> in
                                 <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
                             </small>
@@ -151,9 +182,7 @@
             <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
             <footer class="blockquote-footer">
               <small class="text-muted">
-                                <p>Last updated on
-                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-                                </p>
+                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
                                 <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
                             </small>
             </footer>
@@ -202,8 +231,30 @@
     <br />
     <br />
   </main>
-  <div th:replace="partials/footer :: footer"></div>
-  <div th:replace="partials/script :: script"></div>
+  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="collapse navbar-collapse">
+      <div class="mx-3 w-100 navbar-nav menu-bar">
+        <a class="nav-item nav-link col-lg" href="about.html">
+                About
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="feedback.html">
+                Feedback
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
+                Critic Submission
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
+                Join the Newsletter!
+                <span class="sr-only"></span>
+            </a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/bundle.js"></script>
+
 </body>
 
 </html>

@@ -2,13 +2,13 @@
 <html>
 
 <head>
-    @@include('meta.html')
+    <div th:replace="partials/meta :: meta"></div>
     <title>User Page</title>
-    @@include('style.html')
+    <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-    @@include('header.html')
+    <div th:replace="partials/header :: header"></div>
     <main class="container">
         <h1 class="main-title">John Doe</h1>
         <div class="row">
@@ -166,7 +166,8 @@
             </div>
         </div>
     </main>
-    @@include('footer.html') @@include('script.html')
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>

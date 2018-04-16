@@ -2,13 +2,13 @@
 <html>
 
 <head>
-    @@include('meta.html')
+    <div th:replace="partials/meta :: meta"></div>
     <title th:text="${movie.title}">Movie Page</title>
-    @@include('style.html')
+    <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-    @@include('header.html')
+    <div th:replace="partials/header :: header"></div>
     <main class="container" th:data-media-slug="${movie.slug}">
         <section class="media-section">
             <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
@@ -36,10 +36,10 @@
                             <div class="media-info">
                                 <p class="media-info -key">Written By: </p>
                                 <p class="media-info -value" th:text="${movie.writer.name}"></p>
-                            <div class="media-info">
-                                <p class="media-info -key">Produced By: </p>
-                                <p class="media-info -value" th:text="${movie.producer.name}"></p>
-                            </div>
+                                <div class="media-info">
+                                    <p class="media-info -key">Produced By: </p>
+                                    <p class="media-info -value" th:text="${movie.producer.name}"></p>
+                                </div>
                             </div>
                             <div class="media-info">
                                 <p class="media-info -key">Release Date: </p>
@@ -57,20 +57,32 @@
                                 <div class="row">
                                     <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
                                 </div>
-                                <p class="text-center media-score -value"><span th:text="${movie.averageCriticRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Reviews: <span th:text="${movie.totalCriticRating}"></span></p>
-                                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageCriticRating}"></span>/10</p>
-                                <p class="text-center media-score -stat">Smash: <span th:text="${movie.smashCount}"></span></p>
-                                <p class="text-center media-score -stat">Pass: <span th:text="${movie.passCount}"></span></p>
+                                <p class="text-center media-score -value">
+                                    <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
+                                <p class="text-center media-score -stat">Total Reviews:
+                                    <span th:text="${movie.totalCriticRating}"></span>
+                                </p>
+                                <p class="text-center media-score -stat">Average Rating:
+                                    <span th:text="${movie.averageCriticRating}"></span>/10</p>
+                                <p class="text-center media-score -stat">Smash:
+                                    <span th:text="${movie.smashCount}"></span>
+                                </p>
+                                <p class="text-center media-score -stat">Pass:
+                                    <span th:text="${movie.passCount}"></span>
+                                </p>
                             </div>
                             <div class="col-md-6">
                                 <p class="text-center media-score -label">Audience Score</p>
                                 <div class="row">
                                     <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
                                 </div>
-                                <p class="text-center media-score -value"><span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Ratings: <span th:text="${movie.totalAudienceRating}"></span></p>
-                                <p class="text-center media-score -stat">Average Rating: <span th:text="${movie.averageAudienceRating}"></span>/5</p>
+                                <p class="text-center media-score -value">
+                                    <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
+                                <p class="text-center media-score -stat">Total Ratings:
+                                    <span th:text="${movie.totalAudienceRating}"></span>
+                                </p>
+                                <p class="text-center media-score -stat">Average Rating:
+                                    <span th:text="${movie.averageAudienceRating}"></span>/5</p>
                             </div>
                         </div>
                     </div>
@@ -87,7 +99,7 @@
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Videos</h1>
             <div class="d-flex justify-content-between">
-                <div class="media-section -video-thumbnail" th:each="video: ${movie.videos}" >
+                <div class="media-section -video-thumbnail" th:each="video: ${movie.videos}">
                     <a th:href="${video.videoPath}">
                         <img th:src="${video.thumbnailPath}">
                     </a>
@@ -101,7 +113,9 @@
                 <div class="talent-box" th:each="character: ${movie.characters}">
                     <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
                     <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
-                    <p class="talent-box -character">as  <span th:text="${character.name}"></span></p>
+                    <p class="talent-box -character">as
+                        <span th:text="${character.name}"></span>
+                    </p>
                 </div>
             </div>
             <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
@@ -118,7 +132,9 @@
                         <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
                         <footer class="blockquote-footer">
                             <small class="text-muted">
-                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
+                                <p>Last updated on
+                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
+                                </p>
                                 <a th:href="@{/critic/{slug}(slug=${rating.author.slug})}" th:text="${rating.author.name}"></a> in
                                 <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
                             </small>
@@ -140,7 +156,9 @@
                         <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
                         <footer class="blockquote-footer">
                             <small class="text-muted">
-                                <p>Last updated on <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span></p>
+                                <p>Last updated on
+                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
+                                </p>
                                 <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
                             </small>
                         </footer>
@@ -164,18 +182,18 @@
                 </div>
             </div>
             <div id="rating-form" class="mt-3">
-                <h2 class="media-section -secondary-title" >Add your rating</h2>
+                <h2 class="media-section -secondary-title">Add your rating</h2>
                 <div class="row mt-2">
                     <fieldset class="mx-auto star-rating-bar">
                         <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
                         <label class="full" for="star5"></label>
-                        <input type="radio" id="star4" name="rating-form-star-rating" value="4"/>
+                        <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
                         <label class="full" for="star4"></label>
-                        <input type="radio" id="star3" name="rating-form-star-rating" value="3"/>
+                        <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
                         <label class="full" for="star3"></label>
-                        <input type="radio" id="star2" name="rating-form-star-rating" value="2"/>
+                        <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
                         <label class="full" for="star2"></label>
-                        <input type="radio" id="star1" name="rating-form-star-rating" value="1"/>
+                        <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
                         <label class="full" for="star1"></label>
                     </fieldset>
                 </div>
@@ -189,8 +207,8 @@
         <br />
         <br />
     </main>
-    @@include('footer.html')
-    @@include('script.html')
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>
