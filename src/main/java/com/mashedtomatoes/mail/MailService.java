@@ -1,6 +1,6 @@
 package com.mashedtomatoes.mail;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,34 +13,30 @@ import java.util.Properties;
 
 @Service
 public class MailService {
-  @Value("${spring.mail.host}")           private String host;
-  @Value("${spring.mail.port}")           private int port;
-  @Value("${spring.mail.username}")       private String username;
-  @Value("${spring.mail.password}")       private String password;
-  @Value("${mt.mail.from}")               private String from;
-  @Value("${mt.mail.transport.protocol}") private String protocol;
-  @Value("${mt.server.host}")             private String serverHost;
-  @Value("${mt.server.port}")             private int serverPort;
-
+  private Environment env; // Injection must be constructor-based
   private JavaMailSenderImpl mailSender;
   private TemplateEngine templateEngine;
-  private boolean configured;
+  private String from;
+  private String serverHost;
+  private int serverPort;
 
-  public MailService(JavaMailSenderImpl mailSender, TemplateEngine templateEngine) {
-    this.mailSender = mailSender;
+  public MailService(Environment env, JavaMailSenderImpl mailSender, TemplateEngine templateEngine) {
+    this.env = env;
     this.templateEngine = templateEngine;
-    this.configured = false;
+    this.from = env.getProperty("mt.mail.from");
+    this.serverHost = env.getProperty("mt.server.host");
+    this.serverPort = Integer.valueOf(env.getProperty("mt.server.port"));
+    configureSender(mailSender);
   }
 
   public void sendVerificationEmail(String to, String key) {
     String link = "http://" + serverHost + ":" + serverPort + "/verify?email=" + to + "&key=" + key;
     Context context = new Context();
     context.setVariable("link", link);
-    send(to, "Verify your Mashed Tomatoes email", "emailverification", context);
+    send(to, env.getProperty("mt.verifyEmailSubject"), "emailverification", context);
   }
 
   public void send(String to, String subject, String templateName, Context context) {
-    configure();
     MimeMessage mail = mailSender.createMimeMessage();
     String body = templateEngine.process(templateName, context);
     try {
@@ -55,19 +51,13 @@ public class MailService {
     mailSender.send(mail);
   }
 
-  /*
-   * This method should not be called inside the constructor
-   * because the necessary values will not have been injected yet.
-   */
-  private void configure() {
-    if (!configured) {
-      mailSender.setHost(host);
-      mailSender.setPort(port);
-      mailSender.setUsername(username);
-      mailSender.setPassword(password);
-      Properties props = mailSender.getJavaMailProperties();
-      props.put("mail.transport.protocol", protocol);
-      configured = true;
-    }
+  private void configureSender(JavaMailSenderImpl mailSender) {
+    mailSender.setHost(env.getProperty("spring.mail.host"));
+    mailSender.setPort(Integer.valueOf(env.getProperty("spring.mail.port")));
+    mailSender.setUsername(env.getProperty("spring.mail.username"));
+    mailSender.setPassword(env.getProperty("spring.mail.password"));
+    Properties props = mailSender.getJavaMailProperties();
+    props.put("mail.transport.protocol", env.getProperty("mt.mail.transport.protocol"));
+    this.mailSender = mailSender;
   }
 }
