@@ -41,3 +41,14 @@ build
 *.swp
 *.bak
 __pycache__
+bitbucket*
+code.style.schemes.xml
+debugger.xml
+ide.general.xml
+vcs.xml
+colors.scheme.xml
+webapp.iml
+codestyles
+databaseSettings.xml
+.project
+_windows
