@@ -27,7 +27,7 @@ public class TVShowService {
         List<TVShow> tvShows = tvShowRepository.findSimilarTVShows(regex);
         String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
         FuzzyStringMatchComparator<TVShow> tvShowComparator =
-                new FuzzyStringMatchComparator<>(originalExpr, TVShow::getTitle);
+            new FuzzyStringMatchComparator<>(originalExpr, TVShow::getTitle);
         Collections.sort(tvShows, tvShowComparator);
 
         if (tvShows.size() < MAX_TVSHOW_SEARCH_COUNT) {
@@ -35,6 +35,6 @@ public class TVShowService {
         }
 
         return tvShows.subList(0, MAX_TVSHOW_SEARCH_COUNT);
-    }
+        }
 
-}
+    }
