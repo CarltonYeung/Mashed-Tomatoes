@@ -2,6 +2,7 @@ package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,19 +15,20 @@ public class UserService {
   private AudienceRepository audienceRepository;
   @Autowired
   private HashService hashService;
+  @Autowired
+  private Environment env;
 
   public Audience addAudience(String displayName,
                               String email,
                               String password) throws Exception {
 
     if (audienceRepository.existsByDisplayName(displayName)) {
-      throw new Exception("This display name already exists.");
+      throw new Exception(env.getProperty("user.duplicateDisplayName"));
     }
 
     if (userRepository.existsByCredentials_Email(email)) {
-      throw new Exception("This email already exists.");
+      throw new Exception(env.getProperty("user.duplicateEmail"));
     }
-
     Audience user = new Audience(displayName, email, hashService.hash(password));
     return userRepository.save(user);
   }

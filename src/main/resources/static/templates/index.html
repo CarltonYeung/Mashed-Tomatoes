@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Mashed Tomatoes</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+11
+
+<body>
+  <header id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="grid w-100">
+      <div class="row">
+        <a href="index.html" class="ml-3 navbar-brand ">
+                <img src="/img/base/logo.png" class="icon">
+            </a>
+        <form id="search-bar" class="mx-3 my-auto d-inline w-75">
+          <div class="input-group search-form ">
+            <input type="text" class="form-control field " placeholder="Search?">
+            <button class="btn action" onclick="location.href = 'search.html';">Search</button>
+          </div>
+        </form>
+        <a th:if="${not session.containsKey('user')}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+      </div>
+      <div id="menus" class="collapse navbar-collapse">
+        <ul class="w-100 m-auto navbar-nav menu-bar">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Movies
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>Movie Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        TV Shows
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>TV Show Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        News
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>News Megamenu</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div id="popupstart" class="container my-3 vertical-center">
+    <div class="">
+      <div class="container" id="contents-container">
+        <div id="carousel" class="carousel slide w-75 my-5" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <a href="#">
+                <img class="d-block w-100" src="/img/carousel1.jpg" alt="First slide">
+                <div class="carousel-caption" style="text-shadow: 4px 4px 2px #000000;">
+                  <p>FOR YOU</p>
+                  <h5>THE 20 BEST SUPERHERO MOVIE VILLAINS</h5>
+                </div>
+              </a>
+            </div>
+            <div class="carousel-item ">
+              <a href="#">
+                <img class="d-block w-100" src="/img/carousel2.jpg" alt="Second slide">
+                <div class="carousel-caption" style="text-shadow: 4px 4px 2px #000000;">
+                  <p>WEEKLY KETCHUP</p>
+                  <h5>JESSICA CHASTAIN TO PLAY ADULT BEVERLY IN IT</h5>
+                </div>
+              </a>
+            </div>
+            <div class="carousel-item ">
+              <a href="#">
+                <img class="d-block w-100" src="/img/carousel3.jpg" alt="Third slide">
+                <div class="carousel-caption" style="text-shadow: 4px 4px 2px #000000;">
+                  <p>GROOVY?</p>
+                  <h5>BRUCE CAMPBELL SAYS ASH VS EVIL DEAD SEASON 3 MAY FINALLY BREAK ASH</h5>
+                </div>
+              </a>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <div class="row" style="margin-top: -68px">
+          <div class="col-5">
+            <div class="col-sm" style="margin-top:50px">
+              <div id="homepage-opening-this-week" class="listings w-100">
+                <h3>Movies Opening This Week</h3>
+                <table id="Opening" class="movie_list w-100 table">
+                  <tbody>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/annihilation">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">87%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/annihilation">Annihilation</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/annihilation">Feb 23</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/game_night_2018">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">80%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/game_night_2018">Game Night</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/game_night_2018">Feb 23</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/every_day_2018">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">50%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/every_day_2018">Every Day</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/every_day_2018">Feb 23</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/mute">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">11%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/mute">Mute</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/mute">Feb 23</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/the_young_karl_marx">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">54%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/the_young_karl_marx">The Young Karl Marx</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/the_young_karl_marx">Feb 23</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="homepage-top-box-office" class="listings w-100 mt-5">
+                <h3>Top Box Office</h3>
+                <table class="movie_list w-100 table" id="Top-Box-Office">
+                  <tbody>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/black_panther_2018">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">97%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/black_panther_2018">Black Panther</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/black_panther_2018">
+                          $201.8M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/peter_rabbit_2018">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">58%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/peter_rabbit_2018">Peter Rabbit</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/peter_rabbit_2018">
+                          $17.6M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/fifty_shades_freed">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">12%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/fifty_shades_freed">Fifty Shades Freed</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/fifty_shades_freed">
+                          $17.4M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/jumanji_welcome_to_the_jungle">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">76%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/jumanji_welcome_to_the_jungle">Jumanji: Welcome to the Jungle</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/jumanji_welcome_to_the_jungle">
+                          $8M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/the_1517_to_paris">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">25%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/the_1517_to_paris">The 15:17 to Paris</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/the_1517_to_paris">
+                          $7.7M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/the_greatest_showman_2017">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">55%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/the_greatest_showman_2017">The Greatest Showman</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/the_greatest_showman_2017">
+                          $5.2M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/early_man">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">81%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/early_man">Early Man</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/early_man">
+                          $3.2M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/maze_runner_the_death_cure">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">43%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/maze_runner_the_death_cure">Maze Runner: The Death Cure</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/maze_runner_the_death_cure">
+                          $2.6M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/winchester">
+                          <span class="icon tiny rotten"></span>
+                          <span class="tMeterScore">14%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/winchester">Winchester</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/winchester">
+                          $2.2M</a>
+                      </td>
+                    </tr>
+                    <tr class="sidebarInTheaterOpening">
+                      <td class="left_col">
+                        <a href="/m/the_post">
+                          <span class="icon tiny certified_fresh"></span>
+                          <span class="tMeterScore">88%</span>
+                        </a>
+                      </td>
+                      <td class="middle_col">
+                        <a href="/m/the_post">The Post</a>
+                      </td>
+                      <td class="right_col right">
+                        <a href="/m/the_post">
+                          $2M</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-7 my-5">
+            <div class="row mt-5">
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/CFP1.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Certified Fresh Pick</h5>
+                  <p class="card-text">Thor Ragnarok</p>
+                </div>
+              </div>
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/CFP2.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Certified Fresh Pick</h5>
+                  <p class="card-text">Star Wars: The Last Jedi</p>
+                </div>
+              </div>
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/CFP3.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Certified Fresh Pick</h5>
+                  <p class="card-text">Black Panther</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 100px">
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/Trailer1.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Trailer</h5>
+                  <p class="card-text">Coco</p>
+                </div>
+              </div>
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/Trailer2.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Trailer</h5>
+                  <p class="card-text">Jumanji: Welcome To The Jungle</p>
+                </div>
+              </div>
+              <div class="col-lg mx-1 card" style="width :200px">
+                <img class="card-img-top" src="/img/Trailer3.jpg">
+                <div class="card-body">
+                  <h5 class="card-title">Trailer</h5>
+                  <p class="card-text">Early Man</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="collapse navbar-collapse">
+      <div class="mx-3 w-100 navbar-nav menu-bar">
+        <a class="nav-item nav-link col-lg" href="about.html">
+                About
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="feedback.html">
+                Feedback
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
+                Critic Submission
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
+                Join the Newsletter!
+                <span class="sr-only"></span>
+            </a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/bundle.js"></script>
+
+</body>
+
+</html>

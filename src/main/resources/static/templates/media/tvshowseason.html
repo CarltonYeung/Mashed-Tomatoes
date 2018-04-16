@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title th:text="${tvshow.title}: Season ${tvseason.seasonNo}">TV Show Season Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <header id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="grid w-100">
+      <div class="row">
+        <a href="index.html" class="ml-3 navbar-brand ">
+                <img src="/img/base/logo.png" class="icon">
+            </a>
+        <form id="search-bar" class="mx-3 my-auto d-inline w-75">
+          <div class="input-group search-form ">
+            <input type="text" class="form-control field " placeholder="Search?">
+            <button class="btn action" onclick="location.href = 'search.html';">Search</button>
+          </div>
+        </form>
+        <a th:if="${not session.containsKey('user')}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+      </div>
+      <div id="menus" class="collapse navbar-collapse">
+        <ul class="w-100 m-auto navbar-nav menu-bar">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Movies
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>Movie Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        TV Shows
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>TV Show Megamenu</p>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        News
+                    </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <p>News Megamenu</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" th:data-media-slug="${movie.slug}">
+    <section class="media-section">
+      <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">TV Show: Season 0 (Season Year)</h1>
+      <div class="d-flex justify-content-between">
+        <img class="media-info -poster" src="http://via.placeholder.com/200x300">
+        <div class="col-md-8">
+          <p class="row media-info" th:text="${movie.description}">
+            In the year 2045, people can escape their harsh reality in the OASIS, an immersive virtual world where you can go anywhere, do anything, be anyone-the only limits are your own imagination. OASIS creator James Halliday left his immense fortune and control of the Oasis to the winner of a contest designed to find a worthy heir. When unlikely hero Wade Watts conquers the first challenge of the reality-bending treasure hunt, he and his friends-known as the High Five-are hurled into a fantastical universe of discovery and danger to save the OASIS and their world.
+          </p>
+          <div class="row mt-2">
+            <div class="col-md-7 px-0">
+              <div class="media-info">
+                <p class="media-info -key">Genre: </p>
+                <p class="media-info -value">Action & Adventure, Science Fiction & Fantasy</p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Directed By: </p>
+                <p class="media-info -value">Steven Spielberg</p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Produced By: </p>
+                <p class="media-info -value">Zak Penn, Ernest Cline</p>
+              </div>
+              <div class="media-info">
+                <p class="media-info -key">Network: </p>
+                <p class="media-info -value">HBO</p>
+              </div>
+
+            </div>
+            <div class="row col-md-5 px-0">
+              <div class="col-md-6">
+                <p class="text-center media-score -label">MashoMeter!</p>
+                <div class="row">
+                  <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
+                </div>
+                <p class="text-center media-score -value">57%</p>
+                <p class="text-center media-score -stat">Total Reviews: 311</p>
+                <p class="text-center media-score -stat">Average Rating: 5.7/10</p>
+                <p class="text-center media-score -stat">Smash: 231</p>
+                <p class="text-center media-score -stat">Pass: 80</p>
+              </div>
+              <div class="col-md-6">
+                <p class="text-center media-score -label">Audience Score</p>
+                <div class="row">
+                  <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
+                </div>
+                <p class="text-center media-score -value">70%</p>
+                <p class="text-center media-score -stat">Total Ratings: 342</p>
+                <p class="text-center media-score -stat">Average Rating: 3.5/5</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Photos</h1>
+      <div class="d-flex justify-content-between">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+      </div>
+      <a class="mt-2 float-right" href="#">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Videos</h1>
+      <div class="d-flex justify-content-between">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+        <img src="http://via.placeholder.com/175x200">
+      </div>
+      <a class="mt-2 float-right" href="#">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Cast</h1>
+      <div class="d-flex justify-content-between">
+        <div class="talent-box">
+          <img class="talent-box -profile" src="http://via.placeholder.com/175x200">
+          <p class="talent-box -celebrity">John Doe</p>
+          <p class="talent-box -character">as Willy Wonka</p>
+        </div>
+        <div class="talent-box">
+          <img class="talent-box -profile" src="http://via.placeholder.com/175x200">
+          <p class="talent-box -celebrity">John Doe</p>
+          <p class="talent-box -character">as Willy Wonka</p>
+        </div>
+        <div class="talent-box">
+          <img class="talent-box -profile" src="http://via.placeholder.com/175x200">
+          <p class="talent-box -celebrity">John Doe</p>
+          <p class="talent-box -character">as Willy Wonka</p>
+        </div>
+        <div class="talent-box">
+          <img class="talent-box -profile" src="http://via.placeholder.com/175x200">
+          <p class="talent-box -celebrity">John Doe</p>
+          <p class="talent-box -character">as Willy Wonka</p>
+        </div>
+        <div class="talent-box">
+          <img class="talent-box -profile" src="http://via.placeholder.com/175x200">
+          <p class="talent-box -celebrity">John Doe</p>
+          <p class="talent-box -character">as Willy Wonka</p>
+        </div>
+      </div>
+      <a class="mt-1 float-right" href="#">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Episodes</h1>
+      <ul>
+        <li>
+          <div class="d-flex justify-content-between">
+            <h2 class="media-section -secondary-title">Episode Title or Number</h2>
+            <small>Air Date: 01/02/2003</small>
+          </div>
+          <p>
+            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+          <div class="d-flex flex-row-reverse">
+            <a href="#">See more</a>
+          </div>
+        </li>
+        <li class="mt-2">
+          <div class="d-flex justify-content-between">
+            <h2 class="media-section -secondary-title">Episode Title or Number</h2>
+            <small>Air Date: 01/02/2003</small>
+          </div>
+          <p>
+            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+          <div class="d-flex flex-row-reverse">
+            <a href="#">See more</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Critic Reviews</h1>
+      <div class="card-columns">
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <a class="float-right" href="#">See more</a>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Audience Reviews</h1>
+      <div class="card-columns">
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+            <p class="pt-2 card-text review-card -text">
+              It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
+            </p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                                <p>Last updated 3 mins ago</p>
+                                <a href="#">Jane Done</a> in
+                                <a href="#">The New Yorker</a>
+                            </small>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <a class="float-right" href="#">See more</a>
+      </div>
+    </section>
+    <section class="mt-4 media-section">
+      <h1 class="media-section -title">Your Thoughts</h1>
+      <div id="media-update-list" class="mt-3">
+        <h2 class="media-section -secondary-title">Save This Movie</h2>
+        <div class="d-flex justify-content-center">
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested == null || !inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+          <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+          <button class="ml-5 btn list-btn" th:if="${inWantToSee == null || !inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+        </div>
+      </div>
+      <div id="rating-form" class="mt-3">
+        <h2 class="media-section -secondary-title">Add your rating</h2>
+        <div class="row mt-2">
+          <fieldset class="mx-auto star-rating-bar">
+            <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
+            <label class="full" for="star5"></label>
+            <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
+            <label class="full" for="star4"></label>
+            <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
+            <label class="full" for="star3"></label>
+            <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
+            <label class="full" for="star2"></label>
+            <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
+            <label class="full" for="star1"></label>
+          </fieldset>
+        </div>
+        <div class="row mt-2">
+          <textarea id="rating-form-comment-box" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
+        </div>
+        <div class="row mt-2">
+          <button id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</button>
+        </div>
+    </section>
+    <br />
+    <br />
+  </main>
+  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="collapse navbar-collapse">
+      <div class="mx-3 w-100 navbar-nav menu-bar">
+        <a class="nav-item nav-link col-lg" href="about.html">
+                About
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="feedback.html">
+                Feedback
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
+                Critic Submission
+                <span class="sr-only"></span>
+            </a>
+        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
+                Join the Newsletter!
+                <span class="sr-only"></span>
+            </a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/bundle.js"></script>
+
+</body>
+
+</html>

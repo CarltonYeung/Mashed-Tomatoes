@@ -2,240 +2,172 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>User Page</title>
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/main.css">
+    <div th:replace="partials/meta :: meta"></div>
+    <title>User Page</title>
+    <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-  <header id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
-    <div class="grid w-100">
-      <div class="row">
-        <a href="index.html" class="ml-3 navbar-brand ">
-                <img src="/img/base/logo.png" class="icon">
-            </a>
-        <form id="search-bar" class="mx-3 my-auto d-inline w-75">
-          <div class="input-group search-form ">
-            <input type="text" class="form-control field " placeholder="Search?">
-            <button class="btn action" onclick="location.href = 'search.html';">Search</button>
-          </div>
-        </form>
-        <button id="login-btn" class="ml-4 my-4 h-50 btn login-button" onclick="location.href = 'login.html';">Login</button>
-      </div>
-      <div id="menus" class="collapse navbar-collapse">
-        <ul class="w-100 m-auto navbar-nav menu-bar">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Movies
-                    </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <p>Movie Megamenu</p>
+    <div th:replace="partials/header :: header"></div>
+    <main class="container">
+        <h1 class="main-title">John Doe</h1>
+        <div class="row">
+            <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
+                <li class="pr-3 nav-item user-tab -item">
+                    <a class="nav-link active user-tab -item-link" data-toggle="pill" href="#pills-account">Account</a>
+                </li>
+                <li class="px-3 nav-item user-tab -item">
+                    <a class="nav-link user-tab -item-link" data-toggle="pill" href="#pills-about">About</a>
+                </li>
+                <li class="px-3 nav-item user-tab -item">
+                    <a class="nav-link user-tab -item-link" id="pills-ratings-tab" data-toggle="pill" href="#pills-ratings">Ratings</a>
+                </li>
+                <li class="px-3 nav-item user-tab -item">
+                    <a class="nav-link user-tab -item-link" id="pills-lists-tab" data-toggle="pill" href="#pills-lists">WTS/NI</a>
+                </li>
+                <li class="px-3 nav-item user-tab -item">
+                    <a class="nav-link user-tab -item-link" id="pills-quotes-tab" data-toggle="pill" href="#pills-quotes">Quotes</a>
+                </li>
+                <li class="pl-3 nav-item user-tab -item">
+                    <a class="nav-link user-tab -item-link" id="pills-critics-tab" data-toggle="pill" href="#pills-stats">Stats</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active user-pane" id="pills-account" role="tabpanel">
+                <h1 class="user-pane -title">Account Settings</h1>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Personal Information</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Edit personal information associated with your Mashed Tomatoes account.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Email Address</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Change your email address for your Mashed Tomatoes account.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Profile Display Name</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Edit your public profile display name.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Profile Details</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Edit public profile information about yourself.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Email Preferences</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Modify your email subscription settings.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Password</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Change the password for your Mashed Tomatoes account.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Privacy Settings</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Manage your profile visibility and share settings.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Country</p>
+                    <a href="#" class="user-pane -account-item -action">Edit</a>
+                    <p class="user-pane -account-item -description">Manage your localization setting.</p>
+                </div>
+                <div class="user-pane -account-item">
+                    <p class="user-pane -account-item -label">Delete Account</p>
+                    <a href="#" class="user-pane -account-item -action">Delete</a>
+                    <p class="user-pane -account-item -description">Terminate your Mashed Tomatoes account.</p>
+                </div>
             </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        TV Shows
-                    </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <p>TV Show Megamenu</p>
+            <div class="tab-pane fade user-pane" id="pills-about" role="tabpanel">
+                <h1 class="user-pane -title">About John Doe</h1>
+                <div class="user-pane -about-item">
+                    <p class="user-pane -about-item -label">Member Since</p>
+                    <p class="user-pane -about-item -text">February 2003</p>
+                </div>
+                <div class="user-pane -about-item">
+                    <p class="user-pane -about-item -label">Current Location</p>
+                    <p class="user-pane -about-item -text">Stony Brook, New York</p>
+                </div>
+                <div class="user-pane -about-item">
+                    <p class="user-pane -about-item -label">Hometown</p>
+                    <p class="user-pane -about-item -text">Miami, Florida</p>
+                </div>
+                <div class="user-pane -about-item">
+                    <p class="user-pane -about-item -label">Favorite Line From A Movie</p>
+                    <p class="user-pane -about-item -text">Say hello to my lil' friend!</p>
+                </div>
+                <div class="user-pane -about-item">
+                    <p class="user-pane -about-item -label">Favorite Movie</p>
+                    <p class="user-pane -about-item -text">The Notebook</p>
+                </div>
             </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        News
-                    </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <p>News Megamenu</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <h1 class="main-title">John Doe</h1>
-    <div class="row">
-      <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
-        <li class="pr-3 nav-item user-tab -item">
-          <a class="nav-link active user-tab -item-link" data-toggle="pill" href="#pills-account">Account</a>
-        </li>
-        <li class="px-3 nav-item user-tab -item">
-          <a class="nav-link user-tab -item-link" data-toggle="pill" href="#pills-about">About</a>
-        </li>
-        <li class="px-3 nav-item user-tab -item">
-          <a class="nav-link user-tab -item-link" id="pills-ratings-tab" data-toggle="pill" href="#pills-ratings">Ratings</a>
-        </li>
-        <li class="px-3 nav-item user-tab -item">
-          <a class="nav-link user-tab -item-link" id="pills-lists-tab" data-toggle="pill" href="#pills-lists">WTS/NI</a>
-        </li>
-        <li class="px-3 nav-item user-tab -item">
-          <a class="nav-link user-tab -item-link" id="pills-quotes-tab" data-toggle="pill" href="#pills-quotes">Quotes</a>
-        </li>
-        <li class="pl-3 nav-item user-tab -item">
-          <a class="nav-link user-tab -item-link" id="pills-critics-tab" data-toggle="pill" href="#pills-stats">Stats</a>
-        </li>
-      </ul>
-    </div>
-    <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active user-pane" id="pills-account" role="tabpanel">
-        <h1 class="user-pane -title">Account Settings</h1>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Personal Information</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Edit personal information associated with your Mashed Tomatoes account.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Email Address</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Change your email address for your Mashed Tomatoes account.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Profile Display Name</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Edit your public profile display name.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Profile Details</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Edit public profile information about yourself.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Email Preferences</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Modify your email subscription settings.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Password</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Change the password for your Mashed Tomatoes account.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Privacy Settings</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Manage your profile visibility and share settings.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Country</p>
-          <a href="#" class="user-pane -account-item -action">Edit</a>
-          <p class="user-pane -account-item -description">Manage your localization setting.</p>
-        </div>
-        <div class="user-pane -account-item">
-          <p class="user-pane -account-item -label">Delete Account</p>
-          <a href="#" class="user-pane -account-item -action">Delete</a>
-          <p class="user-pane -account-item -description">Terminate your Mashed Tomatoes account.</p>
-        </div>
-      </div>
-      <div class="tab-pane fade user-pane" id="pills-about" role="tabpanel">
-        <h1 class="user-pane -title">About John Doe</h1>
-        <div class="user-pane -about-item">
-          <p class="user-pane -about-item -label">Member Since</p>
-          <p class="user-pane -about-item -text">February 2003</p>
-        </div>
-        <div class="user-pane -about-item">
-          <p class="user-pane -about-item -label">Current Location</p>
-          <p class="user-pane -about-item -text">Stony Brook, New York</p>
-        </div>
-        <div class="user-pane -about-item">
-          <p class="user-pane -about-item -label">Hometown</p>
-          <p class="user-pane -about-item -text">Miami, Florida</p>
-        </div>
-        <div class="user-pane -about-item">
-          <p class="user-pane -about-item -label">Favorite Line From A Movie</p>
-          <p class="user-pane -about-item -text">Say hello to my lil' friend!</p>
-        </div>
-        <div class="user-pane -about-item">
-          <p class="user-pane -about-item -label">Favorite Movie</p>
-          <p class="user-pane -about-item -text">The Notebook</p>
-        </div>
-      </div>
-      <div class="tab-pane fade user-pane" id="pills-ratings" role="tabpanel">
-        <h1 class="user-pane -title">Ratings and Reviews</h1>
-        <div class="card-columns">
-          <div class="card bg-light">
-            <div class="card-body">
-              <a href="#">
+            <div class="tab-pane fade user-pane" id="pills-ratings" role="tabpanel">
+                <h1 class="user-pane -title">Ratings and Reviews</h1>
+                <div class="card-columns">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <a href="#">
                                 <img class="card-img-top user-pane -rating-img" src="http://via.placeholder.com/100x100">
                             </a>
-              <p class="pt-2 card-text review-card -text">
-                It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something uneasily in between, cowed by the idea of the fanboy demographic.
-              </p>
-              <footer class="blockquote-footer">
-                <small class="text-muted">
+                            <p class="pt-2 card-text review-card -text">
+                                It is, despite Spielberg's claims, neither a purehearted popcorn flick nor a Paul Verhoevenesque subversion, but something
+                                uneasily in between, cowed by the idea of the fanboy demographic.
+                            </p>
+                            <footer class="blockquote-footer">
+                                <small class="text-muted">
                                     <p>Last updated 3 mins ago</p>
                                     <a href="#">Jane Done</a> in
                                     <a href="#">The New Yorker</a>
                                 </small>
-              </footer>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane fade user-pane" id="pills-lists" role="tabpanel">
-        <h1 class="user-pane -title">Want To See and Not Interested</h1>
-        <div class="d-flex">
-          <div class="user-pane -list">
-            <h2 class="user-pane -list -title">Want To See</h2>
-            <div class="user-pane -list -item">
-              <a class="user-pane -list -item -action" href="#">
+            <div class="tab-pane fade user-pane" id="pills-lists" role="tabpanel">
+                <h1 class="user-pane -title">Want To See and Not Interested</h1>
+                <div class="d-flex">
+                    <div class="user-pane -list">
+                        <h2 class="user-pane -list -title">Want To See</h2>
+                        <div class="user-pane -list -item">
+                            <a class="user-pane -list -item -action" href="#">
                                 <img class="user-pane -list -item -action -thumbnail" src="http://via.placeholder.com/200x250">
                             </a>
-              <div class="user-pane -list -item -caption">
-                <p class="user-pane -list -item -caption -title">Black Panther</p>
-                <p class="user-pane -list -item -caption -mashometer">97%</p>
-              </div>
+                            <div class="user-pane -list -item -caption">
+                                <p class="user-pane -list -item -caption -title">Black Panther</p>
+                                <p class="user-pane -list -item -caption -mashometer">97%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-pane -list">
+                        <h2 class="user-pane -list -title">Not Interested</h2>
+                        <p class="user-pane -list -no-item">So much empty...</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="user-pane -list">
-            <h2 class="user-pane -list -title">Not Interested</h2>
-            <p class="user-pane -list -no-item">So much empty...</p>
-          </div>
+            <div class="tab-pane fade user-pane" id="pills-quotes" role="tabpanel">
+                <h1 class="pane-title">Quotes</h1>
+                <p class="no-text">So much empty...</p>
+            </div>
+            <div class="tab-pane fade user-pane" id="pills-stats" role="tabpanel">
+                <h2>Profile Stats</h2>
+                <div class="labelled-stat">
+                    <p class="label">Total Profile Views</p>
+                    <p class="stat">13</p>
+                </div>
+                <div class="labelled-stat">
+                    <p class="label">Profile Views in Last 7 Days</p>
+                    <p class="stat">27</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="tab-pane fade user-pane" id="pills-quotes" role="tabpanel">
-        <h1 class="pane-title">Quotes</h1>
-        <p class="no-text">So much empty...</p>
-      </div>
-      <div class="tab-pane fade user-pane" id="pills-stats" role="tabpanel">
-        <h2>Profile Stats</h2>
-        <div class="labelled-stat">
-          <p class="label">Total Profile Views</p>
-          <p class="stat">13</p>
-        </div>
-        <div class="labelled-stat">
-          <p class="label">Profile Views in Last 7 Days</p>
-          <p class="stat">27</p>
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer class="navbar navbar-expand-sm navbar-dark bg-success">
-    <div class="collapse navbar-collapse">
-      <div class="mx-3 w-100 navbar-nav menu-bar">
-        <a class="nav-item nav-link col-lg" href="about.html">
-                About
-                <span class="sr-only"></span>
-            </a>
-        <a class="nav-item nav-link col-lg" href="feedback.html">
-                Feedback
-                <span class="sr-only"></span>
-            </a>
-        <a class="nav-item nav-link col-lg" href="criticsubmission.html">
-                Critic Submission
-                <span class="sr-only"></span>
-            </a>
-        <a class="nav-item nav-link btn-primary col-lg rounded" href="newsletter.html">
-                Join the Newsletter!
-                <span class="sr-only"></span>
-            </a>
-      </div>
-    </div>
-  </footer>
-  <script src="/js/bundle.js"></script>
-
+    </main>
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>

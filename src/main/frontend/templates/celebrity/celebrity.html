@@ -2,40 +2,41 @@
 <html>
 
 <head>
-    @@include('meta.html')
+    <div th:replace="partials/meta :: meta"></div>
     <title th:text="${celebrity.name}"></title>
-    @@include('style.html')
+    <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-    @@include('header.html')
+    <div th:replace="partials/header :: header"></div>
     <main class="container">
         <section class="celeb-section">
             <h1 class="celeb-section-title">Celebrity Name</h1>
             <div class="d-flex justify-content-between">
-            <img class="media-info -poster" src="http://via.placeholder.com/100x200">
-            <div class="col-md-8 info">
-                <dl>
-                    <dt class="media-info-term">Highest Rated:</dt>
-                    <dd class="media-info-description">Foo</dd>
-                    <dt class="media-info-term">Lowest Rated:</dt>
-                    <dd class="media-info-description">Bar</dd>
-                    <dt class="media-info-term">Birthday</dt>
-                    <dd class="media-info-description">01/02/03</dd>
-                    <dt class="media-info-term">Birthplace</dt>
-                    <dd class="media-info-description">Earth</dd>
-                    <dt class="media-info-term">Bio</dt>
-                    <dd class="media-info-description">
-                        The son of a trucking company manager, Brad Pitt was born December 18, 1963, in Shawnee, OK. Raised in Missouri as the oldest
-                        of three children, and brought up in a strict Baptist household, Pitt enrolled at the University
-                        of Missouri, following high school graduation, studying journalism and advertising.
-                    </dd>
-                </dl>
-            </div>
+                <img class="media-info -poster" src="http://via.placeholder.com/100x200">
+                <div class="col-md-8 info">
+                    <dl>
+                        <dt class="media-info-term">Highest Rated:</dt>
+                        <dd class="media-info-description">Foo</dd>
+                        <dt class="media-info-term">Lowest Rated:</dt>
+                        <dd class="media-info-description">Bar</dd>
+                        <dt class="media-info-term">Birthday</dt>
+                        <dd class="media-info-description">01/02/03</dd>
+                        <dt class="media-info-term">Birthplace</dt>
+                        <dd class="media-info-description">Earth</dd>
+                        <dt class="media-info-term">Bio</dt>
+                        <dd class="media-info-description">
+                            The son of a trucking company manager, Brad Pitt was born December 18, 1963, in Shawnee, OK. Raised in Missouri as the oldest
+                            of three children, and brought up in a strict Baptist household, Pitt enrolled at the University
+                            of Missouri, following high school graduation, studying journalism and advertising.
+                        </dd>
+                    </dl>
+                </div>
             </div>
         </section>
     </main>
-    @@include('footer.html') @@include('script.html')
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>
