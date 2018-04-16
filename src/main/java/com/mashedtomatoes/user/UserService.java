@@ -1,5 +1,7 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.exception.DuplicateDisplayNameException;
+import com.mashedtomatoes.exception.DuplicateEmailException;
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,11 +25,10 @@ public class UserService {
                               String password) throws Exception {
 
     if (audienceRepository.existsByDisplayName(displayName)) {
-      throw new Exception(env.getProperty("user.duplicateDisplayName"));
+      throw new DuplicateDisplayNameException(env.getProperty("user.duplicateDisplayName"));
     }
-
     if (userRepository.existsByCredentials_Email(email)) {
-      throw new Exception(env.getProperty("user.duplicateEmail"));
+      throw new DuplicateEmailException(env.getProperty("user.duplicateDisplayName"));
     }
     Audience user = new Audience(displayName, email, hashService.hash(password));
     return userRepository.save(user);
