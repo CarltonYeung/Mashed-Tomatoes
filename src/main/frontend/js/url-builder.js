@@ -10,5 +10,8 @@ module.exports = {
   },
   buildRegister:() => {
     return "/register";
+  },
+  buildSearch:() => {
+    return "/search";
   }
 };

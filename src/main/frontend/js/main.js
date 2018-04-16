@@ -8,7 +8,8 @@ const components = [
   require('./media/media-update-list'),
   require('./rating/rating-form-post-btn'),
   require('./user/login-btn'),
-  require('./user/register-btn')
+  require('./user/register-btn'),
+  requrie('./search/search-btn')
 ];
 
 const areDepsMet = deps => {
