@@ -1,10 +1,13 @@
 package com.mashedtomatoes.media;
 
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Movies")
+@Indexed
 public class Movie extends Media {
   private double boxOffice;
   private double budget;

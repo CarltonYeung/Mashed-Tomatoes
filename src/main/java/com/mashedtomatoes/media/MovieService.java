@@ -1,13 +1,13 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.util.FuzzyStringMatchComparator;
-import com.mashedtomatoes.util.RegexBuilder;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @Service
@@ -18,31 +18,40 @@ public class MovieService {
   @Autowired
   MovieRepository movieRepository;
 
+  @Autowired
+  EntityManagerFactory emf;
+
   @Cacheable("movies")
   public Iterable<Movie> getAllMovies(String expr) {
-//    try {
-//      Thread.sleep(3000L);
-//    } catch (InterruptedException e) {
-//      throw new IllegalStateException(e);
-//    } // For testing to cache
-
-    if (expr == null) {
+    if (expr == null)
       return movieRepository.findAll();
-    }
 
-    List<String> parts = Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
-    String regex = RegexBuilder.buildMySQLRegex(parts);
-    List<Movie> movies = movieRepository.findSimilarMovies(regex);
-    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
-    FuzzyStringMatchComparator<Movie> movieComparator =
-        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
-    Collections.sort(movies, movieComparator);
+    return hibernateSearch(expr);
+  }
 
-    if (movies.size() < MAX_MOVIE_SEARCH_COUNT) {
-      return movies;
-    }
+  private List<Movie> hibernateSearch(String expr) {
+    EntityManager em = emf.createEntityManager();
+    FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+    em.getTransaction().begin();
 
-    return movies.subList(0, MAX_MOVIE_SEARCH_COUNT);
+    QueryBuilder qb = fullTextEntityManager.getSearchFactory()
+            .buildQueryBuilder().forEntity(Movie.class).get();
+    org.apache.lucene.search.Query query = qb
+            .keyword()
+              .fuzzy()
+            .onFields("title")
+            .matching(expr)
+            .createQuery();
+
+    javax.persistence.Query persistenceQuery =
+            fullTextEntityManager.createFullTextQuery(query, Movie.class);
+
+    List result = persistenceQuery.getResultList();
+
+    em.getTransaction().commit();
+    em.close();
+
+    return result;
   }
 
   Movie getMovieBySlug(String slug) {
