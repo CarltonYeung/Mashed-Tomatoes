@@ -91,13 +91,19 @@
         </section>
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Photos</h1>
+            <!--
             <div class="d-flex justify-content-between">
                 <img class="media-section -photo" th:each="photo: ${movie.photos}" th:src="${photo}">
             </div>
             <a class="mt-2 float-right" th:if="${#lists.size(movie.photos) > 4}" th:href="@{/movie/{slug}/photo(slug=${movie.slug})}">See more</a>
+            -->
+            <div class="text-center">
+                <h3>No photos...</h3>
+            </div>
         </section>
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Videos</h1>
+            <!--
             <div class="d-flex justify-content-between">
                 <div class="media-section -video-thumbnail" th:each="video: ${movie.videos}">
                     <a th:href="${video.videoPath}">
@@ -106,9 +112,14 @@
                 </div>
             </div>
             <a class="mt-2 float-right" th:if="${#lists.size(movie.videos) > 4}" th:href="@{/movie/{slug}/video(slug=${movie.slug})}">See more</a>
+            -->
+            <div class="text-center">
+                <h3>No videos...</h3>
+            </div>
         </section>
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Cast</h1>
+            <!--
             <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
                 <div class="talent-box" th:each="character: ${movie.characters}">
                     <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
@@ -120,7 +131,9 @@
             </div>
             <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
             <div class="text-center" th:if="${#lists.isEmpty(movie.characters)}">
-                <h3>No characters? What is this...</h3>
+            -->
+            <div class="text-center">
+                <h3>No characters...</h3>
             </div>
         </section>
         <section class="mt-4 media-section">
