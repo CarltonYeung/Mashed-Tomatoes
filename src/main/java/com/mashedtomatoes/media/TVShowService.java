@@ -3,6 +3,7 @@ package com.mashedtomatoes.media;
 import com.mashedtomatoes.util.FuzzyStringMatchComparator;
 import com.mashedtomatoes.util.RegexBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class TVShowService {
     @Autowired
     TVShowRepository tvShowRepository;
 
+    @Cacheable("TVShows")
     public Iterable<TVShow> getAllTVShows(String expr) {
         if (expr == null) {
             return tvShowRepository.findAll();

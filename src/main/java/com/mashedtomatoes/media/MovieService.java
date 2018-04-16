@@ -2,11 +2,13 @@ package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.util.FuzzyStringMatchComparator;
 import com.mashedtomatoes.util.RegexBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {
@@ -16,7 +18,14 @@ public class MovieService {
   @Autowired
   MovieRepository movieRepository;
 
+  @Cacheable("movies")
   public Iterable<Movie> getAllMovies(String expr) {
+//    try {
+//      Thread.sleep(3000L);
+//    } catch (InterruptedException e) {
+//      throw new IllegalStateException(e);
+//    } // For testing to cache
+
     if (expr == null) {
       return movieRepository.findAll();
     }
