@@ -27553,6 +27553,9 @@ module.exports = {
   buildLogin:() => {
     return "/login";
   },
+  buildLogout:() => {
+    return "/logout";
+  },
   buildRegister:() => {
     return "/register";
   }
@@ -27599,7 +27602,8 @@ const components = [
   __webpack_require__(9),
   __webpack_require__(11),
   __webpack_require__(12),
-  __webpack_require__(13)
+  __webpack_require__(13),
+  __webpack_require__(14)
 ];
 
 const areDepsMet = deps => {
@@ -40266,6 +40270,34 @@ module.exports.init = () => {
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const urlBuilder = __webpack_require__(2);
+
+module.exports.deps = [
+  '#logout-btn',
+];
+
+module.exports.init = () => {
+  $('#logout-btn').on('click', () => {
+    $.ajax(
+      urlBuilder.buildLogout(),
+      {
+        method: "POST",
+        success: res => {
+          window.location.href = "/";
+        },
+        error: res => {
+          console.error(res.status);
+        }
+      });
+  });
+};
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

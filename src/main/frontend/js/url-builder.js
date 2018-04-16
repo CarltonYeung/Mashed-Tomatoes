@@ -8,6 +8,9 @@ module.exports = {
   buildLogin:() => {
     return "/login";
   },
+  buildLogout:() => {
+    return "/logout";
+  },
   buildRegister:() => {
     return "/register";
   }

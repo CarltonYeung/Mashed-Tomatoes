@@ -10,7 +10,8 @@
                     <button class="btn action" onclick="location.href = 'search.html';">Search</button>
                 </div>
             </form>
-            <a th:if="${not session.containsKey('user')}" id="login-btn"class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+            <a th:if="${#session == null}" id="login-btn"class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+            <button th:if="${#session != null}" id="logout-btn" class="ml-4 my-4 h-50 btn login-button">Logout</button>
         </div>
         <div id="menus" class="collapse navbar-collapse">
             <ul class="w-100 m-auto navbar-nav menu-bar">
