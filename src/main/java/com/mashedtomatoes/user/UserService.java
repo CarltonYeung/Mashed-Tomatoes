@@ -28,7 +28,7 @@ public class UserService {
       throw new DuplicateDisplayNameException(env.getProperty("user.duplicateDisplayName"));
     }
     if (userRepository.existsByCredentials_Email(email)) {
-      throw new DuplicateEmailException(env.getProperty("user.duplicateDisplayName"));
+      throw new DuplicateEmailException(env.getProperty("user.duplicateEmail"));
     }
     Audience user = new Audience(displayName, email, hashService.hash(password));
     return userRepository.save(user);
