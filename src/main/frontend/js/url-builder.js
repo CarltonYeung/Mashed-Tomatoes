@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = {
   buildUpdateList: () => {
     return "/api/user/list";
@@ -14,7 +16,11 @@ module.exports = {
   buildRegister:() => {
     return "/register";
   },
-  buildSearch:() => {
-    return "/search";
+  buildSearch:(expr) => {
+    if (_.isNil(expr) || _.isEmpty(expr)) {
+      return "/search";
+    }
+
+    return `/search?=expr=${expr}`;
   }
 };

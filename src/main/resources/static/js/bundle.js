@@ -27541,7 +27541,9 @@ return jQuery;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+const _ = __webpack_require__(1);
 
 module.exports = {
   buildUpdateList: () => {
@@ -27559,8 +27561,12 @@ module.exports = {
   buildRegister:() => {
     return "/register";
   },
-  buildSearch:() => {
-    return "/search";
+  buildSearch:(expr) => {
+    if (_.isNil(expr) || _.isEmpty(expr)) {
+      return "/search";
+    }
+
+    return `/search?=expr=${expr}`;
   }
 };
 
@@ -27606,8 +27612,8 @@ const components = [
   __webpack_require__(11),
   __webpack_require__(12),
   __webpack_require__(13),
-  requrie('./search/search-btn'),
   __webpack_require__(14),
+  __webpack_require__(15),
 ];
 
 const areDepsMet = deps => {
@@ -40323,6 +40329,31 @@ module.exports.init = () => {
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const urlBuilder = __webpack_require__(2);
+
+module.exports.deps = [
+  '#search-input',
+  '#search-btn'
+];
+
+module.exports.init = () => {
+  $('#search-btn').on('click', evt => {
+    const inputSelector = $('#search-input');
+    let inputValue = inputSelector.val();
+    inputValue = _.replace(inputValue, /\s+/g, ' ');
+    inputValue = _.replace(inputValue, /[^0-9a-z\s]/gi, '');
+    const searchValue = _.replace(inputValue, /\s/g, '+');
+    console.log(searchValue);
+    window.location.href = urlBuilder.buildSearch(searchValue);
+  });
+};
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
