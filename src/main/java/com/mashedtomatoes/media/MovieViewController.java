@@ -35,7 +35,7 @@ public class MovieViewController {
     return "media/movie";
   }
 
-  static class ViewModel extends Movie {
+  public static class ViewModel extends Movie {
 
     private Double averageCriticRating = 0.0;
 
@@ -61,7 +61,6 @@ public class MovieViewController {
       super.setCharacters(movie.getCharacters());
       super.getCharacters().forEach(character -> {
       	Celebrity c = character.getCelebrity();
-      	System.out.println(c.getProfilePath());
       	character.getCelebrity().setProfilePath(FILES_URI + c.getProfilePath());
       });
 	    super.setDirector(movie.getDirector());

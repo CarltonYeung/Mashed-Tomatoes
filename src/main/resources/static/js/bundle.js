@@ -27566,7 +27566,7 @@ module.exports = {
       return "/search";
     }
 
-    return `/search?=expr=${expr}`;
+    return `/search?expr=${expr}`;
   }
 };
 
