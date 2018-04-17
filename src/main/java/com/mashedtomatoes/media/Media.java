@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +23,20 @@ import java.util.Set;
 @Table(name = "Media")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Indexed
+@AnalyzerDef(name = "searchAnalyzer",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = StandardFilterFactory.class),
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = NGramFilterFactory.class,
+                        params = {
+                                @Parameter(name = "minGramSize", value = "1"),
+                                @Parameter(name = "maxGramSize", value = "3") } )
+        }
+)
 public abstract class Media {
   protected long id;
   protected String title;
@@ -47,7 +65,8 @@ public abstract class Media {
   }
 
   @Column(nullable = false)
-  @Field(analyze = Analyze.NO)
+  @Field
+  @Analyzer(definition = "searchAnalyzer")
   public String getTitle() {
     return title;
   }

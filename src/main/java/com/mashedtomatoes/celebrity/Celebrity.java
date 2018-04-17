@@ -3,17 +3,17 @@ package com.mashedtomatoes.celebrity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "Celebrities")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Indexed
 public class Celebrity {
   private long id;
   private String name;
@@ -36,6 +36,8 @@ public class Celebrity {
   }
 
   @Column(nullable = false)
+  @Field
+  @Analyzer(definition = "searchAnalyzer")
   public String getName() {
     return name;
   }
