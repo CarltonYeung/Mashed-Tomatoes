@@ -27609,7 +27609,7 @@ const _ = __webpack_require__(1);
 const components = [
   __webpack_require__(8),
   __webpack_require__(9),
-  __webpack_require__(11),
+  __webpack_require__(10),
   __webpack_require__(12),
   __webpack_require__(13),
   __webpack_require__(14),
@@ -34159,7 +34159,32 @@ window.onscroll = function() {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const ko = __webpack_require__(10);
+const urlBuilder = __webpack_require__(2);
+
+module.exports.deps = [
+  '#search-form',
+];
+
+module.exports.init = () => {
+  $('#search-form').submit(evt => {
+    const inputSelector = $('#search-input');
+    let inputValue = inputSelector.val();
+    inputValue = _.trim(inputValue);
+    inputValue = _.replace(inputValue, /[^0-9a-z\s]/gi, '');
+    const searchValue = _.replace(inputValue, /\s+/g, '+');
+    console.log(searchValue);
+    window.location.href = urlBuilder.buildSearch(searchValue);
+    evt.preventDefault();
+  });
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const ko = __webpack_require__(11);
 const urlBuilder = __webpack_require__(2);
 
 const movieSlug = $('[data-media-slug]').attr('data-media-slug');
@@ -34240,7 +34265,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -40183,7 +40208,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40237,7 +40262,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40279,7 +40304,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40326,31 +40351,6 @@ module.exports.init = () => {
   });
 };
 
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0);
-const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
-
-module.exports.deps = [
-  '#search-input',
-  '#search-btn'
-];
-
-module.exports.init = () => {
-  $('#search-btn').on('click', evt => {
-    const inputSelector = $('#search-input');
-    let inputValue = inputSelector.val();
-    inputValue = _.replace(inputValue, /\s+/g, ' ');
-    inputValue = _.replace(inputValue, /[^0-9a-z\s]/gi, '');
-    const searchValue = _.replace(inputValue, /\s/g, '+');
-    console.log(searchValue);
-    window.location.href = urlBuilder.buildSearch(searchValue);
-  });
-};
 
 /***/ }),
 /* 15 */

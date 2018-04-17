@@ -3,18 +3,18 @@ const _ = require('lodash');
 const urlBuilder = require('../url-builder');
 
 module.exports.deps = [
-  '#search-input',
-  '#search-btn'
+  '#search-form',
 ];
 
 module.exports.init = () => {
-  $('#search-btn').on('click', evt => {
+  $('#search-form').submit(evt => {
     const inputSelector = $('#search-input');
     let inputValue = inputSelector.val();
-    inputValue = _.replace(inputValue, /\s+/g, ' ');
+    inputValue = _.trim(inputValue);
     inputValue = _.replace(inputValue, /[^0-9a-z\s]/gi, '');
-    const searchValue = _.replace(inputValue, /\s/g, '+');
+    const searchValue = _.replace(inputValue, /\s+/g, '+');
     console.log(searchValue);
     window.location.href = urlBuilder.buildSearch(searchValue);
+    evt.preventDefault();
   });
 };

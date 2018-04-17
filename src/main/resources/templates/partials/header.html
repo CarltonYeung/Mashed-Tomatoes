@@ -5,12 +5,14 @@
                 <img src="/img/base/logo.png" class="icon">
             </a>
             <div id="search-bar" class="mx-3 my-auto d-inline w-75">
-                <div class="input-group search-form">
-                    <input id="search-input" type="text" class="form-control field " placeholder="Search?">
-                    <button id="search-btn" class="btn action">Search</button>
-                </div>
+                <form id="search-form">
+                    <div class="input-group search-form">
+                        <input id="search-input" type="text" class="form-control field " placeholder="Search for movies, tv shows, and celebrities">
+                        <input type="submit" id="search-btn" value="Search" class="btn action"></input>
+                    </div>
+                </form>
             </div>
-            <a th:if="${#session == null}" id="login-btn"class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+            <a th:if="${#session == null}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
             <button th:if="${#session != null}" id="logout-btn" class="ml-4 my-4 h-50 btn login-button">Logout</button>
         </div>
         <div id="menus" class="collapse navbar-collapse">
