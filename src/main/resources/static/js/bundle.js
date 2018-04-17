@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -27537,7 +27537,7 @@ return jQuery;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(7)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)(module)))
 
 /***/ }),
 /* 2 */
@@ -27601,19 +27601,43 @@ module.exports = g;
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+const $ = __webpack_require__(0);
+
+module.exports.init = () => {
+  $('#alert-success').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+
+  $('#alert-danger').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+};
+
+module.exports.display = (message, isDanger) => {
+  const alertSelector = $(isDanger ? '#alert-danger' : '#alert-success');
+  alertSelector.find('strong').text(message);
+  alertSelector.prop('hidden', false);
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(6);
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 
 const components = [
-  __webpack_require__(8),
   __webpack_require__(9),
   __webpack_require__(10),
-  __webpack_require__(12),
+  __webpack_require__(11),
   __webpack_require__(13),
   __webpack_require__(14),
   __webpack_require__(15),
+  __webpack_require__(16),
 ];
 
 const areDepsMet = deps => {
@@ -27622,8 +27646,6 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
-    console.log('Missing deps');
-    console.log(missingDeps);
     return false;
   }
 
@@ -27644,7 +27666,7 @@ window.onload = () => {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -27653,7 +27675,7 @@ window.onload = () => {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(0), __webpack_require__(6)) :
+	 true ? factory(exports, __webpack_require__(0), __webpack_require__(7)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
 	(factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -31544,7 +31566,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34073,7 +34095,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -34101,7 +34123,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -34154,7 +34176,7 @@ window.onscroll = function() {
 */
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -34179,12 +34201,12 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const ko = __webpack_require__(11);
+const ko = __webpack_require__(12);
 const urlBuilder = __webpack_require__(2);
 
 const movieSlug = $('[data-media-slug]').attr('data-media-slug');
@@ -34265,7 +34287,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -40208,7 +40230,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40262,18 +40284,21 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
+const alert = __webpack_require__(4);
 
 module.exports.deps = [
   '#login-form'
 ];
 
 module.exports.init = () => {
+  alert.init();
+
   $('#login-form').submit(evt => {
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
@@ -40282,20 +40307,22 @@ module.exports.init = () => {
       password: passwordSelector.val()
     };
 
-    console.log(data);
     $.ajax(
       urlBuilder.buildLogin(),
       {
         method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: res => {
-          console.log('...redirecting...');
-          window.location = '/';
+        success: (body, status, xhr) => {
+          if (_.isEqual(xhr.status, 200)) {
+            alert.display('Welcome!', false);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1000);
+          }
         },
-        error: res => {
-          console.error('...failed...');
-          console.error(res.status);
+        error: (xhr, status, err) => {
+          alert.display(xhr.responseText, true);
         }
       });
 
@@ -40304,12 +40331,13 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
+const alert = __webpack_require__(4);
 
 module.exports.deps = [
   '#registration-form',
@@ -40318,15 +40346,7 @@ module.exports.deps = [
 ];
 
 module.exports.init = () => {
-  $('#alert-success').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-
-  $('#alert-danger').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
+  alert.init();
 
   $('#registration-form').submit(evt => {
     const displayNameSelector = $('#register-display-name');
@@ -40350,9 +40370,7 @@ module.exports.init = () => {
           console.log(body);
           console.log(status);
           if (_.isEqual(xhr.status, 201)) {
-            const alertSelector = $('#alert-success');
-            alertSelector.find('strong').text('You have been registered!');
-            alertSelector.prop('hidden', false);
+            alert.display('You have been registered!', false);
             setTimeout(() => {
               window.location.href = '/';
             }, 1000);
@@ -40361,9 +40379,7 @@ module.exports.init = () => {
           console.error(`Unexpected success code: ${res.status}`);
         },
         error: (xhr, status, err) => {
-          const alertSelector = $('#alert-danger');
-          alertSelector.find('strong').text(xhr.responseText);
-          alertSelector.prop('hidden', false);
+          alert.display(xhr.responseText, true);
         }
       });
     evt.preventDefault();
@@ -40372,7 +40388,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

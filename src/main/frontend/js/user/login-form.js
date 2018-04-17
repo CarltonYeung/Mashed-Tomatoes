@@ -1,12 +1,15 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const urlBuilder = require('../url-builder');
+const alert = require('../alert');
 
 module.exports.deps = [
   '#login-form'
 ];
 
 module.exports.init = () => {
+  alert.init();
+
   $('#login-form').submit(evt => {
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
@@ -15,20 +18,22 @@ module.exports.init = () => {
       password: passwordSelector.val()
     };
 
-    console.log(data);
     $.ajax(
       urlBuilder.buildLogin(),
       {
         method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: res => {
-          console.log('...redirecting...');
-          window.location = '/';
+        success: (body, status, xhr) => {
+          if (_.isEqual(xhr.status, 200)) {
+            alert.display('Welcome!', false);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1000);
+          }
         },
-        error: res => {
-          console.error('...failed...');
-          console.error(res.status);
+        error: (xhr, status, err) => {
+          alert.display(xhr.responseText, true);
         }
       });
 
