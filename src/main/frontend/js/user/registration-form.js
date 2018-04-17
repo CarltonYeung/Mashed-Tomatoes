@@ -1,6 +1,7 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const urlBuilder = require('../url-builder');
+const alert = require('../alert');
 
 module.exports.deps = [
   '#registration-form',
@@ -9,15 +10,7 @@ module.exports.deps = [
 ];
 
 module.exports.init = () => {
-  $('#alert-success').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-
-  $('#alert-danger').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
+  alert.init();
 
   $('#registration-form').submit(evt => {
     const displayNameSelector = $('#register-display-name');
@@ -41,9 +34,7 @@ module.exports.init = () => {
           console.log(body);
           console.log(status);
           if (_.isEqual(xhr.status, 201)) {
-            const alertSelector = $('#alert-success');
-            alertSelector.find('strong').text('You have been registered!');
-            alertSelector.prop('hidden', false);
+            alert.display('You have been registered!', false);
             setTimeout(() => {
               window.location.href = '/';
             }, 1000);
@@ -52,9 +43,7 @@ module.exports.init = () => {
           console.error(`Unexpected success code: ${res.status}`);
         },
         error: (xhr, status, err) => {
-          const alertSelector = $('#alert-danger');
-          alertSelector.find('strong').text(xhr.responseText);
-          alertSelector.prop('hidden', false);
+          alert.display(xhr.responseText, true);
         }
       });
     evt.preventDefault();
