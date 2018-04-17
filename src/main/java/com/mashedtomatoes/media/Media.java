@@ -22,15 +22,43 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Analyze;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Indexed
+@AnalyzerDef(
+  name = "searchAnalyzer",
+  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+  filters = {
+    @TokenFilterDef(factory = StandardFilterFactory.class),
+    @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+    @TokenFilterDef(
+      factory = SnowballPorterFilterFactory.class,
+      params = {@Parameter(name = "language", value = "English")}
+    ),
+    @TokenFilterDef(
+      factory = NGramFilterFactory.class,
+      params = {
+        @Parameter(name = "minGramSize", value = "1"),
+        @Parameter(name = "maxGramSize", value = "3")
+      }
+    )
+  }
+)
 public abstract class Media {
   protected long id;
   protected String title;
@@ -81,7 +109,8 @@ public abstract class Media {
   }
 
   @Column(nullable = false)
-  @Field(analyze = Analyze.NO)
+  @Field
+  @Analyzer(definition = "searchAnalyzer")
   public String getTitle() {
     return title;
   }
