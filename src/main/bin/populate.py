@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
-from collections import namedtuple
+import os
 import argparse
+from collections import namedtuple
 
-import requests
 import mysql.connector
 
 from populate import net, db
 from populate.deserialize import json_to_movie, json_to_genres
+
 
 MAX_CAST_MEMBERS = 15
 DEFAULT_MOVIES_PER_YEAR_LIMIT = 15
@@ -47,6 +48,8 @@ def store_movie_crew(movie_credits, basepath):
 
 def store_movie(api_movie_id, basepath):
     movie = net.get_movie(api_movie_id)
+    # print (movie)
+
     if basepath and movie.poster_path:
         net.download_file(net.get_poster_img_url(movie.poster_path), basepath)
 
@@ -73,7 +76,6 @@ def store_movies(start_year, end_year, limit, basepath):
         for id in ids:
             store_movie(id, basepath)
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Populate database with data from the Movie Database')
@@ -87,6 +89,9 @@ if __name__ == '__main__':
                         help='Amount of movies to store per year (default: 15)')
 
     args = parser.parse_args()
+    store_movie(550, args.basepath)
+    '''
     store_movies(start_year=int(args.start_year), end_year=int(args.end_year),
-                 limit=int(args.limit), basepath=args.basepath)
-    db.close()
+                  limit=int(args.limit), basepath=args.basepath)
+
+    '''
