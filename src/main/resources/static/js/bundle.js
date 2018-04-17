@@ -40318,12 +40318,8 @@ module.exports.deps = [
 module.exports.init = () => {
   $('#registration-form').submit(evt => {
     const displayNameSelector = $('#register-display-name');
-    console.log(displayNameSelector.val());
     const emailSelector = $('#register-email');
-    console.log(emailSelector.val());
     const passwordSelector = $('#register-password');
-    console.log(passwordSelector);
-    console.log(passwordSelector.val());
 
     const data = {
       displayName: displayNameSelector.val(),
@@ -40331,23 +40327,27 @@ module.exports.init = () => {
       password: passwordSelector.val()
     };
 
-    console.log(data);
-    
     $.ajax(
       urlBuilder.buildRegister(),
       {
         method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: res => {
-          console.log('...redirecting...');
-          window.location.href = '/';
+        success: (body, status, xhr) => {
+          console.log(xhr);
+          console.log(body);
+          console.log(status);
+          if (_.isEqual(xhr.status, 201)) {
+            window.location.href = '/';
+          }
+
+          console.error(`Unexpected success code: ${res.status}`);
         },
-        error: res => {
-          console.error(res.status);
+        error: (xhr, status, err) => {
+          console.error(xhr.responseText);
         }
       });
-    e.preventDefault();
+    evt.preventDefault();
   });
 };
 

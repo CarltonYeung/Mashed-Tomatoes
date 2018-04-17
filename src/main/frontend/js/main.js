@@ -9,7 +9,7 @@ const components = [
   require('./media/media-update-list'),
   require('./rating/rating-form-post-btn'),
   require('./user/login-btn'),
-  require('./user/register-btn'),
+  require('./user/registration-form'),
   require('./user/logout-btn'),
 ];
 
