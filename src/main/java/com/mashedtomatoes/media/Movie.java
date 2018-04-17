@@ -1,5 +1,8 @@
 package com.mashedtomatoes.media;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Entity;
@@ -11,7 +14,8 @@ import javax.persistence.Table;
 public class Movie extends Media {
   private double boxOffice;
   private double budget;
-  private String trailerPath;
+  private MovieTrailer movieTrailer;
+  private BestPictureWinner bestPictureWinner;
 
   public Movie() {}
 
@@ -31,11 +35,23 @@ public class Movie extends Media {
     this.budget = budget;
   }
 
-  public String getTrailerPath() {
-    return trailerPath;
-  }
+	@OneToOne(mappedBy = "movie", cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER, optional = false)
+	public MovieTrailer getMovieTrailer() {
+		return movieTrailer;
+	}
 
-  public void setTrailerPath(String trailerPath) {
-    this.trailerPath = trailerPath;
-  }
+	public void setMovieTrailer(MovieTrailer movieTrailer) {
+		this.movieTrailer = movieTrailer;
+	}
+
+	@OneToOne(mappedBy = "movie", cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER, optional = false)
+	public BestPictureWinner getBestPictureWinner() {
+		return bestPictureWinner;
+	}
+
+	public void setBestPictureWinner(BestPictureWinner bestPictureWinner) {
+		this.bestPictureWinner = bestPictureWinner;
+	}
 }
