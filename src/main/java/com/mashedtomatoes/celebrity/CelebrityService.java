@@ -1,14 +1,15 @@
 package com.mashedtomatoes.celebrity;
 
+import com.mashedtomatoes.util.FuzzyStringMatchComparator;
+import com.mashedtomatoes.util.RegexBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import com.mashedtomatoes.util.FuzzyStringMatchComparator;
-import com.mashedtomatoes.util.RegexBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CelebrityService {
@@ -26,6 +27,7 @@ public class CelebrityService {
     return null;
   }
 
+  @Cacheable("Celebrities")
   public Iterable<Celebrity> getAllCelebrities(String expr){
     if(expr == null){
       return celebrityRepository.findAll();
