@@ -6,13 +6,13 @@ from .deserialize import json_to_movie, json_to_media_credits, \
 json_to_celebrity, json_to_api_movie_ids
 
 API_BASE_URL = 'https://api.themoviedb.org/3'
-API_KEY = '340eea09f9407d59cc1ef319b7c6f072'
 IMAGE_BASE_URL = 'https://image.tmdb.org/t/p'
 BACKDROP_SIZE = '/w1280'
 POSTER_SIZE = '/w780'
 PROFILE_SIZE = '/w185'
 RATE_LIMIT = 40
 RATE_LIMIT_DELAY = 10
+API_KEY = os.environ['MOVIEDB_API_KEY']
 
 __request_ct = 0
 
@@ -78,7 +78,7 @@ def get_top_movies(year, limit):
         'api_key': API_KEY,
         'language': 'en-US',
         'sort_by': 'popularity.desc',
-        'year': year
+        'primary_release_year': year
     })
     return json_to_api_movie_ids(r.json(), limit)
 

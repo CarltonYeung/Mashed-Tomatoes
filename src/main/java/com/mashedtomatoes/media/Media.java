@@ -176,7 +176,7 @@ public abstract class Media {
   @ElementCollection(targetClass = Genre.class)
   @CollectionTable(
     name = "MediaGenres",
-    joinColumns = {@JoinColumn(name = "mediaID")}
+    joinColumns = {@JoinColumn(name = "mediaId")}
   )
   @Enumerated(EnumType.STRING)
   @Column(name = "genre", nullable = false, length = 32)
