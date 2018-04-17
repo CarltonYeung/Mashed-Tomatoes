@@ -1,6 +1,6 @@
 import dateutil.parser
 
-from . import models
+import models
 
 def slugify(s):
     return s.lower().replace(' ', '-')

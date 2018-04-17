@@ -2,7 +2,7 @@ import os
 import requests
 import time
 
-from .deserialize import json_to_movie, json_to_media_credits, \
+from deserialize import json_to_movie, json_to_media_credits, \
 json_to_celebrity, json_to_api_movie_ids
 
 API_BASE_URL = 'https://api.themoviedb.org/3'

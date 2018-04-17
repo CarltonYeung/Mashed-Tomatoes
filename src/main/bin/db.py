@@ -153,3 +153,16 @@ def save_character(celebrity_id, media_id, character):
     _cnx.commit()
 
     return _cursor.lastrowid
+
+def save_best_picture_winner(movie_id, year):
+    add_winner = ("insert into BestPictureWinners"
+                  "(movieId, year)"
+                  "values (%s, %s)")
+    
+    sql_winner = (movie_id, year)
+
+    _cursor.execute(add_winner, sql_winner)
+
+    _cnx.commit()
+
+    return _cursor.lastrowid

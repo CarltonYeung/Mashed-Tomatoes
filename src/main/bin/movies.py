@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
-
 import os
 import argparse
 from collections import namedtuple
 
 import mysql.connector
 
-from populate import net, db
-from populate.deserialize import json_to_movie, json_to_genres
+import net, db
+from deserialize import json_to_movie, json_to_genres
 
 
 MAX_CAST_MEMBERS = 15
