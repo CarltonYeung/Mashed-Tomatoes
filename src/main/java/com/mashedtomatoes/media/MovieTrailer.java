@@ -12,38 +12,38 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MovieTrailers")
 public class MovieTrailer {
-	private Long id;
-	private Movie movie;
-	private String trailerPath;
+  private long id;
+  private Movie movie;
+  private String trailerPath;
 
-	public MovieTrailer() {}
+  public MovieTrailer() {}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
+  public void setMovie(Movie movie) {
+    this.movie = movie;
+  }
 
-	public void setTrailerPath(String trailerPath) {
-		this.trailerPath = trailerPath;
-	}
+  public void setTrailerPath(String trailerPath) {
+    this.trailerPath = trailerPath;
+  }
 
-	@Id
-	public Long getId() {
-		return id;
-	}
+  @Id
+  public long getId() {
+    return id;
+  }
 
-	@MapsId
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "movieId")
-	public Movie getMovie() {
-		return movie;
-	}
+  @MapsId
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "movieId")
+  public Movie getMovie() {
+    return movie;
+  }
 
-	@Column(nullable = false)
-	public String getTrailerPath() {
-		return trailerPath;
-	}
+  @Column(nullable = false)
+  public String getTrailerPath() {
+    return trailerPath;
+  }
 }

@@ -28,9 +28,9 @@ public class MovieViewController {
     return "movies";
   }
 
-  @GetMapping("/movie/{slug}")
-  public String getMovie(@PathVariable String slug, Model m) {
-    ViewModel viewModel = new ViewModel(movieService.getMovieBySlug(slug));
+  @GetMapping("/movie/{id}")
+  public String getMovie(@PathVariable long id, Model m) {
+    ViewModel viewModel = new ViewModel(movieService.getMovieById(id));
     m.addAttribute("movie", viewModel);
     return "media/movie";
   }
@@ -52,7 +52,6 @@ public class MovieViewController {
     public ViewModel(Movie movie) {
       super.setId(movie.getId());
       super.setTitle(movie.getTitle());
-      super.setSlug(movie.getSlug());
       super.setGenres(movie.getGenres());
       super.setDescription(movie.getDescription());
       super.setReleaseDate(movie.getReleaseDate());

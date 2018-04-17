@@ -13,17 +13,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BestPictureWinners")
 public class BestPictureWinner {
-	private Long id;
+  private long id;
   private Movie movie;
   private Date year;
 
   public BestPictureWinner() {}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setMovie(Movie movie) {
+  public void setMovie(Movie movie) {
     this.movie = movie;
   }
 
@@ -31,12 +31,12 @@ public class BestPictureWinner {
     this.year = year;
   }
 
-	@Id
-	public Long getId() {
-		return id;
-	}
+  @Id
+  public long getId() {
+    return id;
+  }
 
-	@MapsId
+  @MapsId
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "movieId")
   public Movie getMovie() {

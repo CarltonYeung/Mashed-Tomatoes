@@ -6,20 +6,36 @@ import dateutil.parser
 import db
 import net
 import oscars
-from movies import store_movie
+import store
+
+@command('movie')
+def cmd_movie(id, basepath):
+    store.store_movie(id, basepath)
 
 @command('movies')
-def _movie(basepath, start_year=1950, end_year=2018, limit=20):
+def cmd_movies(basepath, start_year=1950, end_year=2018, limit=20):
     for year in range(start_year, end_year + 1):
         ids = net.get_top_movies(year, limit)
         for id in ids:
-            store_movie(id, basepath)
+            store.store_movie(id, basepath)
+
+@command('tvshow')
+def cmd_tvshow(id, basepath):
+    store.store_tvshow(id, basepath)
+
+@command('tvshows')
+def cmd_tvshows(basepath, start_year=1985, end_year=2018, limit=10):
+    for year in range(start_year, end_year + 1):
+        ids = net.get_top_tvshows(year, limit)
+        for id in ids:
+            store.store_tvshow(id, basepath)
 
 @command('oscars')
-def _oscars(basepath):
+def cmd_oscars(basepath):
     for api_id, year in oscars.API_MOVIE_ID_YEARS:
-        db_movie_id = store_movie(api_id, basepath)
+        db_movie_id = store.store_movie(api_id, basepath)
         db.save_best_picture_winner(db_movie_id, dateutil.parser.parse(str(year)))
+
 
 if __name__ == '__main__':
     Run()

@@ -27,35 +27,35 @@ public class MovieAPIController {
     return movieService.getAllMovies(expr);
   }
 
-  @GetMapping("/api/movie/{slug}")
-  public Movie getMovie(@PathVariable String slug) {
-    return movieService.getMovieBySlug(slug);
+  @GetMapping("/api/movie/{id}")
+  public Movie getMovie(@PathVariable long id) {
+    return movieService.getMovieById(id);
   }
 
-  @DeleteMapping("/api/movie/{slug}/delete")
-  public RedirectView deleteMovie(@PathVariable String slug, Model model) {
-    movieService.deleteMovieBySlug(slug);
+  @DeleteMapping("/api/movie/{id}/delete")
+  public RedirectView deleteMovie(@PathVariable long id, Model model) {
+    movieService.deleteMovieById(id);
     return new RedirectView("/api/movie");
   }
 
-  @PatchMapping("/api/movie/{slug}/update")
-  public Movie updateMovie(@PathVariable String slug,
+  @PatchMapping("/api/movie/{id}/update")
+  public Movie updateMovie(@PathVariable long id,
                            @RequestBody Movie movieIn) {
 
-    Movie movie = movieService.getMovieBySlug(slug);
+    Movie movie = movieService.getMovieById(id);
     movie.setTitle(movieIn.getTitle());
     movieService.updateMovie(movie);
     return movie;
   }
 
-  @PostMapping("/api/movie/{slug}/rate")
-  public void submitRating(@PathVariable String slug,
+  @PostMapping("/api/movie/{id}/rate")
+  public void submitRating(@PathVariable long id,
                            @Valid @RequestBody RateRequest rateRequest,
                            HttpServletRequest request,
                            HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
-    Movie movie = movieService.getMovieBySlug(slug);
+    Movie movie = movieService.getMovieById(id);
     if (session == null) {
       response.setStatus(HttpStatus.SC_UNAUTHORIZED);
       return;
@@ -72,21 +72,21 @@ public class MovieAPIController {
     response.setStatus(HttpStatus.SC_OK);
   }
 
-  @PatchMapping("/api/movie/{slug}/rate/update/{ratingID}")
-  public void updateRating(@PathVariable String slug,
+  @PatchMapping("/api/movie/{id}/rate/update/{ratingID}")
+  public void updateRating(@PathVariable long id,
                            @PathVariable int ratingID,
                            @Valid @RequestBody RateRequest rateRequest,
                            HttpServletRequest request,
                            HttpServletResponse response) {}
 
-  @DeleteMapping("/api/movie/{slug}/rate/delete/{ratingID}")
-  public void deleteRating(@PathVariable String slug,
+  @DeleteMapping("/api/movie/{id}/rate/delete/{ratingID}")
+  public void deleteRating(@PathVariable long id,
                            @PathVariable int ratingID,
                            HttpServletRequest request,
                            HttpServletResponse response) {
 
     HttpSession httpSession = request.getSession(false);
-    Movie movie = movieService.getMovieBySlug(slug);
+    Movie movie = movieService.getMovieById(id);
     if (httpSession == null) {
       response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;

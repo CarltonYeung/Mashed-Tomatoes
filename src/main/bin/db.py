@@ -48,19 +48,18 @@ def close():
     _cnx.close()
 
 
-def save_media(media, writer_id, director_id, producer_id):
+def save_media(media):
     _cursor.execute('select id from Media where title = %s', (media.title,))
     row = _cursor.fetchone()
     if row:
         return row[0]
 
     add_media = ("insert into Media "
-                 "(description, posterPath, productionCompany, releaseDate, runTime, slug, title, writerId, directorId, producerId)"
-                 "values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                 "(description, posterPath, productionCompany, title)"
+                 "values (%s, %s, %s, %s)")
 
-    sql_media = (media.description, media.poster_path, media.production_company,
-                 media.release_date, media.run_time, media.slug, media.title,
-                 writer_id, director_id, producer_id)
+    sql_media = (media.description, media.poster_path,
+                 media.production_company, media.title)
 
     _cursor.execute(add_media, sql_media)
 
@@ -77,7 +76,7 @@ def save_media_genres(media_id, genres):
     valid_genres = map(lambda genre: genre.upper(), genres)
     valid_genres = filter(lambda genre: genre in VALID_GENRES, valid_genres)
     if not valid_genres:
-        valid_genres.append('ACTION') # default genre
+        valid_genres.append('ACTION')  # default genre
 
     valid_genres = list(set(valid_genres))
 
@@ -91,7 +90,7 @@ def save_media_genres(media_id, genres):
 
 
 def save_movie(movie, writer_id, director_id, producer_id):
-    media_id = save_media(movie, writer_id, director_id, producer_id)
+    media_id = save_media(movie)
 
     _cursor.execute('select id from Movies where id = %s', (media_id,))
     row = _cursor.fetchone()
@@ -99,12 +98,34 @@ def save_movie(movie, writer_id, director_id, producer_id):
         return row[0]
 
     add_movie = ("insert into Movies "
-                 "(id, boxOffice, budget)"
-                 "values (%s, %s, %s)")
+                 "(id, boxOffice, budget, releaseDate, runTime, writerId, directorId, producerId)"
+                 "values (%s, %s, %s, %s, %s, %s, %s, %s)")
 
-    sql_movie = (media_id, movie.box_office, movie.budget)
+    sql_movie = (media_id, movie.box_office, movie.budget, movie.release_date,
+                 movie.run_time, writer_id, director_id, producer_id)
 
     _cursor.execute(add_movie, sql_movie)
+
+    _cnx.commit()
+
+    return media_id
+
+
+def save_tvshow(tvshow, creator_id):
+    media_id = save_media(tvshow)
+    _cursor.execute('select id from TVShows where id = %s', (media_id,))
+    row = _cursor.fetchone()
+    if row:
+        return row[0]
+
+    add_tvshow = ("insert into TVShows "
+                  "(id, endDate, episodeRunTime, episodes, network, seasons, startDate, creatorId)"
+                  "values (%s, %s, %s, %s, %s, %s, %s, %s)")
+
+    sql_tvshow = (media_id, tvshow.end_date, tvshow.episode_run_time, tvshow.episodes,
+                  tvshow.network_company, tvshow.seasons, tvshow.start_date, creator_id)
+
+    _cursor.execute(add_tvshow, sql_tvshow)
 
     _cnx.commit()
 
@@ -154,11 +175,12 @@ def save_character(celebrity_id, media_id, character):
 
     return _cursor.lastrowid
 
+
 def save_best_picture_winner(movie_id, year):
     add_winner = ("insert into BestPictureWinners"
                   "(movieId, year)"
                   "values (%s, %s)")
-    
+
     sql_winner = (movie_id, year)
 
     _cursor.execute(add_winner, sql_winner)

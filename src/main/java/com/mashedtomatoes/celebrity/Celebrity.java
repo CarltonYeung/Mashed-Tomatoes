@@ -24,6 +24,30 @@ public class Celebrity {
 
   public Celebrity() {}
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public void setBirthplace(String birthplace) {
+    this.birthplace = birthplace;
+  }
+
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
+
+  public void setProfilePath(String profilePath) {
+    this.profilePath = profilePath;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("id")
@@ -31,33 +55,17 @@ public class Celebrity {
     return id;
   }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
   @Column(nullable = false)
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Date getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-  }
-
   public String getBirthplace() {
     return birthplace;
-  }
-
-  public void setBirthplace(String birthplace) {
-    this.birthplace = birthplace;
   }
 
   @Column(columnDefinition = "TEXT")
@@ -65,15 +73,7 @@ public class Celebrity {
     return biography;
   }
 
-  public void setBiography(String biography) {
-    this.biography = biography;
-  }
-
   public String getProfilePath() {
     return profilePath;
-  }
-
-  public void setProfilePath(String profilePath) {
-    this.profilePath = profilePath;
   }
 }

@@ -3,7 +3,7 @@ import requests
 import time
 
 from deserialize import json_to_movie, json_to_media_credits, \
-json_to_celebrity, json_to_api_movie_ids
+json_to_celebrity, json_to_api_movie_ids, json_to_tvshow
 
 API_BASE_URL = 'https://api.themoviedb.org/3'
 IMAGE_BASE_URL = 'https://image.tmdb.org/t/p'
@@ -20,10 +20,14 @@ __request_ct = 0
 def get_movie_url(movie_id):
     return API_BASE_URL + "/movie/" + str(movie_id)
 
-
 def get_movie_credits_url(movie_id):
     return get_movie_url(movie_id) + "/credits"
 
+def get_tvshow_url(tvshow_id):
+    return API_BASE_URL + "/tv/" + str(tvshow_id)
+
+def get_tvshow_credits_url(tvshow_id):
+    return get_tvshow_url(tvshow_id) + "/credits"
 
 def get_person_url(person_id):
     return API_BASE_URL + "/person/" + str(person_id)
@@ -64,6 +68,15 @@ def get_movie_credits(movie_id):
         movie_id), params={'api_key': API_KEY})
     return json_to_media_credits(r.json())
 
+def get_tvshow(tvshow_id):
+    delay_request()
+    r = requests.get(get_tvshow_url(tvshow_id), params={'api_key': API_KEY})
+    return json_to_tvshow(r.json())
+
+def get_tvshow_credits(tvshow_id):
+    delay_request()
+    r = requests.get(get_tvshow_credits_url(tvshow_id), params={'api_key': API_KEY})
+    return json_to_media_credits(r.json())
 
 def get_celebrity(celebrity_id):
     delay_request()
@@ -82,6 +95,17 @@ def get_top_movies(year, limit):
     })
     return json_to_api_movie_ids(r.json(), limit)
 
+def get_top_tvshows(year, limit):
+    delay_request()
+    url = API_BASE_URL + '/discover/tv'
+    r = requests.get(url, params={
+        'api_key': API_KEY,
+        'language': 'en-US',
+        'sort_by': 'popularity.desc',
+        'first_air_date_year': year,
+        'timezone': 'America/New_York'
+    })
+    return json_to_api_movie_ids(r.json(), limit)
 
 def download_file(url, basepath):
     r = requests.get(url, stream=True)

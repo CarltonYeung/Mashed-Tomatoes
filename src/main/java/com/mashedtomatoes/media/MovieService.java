@@ -1,5 +1,6 @@
 package com.mashedtomatoes.media;
 
+import java.util.Optional;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +55,12 @@ public class MovieService {
     return result;
   }
 
-  Movie getMovieBySlug(String slug) {
-    return movieRepository.findFirstBySlug(slug);
-  }
-
   void addMovie(Movie movie) {
     movieRepository.save(movie);
+  }
+
+  Movie getMovieById(long id) {
+  	return movieRepository.findFirstById(id);
   }
 
   void updateMovie(Movie movie) {
@@ -70,8 +71,8 @@ public class MovieService {
     movieRepository.delete(movie);
   }
 
-  Boolean deleteMovieBySlug(String slug) {
-    Movie movie = getMovieBySlug(slug);
+  Boolean deleteMovieById(long id) {
+  	Movie movie = getMovieById(id);
     if (movie == null) {
       return false;
     }
