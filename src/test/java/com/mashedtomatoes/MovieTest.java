@@ -27,7 +27,7 @@ public class MovieTest {
     public void addMovieTest() {
         Movie movie = new Movie();
         movie.setTitle("foo");
-        movie.setSlug("foo");
+        //movie.setSlug("foo");
 
         HashSet<Genre> genres = new HashSet<>();
         genres.add(Genre.ACTION);
