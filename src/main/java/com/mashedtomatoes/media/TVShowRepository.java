@@ -16,7 +16,4 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
     // select title from TVShows, Media where TVShows.id = Media.id AND title regexp '.*(a|tr).*';
     @Query(value = "SELECT * FROM TVShows, Media WHERE TVShows.id = Media.id AND title REGEXP :expr", nativeQuery = true)
     List<TVShow> findSimilarTVShows(@Param("expr") String expr);
-
-
-
 }

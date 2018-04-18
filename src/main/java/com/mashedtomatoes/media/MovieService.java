@@ -1,30 +1,56 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.search.SearchService;
+import com.mashedtomatoes.util.FuzzyStringMatchComparator;
+import com.mashedtomatoes.util.RegexBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class MovieService {
+  private static final int MAX_MOVIE_SEARCH_COUNT = 10;
+  private static final String URL_SPACE_DELIM = "+";
 
-  @Autowired MovieRepository movieRepository;
-
-  @Autowired SearchService searchService;
+  @Autowired
+  MovieRepository movieRepository;
 
   @Cacheable("movies")
   public Iterable<Movie> getAllMovies(String expr) {
-    if (expr == null || expr.trim().length() == 0) return movieRepository.findAll();
+//    try {
+//      Thread.sleep(3000L);
+//    } catch (InterruptedException e) {
+//      throw new IllegalStateException(e);
+//    } // For testing to cache
 
-    return searchService.search(Movie.class, "title", expr, 0);
-  }
+    if (expr == null) {
+      return movieRepository.findAll();
+    }
 
-  void addMovie(Movie movie) {
-    movieRepository.save(movie);
+    List<String> parts = Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
+    String regex = RegexBuilder.buildMySQLRegex(parts);
+    List<Movie> movies = movieRepository.findSimilarMovies(regex);
+    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
+    FuzzyStringMatchComparator<Movie> movieComparator =
+        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
+    Collections.sort(movies, movieComparator);
+
+    if (movies.size() < MAX_MOVIE_SEARCH_COUNT) {
+      return movies;
+    }
+
+    return movies.subList(0, MAX_MOVIE_SEARCH_COUNT);
   }
 
   Movie getMovieById(long id) {
     return movieRepository.findFirstById(id);
+  }
+
+  void addMovie(Movie movie) {
+    movieRepository.save(movie);
   }
 
   void updateMovie(Movie movie) {
