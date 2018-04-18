@@ -21,7 +21,7 @@
                 <article th:if="${not #lists.isEmpty(movies)}" class="search-result row">
                     <th:block th:each="movie : ${movies}">
                         <div class="search-movie-img">
-                            <a th:href="@{/movie/{id}}" class="thumbnail">
+                            <a th:href="@{/movie/{slug}(slug=${movie.slug})}" class="thumbnail">
                                 <img class="thumbnails media-info -poster" th:src="${movie.posterPath}" />
                             </a>
                         </div>

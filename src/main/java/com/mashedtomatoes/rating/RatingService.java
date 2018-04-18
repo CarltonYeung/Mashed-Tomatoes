@@ -3,6 +3,8 @@ package com.mashedtomatoes.rating;
 import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
