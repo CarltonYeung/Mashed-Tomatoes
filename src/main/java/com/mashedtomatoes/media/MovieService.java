@@ -1,47 +1,30 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.util.FuzzyStringMatchComparator;
-import com.mashedtomatoes.util.RegexBuilder;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.mashedtomatoes.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {
-  private static final int MAX_MOVIE_SEARCH_COUNT = 10;
-  private static final String URL_SPACE_DELIM = "+";
 
-  @Autowired
-  MovieRepository movieRepository;
+  @Autowired MovieRepository movieRepository;
 
+  @Autowired SearchService searchService;
+
+  @Cacheable("movies")
   public Iterable<Movie> getAllMovies(String expr) {
-    if (expr == null) {
-      return movieRepository.findAll();
-    }
+    if (expr == null || expr.trim().length() == 0) return movieRepository.findAll();
 
-    List<String> parts = Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
-    String regex = RegexBuilder.buildMySQLRegex(parts);
-    List<Movie> movies = movieRepository.findSimilarMovies(regex);
-    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
-    FuzzyStringMatchComparator<Movie> movieComparator =
-        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
-    Collections.sort(movies, movieComparator);
-
-    if (movies.size() < MAX_MOVIE_SEARCH_COUNT) {
-      return movies;
-    }
-
-    return movies.subList(0, MAX_MOVIE_SEARCH_COUNT);
-  }
-
-  Movie getMovieBySlug(String slug) {
-    return movieRepository.findFirstBySlug(slug);
+    return searchService.search(Movie.class, "title", expr, 0);
   }
 
   void addMovie(Movie movie) {
     movieRepository.save(movie);
+  }
+
+  Movie getMovieById(long id) {
+    return movieRepository.findFirstById(id);
   }
 
   void updateMovie(Movie movie) {
@@ -52,8 +35,8 @@ public class MovieService {
     movieRepository.delete(movie);
   }
 
-  Boolean deleteMovieBySlug(String slug) {
-    Movie movie = getMovieBySlug(slug);
+  Boolean deleteMovieById(long id) {
+    Movie movie = getMovieById(id);
     if (movie == null) {
       return false;
     }

@@ -5,11 +5,12 @@ const _ = require('lodash');
 
 const components = [
   require('./base/nav-bar'),
+  require('./search/search-form'),
   require('./media/media-update-list'),
   require('./rating/rating-form-post-btn'),
-  require('./user/login-btn'),
+  require('./user/login-form'),
+  require('./user/registration-form'),
   require('./user/logout-btn'),
-  require('./user/register-btn')
 ];
 
 const areDepsMet = deps => {
@@ -18,8 +19,6 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
-    console.log('Missing deps');
-    console.log(missingDeps);
     return false;
   }
 

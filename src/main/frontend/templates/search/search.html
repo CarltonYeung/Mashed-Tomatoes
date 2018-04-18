@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <div th:replace="partials/meta :: meta"></div>
+    <title>Mashed Tomatoes Search</title>
+    <div th:replace="partials/style :: style"></div>
+</head>
+
+<body>
+    <div th:replace="partials/header :: header"></div>
+    <div class="container my-3 vertical-center">
+        <div class="container" id="contents-container">
+            <div class="m-5">
+                <h1 class="search-title">Search Result</h1>
+            </div>
+
+            <h2 class="search-category mt-5 mb-4">Movies</h2>
+            <section class="col-xs-12 col-sm-6 col-md-12">
+                <h3 th:if="${#lists.isEmpty(movies)}">No Movies Found</h3>
+                <article th:if="${not #lists.isEmpty(movies)}" class="search-result row">
+                    <th:block th:each="movie : ${movies}">
+                        <div class="search-movie-img">
+                            <a th:href="@{/movie/{slug}(slug=${movie.slug})}" class="thumbnail">
+                                <img class="thumbnails media-info -poster" th:src="${movie.posterPath}" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                            <h3 th:text="${movie.title}">Movie Name</h3>
+                            <p th:text="${movie.description}">Movie Info</p>
+                        </div>
+                        <span class="clearfix border"></span>
+                    </th:block>
+                </article>
+            </section>
+
+            <h2 class="search-category mt-5 mb-4">TV Show</h2>
+            <section class="col-xs-12 col-sm-6 col-md-12">
+                <h3>No TV Shows Found...</h3>
+                <!--
+            <article class="search-result row">
+                <th:block th:each="tvshow : ${tvShows}">
+                    <div class="search-tvshow-img">
+                        <a href="#" class="thumbnail"><img class="thumbnails" src="/img/CFP3.jpg"   /></a>
+                    </div>
+                    <div class="search-rating">
+                            <div class="search-rating-img"><i></i> <span>RATING</span></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3 th:text="${tvshow.title}">TV Show Name</h3>
+                        <p th:text-"${tvshow.slug}">TV Show Info</p>		
+                    </div>
+                <span class="clearfix border"></span>
+                </th:block>
+            </article>			
+        -->
+            </section>
+
+            <h2 class="search-category mt-5 mb-4">Celebrity</h2>
+            <section class="col-xs-12 col-sm-6 col-md-12">
+                <h3 th:if="${#lists.isEmpty(celebrities)}">No Celebrities Found</h3>
+                <article th:if="${not #lists.isEmpty(celebrities)}" class="search-result row">
+                    <th:block th:each="celeb : ${celebrities}">
+                        <div class="search-celeb-img">
+                            <a href="#" class="thumbnail">
+                                <img class="thumbnails" src="/img/CFP3.jpg" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                            <h3 th:text="${celeb.name}">Celebrity Name</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio praesentium non repudiandae aut ullam ratione quas sint? Quisquam
+                                deserunt ut aliquid asperiores maxime aperiam magnam, et, sapiente nisi ea labore.
+                            </p>
+                        </div>
+                        <span class="clearfix border"></span>
+                    </th:block>
+                </article>
+            </section>
+
+
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
+</body>
+
+</html>

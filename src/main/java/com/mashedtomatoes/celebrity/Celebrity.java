@@ -3,17 +3,17 @@ package com.mashedtomatoes.celebrity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "Celebrities")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Indexed
 public class Celebrity {
   private long id;
   private String name;
@@ -24,6 +24,30 @@ public class Celebrity {
 
   public Celebrity() {}
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public void setBirthplace(String birthplace) {
+    this.birthplace = birthplace;
+  }
+
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
+
+  public void setProfilePath(String profilePath) {
+    this.profilePath = profilePath;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("id")
@@ -31,33 +55,19 @@ public class Celebrity {
     return id;
   }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
   @Column(nullable = false)
+  @Field
+  @Analyzer(definition = "searchAnalyzer")
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Date getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-  }
-
   public String getBirthplace() {
     return birthplace;
-  }
-
-  public void setBirthplace(String birthplace) {
-    this.birthplace = birthplace;
   }
 
   @Column(columnDefinition = "TEXT")
@@ -65,15 +75,7 @@ public class Celebrity {
     return biography;
   }
 
-  public void setBiography(String biography) {
-    this.biography = biography;
-  }
-
   public String getProfilePath() {
     return profilePath;
-  }
-
-  public void setProfilePath(String profilePath) {
-    this.profilePath = profilePath;
   }
 }

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "UserVerifications")
 public class UserVerification {
+  private static final long timeToLive = 1; // Cannot be imported from properties file
   private long ID;
   private User user;
   private boolean verified;
@@ -42,7 +43,7 @@ public class UserVerification {
   }
 
   String generateKey() {
-    expiration = Instant.now().plus(1, ChronoUnit.DAYS).getEpochSecond();
+    expiration = Instant.now().plus(timeToLive, ChronoUnit.DAYS).getEpochSecond();
     verificationKey = UUID.randomUUID().toString().replace("-", "");
     return verificationKey;
   }

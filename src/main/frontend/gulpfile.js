@@ -78,6 +78,8 @@ gulp.task('image', () => {
   }
 });
 
+// If watch is reports ENOSPC, fix it by running
+// https://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc
 gulp.task('watch', () => {
   gulp.watch(srcHTMLGlob, ['html']);
   gulp.watch(srcSASSGlob, ['sass']);

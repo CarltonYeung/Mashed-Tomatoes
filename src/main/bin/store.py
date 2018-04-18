@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
-
-from collections import namedtuple
+import os
 import argparse
+from collections import namedtuple
 
-import requests
 import mysql.connector
 
-from populate import net, db
-from populate.deserialize import json_to_movie, json_to_genres
+import net, db
+from deserialize import json_to_movie, json_to_genres
+
 
 MAX_CAST_MEMBERS = 15
 DEFAULT_MOVIES_PER_YEAR_LIMIT = 15
@@ -20,6 +19,13 @@ def store_celebrity(api_celebrity_id, basepath):
             celebrity.profile_path), basepath)
 
     return db.save_celebrity(celebrity)
+
+def store_cast(cast, media_id, basepath):
+    for i, cast_member in enumerate(cast, 0):
+        if i == MAX_CAST_MEMBERS:
+            break
+        celebrity_id = store_celebrity(cast_member.talent_id, basepath)
+        db.save_character(celebrity_id, media_id, cast_member.character)
 
 
 def store_movie_crew(movie_credits, basepath):
@@ -47,6 +53,7 @@ def store_movie_crew(movie_credits, basepath):
 
 def store_movie(api_movie_id, basepath):
     movie = net.get_movie(api_movie_id)
+
     if basepath and movie.poster_path:
         net.download_file(net.get_poster_img_url(movie.poster_path), basepath)
 
@@ -55,12 +62,7 @@ def store_movie(api_movie_id, basepath):
         movie_credits, basepath)
     movie_id = db.save_movie(movie, writer_id, director_id, producer_id)
     db.save_media_genres(movie_id, movie.genres)
-    for i, cast_member in enumerate(movie_credits.cast, 0):
-        if i == MAX_CAST_MEMBERS:
-            break
-        celebrity_id = store_celebrity(
-            cast_member.talent_id, basepath)
-        db.save_character(celebrity_id, movie_id, cast_member.character)
+    store_cast(movie_credits.cast, movie_id, basepath)
 
     print ('Saved movie: {}'.format(movie.title))
 
@@ -73,20 +75,18 @@ def store_movies(start_year, end_year, limit, basepath):
         for id in ids:
             store_movie(id, basepath)
 
+def store_tvshow(api_tvshow_id, basepath):
+    tvshow = net.get_tvshow(api_tvshow_id)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Populate database with data from the Movie Database')
-    parser.add_argument('--basepath', default=None,
-                        help='Path in which to store images, if none given, images are not stored')
-    parser.add_argument('--start-year', default=1950,
-                        help='Year in which to start downloading movies from (default: 1950)')
-    parser.add_argument('--end-year', default=2018,
-                        help='Year in which to end downloading movies for (default: 2018)')
-    parser.add_argument('--limit', default=2018,
-                        help='Amount of movies to store per year (default: 15)')
+    if basepath and tvshow.poster_path:
+        net.download_file(net.get_poster_img_url(tvshow.poster_path), basepath)
 
-    args = parser.parse_args()
-    store_movies(start_year=int(args.start_year), end_year=int(args.end_year),
-                 limit=int(args.limit), basepath=args.basepath)
-    db.close()
+    tvshow_credits = net.get_tvshow_credits(api_tvshow_id)
+    creator_id = store_celebrity(tvshow.api_creator_id, basepath)
+    tvshow_id = db.save_tvshow(tvshow, creator_id)
+    db.save_media_genres(tvshow_id, tvshow.genres)
+    store_cast(tvshow_credits.cast, tvshow_id, basepath)
+
+    print ('Saved tv show: {}'.format(tvshow.title))
+
+    return tvshow_id
