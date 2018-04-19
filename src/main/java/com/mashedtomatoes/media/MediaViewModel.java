@@ -4,12 +4,15 @@ import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.thymeleaf.util.StringUtils;
 
 public class MediaViewModel extends Media {
+  private static final Integer COMMA_SEPARATED_VALUE_LIMIT = 3;
+
   private final Double averageCriticRating;
   private final Long totalCriticRating;
   private final Long smashCount;
@@ -25,12 +28,16 @@ public class MediaViewModel extends Media {
     super.setGenres(base.getGenres());
     super.setDescription(base.getDescription());
     super.setPosterPath(fileUri + base.getPosterPath());
-    super.setCharacters(base.getCharacters());
+    super.setCharacters(
+        base.getCharacters()
+            .stream()
+            .sorted(Comparator.comparing(Character::getCastOrder))
+            .collect(Collectors.toList()));
     for (Character character : super.getCharacters()) {
       Celebrity c = character.getCelebrity();
       character.getCelebrity().setProfilePath(String.format("%s%s", fileUri, c.getProfilePath()));
     }
-    super.setProductionCompany(super.getProductionCompany());
+    super.setProductionCompany(base.getProductionCompany());
 
     if (getRatings() == null || getRatings().isEmpty()) {
       criticRatings = new HashSet<>();
@@ -105,6 +112,7 @@ public class MediaViewModel extends Media {
     return getGenres()
         .stream()
         .map(g -> StringUtils.capitalize(g.toString().toLowerCase()))
-        .collect(Collectors.joining(","));
+        .limit(COMMA_SEPARATED_VALUE_LIMIT)
+        .collect(Collectors.joining(", "));
   }
 }

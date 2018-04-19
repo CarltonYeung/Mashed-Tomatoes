@@ -7,6 +7,7 @@ const components = [
   require('./base/nav-bar'),
   require('./search/search-form'),
   require('./media/media-update-list'),
+  require('./media/talent-box'),
   require('./rating/rating-form-post-btn'),
   require('./user/login-form'),
   require('./user/registration-form'),

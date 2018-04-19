@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -33,7 +34,7 @@ public abstract class Media {
   protected String description;
   protected String posterPath;
   protected String productionCompany;
-  protected Set<Character> characters;
+  protected List<Character> characters;
   protected Set<Rating> ratings;
   protected Set<Genre> genres;
   protected Set<String> photos;
@@ -58,7 +59,7 @@ public abstract class Media {
     this.productionCompany = productionCompany;
   }
 
-  public void setCharacters(Set<Character> characters) {
+  public void setCharacters(List<Character> characters) {
     this.characters = characters;
   }
 
@@ -100,7 +101,7 @@ public abstract class Media {
   }
 
   @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  public Set<Character> getCharacters() {
+  public List<Character> getCharacters() {
     return characters;
   }
 

@@ -27638,6 +27638,7 @@ const components = [
   __webpack_require__(14),
   __webpack_require__(15),
   __webpack_require__(16),
+  __webpack_require__(17),
 ];
 
 const areDepsMet = deps => {
@@ -40234,6 +40235,27 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
+
+module.exports.deps = [
+  '.talent-box',
+  '#talent-box-see-more'
+];
+
+module.exports.init = () => {
+  $('#talent-box-see-more').on('click', () => {
+    $('.talent-box').each((i, el) => {
+      $(el).prop('hidden', false);
+    });
+    $('#talent-box-see-more').prop('hidden', true);
+  });
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
 
 module.exports.deps = [
@@ -40283,7 +40305,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40330,7 +40352,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40387,7 +40409,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
