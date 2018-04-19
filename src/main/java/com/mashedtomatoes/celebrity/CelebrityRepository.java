@@ -15,7 +15,6 @@ public interface CelebrityRepository extends CrudRepository<Celebrity, Long> {
 
   Optional<Celebrity> findFirstByName(String name);
 
-  // select * from Celebrity where Celebrity.name = regexp '.*(a|tr).*';
   @Query(value = "SELECT * FROM Celebrities WHERE Celebrities.name REGEXP :expr", nativeQuery = true)
   List<Celebrity> findSimilarMovies(@Param("expr") String expr);
 
