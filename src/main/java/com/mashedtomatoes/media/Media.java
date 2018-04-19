@@ -5,9 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
-
-import javax.persistence.*;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,6 +36,7 @@ public abstract class Media {
   protected Set<Character> characters;
   protected Set<Rating> ratings;
   protected Set<Genre> genres;
+  protected Set<String> photos;
 
   public void setId(long id) {
     this.id = id;
@@ -53,6 +68,10 @@ public abstract class Media {
 
   public void setGenres(Set<Genre> genres) {
     this.genres = genres;
+  }
+
+  public void setPhotos(Set<String> photos) {
+    this.photos = photos;
   }
 
   @Id
@@ -99,5 +118,15 @@ public abstract class Media {
   @Column(name = "genre", nullable = false, length = 32)
   public Set<Genre> getGenres() {
     return genres;
+  }
+
+  @ElementCollection(targetClass = String.class)
+  @CollectionTable(
+    name = "MediaPhotos",
+    joinColumns = {@JoinColumn(name = "mediaId")}
+  )
+  @Column(name = "photo", nullable = false)
+  public Set<String> getPhotos() {
+    return photos;
   }
 }

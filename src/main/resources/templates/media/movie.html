@@ -11,17 +11,11 @@
     <div th:replace="partials/header :: header"></div>
     <main class="container" th:data-media-slug="${movie.slug}">
         <section class="media-section">
-            <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
+            <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h1>
             <div class="d-flex justify-content-between">
                 <img class="media-info -poster" th:src="${movie.posterPath}">
                 <div class="col-md-8">
                     <p class="row media-info" th:text="${movie.description}">
-                        In the year 2045, people can escape their harsh reality in the OASIS, an immersive virtual world where you can go anywhere,
-                        do anything, be anyone-the only limits are your own imagination. OASIS creator James Halliday left
-                        his immense fortune and control of the Oasis to the winner of a contest designed to find a worthy
-                        heir. When unlikely hero Wade Watts conquers the first challenge of the reality-bending treasure
-                        hunt, he and his friends-known as the High Five-are hurled into a fantastical universe of discovery
-                        and danger to save the OASIS and their world.
                     </p>
                     <div class="row mt-2">
                         <div class="col-md-7 px-0">
@@ -119,11 +113,10 @@
         </section>
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Cast</h1>
-
             <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
                 <div class="talent-box" th:each="character: ${movie.characters}">
                     <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
-                    <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
+                    <a class="talent-box -celebrity" th:href="@{/celebrity/{id}(id=${character.celebrity.id})}" th:text="${character.celebrity.name}"></a>
                     <p class="talent-box -character">as
                         <span th:text="${character.name}"></span>
                     </p>
@@ -131,7 +124,6 @@
             </div>
             <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
             <div class="text-center" th:if="${#lists.isEmpty(movie.characters)}">
-
             <div class="text-center">
                 <h3>No characters...</h3>
             </div>
