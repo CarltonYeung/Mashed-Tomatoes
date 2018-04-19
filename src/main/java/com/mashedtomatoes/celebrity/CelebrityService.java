@@ -1,44 +1,73 @@
 package com.mashedtomatoes.celebrity;
 
+import com.mashedtomatoes.media.Movie;
+import com.mashedtomatoes.media.MovieRepository;
+import com.mashedtomatoes.media.TVShow;
+import com.mashedtomatoes.media.TVShowRepository;
 import com.mashedtomatoes.util.FuzzyStringMatchComparator;
 import com.mashedtomatoes.util.RegexBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CelebrityService {
   private static final int MAX_CELEBRITY_SEARCH_COUNT = 10;
   private static final String URL_SPACE_DELIM = "+";
 
-  @Autowired
-  CelebrityRepository celebrityRepository;
+  @Autowired private CelebrityRepository celebrityRepository;
 
-  public Celebrity getCelebrityByID(long ID) {
-    Optional<Celebrity> optional = celebrityRepository.findById(ID);
-    if (optional.isPresent()) {
-      return optional.get();
-    }
-    return null;
+  @Autowired private CharacterRepository characterRepository;
+
+  @Autowired private MovieRepository movieRepository;
+
+  @Autowired private TVShowRepository tvShowRepository;
+
+  public Celebrity getCelebrityById(long id) {
+    return celebrityRepository.findFirstById(id);
+  }
+
+  @Cacheable("CelebrityDirectedMovies")
+  public Iterable<Movie> getDirectedMovies(long id) {
+    return movieRepository.findAllByDirector_Id(id);
+  }
+
+  @Cacheable("CelebrityProducedMovies")
+  public Iterable<Movie> getProducedMovies(long id) {
+    return movieRepository.findAllByProducer_Id(id);
+  }
+
+  @Cacheable("CelebrityWrittenMovies")
+  public Iterable<Movie> getWrittenMovies(long id) {
+    return movieRepository.findAllByWriter_Id(id);
+  }
+
+  @Cacheable("CelebrityCreatedTVShows")
+  public Iterable<TVShow> getCreatedTVShows(long id) {
+    return tvShowRepository.findAllByCreator_Id(id);
+  }
+
+  @Cacheable("CelebrityCharacters")
+  public Iterable<Character> getAllPlayedCharacters(long id) {
+    return characterRepository.findAllByCelebrity_Id(id);
   }
 
   @Cacheable("Celebrities")
   public Iterable<Celebrity> getAllCelebrities(String expr, int page) {
-    if(expr == null){
+    if (expr == null) {
       return celebrityRepository.findAll();
     }
 
-    List<String> parts = Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
+    List<String> parts =
+        Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
     String regex = RegexBuilder.buildMySQLRegex(parts);
     List<Celebrity> celebrities = celebrityRepository.findSimilarMovies(regex);
     String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
     FuzzyStringMatchComparator<Celebrity> celebrityComparator =
-            new FuzzyStringMatchComparator<>(originalExpr, Celebrity::getName);
+        new FuzzyStringMatchComparator<>(originalExpr, Celebrity::getName);
     Collections.sort(celebrities, celebrityComparator);
 
     // Pagination
