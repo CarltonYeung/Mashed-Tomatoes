@@ -134,8 +134,9 @@ public class UserAPIController {
 
     me.following.add(toFollow);
     toFollow.followers.add(me);
-//    userService.save(me);
-//    userService.save(toFollow);
+    userService.save(me);
+    userService.save(toFollow);
+    session.setAttribute("User", userService.getUserById(me.id));
 
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
@@ -169,8 +170,9 @@ public class UserAPIController {
     }
 
     unfollow(me, toUnfollow);
-//    userService.save(me);
-//    userService.save(toUnfollow);
+    userService.save(toUnfollow);
+    userService.save(me);
+    session.setAttribute("User", userService.getUserById(me.id));
 
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
