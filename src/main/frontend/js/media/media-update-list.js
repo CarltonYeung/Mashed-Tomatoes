@@ -3,7 +3,7 @@ const _ = require('lodash');
 const ko = require('knockout');
 const urlBuilder = require('../url-builder');
 
-const movieId = $('[data-media-id]').attr('data-media-id');
+const movieSlug = $('[data-media-slug]').attr('data-media-slug');
 
 const updateList = (isWantToSee) => {
   $.ajax(
@@ -11,10 +11,11 @@ const updateList = (isWantToSee) => {
     {
       method: "PATCH",
       data: {
-        movieId: movieId,
+        movieSlug: movieSlug,
         isWantToSee: isWantToSee
       },
       contentType: "application/json",
+      dataType: "application/json",
       success: res => {
         if (res.status == 204) {
           console.log('List updated');
@@ -69,7 +70,7 @@ class ViewModel {
 
 module.exports.deps = [
   '#media-update-list',
-  '[data-media-id]'
+  '[data-media-slug]'
 ];
 
 module.exports.init = () => {

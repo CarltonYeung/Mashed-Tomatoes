@@ -20,12 +20,6 @@ def json_to_creator_id(node):
     except IndexError as e:
         return 'None'
 
-def json_to_runtime(node):
-    try:
-        return node[0]
-    except IndexError as e:
-        return 23 # default 23mins
-
 
 def json_to_movie(node):
     return models.Movie(title=node['original_title'], description=node['overview'],
@@ -45,7 +39,7 @@ def json_to_tvshow(node):
                          poster_path=node['poster_path'],
                          start_date=node['first_air_date'],
                          end_date=node['last_air_date'],
-                         episode_run_time=json_to_runtime(node['episode_run_time']),
+                         episode_run_time=node['episode_run_time'][0],
                          genres=json_to_genres(node['genres']),
                          production_company=json_to_company(
                              node['production_companies']),
@@ -93,7 +87,7 @@ def json_to_celebrity(node):
         biography=node.get('biography', None),
         birthday=birthday,
         birthplace=node.get('place_of_birth', 'Unknown'),
-        name=node.get('name', 'John Doe'),
+        name=node['name'],
         profile_path=node.get('profile_path', None)
     )
 

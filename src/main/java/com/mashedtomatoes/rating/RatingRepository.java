@@ -1,5 +1,8 @@
 package com.mashedtomatoes.rating;
 
+import com.mashedtomatoes.media.Movie;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,4 +20,5 @@ public interface RatingRepository extends CrudRepository<Rating, Long> {
   @Modifying
   @Query("DELETE FROM Rating r WHERE r.id LIKE ?1")
   void deleteRating(@Param("expr") long expr);
+
 }
