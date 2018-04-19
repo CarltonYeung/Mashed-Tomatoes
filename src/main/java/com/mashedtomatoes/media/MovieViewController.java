@@ -3,6 +3,9 @@ package com.mashedtomatoes.media;
 import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,17 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Controller
 public class MovieViewController {
-	private static final String FILES_URI = "/files";
+  private static final String FILES_URI = "/files";
 
-  @Autowired
-  private MovieService movieService;
+  @Autowired private MovieService movieService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
@@ -58,43 +55,45 @@ public class MovieViewController {
       super.setRunTime(movie.getRunTime());
       super.setPosterPath(FILES_URI + movie.getPosterPath());
       super.setCharacters(movie.getCharacters());
-      super.getCharacters().forEach(character -> {
-      	Celebrity c = character.getCelebrity();
-      	character.getCelebrity().setProfilePath(FILES_URI + c.getProfilePath());
-      });
-	    super.setDirector(movie.getDirector());
-	    super.setProducer(movie.getProducer());
-	    super.setWriter(movie.getWriter());
-	    super.setProductionCompany(movie.getProductionCompany());
+      super.getCharacters()
+          .forEach(
+              character -> {
+                Celebrity c = character.getCelebrity();
+                character.getCelebrity().setProfilePath(FILES_URI + c.getProfilePath());
+              });
+      super.setDirector(movie.getDirector());
+      super.setProducer(movie.getProducer());
+      super.setWriter(movie.getWriter());
+      super.setProductionCompany(movie.getProductionCompany());
       super.setBoxOffice(movie.getBoxOffice());
       super.setBudget(movie.getBudget());
     }
 
     public Double getAverageCriticRating() {
-    	return averageCriticRating;
+      return averageCriticRating;
     }
 
-	  public Integer getTotalCriticRating() {
-    	return totalCriticRating;
-	  }
+    public Integer getTotalCriticRating() {
+      return totalCriticRating;
+    }
 
-	  public Integer getSmashCount() {
-		  return smashCount;
-	  }
+    public Integer getSmashCount() {
+      return smashCount;
+    }
 
-	  public Integer getPassCount() {
-		  return passCount;
-	  }
+    public Integer getPassCount() {
+      return passCount;
+    }
 
-	  public Double getAverageAudienceRating() {
-		  return averageAudienceRating;
-	  }
+    public Double getAverageAudienceRating() {
+      return averageAudienceRating;
+    }
 
-	  public Integer getTotalAudienceRating() {
-		  return totalAudienceRating;
-	  }
+    public Integer getTotalAudienceRating() {
+      return totalAudienceRating;
+    }
 
-	  public void setTotalAudienceRating(Integer totalAudienceRating) {
+    public void setTotalAudienceRating(Integer totalAudienceRating) {
       this.totalAudienceRating = totalAudienceRating;
     }
 
@@ -106,7 +105,7 @@ public class MovieViewController {
     }
 
     public List<String> getVideos() {
-    	return new ArrayList<>();
+      return new ArrayList<>();
     }
 
     public List<CriticRating> getCriticRatings() {
@@ -116,6 +115,5 @@ public class MovieViewController {
     public List<AudienceRating> getAudienceRatings() {
       return null;
     }
-
   }
 }
