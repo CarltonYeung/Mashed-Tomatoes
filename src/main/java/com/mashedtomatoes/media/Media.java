@@ -23,6 +23,7 @@ public abstract class Media {
   protected Set<Character> characters;
   protected Set<Rating> ratings;
   protected Set<Genre> genres;
+  protected Set<String> photos;
 
   public void setId(long id) {
     this.id = id;
@@ -54,6 +55,10 @@ public abstract class Media {
 
   public void setGenres(Set<Genre> genres) {
     this.genres = genres;
+  }
+
+  public void setPhotos(Set<String> photos) {
+    this.photos = photos;
   }
 
   @Id
@@ -100,5 +105,15 @@ public abstract class Media {
   @Column(name = "genre", nullable = false, length = 32)
   public Set<Genre> getGenres() {
     return genres;
+  }
+
+  @ElementCollection(targetClass = String.class)
+  @CollectionTable(
+    name = "MediaPhotos",
+    joinColumns = {@JoinColumn(name = "mediaId")}
+  )
+  @Column(name = "photo", nullable = false)
+  public Set<String> getPhotos() {
+    return photos;
   }
 }

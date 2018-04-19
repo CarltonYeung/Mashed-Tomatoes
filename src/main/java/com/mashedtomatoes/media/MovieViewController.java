@@ -105,10 +105,6 @@ public class MovieViewController {
           .collect(Collectors.joining(","));
     }
 
-    public List<String> getPhotos() {
-    	return new ArrayList<>();
-    }
-
     public List<String> getVideos() {
     	return new ArrayList<>();
     }
