@@ -2,6 +2,9 @@ package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.exception.DuplicateDisplayNameException;
 import com.mashedtomatoes.exception.DuplicateEmailException;
+import com.mashedtomatoes.http.UserMediaList;
+import com.mashedtomatoes.media.Media;
+import com.mashedtomatoes.media.MediaService;
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -16,6 +20,8 @@ public class UserService {
   private UserRepository userRepository;
   @Autowired
   private AudienceRepository audienceRepository;
+  @Autowired
+  private MediaService mediaService;
   @Autowired
   private HashService hashService;
   @Autowired
@@ -78,7 +84,68 @@ public class UserService {
     return optional.get();
   }
 
-  public void save(User u) {
-    userRepository.save(u);
+  public void save(User user) {
+    userRepository.save(user);
+  }
+
+  void addWantToSee(User user, long mediaId) throws Exception {
+    if (inList(user, mediaId, UserMediaList.NI)) {
+      throw new Exception(env.getProperty("user.existsInNotInterested"));
+    }
+
+    Media media = mediaService.getMediaById(mediaId);
+    if (user.wantToSee.add(media)) {
+      save(user);
+    }
+  }
+
+  void removeWantToSee(User user, long mediaId) {
+    for (Media media : user.wantToSee) {
+      if (media.getId() == mediaId) {
+        user.wantToSee.remove(media);
+        save(user);
+        break;
+      }
+    }
+  }
+
+  void addNotInterested(User user, long mediaId) throws Exception {
+    if (inList(user, mediaId, UserMediaList.WTS)) {
+      throw new Exception(env.getProperty("user.existsInWantToSee"));
+    }
+
+    Media media = mediaService.getMediaById(mediaId);
+    if (user.notInterested.add(media)) {
+      save(user);
+    }
+  }
+
+  void removeNotInterested(User user, long mediaId) {
+    for (Media media : user.notInterested) {
+      if (media.getId() == mediaId) {
+        user.notInterested.remove(media);
+        save(user);
+        break;
+      }
+    }
+  }
+
+  private boolean inList(User user, long mediaId, UserMediaList type) {
+    Set<Media> list = null;
+
+    switch (type) {
+      case WTS:
+        list = user.wantToSee; break;
+      case NI:
+        list = user.notInterested; break;
+    }
+
+    for (Media media : list) {
+      if (media.getId() == mediaId) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

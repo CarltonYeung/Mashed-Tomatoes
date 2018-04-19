@@ -3,10 +3,10 @@ package com.mashedtomatoes.user;
 import com.mashedtomatoes.http.FollowRequest;
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
+import com.mashedtomatoes.http.UserMediaListsRequest;
 import com.mashedtomatoes.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,10 +102,9 @@ public class UserAPIController {
   }
 
   @PostMapping("/user/follow")
-  @Transactional
   public String follow(@Valid @RequestBody FollowRequest followRequest,
-                     HttpServletRequest request,
-                     HttpServletResponse response) {
+                       HttpServletRequest request,
+                       HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -137,13 +136,11 @@ public class UserAPIController {
     userService.save(me);
     userService.save(toFollow);
     session.setAttribute("User", userService.getUserById(me.id));
-
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
 
   @PostMapping("/user/unfollow")
-  @Transactional
   public String unfollow(@Valid @RequestBody FollowRequest followRequest,
                          HttpServletRequest request,
                          HttpServletResponse response) {
@@ -173,7 +170,6 @@ public class UserAPIController {
     userService.save(toUnfollow);
     userService.save(me);
     session.setAttribute("User", userService.getUserById(me.id));
-
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
@@ -200,6 +196,52 @@ public class UserAPIController {
         you.followers.remove(possiblyMe);
         break;
       }
+    }
+  }
+
+  @PostMapping("/userMediaLists")
+  public String userMediaLists(@Valid @RequestBody UserMediaListsRequest umlRequest,
+                               HttpServletRequest request,
+                               HttpServletResponse response) {
+
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User me = (User) session.getAttribute("User");
+
+    try {
+      switch (umlRequest.getList()) {
+        case WTS:
+          wantToSee(me, umlRequest); break;
+        case NI:
+          notInterested(me, umlRequest); break;
+      }
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return e.getMessage();
+    }
+
+    session.setAttribute("User", userService.getUserById(me.id));
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  private void wantToSee(User user, UserMediaListsRequest request) throws Exception {
+    if (request.isAdd()) {
+      userService.addWantToSee(user, request.getId());
+    } else {
+      userService.removeWantToSee(user, request.getId());
+    }
+  }
+
+  private void notInterested(User user, UserMediaListsRequest request) throws Exception {
+    if (request.isAdd()) {
+      userService.addNotInterested(user, request.getId());
+    } else {
+      userService.removeNotInterested(user, request.getId());
     }
   }
 
