@@ -1,5 +1,6 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.http.FollowRequest;
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.mail.MailService;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 @RestController
 public class UserAPIController {
@@ -96,6 +98,54 @@ public class UserAPIController {
     } else {
       response.setStatus(HttpServletResponse.SC_OK);
     }
+  }
+
+  @PostMapping("/user/follow")
+  public String follow(@Valid @RequestBody FollowRequest followRequest,
+                     HttpServletRequest request,
+                     HttpServletResponse response) {
+
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User me = (User) session.getAttribute("User");
+    if (me.id == followRequest.getId()) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.followSelf");
+    }
+
+    User toFollow;
+    try {
+      toFollow = userService.getUserById(followRequest.getId());
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.notFound");
+    }
+
+    if (isFollowing(me, toFollow)) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.alreadyFollowing");
+    }
+
+    me.following.add(toFollow);
+    toFollow.followers.add(me);
+    userService.save(me);
+    userService.save(toFollow);
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  private boolean isFollowing(User me, User toFollow) {
+    for (User following : me.following) {
+      if (following.id == toFollow.id) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

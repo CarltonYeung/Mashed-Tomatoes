@@ -1,16 +1,17 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
-
+import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
-import java.util.HashSet;
+import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Table(name = "TVShows")
+@Indexed
 public class TVShow extends Media {
   private Date startDate;
   private Date endDate;

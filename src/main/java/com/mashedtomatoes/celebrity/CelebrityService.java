@@ -28,7 +28,7 @@ public class CelebrityService {
   }
 
   @Cacheable("Celebrities")
-  public Iterable<Celebrity> getAllCelebrities(String expr){
+  public Iterable<Celebrity> getAllCelebrities(String expr, int page) {
     if(expr == null){
       return celebrityRepository.findAll();
     }
@@ -41,11 +41,22 @@ public class CelebrityService {
             new FuzzyStringMatchComparator<>(originalExpr, Celebrity::getName);
     Collections.sort(celebrities, celebrityComparator);
 
-    if (celebrities.size() < MAX_CELEBRITY_SEARCH_COUNT) {
-      return celebrities;
+    // Pagination
+    int start = 0, end = celebrities.size();
+    if (page > 0) {
+      start = (page - 1) * MAX_CELEBRITY_SEARCH_COUNT;
+
+      if (start >= celebrities.size()) {
+        return celebrities.subList(0, 0);
+      }
+
+      end = start + MAX_CELEBRITY_SEARCH_COUNT;
+      end = Integer.min(end, celebrities.size());
     }
+    return celebrities.subList(start, end);
+  }
 
-    return celebrities.subList(0, MAX_CELEBRITY_SEARCH_COUNT);
-
+  public Iterable<Celebrity> getAllCelebrities(String expr) {
+    return getAllCelebrities(expr, 0);
   }
 }
