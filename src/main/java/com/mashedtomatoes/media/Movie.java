@@ -9,11 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Table(name = "Movies")
-@Indexed
 public class Movie extends Media {
   private double boxOffice;
   private double budget;
