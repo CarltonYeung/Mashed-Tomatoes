@@ -1,5 +1,6 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.rating.Rating;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public abstract class User {
   protected Set<Rating> ratings;
   protected Set<User> following;
   protected Set<User> followers;
+  protected Set<Media> wantToSee;
+  protected Set<Media> notInterested;
   protected long created;
   protected long updated;
 
@@ -29,6 +32,8 @@ public abstract class User {
     this.credentials = new UserCredentials(this);
     this.verification = new UserVerification(this);
     this.ratings = new HashSet<>();
+    this.wantToSee = new HashSet<>();
+    this.notInterested = new HashSet<>();
     this.type = type;
   }
 
@@ -137,6 +142,34 @@ public abstract class User {
 
   public void setFollowers(Set<User> followers) {
     this.followers = followers;
+  }
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+          name = "WantToSee",
+          joinColumns = {@JoinColumn(name = "userID")},
+          inverseJoinColumns = {@JoinColumn(name = "mediaID")}
+  )
+  public Set<Media> getWantToSee() {
+    return wantToSee;
+  }
+
+  public void setWantToSee(Set<Media> wantToSee) {
+    this.wantToSee = wantToSee;
+  }
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+          name = "NotInterested",
+          joinColumns = {@JoinColumn(name = "userID")},
+          inverseJoinColumns = {@JoinColumn(name = "mediaID")}
+  )
+  public Set<Media> getNotInterested() {
+    return notInterested;
+  }
+
+  public void setNotInterested(Set<Media> notInterested) {
+    this.notInterested = notInterested;
   }
 
   @Column(nullable = false, updatable = false)
