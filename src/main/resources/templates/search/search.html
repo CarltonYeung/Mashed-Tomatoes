@@ -21,7 +21,7 @@
                 <article th:if="${not #lists.isEmpty(movies)}" class="search-result row">
                     <th:block th:each="movie : ${movies}">
                         <div class="search-movie-img">
-                            <a th:href="@{/movie/{slug}(slug=${movie.slug})}" class="thumbnail">
+                            <a th:href="@{/movie/{id}(id=${movie.id})}" class="thumbnail">
                                 <img class="thumbnails media-info -poster" th:src="${movie.posterPath}" />
                             </a>
                         </div>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
                         <h3 th:text="${tvshow.title}">TV Show Name</h3>
-                        <p th:text-"${tvshow.slug}">TV Show Info</p>		
+                        <p th:text-"${tvshow.id}">TV Show Info</p>		
                     </div>
                 <span class="clearfix border"></span>
                 </th:block>

@@ -22,8 +22,12 @@ public class TVShowViewModel extends MediaViewModel {
     this.seasons = base.getSeasons();
     this.episodes = base.getEpisodes();
     this.network = base.getNetwork();
-    this.creator = base.getCreator();
     this.airDates = base.getAirDates();
+	  if (base.getCreator() != null) {
+		  base.getCreator()
+				  .setProfilePath(String.format("%s%s", fileUri, base.getCreator().getProfilePath()));
+	  }
+	  this.creator = base.getCreator();
   }
 
   public Date getStartDate() {

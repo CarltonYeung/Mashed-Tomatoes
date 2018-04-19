@@ -17,13 +17,19 @@ public class MovieViewModel extends MediaViewModel {
     super(fileUri, smashThreshold, base);
     this.releaseDate = base.getReleaseDate();
     this.runTime = base.getRunTime();
-    base.getDirector()
-        .setProfilePath(String.format("%s%s", fileUri, getDirector().getProfilePath()));
+    if (base.getDirector() != null) {
+      base.getDirector()
+          .setProfilePath(String.format("%s%s", fileUri, base.getDirector().getProfilePath()));
+    }
     this.director = base.getDirector();
-    base.getProducer()
-        .setProfilePath(String.format("%s%s", fileUri, getProducer().getProfilePath()));
+    if (base.getProducer() != null) {
+      base.getProducer()
+          .setProfilePath(String.format("%s%s", fileUri, base.getProducer().getProfilePath()));
+    }
     this.producer = base.getProducer();
-    base.getWriter().setProfilePath(String.format("%s%s", fileUri, getWriter().getProfilePath()));
+    if (base.getWriter() != null) {
+      base.getWriter().setProfilePath(String.format("%s%s", fileUri, base.getWriter().getProfilePath()));
+    }
     this.writer = base.getWriter();
     this.boxOffice = base.getBoxOffice();
     this.budget = base.getBudget();
