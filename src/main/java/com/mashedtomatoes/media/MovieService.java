@@ -106,10 +106,6 @@ public class MovieService {
     movieRepository.save(movie);
   }
 
-  Movie getMovieById(long id) {
-    return movieRepository.findFirstById(id);
-  }
-
   void updateMovie(Movie movie) {
     addMovie(movie);
   }
