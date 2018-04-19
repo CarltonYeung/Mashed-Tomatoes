@@ -19,8 +19,8 @@ public class TVShowService {
     TVShowRepository tvShowRepository;
 
     @Cacheable("TVShows")
-    public Iterable<TVShow> getAllTVShows(String expr) {
-        if (expr == null) {
+    public Iterable<TVShow> getAllTVShows(String expr, int page) {
+        if(expr == null){
             return tvShowRepository.findAll();
         }
 
@@ -28,15 +28,27 @@ public class TVShowService {
         String regex = RegexBuilder.buildMySQLRegex(parts);
         List<TVShow> tvShows = tvShowRepository.findSimilarTVShows(regex);
         String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
-        FuzzyStringMatchComparator<TVShow> tvShowComparator =
+        FuzzyStringMatchComparator<TVShow> celebrityComparator =
                 new FuzzyStringMatchComparator<>(originalExpr, TVShow::getTitle);
-        Collections.sort(tvShows, tvShowComparator);
+        Collections.sort(tvShows, celebrityComparator);
 
-        if (tvShows.size() < MAX_TVSHOW_SEARCH_COUNT) {
-            return tvShows;
+        // Pagination
+        int start = 0, end = tvShows.size();
+        if (page > 0) {
+            start = (page - 1) * MAX_TVSHOW_SEARCH_COUNT;
+
+            if (start >= tvShows.size()) {
+                return tvShows.subList(0, 0);
+            }
+
+            end = start + MAX_TVSHOW_SEARCH_COUNT;
+            end = Integer.min(end, tvShows.size());
         }
+        return tvShows.subList(start, end);
+    }
 
-        return tvShows.subList(0, MAX_TVSHOW_SEARCH_COUNT);
+    public Iterable<TVShow> getAllTVShows(String expr) {
+        return getAllTVShows(expr, 0);
     }
 
 }

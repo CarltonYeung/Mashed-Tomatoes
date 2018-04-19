@@ -119,7 +119,7 @@
         </section>
         <section class="mt-4 media-section">
             <h1 class="media-section -title">Cast</h1>
-            <!--
+
             <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
                 <div class="talent-box" th:each="character: ${movie.characters}">
                     <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
@@ -131,7 +131,7 @@
             </div>
             <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{id}/character(id=${movie.id})}">See more</a>
             <div class="text-center" th:if="${#lists.isEmpty(movie.characters)}">
-            -->
+
             <div class="text-center">
                 <h3>No characters...</h3>
             </div>

@@ -19,13 +19,7 @@ public class MovieService {
   MovieRepository movieRepository;
 
   @Cacheable("movies")
-  public Iterable<Movie> getAllMovies(String expr) {
-//    try {
-//      Thread.sleep(3000L);
-//    } catch (InterruptedException e) {
-//      throw new IllegalStateException(e);
-//    } // For testing to cache
-
+  public Iterable<Movie> getAllMovies(String expr, int page) {
     if (expr == null) {
       return movieRepository.findAll();
     }
@@ -35,14 +29,26 @@ public class MovieService {
     List<Movie> movies = movieRepository.findSimilarMovies(regex);
     String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
     FuzzyStringMatchComparator<Movie> movieComparator =
-        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
+            new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
     Collections.sort(movies, movieComparator);
 
-    if (movies.size() < MAX_MOVIE_SEARCH_COUNT) {
-      return movies;
-    }
+    // Pagination
+    int start = 0, end = movies.size();
+    if (page > 0) {
+      start = (page - 1) * MAX_MOVIE_SEARCH_COUNT;
 
-    return movies.subList(0, MAX_MOVIE_SEARCH_COUNT);
+      if (start >= movies.size()) {
+        return movies.subList(0, 0);
+      }
+
+      end = start + MAX_MOVIE_SEARCH_COUNT;
+      end = Integer.min(end, movies.size());
+    }
+    return movies.subList(start, end);
+  }
+
+  public Iterable<Movie> getAllMovies(String expr) {
+    return getAllMovies(expr, 0);
   }
 
   Movie getMovieById(long id) {
