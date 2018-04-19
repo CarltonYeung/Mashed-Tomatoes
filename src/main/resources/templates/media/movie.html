@@ -115,16 +115,16 @@
             <h1 class="media-section -title">Cast</h1>
             <div class="d-flex justify-content-between flex-wrap" th:if="${not #lists.isEmpty(movie.characters)}">
                 <th:block th:each="character, iterStat : ${movie.characters}">
-                <div class="talent-box" th:hidden="${iterStat.index < 5} ? 'false' : 'true'">
+                <div class="talent-box pb-2" th:hidden="${iterStat.index < 5} ? 'false' : 'true'">
                     <img class="talent-box -thumbnail mx-auto" th:src="${character.celebrity.profilePath}">
                     <div class="row">
-                        <a class="mx-auto" th:href="@{/celebrity/{id}(id=${character.celebrity.id})}" th:text="${character.celebrity.name}"></a>
+                        <a class="mx-auto talent-box -text" th:href="@{/celebrity/{id}(id=${character.celebrity.id})}" th:text="${character.celebrity.name}"></a>
                     </div>
                     <div class="row">
-                        <p class="mx-auto">as</p>
+                        <p class="mx-auto talent-box -text">as</p>
                     </div>
                     <div class="row">
-                        <p class="mx-auto" th:text="${character.name}"></p>
+                        <p class="mx-auto talent-box -text" th:text="${character.name}"></p>
                     </div>
                 </div>
                 </th:block>
