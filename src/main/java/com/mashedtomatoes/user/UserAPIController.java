@@ -6,6 +6,7 @@ import com.mashedtomatoes.http.RegisterRequest;
 import com.mashedtomatoes.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +102,7 @@ public class UserAPIController {
   }
 
   @PostMapping("/user/follow")
+  @Transactional
   public String follow(@Valid @RequestBody FollowRequest followRequest,
                      HttpServletRequest request,
                      HttpServletResponse response) {
@@ -132,20 +134,71 @@ public class UserAPIController {
 
     me.following.add(toFollow);
     toFollow.followers.add(me);
-    userService.save(me);
-    userService.save(toFollow);
+//    userService.save(me);
+//    userService.save(toFollow);
 
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
 
-  private boolean isFollowing(User me, User toFollow) {
+  @PostMapping("/user/unfollow")
+  @Transactional
+  public String unfollow(@Valid @RequestBody FollowRequest followRequest,
+                         HttpServletRequest request,
+                         HttpServletResponse response) {
+
+    HttpSession session = request.getSession(false);
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User me = (User) session.getAttribute("User");
+
+    User toUnfollow;
+    try {
+      toUnfollow = userService.getUserById(followRequest.getId());
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.notFound");
+    }
+
+    if (!isFollowing(me, toUnfollow)) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.notFollowing");
+    }
+
+    unfollow(me, toUnfollow);
+//    userService.save(me);
+//    userService.save(toUnfollow);
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  private boolean isFollowing(User me, User you) {
     for (User following : me.following) {
-      if (following.id == toFollow.id) {
+      if (following.id == you.id) {
         return true;
       }
     }
     return false;
+  }
+
+  private void unfollow(User me, User you) {
+    for (User possiblyYou : me.following) {
+      if (possiblyYou.id == you.id) {
+        me.following.remove(possiblyYou);
+        break;
+      }
+    }
+
+    for (User possiblyMe : you.followers) {
+      if (possiblyMe.id == me.id) {
+        you.followers.remove(possiblyMe);
+        break;
+      }
+    }
   }
 
 }
