@@ -1,30 +1,12 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.rating.Rating;
+
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -134,7 +116,7 @@ public abstract class User {
     this.ratings = ratings;
   }
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "Follows",
     joinColumns = @JoinColumn(name = "followerId"),
@@ -148,12 +130,7 @@ public abstract class User {
     this.following = following;
   }
 
-  @ManyToMany
-  @JoinTable(
-    name = "Follows",
-    joinColumns = @JoinColumn(name = "followingId"),
-    inverseJoinColumns = @JoinColumn(name = "followerId")
-  )
+  @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
   public Set<User> getFollowers() {
     return followers;
   }

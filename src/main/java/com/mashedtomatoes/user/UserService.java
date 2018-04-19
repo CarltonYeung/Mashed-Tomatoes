@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -69,5 +70,15 @@ public class UserService {
 
   private Iterable<? extends User> findAllByType(UserType userType) {
     return userRepository.findAllByType(userType);
+  }
+
+  public User getUserById(long id) throws NoSuchElementException {
+    Optional<User> optional = userRepository.findFirstById(id);
+    optional.orElseThrow(NoSuchElementException::new);
+    return optional.get();
+  }
+
+  public void save(User u) {
+    userRepository.save(u);
   }
 }

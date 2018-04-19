@@ -11,4 +11,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
   Optional<User> findFirstByCredentials_Email(String email);
 
   boolean existsByCredentials_Email(String email);
+
+  Optional<User> findFirstById(long id);
 }
