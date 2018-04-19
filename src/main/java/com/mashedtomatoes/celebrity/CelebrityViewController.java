@@ -30,4 +30,8 @@ public class CelebrityViewController {
     return "celebrity/celebrity";
   }
 
+  public static class ViewModel {
+
+  }
+
 }

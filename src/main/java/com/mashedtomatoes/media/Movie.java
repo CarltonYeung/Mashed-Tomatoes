@@ -21,7 +21,6 @@ public class Movie extends Media {
   private Celebrity producer;
   private Celebrity writer;
   private MovieTrailer movieTrailer;
-  private BestPictureWinner bestPictureWinner;
 
   public Movie() {}
 
@@ -55,10 +54,6 @@ public class Movie extends Media {
 
   public void setMovieTrailer(MovieTrailer movieTrailer) {
     this.movieTrailer = movieTrailer;
-  }
-
-  public void setBestPictureWinner(BestPictureWinner bestPictureWinner) {
-    this.bestPictureWinner = bestPictureWinner;
   }
 
   public double getBoxOffice() {
@@ -103,15 +98,5 @@ public class Movie extends Media {
   )
   public MovieTrailer getMovieTrailer() {
     return movieTrailer;
-  }
-
-  @OneToOne(
-    mappedBy = "movie",
-    cascade = CascadeType.ALL,
-    fetch = FetchType.EAGER,
-    optional = false
-  )
-  public BestPictureWinner getBestPictureWinner() {
-    return bestPictureWinner;
   }
 }

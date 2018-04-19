@@ -9,18 +9,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
+  private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+    "classpath:/META-INF/resources/", "classpath:/resources/",
+    "classpath:/static/", "classpath:/public/"
+  };
+
   @Value("${mt.files.path}")
   private String filesPath = "file:/tmp/";
 
-	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-			"classpath:/META-INF/resources/", "classpath:/resources/",
-			"classpath:/static/", "classpath:/public/" };
+  @Value("${mt.files.uri}")
+  private String filesUri = "/files";
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-  	// super.addResourceHandlers(registry);
-	  registry.addResourceHandler("/**")
-			  .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
-    registry.addResourceHandler("/files/**").addResourceLocations(filesPath);
+    registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
+    registry
+        .addResourceHandler(String.format("%s/**".format(filesUri)))
+        .addResourceLocations(filesPath);
   }
 }

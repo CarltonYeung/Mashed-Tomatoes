@@ -34209,7 +34209,7 @@ const _ = __webpack_require__(1);
 const ko = __webpack_require__(12);
 const urlBuilder = __webpack_require__(2);
 
-const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+const mediaId = $('[data-media-id]').attr('data-media-id');
 
 const updateList = (isWantToSee) => {
   $.ajax(
@@ -34217,11 +34217,10 @@ const updateList = (isWantToSee) => {
     {
       method: "PATCH",
       data: {
-        movieSlug: movieSlug,
+        mediaId: mediaId,
         isWantToSee: isWantToSee
       },
       contentType: "application/json",
-      dataType: "application/json",
       success: res => {
         if (res.status == 204) {
           console.log('List updated');
@@ -34276,7 +34275,7 @@ class ViewModel {
 
 module.exports.deps = [
   '#media-update-list',
-  '[data-media-slug]'
+  '[data-media-id]'
 ];
 
 module.exports.init = () => {
