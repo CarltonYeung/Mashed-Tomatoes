@@ -1,7 +1,8 @@
 package com.mashedtomatoes.http;
 
-import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
 
 public class RateRequest {
   private int rating;
@@ -9,7 +10,7 @@ public class RateRequest {
 
   public RateRequest() {}
 
-  @NotEmpty
+  @NotNull
   @Range(min = 1, max = 5)
   public int getRating() {
     return rating;

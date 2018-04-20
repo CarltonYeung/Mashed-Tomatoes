@@ -91,6 +91,16 @@ public class UserService {
     userRepository.save(user);
   }
 
+  public void delete(User user) {
+    user.following = null;
+    save(user);
+    for (User u : user.followers) {
+      u.following.remove(user);
+      save(u);
+    }
+    userRepository.delete(user);
+  }
+
   void addWantToSee(User user, long mediaId) throws Exception {
     if (inList(user, mediaId, UserMediaList.NI)) {
       throw new Exception(env.getProperty("user.existsInNotInterested"));
