@@ -73,6 +73,12 @@ public class UserService {
     return user;
   }
 
+  User getUserByEmail(String email) throws NoSuchElementException {
+    Optional<User> optional = userRepository.findFirstByCredentials_Email(email);
+    optional.orElseThrow(NoSuchElementException::new);
+    return optional.get();
+  }
+
   public Iterable<Audience> findAllAudience() {
     return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);
   }

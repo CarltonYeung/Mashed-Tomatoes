@@ -1,9 +1,6 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.http.FollowRequest;
-import com.mashedtomatoes.http.LoginRequest;
-import com.mashedtomatoes.http.RegisterRequest;
-import com.mashedtomatoes.http.UserMediaListsRequest;
+import com.mashedtomatoes.http.*;
 import com.mashedtomatoes.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -53,6 +50,26 @@ public class UserAPIController {
     } else {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
+  }
+
+  @PostMapping("/resendVerificationEmail")
+  public String resendVerificationEmail(@Valid @RequestBody ResendVerificationEmailRequest request,
+                                      HttpServletResponse response) {
+
+    User user;
+    try {
+      user = userService.getUserByEmail(request.getEmail());
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.resendVerificationFailure");
+    }
+
+    user.verification.generateKey();
+    userService.save(user);
+    System.out.println(user.verification.getVerificationKey());
+    mailService.sendVerificationEmail(request.getEmail(), user.verification.getVerificationKey());
+    response.setStatus(HttpServletResponse.SC_OK);
+    return env.getProperty("user.resendVerificationSuccess");
   }
 
   @PostMapping("/login")
