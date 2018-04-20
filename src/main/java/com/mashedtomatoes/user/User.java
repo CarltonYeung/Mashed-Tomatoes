@@ -23,6 +23,7 @@ public abstract class User {
   protected Set<User> followers;
   protected Set<Media> wantToSee;
   protected Set<Media> notInterested;
+  protected long profileViews;
   protected long created;
   protected long updated;
 
@@ -170,6 +171,14 @@ public abstract class User {
 
   public void setNotInterested(Set<Media> notInterested) {
     this.notInterested = notInterested;
+  }
+
+  public long getProfileViews() {
+    return profileViews;
+  }
+
+  public void setProfileViews(long profileViews) {
+    this.profileViews = profileViews;
   }
 
   @Column(nullable = false, updatable = false)
