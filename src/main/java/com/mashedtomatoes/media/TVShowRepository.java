@@ -17,7 +17,7 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
 
   TVShow findFirstById(long id);
 
-  Iterable<TVShow> findAllByCreator_Id(long id);
+  List<TVShow> findAllByCreator_Id(long id);
 
   // select title from TVShows, Media where TVShows.id = Media.id AND title regexp '.*(a|tr).*';
   @Query(

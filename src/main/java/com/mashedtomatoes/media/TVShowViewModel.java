@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.util.Util;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,11 +24,11 @@ public class TVShowViewModel extends MediaViewModel {
     this.episodes = base.getEpisodes();
     this.network = base.getNetwork();
     this.airDates = base.getAirDates();
-	  if (base.getCreator() != null) {
-		  base.getCreator()
-				  .setProfilePath(String.format("%s%s", fileUri, base.getCreator().getProfilePath()));
-	  }
-	  this.creator = base.getCreator();
+    if (base.getCreator() != null) {
+      base.getCreator()
+          .setProfilePath(Util.resolveFilesUrl(fileUri, base.getCreator().getProfilePath()));
+    }
+    this.creator = base.getCreator();
   }
 
   public Date getStartDate() {

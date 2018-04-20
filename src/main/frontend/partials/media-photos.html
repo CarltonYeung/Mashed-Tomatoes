@@ -1,6 +1,6 @@
 <section class="mt-5 media-section">
   <h1 class="media-section -title">Photos</h1>
-  <div class="d-flex justify-content-between flex-wrap" th:if="${not #lists.isEmpty(@@media.characters)}">
+  <div class="d-flex justify-content-between flex-wrap" th:if="${not #lists.isEmpty(@@media.photos)}">
     <th:block th:each="photoUrl, iterStat : ${@@media.photos}">
       <div class="pb-2 media-box-photo" th:hidden="${iterStat.index < 5} ? 'false' : 'true'">
         <img class="media-box -thumbnail mx-auto" th:src="${photoUrl}">

@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
+import com.mashedtomatoes.util.Util;
 import java.util.Date;
 
 public class MovieViewModel extends MediaViewModel {
@@ -19,16 +20,17 @@ public class MovieViewModel extends MediaViewModel {
     this.runTime = base.getRunTime();
     if (base.getDirector() != null) {
       base.getDirector()
-          .setProfilePath(String.format("%s%s", fileUri, base.getDirector().getProfilePath()));
+          .setProfilePath(Util.resolveFilesUrl(fileUri, base.getDirector().getProfilePath()));
     }
     this.director = base.getDirector();
     if (base.getProducer() != null) {
       base.getProducer()
-          .setProfilePath(String.format("%s%s", fileUri, base.getProducer().getProfilePath()));
+          .setProfilePath(Util.resolveFilesUrl(fileUri, base.getProducer().getProfilePath()));
     }
     this.producer = base.getProducer();
     if (base.getWriter() != null) {
-      base.getWriter().setProfilePath(String.format("%s%s", fileUri, base.getWriter().getProfilePath()));
+      base.getWriter()
+          .setProfilePath(Util.resolveFilesUrl(fileUri, base.getWriter().getProfilePath()));
     }
     this.writer = base.getWriter();
     this.boxOffice = base.getBoxOffice();

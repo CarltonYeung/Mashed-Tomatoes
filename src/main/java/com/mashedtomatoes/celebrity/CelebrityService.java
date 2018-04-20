@@ -31,27 +31,27 @@ public class CelebrityService {
   }
 
   @Cacheable("CelebrityDirectedMovies")
-  public Iterable<Movie> getDirectedMovies(long id) {
+  public List<Movie> getDirectedMovies(long id) {
     return movieRepository.findAllByDirector_Id(id);
   }
 
   @Cacheable("CelebrityProducedMovies")
-  public Iterable<Movie> getProducedMovies(long id) {
+  public List<Movie> getProducedMovies(long id) {
     return movieRepository.findAllByProducer_Id(id);
   }
 
   @Cacheable("CelebrityWrittenMovies")
-  public Iterable<Movie> getWrittenMovies(long id) {
+  public List<Movie> getWrittenMovies(long id) {
     return movieRepository.findAllByWriter_Id(id);
   }
 
   @Cacheable("CelebrityCreatedTVShows")
-  public Iterable<TVShow> getCreatedTVShows(long id) {
+  public List<TVShow> getCreatedTVShows(long id) {
     return tvShowRepository.findAllByCreator_Id(id);
   }
 
   @Cacheable("CelebrityCharacters")
-  public Iterable<Character> getAllPlayedCharacters(long id) {
+  public List<Character> getAllPlayedCharacters(long id) {
     return characterRepository.findAllByCelebrity_Id(id);
   }
 

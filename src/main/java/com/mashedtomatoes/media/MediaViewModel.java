@@ -4,6 +4,7 @@ import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
+import com.mashedtomatoes.util.Util;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,9 +36,14 @@ public class MediaViewModel extends Media {
             .collect(Collectors.toList()));
     for (Character character : super.getCharacters()) {
       Celebrity c = character.getCelebrity();
-      character.getCelebrity().setProfilePath(String.format("%s%s", fileUri, c.getProfilePath()));
+      character.getCelebrity().setProfilePath(Util.resolveFilesUrl(fileUri, c.getProfilePath()));
     }
     super.setProductionCompany(base.getProductionCompany());
+    super.setPhotos(
+        base.getPhotos()
+            .stream()
+            .map(photo -> Util.resolveFilesUrl(fileUri, photo))
+            .collect(Collectors.toSet()));
 
     if (getRatings() == null || getRatings().isEmpty()) {
       criticRatings = new HashSet<>();

@@ -72,9 +72,9 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   )
   Page<Object[]> findBestPictureWinner(Pageable pageable);
 
-  Iterable<Movie> findAllByWriter_Id(long id);
+  List<Movie> findAllByWriter_Id(long id);
 
-  Iterable<Movie> findAllByDirector_Id(long id);
+  List<Movie> findAllByDirector_Id(long id);
 
-  Iterable<Movie> findAllByProducer_Id(long id);
+  List<Movie> findAllByProducer_Id(long id);
 }
