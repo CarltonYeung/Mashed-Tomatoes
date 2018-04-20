@@ -65,9 +65,9 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1), media.title, movie.id, movie.boxOffice, bpw.year "
-            + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media, BestPictureWinners bpw "
-            + "WHERE movie.id = media.id AND media.id = bpw.movieId Group By movie.id ORDER By bpw.year DESC",
+        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1), media.title, movie.id, movie.boxOffice, ows.year "
+            + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media, OscarWinnerSet ows "
+            + "WHERE movie.id = media.id AND media.id = ows.bestPictureId Group By movie.id ORDER By ows.year DESC",
     nativeQuery = true
   )
   Page<Object[]> findBestPictureWinner(Pageable pageable);
