@@ -12,14 +12,14 @@ public class MovieViewController {
   @Value("${mt.files.uri}")
   private String filesUri = "/files";
 
-	@Value("${mt.smash.threshold}")
-	private int smashThreshold = 50;
+  @Value("${mt.smash.threshold}")
+  private int smashThreshold = 50;
 
   @Autowired private MovieService movieService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
-    m.addAttribute("movies", movieService.getAllMovies(null));
+    m.addAttribute("movies", movieService.getAllMovies());
     return "movies";
   }
 

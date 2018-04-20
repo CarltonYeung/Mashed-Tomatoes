@@ -8,6 +8,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -91,7 +92,7 @@ public class TVShow extends Media {
     return creator;
   }
 
-  @ElementCollection(targetClass = Date.class)
+  @ElementCollection(targetClass = Date.class, fetch = FetchType.EAGER)
   @CollectionTable(
     name = "TVShowAirDates",
     joinColumns = {@JoinColumn(name = "mediaId")}

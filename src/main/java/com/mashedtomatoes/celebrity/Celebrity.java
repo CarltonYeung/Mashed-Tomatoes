@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -95,7 +96,7 @@ public class Celebrity {
     return profilePath;
   }
 
-  @ElementCollection(targetClass = String.class)
+  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
   @CollectionTable(
     name = "CelebrityPhotos",
     joinColumns = {@JoinColumn(name = "celebrityId")}
@@ -103,5 +104,10 @@ public class Celebrity {
   @Column(name = "photo", nullable = false)
   public Set<String> getPhotos() {
     return photos;
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 }

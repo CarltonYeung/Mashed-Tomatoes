@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -27,8 +26,8 @@ public class MovieAPIController {
   @Autowired private RatingService ratingService;
 
   @GetMapping("/api/movie")
-  public Iterable<Movie> getMovies(@RequestParam(value = "expr", required = false) String expr) {
-    return movieService.getAllMovies(expr);
+  public Iterable<Movie> getMovies() {
+    return movieService.getAllMovies();
   }
 
   @GetMapping("/api/movie/{id}")

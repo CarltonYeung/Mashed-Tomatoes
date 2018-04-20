@@ -105,12 +105,12 @@ public abstract class Media {
     return characters;
   }
 
-  @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   public Set<Rating> getRatings() {
     return ratings;
   }
 
-  @ElementCollection(targetClass = Genre.class)
+  @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)
   @CollectionTable(
     name = "MediaGenres",
     joinColumns = {@JoinColumn(name = "mediaId")}
@@ -121,7 +121,7 @@ public abstract class Media {
     return genres;
   }
 
-  @ElementCollection(targetClass = String.class)
+  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
   @CollectionTable(
     name = "MediaPhotos",
     joinColumns = {@JoinColumn(name = "mediaId")}
@@ -129,5 +129,10 @@ public abstract class Media {
   @Column(name = "photo", nullable = false)
   public Set<String> getPhotos() {
     return photos;
+  }
+
+  @Override
+  public String toString() {
+    return title;
   }
 }

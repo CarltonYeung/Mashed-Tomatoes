@@ -4,10 +4,6 @@ import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.media.MovieRepository;
 import com.mashedtomatoes.media.TVShow;
 import com.mashedtomatoes.media.TVShowRepository;
-import com.mashedtomatoes.util.FuzzyStringMatchComparator;
-import com.mashedtomatoes.util.RegexBuilder;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -53,39 +49,5 @@ public class CelebrityService {
   @Cacheable("CelebrityCharacters")
   public List<Character> getAllPlayedCharacters(long id) {
     return characterRepository.findAllByCelebrity_Id(id);
-  }
-
-  @Cacheable("Celebrities")
-  public Iterable<Celebrity> getAllCelebrities(String expr, int page) {
-    if (expr == null) {
-      return celebrityRepository.findAll();
-    }
-
-    List<String> parts =
-        Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
-    String regex = RegexBuilder.buildMySQLRegex(parts);
-    List<Celebrity> celebrities = celebrityRepository.findSimilarMovies(regex);
-    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
-    FuzzyStringMatchComparator<Celebrity> celebrityComparator =
-        new FuzzyStringMatchComparator<>(originalExpr, Celebrity::getName);
-    Collections.sort(celebrities, celebrityComparator);
-
-    // Pagination
-    int start = 0, end = celebrities.size();
-    if (page > 0) {
-      start = (page - 1) * MAX_CELEBRITY_SEARCH_COUNT;
-
-      if (start >= celebrities.size()) {
-        return celebrities.subList(0, 0);
-      }
-
-      end = start + MAX_CELEBRITY_SEARCH_COUNT;
-      end = Integer.min(end, celebrities.size());
-    }
-    return celebrities.subList(start, end);
-  }
-
-  public Iterable<Celebrity> getAllCelebrities(String expr) {
-    return getAllCelebrities(expr, 0);
   }
 }

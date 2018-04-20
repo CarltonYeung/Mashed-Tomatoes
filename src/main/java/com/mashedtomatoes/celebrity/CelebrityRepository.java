@@ -12,9 +12,12 @@ public interface CelebrityRepository extends CrudRepository<Celebrity, Long> {
 
   Celebrity findFirstByName(String name);
 
+  @Override
+  List<Celebrity> findAll();
+
   @Query(
     value = "SELECT * FROM Celebrities WHERE Celebrities.name REGEXP :expr",
     nativeQuery = true
   )
-  List<Celebrity> findSimilarMovies(@Param("expr") String expr);
+  List<Celebrity> findSimilarCelebrities(@Param("expr") String expr);
 }

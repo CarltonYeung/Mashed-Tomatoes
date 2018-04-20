@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface TVShowRepository extends CrudRepository<TVShow, Long> {
 
   @Override
-  Iterable<TVShow> findAll();
+  List<TVShow> findAll();
 
   TVShow findFirstById(long id);
 

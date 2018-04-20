@@ -1,62 +1,24 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.util.FuzzyStringMatchComparator;
-import com.mashedtomatoes.util.RegexBuilder;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {
-  private static final int MAX_MOVIE_SEARCH_COUNT = 10;
-  private static final String URL_SPACE_DELIM = "+";
 
   @Autowired MovieRepository movieRepository;
 
-  @Cacheable("movies")
-  public Iterable<Movie> getAllMovies(String expr, int page) {
-    if (expr == null) {
-      return movieRepository.findAll();
-    }
-
-    List<String> parts =
-        Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
-    String regex = RegexBuilder.buildMySQLRegex(parts);
-    List<Movie> movies = movieRepository.findSimilarMovies(regex);
-    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
-    FuzzyStringMatchComparator<Movie> movieComparator =
-        new FuzzyStringMatchComparator<>(originalExpr, Movie::getTitle);
-    Collections.sort(movies, movieComparator);
-
-    // Pagination
-    int start = 0, end = movies.size();
-    if (page > 0) {
-      start = (page - 1) * MAX_MOVIE_SEARCH_COUNT;
-
-      if (start >= movies.size()) {
-        return movies.subList(0, 0);
-      }
-
-      end = start + MAX_MOVIE_SEARCH_COUNT;
-      end = Integer.min(end, movies.size());
-    }
-    return movies.subList(start, end);
-  }
-
-  public Iterable<Movie> getAllMovies(String expr) {
-    return getAllMovies(expr, 0);
+  public Iterable<Movie> getAllMovies() {
+    return movieRepository.findAll();
   }
 
   private ArrayList<MovieRatingQuery> makeMovieRatingList(Iterator<Object[]> rows) {

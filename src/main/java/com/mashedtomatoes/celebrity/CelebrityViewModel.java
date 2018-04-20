@@ -14,6 +14,10 @@ public class CelebrityViewModel extends Celebrity {
   private final List<Character> movieCharacters;
   private final List<Character> tvShowCharacters;
 
+  public CelebrityViewModel(String filesUri, Celebrity base) {
+    this(filesUri, base, null, null, null, null, null);
+  }
+
   public CelebrityViewModel(
       String filesUri,
       Celebrity base,

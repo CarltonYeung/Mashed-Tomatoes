@@ -19,7 +19,7 @@ public class TVShowViewController {
 
   @GetMapping("/tv")
   public String getTVShows(Model m) {
-    m.addAttribute("tvshows", tvShowService.getAllTVShows(null));
+    m.addAttribute("tvshows", tvShowService.getAllTVShows());
     return "media/tvshows";
   }
 
