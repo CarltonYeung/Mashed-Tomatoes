@@ -25,16 +25,16 @@
                 </p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Director:
+                <p class="media-info -key" th:if="${movie.director != null}">Director:
                   <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
                 </p>
               </div>
-              <div class="media-info">
+              <div class="media-info" th:if="${movie.writer != null}">
                 <p class="media-info -key">Writer:
                   <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
                 </p>
               </div>
-              <div class="media-info">
+              <div class="media-info" th:if="${movie.producer != null}">
                 <p class="media-info -key">Producer:
                   <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
                 </p>

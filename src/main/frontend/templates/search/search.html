@@ -20,60 +20,140 @@
                 <h3 th:if="${#lists.isEmpty(movies)}">No Movies Found</h3>
                 <article th:if="${not #lists.isEmpty(movies)}" class="search-result row">
                     <th:block th:each="movie : ${movies}">
-                        <div class="search-movie-img">
-                            <a th:href="@{/movie/{id}(id=${movie.id})}" class="thumbnail">
-                                <img class="thumbnails media-info -poster" th:src="${movie.posterPath}" />
-                            </a>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                            <h3 th:text="${movie.title}">Movie Name</h3>
-                            <p th:text="${movie.description}">Movie Info</p>
-                        </div>
-                        <span class="clearfix border"></span>
+                        <section class="media-section">
+                            <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h1>
+                            <div class="d-flex justify-content-between">
+                                <img class="col-md-4 media-info -poster" th:src="${movie.posterPath}">
+                                <div class="col-md-8">
+                                    <p class="row media-info" th:text="${movie.description}">
+                                    </p>
+                                    <div class="row mt-2">
+                                        <div class="col-md-7 px-0">
+                                            <div class="media-info">
+                                                <p class="media-info -key">Genre(s):
+                                                    <span class="media-info -value" th:text="${movie.commaSeperatedGenres}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key" th:if="${movie.director != null}">Director:
+                                                    <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                                                </p>
+                                            </div>
+                                            <div class="media-info" th:if="${movie.writer != null}">
+                                                <p class="media-info -key">Writer:
+                                                    <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                                                </p>
+                                            </div>
+                                            <div class="media-info" th:if="${movie.producer != null}">
+                                                <p class="media-info -key">Producer:
+                                                    <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Release Date:
+                                                    <span class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info" th:if="${not #strings.isEmpty(movie.productionCompany)}">
+                                                <p class="media-info -key">Production:
+                                                    <span class="media-info -value" th:text="${movie.productionCompany}"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-5 px-0">
+                                            @@include('media-stats.html', { "media" : "movie" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </th:block>
                 </article>
             </section>
 
             <h2 class="search-category mt-5 mb-4">TV Show</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
-                <h3>No TV Shows Found...</h3>
-                <!--
-            <article class="search-result row">
-                <th:block th:each="tvshow : ${tvShows}">
-                    <div class="search-tvshow-img">
-                        <a href="#" class="thumbnail"><img class="thumbnails" src="/img/CFP3.jpg"   /></a>
-                    </div>
-                    <div class="search-rating">
-                            <div class="search-rating-img"><i></i> <span>RATING</span></div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                        <h3 th:text="${tvshow.title}">TV Show Name</h3>
-                        <p th:text-"${tvshow.id}">TV Show Info</p>		
-                    </div>
-                <span class="clearfix border"></span>
-                </th:block>
-            </article>			
-        -->
+                <h3 th:if="${#lists.isEmpty(tvShows)}">No TV Shows Found</h3>
+                <article th:if="${not #lists.isEmpty(tvShows)}" class="search-result row">
+                    <th:block th:each="tvshow : ${tvShows}">
+                        <section class="media-section">
+                            <h1 class="media-section -title" th:text="#{tvshow.heading(${tvshow.title}, ${#calendars.format(tvshow.startDate, 'yyyy')}, ${#calendars.format(tvshow.endDate, 'yyyy')})}"></h1>
+                            <div class="d-flex justify-content-between">
+                                <img class="col-md-4 media-info -poster" th:src="${tvshow.posterPath}">
+                                <div class="col-md-8">
+                                    <p class="row media-info" th:text="${tvshow.description}">
+                                    </p>
+                                    <div class="row mt-2">
+                                        <div class="col-md-7 px-0">
+                                            <div class="media-info">
+                                                <p class="media-info -key">Genre(s):
+                                                    <span class="media-info -value" th:text="${tvshow.commaSeperatedGenres}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Creator:
+                                                    <a class="media-info -value" th:text="${tvshow.creator.name}" th:href="@{/celebrity/{id}(id=${tvshow.creator.id})}"></a>
+                                                </p>
+                                            </div>
+                                            <div class="media-info" th:if="${not #strings.isEmpty(tvshow.productionCompany)}">
+                                                <p class="media-info -key">Production:
+                                                    <span class="media-info -value" th:text="${tvshow.productionCompany}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Network:
+                                                    <span class="media-info -value" th:text="${tvshow.network}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Season:
+                                                    <span class="media-info -value" th:text="${tvshow.seasons}"></span>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Episodes:
+                                                    <span class="media-info -value" th:text="${tvshow.episodes}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-5 px-0">
+                                            @@include('media-stats.html', { "media" : "tvshow" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </th:block>
+                </article>
             </section>
 
             <h2 class="search-category mt-5 mb-4">Celebrity</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
                 <h3 th:if="${#lists.isEmpty(celebrities)}">No Celebrities Found</h3>
                 <article th:if="${not #lists.isEmpty(celebrities)}" class="search-result row">
-                    <th:block th:each="celeb : ${celebrities}">
-                        <div class="search-celeb-img">
-                            <a href="#" class="thumbnail">
-                                <img class="thumbnails" src="/img/CFP3.jpg" />
-                            </a>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                            <h3 th:text="${celeb.name}">Celebrity Name</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio praesentium non repudiandae aut ullam ratione quas sint? Quisquam
-                                deserunt ut aliquid asperiores maxime aperiam magnam, et, sapiente nisi ea labore.
-                            </p>
-                        </div>
-                        <span class="clearfix border"></span>
+                    <th:block th:each="celebrity : ${celebrities}">
+                        <section class="media-section">
+                            <h1 class="media-section -title" th:text="${celebrity.name}"></h1>
+                            <div class="d-flex justify-content-between">
+                                <img class="col-md-4 media-info -poster" th:src="${celebrity.profilePath}">
+                                <div class="col-md-8">
+                                    <p class="row media-info" th:text="${celebrity.biography}">
+                                    </p>
+                                    <div class="row mt-2">
+                                        <div class="col-md-7 px-0">
+                                            <div class="media-info">
+                                                <p class="media-info -key">Birthdate:
+                                                    <span class="media-info -value" th:text="${#calendars.format(celebrity.birthday, 'MM/dd/yyyy')}"></span>
+                                                </p>
+                                            </div>
+                                            <div class="media-info">
+                                                <p class="media-info -key">Birthplace:
+                                                    <span class="media-info -value" th:text="${celebrity.birthplace}"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </th:block>
                 </article>
             </section>

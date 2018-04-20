@@ -38,16 +38,21 @@ public class CelebrityViewModel extends Celebrity {
     this.produced = produced;
     this.written = written;
     this.created = created;
-    this.movieCharacters =
-        characters
-            .stream()
-            .filter(character -> character.getMedia() instanceof Movie)
-            .collect(Collectors.toList());
-    this.tvShowCharacters =
-        characters
-            .stream()
-            .filter(character -> character.getMedia() instanceof TVShow)
-            .collect(Collectors.toList());
+    if (characters != null) {
+      this.movieCharacters =
+          characters
+              .stream()
+              .filter(character -> character.getMedia() instanceof Movie)
+              .collect(Collectors.toList());
+      this.tvShowCharacters =
+          characters
+              .stream()
+              .filter(character -> character.getMedia() instanceof TVShow)
+              .collect(Collectors.toList());
+    } else {
+      this.movieCharacters = null;
+      this.tvShowCharacters = null;
+    }
   }
 
   public List<Movie> getDirected() {

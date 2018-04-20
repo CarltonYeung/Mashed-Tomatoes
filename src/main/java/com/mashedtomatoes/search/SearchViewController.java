@@ -1,15 +1,15 @@
 package com.mashedtomatoes.search;
 
-import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.celebrity.CelebrityService;
-import com.mashedtomatoes.media.Movie;
+import com.mashedtomatoes.celebrity.CelebrityViewModel;
 import com.mashedtomatoes.media.MovieService;
 import com.mashedtomatoes.media.MovieViewModel;
-import com.mashedtomatoes.media.TVShow;
 import com.mashedtomatoes.media.TVShowService;
-import java.util.ArrayList;
+import com.mashedtomatoes.media.TVShowViewModel;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,10 @@ public class SearchViewController {
   @Autowired MovieService movieService;
   @Autowired TVShowService tvShowService;
   @Autowired CelebrityService celebrityService;
+
   @Value("${mt.files.uri}")
   private String filesUri = "/files";
+
   @Value("${mt.smash.threshold}")
   private int smashThreshold = 50;
 
@@ -33,17 +35,32 @@ public class SearchViewController {
       @RequestParam(value = "expr", required = false) String expr,
       @RequestParam(value = "page", required = false) Integer page) {
 
-    page = (page == null) ? 0 : page;
-    Iterable<Movie> movies = movieService.getAllMovies(expr);
-    Iterable<TVShow> tvShows = tvShowService.getAllTVShows(expr);
-    Iterable<Celebrity> celebrities = celebrityService.getAllCelebrities(expr);
+  	if (page == null) {
+  		page = 0;
+	  }
 
-    List<MovieViewModel> viewMovies = new ArrayList<>();
-    for (Movie movie : movies) {
-      viewMovies.add(new MovieViewModel(filesUri, smashThreshold, movie));
+    if (page < 0) {
+      return "error/404";
     }
 
-    m.addAttribute("movies", viewMovies);
+    List<MovieViewModel> movies =
+        StreamSupport.stream(movieService.getAllMovies(expr, page).spliterator(), false)
+            .map(movie -> new MovieViewModel(filesUri, smashThreshold, movie))
+            .collect(Collectors.toList());
+
+    List<TVShowViewModel> tvShows =
+        StreamSupport.stream(tvShowService.getAllTVShows(expr, page).spliterator(), false)
+            .map(tvShow -> new TVShowViewModel(filesUri, smashThreshold, tvShow))
+            .collect(Collectors.toList());
+
+    List<CelebrityViewModel> celebrities =
+        StreamSupport.stream(celebrityService.getAllCelebrities(expr, page).spliterator(), false)
+            .map(
+                celebrity ->
+                    new CelebrityViewModel(filesUri, celebrity, null, null, null, null, null))
+            .collect(Collectors.toList());
+
+    m.addAttribute("movies", movies);
     m.addAttribute("tvShows", tvShows);
     m.addAttribute("celebrities", celebrities);
 
