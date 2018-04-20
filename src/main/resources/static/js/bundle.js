@@ -27639,6 +27639,7 @@ const components = [
   __webpack_require__(15),
   __webpack_require__(16),
   __webpack_require__(17),
+  __webpack_require__(18),
 ];
 
 const areDepsMet = deps => {
@@ -27647,6 +27648,7 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
+    console.log(missingDeps);
     return false;
   }
 
@@ -40234,24 +40236,41 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
-const _ = __webpack_require__(1);
 
 module.exports.deps = [
-  '.talent-box',
-  '#talent-box-see-more'
+  '#see-more-cast',
 ];
 
 module.exports.init = () => {
-  $('#talent-box-see-more').on('click', () => {
-    $('.talent-box').each((i, el) => {
+  $('#see-more-cast').on('click', () => {
+    $('.-cast').each((i, el) => {
       $(el).prop('hidden', false);
     });
-    $('#talent-box-see-more').prop('hidden', true);
+    $('#see-more-cast').prop('hidden', true);
   });
 };
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.deps = [
+  '#see-more-photo'
+];
+
+module.exports.init = () => {
+  $('#see-more-photo').on('click', () => {
+    $('.-photo').each((i, el) => {
+      $(el).prop('hidden', false);
+    });
+    $('#see-more-photo').prop('hidden', true);
+  });
+};
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40305,7 +40324,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40352,7 +40371,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -40409,7 +40428,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
