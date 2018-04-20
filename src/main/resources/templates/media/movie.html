@@ -20,30 +20,35 @@
           <div class="row mt-2">
             <div class="col-md-7 px-0">
               <div class="media-info">
-                <p class="media-info -key">Genre: </p>
-                <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
+                <p class="media-info -key">Genre(s):
+                  <span class="media-info -value" th:text="${movie.commaSeperatedGenres}"></span>
+                </p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Directed By: </p>
-                <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                <p class="media-info -key">Director:
+                  <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                </p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Written By: </p>
-                <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                <p class="media-info -key">Writer:
+                  <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                </p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Produced By: </p>
-                <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                <p class="media-info -key">Producer:
+                  <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                </p>
               </div>
               <div class="media-info">
-                <p class="media-info -key">Release Date: </p>
-                <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
+                <p class="media-info -key">Release Date:
+                  <span class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></span>
+                </p>
               </div>
               <div class="media-info" th:if="${not #strings.isEmpty(movie.productionCompany)}">
-                <p class="media-info -key">Production Company: </p>
-                <p class="media-info -value" th:text="${movie.productionCompany}"></p>
+                <p class="media-info -key">Production:
+                  <span class="media-info -value" th:text="${movie.productionCompany}"></span>
+                </p>
               </div>
-
             </div>
             <div class="row col-md-5 px-0">
               <div class="col-md-6">

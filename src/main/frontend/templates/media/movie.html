@@ -20,83 +20,50 @@
                     <div class="row mt-2">
                         <div class="col-md-7 px-0">
                             <div class="media-info">
-                                <p class="media-info -key">Genre: </p>
-                                <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
+                                <p class="media-info -key">Genre(s):
+                                    <span class="media-info -value" th:text="${movie.commaSeperatedGenres}"></span>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Directed By: </p>
-                                <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                                <p class="media-info -key">Director:
+                                    <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Written By: </p>
-                                <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                                <p class="media-info -key">Writer:
+                                    <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Produced By: </p>
-                                <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                                <p class="media-info -key">Producer:
+                                    <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Release Date: </p>
-                                <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
+                                <p class="media-info -key">Release Date:
+                                    <span class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></span>
+                                </p>
                             </div>
                             <div class="media-info" th:if="${not #strings.isEmpty(movie.productionCompany)}">
-                                <p class="media-info -key">Production Company: </p>
-                                <p class="media-info -value" th:text="${movie.productionCompany}"></p>
+                                <p class="media-info -key">Production:
+                                    <span class="media-info -value" th:text="${movie.productionCompany}"></span>
+                                </p>
                             </div>
-
                         </div>
                         <div class="row col-md-5 px-0">
-                            <div class="col-md-6">
-                                <p class="text-center media-score -label">MashoMeter!</p>
-                                <div class="row">
-                                    <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
-                                </div>
-                                <p class="text-center media-score -value">
-                                    <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Reviews:
-                                    <span th:text="${movie.totalCriticRating}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Average Rating:
-                                    <span th:text="${movie.averageCriticRating}"></span>/10</p>
-                                <p class="text-center media-score -stat">Smash:
-                                    <span th:text="${movie.smashCount}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Pass:
-                                    <span th:text="${movie.passCount}"></span>
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-center media-score -label">Audience Score</p>
-                                <div class="row">
-                                    <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
-                                </div>
-                                <p class="text-center media-score -value">
-                                    <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Ratings:
-                                    <span th:text="${movie.totalAudienceRating}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Average Rating:
-                                    <span th:text="${movie.averageAudienceRating}"></span>/5</p>
-                            </div>
+                            @@include('media-stats.html', { "media" : "movie" })
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        @@include('media-photos.html', {
-            "media": "movie"
-        })
-        @@include('media-cast.html', {
-            "media": "movie"
-        })
-        @@include('media-ratings.html', {
-            "media": "movie",
-            "mediaPretty": "Movie"
-        })
+        @@include('media-photos.html', { "media": "movie" }) @@include('media-cast.html', { "media": "movie" }) @@include('media-ratings.html',
+        { "media": "movie", "mediaPretty": "Movie" })
         <br />
         <br />
     </main>
     <div th:replace="partials/footer :: footer"></div>
     <div th:replace="partials/script :: script"></div>
 </body>
+
 </html>

@@ -3,9 +3,65 @@
 
 <head>
     <div th:replace="partials/meta :: meta"></div>
-    <title th:text="${tvshow.title}">TV Show Page</title>
-
+    <title th:text="${tvshow.title}"></title>
     <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
+    <div th:replace="partials/header :: header"></div>
+    <main class="container" th:data-media-id="${tvshow.id}">
+        <section class="media-section">
+            <h1 class="media-section -title" th:text="#{tvshow.heading(${tvshow.title}, ${#calendars.format(tvshow.startDate, 'yyyy')}, ${#calendars.format(tvshow.endDate, 'yyyy')})}"></h1>
+            <div class="d-flex justify-content-between">
+                <img class="col-md-4 media-info -poster" th:src="${tvshow.posterPath}">
+                <div class="col-md-8">
+                    <p class="row media-info" th:text="${tvshow.description}">
+                    </p>
+                    <div class="row mt-2">
+                        <div class="col-md-7 px-0">
+                            <div class="media-info">
+                                <p class="media-info -key">Genre(s):
+                                    <span class="media-info -value" th:text="${tvshow.commaSeperatedGenres}"></span>
+                                </p>
+                            </div>
+                            <div class="media-info">
+                                <p class="media-info -key">Creator:
+                                    <a class="media-info -value" th:text="${tvshow.creator.name}" th:href="@{/celebrity/{id}(id=${tvshow.creator.id})}"></a>
+                                </p>
+                            </div>
+                            <div class="media-info" th:if="${not #strings.isEmpty(tvshow.productionCompany)}">
+                                <p class="media-info -key">Production:
+                                    <span class="media-info -value" th:text="${tvshow.productionCompany}"></span>
+                                </p>
+                            </div>
+                            <div class="media-info">
+                                <p class="media-info -key">Network:
+                                    <span class="media-info -value" th:text="${tvshow.network}"></span>
+                                </p>
+                            </div>
+                            <div class="media-info">
+                                <p class="media-info -key">Season:
+                                    <span class="media-info -value" th:text="${tvshow.seasons}"></span>
+                            </div>
+                            <div class="media-info">
+                                <p class="media-info -key">Episodes:
+                                    <span class="media-info -value" th:text="${tvshow.episodes}"></span>
+                            </div>
+                        </div>
+                        <div class="row col-md-5 px-0">
+                            @@include('media-stats.html', { "media" : "tvshow" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @@include('media-photos.html', { "media": "tvshow" }) @@include('media-cast.html', { "media": "tvshow" }) @@include('media-ratings.html',
+        { "media": "tvshow", "mediaPretty": "TV Show" })
+        <br />
+        <br />
+    </main>
+    <div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/script :: script"></div>
+</body>
+
+</html>

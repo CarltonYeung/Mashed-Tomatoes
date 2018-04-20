@@ -43,12 +43,11 @@
 
 @mixin info-key-value {
     &.-key {
-        display: table-cell;
         font-size: 20px;
         font-weight: bold;
     }
     &.-value {
-        display: table-cell;
         padding: 0 10px;
+        font-weight: normal;
     }
 }
