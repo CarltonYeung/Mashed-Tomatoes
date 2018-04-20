@@ -1,0 +1,14 @@
+.media-box {
+    width: 20%;
+    text-align: center;
+    &.-thumbnail {
+        width: 150px;
+        height: 200px;
+    }
+
+    &.-text {
+        width: 90%;
+        font-size: 14px;
+        overflow-wrap: break-word;
+    }
+}
