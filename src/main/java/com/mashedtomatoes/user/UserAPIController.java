@@ -1,5 +1,6 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.exception.DuplicateKeyException;
 import com.mashedtomatoes.http.ChangeEmailRequest;
 import com.mashedtomatoes.http.ChangePasswordRequest;
 import com.mashedtomatoes.http.FollowRequest;
@@ -38,9 +39,12 @@ public class UserAPIController {
       user =
           userService.addAudience(
               request.getDisplayName(), request.getEmail(), request.getPassword());
-    } catch (Exception e) {
+    } catch (DuplicateKeyException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      return "";
     }
     String to = user.getCredentials().getEmail();
     String key = user.getVerification().getVerificationKey();

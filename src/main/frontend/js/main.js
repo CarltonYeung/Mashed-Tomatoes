@@ -21,7 +21,6 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
-    console.log(missingDeps);
     return false;
   }
 

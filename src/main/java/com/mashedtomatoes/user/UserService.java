@@ -1,7 +1,6 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.exception.DuplicateDisplayNameException;
-import com.mashedtomatoes.exception.DuplicateEmailException;
+import com.mashedtomatoes.exception.DuplicateKeyException;
 import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaService;
@@ -33,10 +32,10 @@ public class UserService {
   public Audience addAudience(String displayName, String email, String password) throws Exception {
 
     if (audienceRepository.existsByDisplayName(displayName)) {
-      throw new DuplicateDisplayNameException(env.getProperty("user.duplicateDisplayName"));
+      throw new DuplicateKeyException(env.getProperty("user.duplicateDisplayName"));
     }
     if (userRepository.existsByCredentials_Email(email)) {
-      throw new DuplicateEmailException(env.getProperty("user.duplicateEmail"));
+      throw new DuplicateKeyException(env.getProperty("user.duplicateEmail"));
     }
     Audience user = new Audience(displayName, email, hashService.hash(password));
     return userRepository.save(user);
@@ -89,8 +88,8 @@ public class UserService {
     return optional.get();
   }
 
-  public void save(User user) {
-    userRepository.save(user);
+  public User save(User user) {
+    return userRepository.save(user);
   }
 
   public void delete(User user) {

@@ -27648,7 +27648,6 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
-    console.log(missingDeps);
     return false;
   }
 
@@ -40362,7 +40361,11 @@ module.exports.init = () => {
           }
         },
         error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
+          if (xhr.status == 401) {
+            alert.display(xhr.responseText, true);
+          } else if (xhr.status ==  500) {
+            alert.display("Something's wrong with our server. Please try again later", true);
+          }
         }
       });
 
@@ -40419,7 +40422,11 @@ module.exports.init = () => {
           console.error(`Unexpected success code: ${res.status}`);
         },
         error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
+          if (xhr.status == 400) {
+            alert.display(xhr.responseText, true);
+          } else if (xhr.status == 500) {
+            alert.display("Something's wrong with our server. Please try again later", true);
+          }
         }
       });
     evt.preventDefault();
