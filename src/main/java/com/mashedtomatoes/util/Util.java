@@ -1,10 +1,13 @@
 package com.mashedtomatoes.util;
 
 public class Util {
+	private static final String UnknownImageUrl = "/img/unknown.png"	;
+
 	public static String resolveFilesUrl(String filesUri, String resourceUri) {
 		if (resourceUri == null) {
-			resourceUri = "/img/unknown.png";
+			return UnknownImageUrl;
 		}
+
 		if (resourceUri.toLowerCase().startsWith(filesUri.toLowerCase())) {
 			return resourceUri;
 		}

@@ -71,6 +71,8 @@ public class SearchViewController {
     m.addAttribute("movies", movies);
     m.addAttribute("tvShows", tvShows);
     m.addAttribute("celebrities", celebrities);
+	  m.addAttribute("expr", expr);
+	  m.addAttribute("page", page);
     m.addAttribute("hasPrevPage", page != 0);
     m.addAttribute("hasNextPage", hasNextPage);
 

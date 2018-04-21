@@ -14,7 +14,6 @@
             <div class="m-5">
                 <h1 class="search-title">Search Result</h1>
             </div>
-
             <h2 class="search-category mt-5 mb-4">Movies</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
                 <h3 th:if="${#lists.isEmpty(movies)}">No Movies Found</h3>
@@ -22,48 +21,10 @@
                     <th:block th:each="movie : ${movies}">
                         <section class="media-section">
                             <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h1>
-                            <div class="d-flex justify-content-between">
+                            <div class="row">
                                 <img class="col-md-4 media-info -poster" th:src="${movie.posterPath}">
                                 <div class="col-md-8">
-                                    <p class="row media-info" th:text="${movie.description}">
-                                    </p>
-                                    <div class="row mt-2">
-                                        <div class="col-md-7 px-0">
-                                            <div class="media-info">
-                                                <p class="media-info -key">Genre(s):
-                                                    <span class="media-info -value" th:text="${movie.commaSeperatedGenres}"></span>
-                                                </p>
-                                            </div>
-                                            <div class="media-info">
-                                                <p class="media-info -key" th:if="${movie.director != null}">Director:
-                                                    <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
-                                                </p>
-                                            </div>
-                                            <div class="media-info" th:if="${movie.writer != null}">
-                                                <p class="media-info -key">Writer:
-                                                    <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
-                                                </p>
-                                            </div>
-                                            <div class="media-info" th:if="${movie.producer != null}">
-                                                <p class="media-info -key">Producer:
-                                                    <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
-                                                </p>
-                                            </div>
-                                            <div class="media-info">
-                                                <p class="media-info -key">Release Date:
-                                                    <span class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></span>
-                                                </p>
-                                            </div>
-                                            <div class="media-info" th:if="${not #strings.isEmpty(movie.productionCompany)}">
-                                                <p class="media-info -key">Production:
-                                                    <span class="media-info -value" th:text="${movie.productionCompany}"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="row col-md-5 px-0">
-                                            @@include('media-stats.html', { "media" : "movie" })
-                                        </div>
-                                    </div>
+                                    @@include('media-stats.html', { "media" : "movie" })
                                 </div>
                             </div>
                         </section>
@@ -124,7 +85,6 @@
                     </th:block>
                 </article>
             </section>
-
             <h2 class="search-category mt-5 mb-4">Celebrity</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
                 <h3 th:if="${#lists.isEmpty(celebrities)}">No Celebrities Found</h3>
@@ -157,14 +117,18 @@
                     </th:block>
                 </article>
             </section>
-
-
         </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
+    <nav>
+        <ul id="page-btns" class="pagination" th:if="${hasPrevPage || hasNextPage}">
+            <li class="page-item" th:if="${hasPrevPage}">
+                <a class="page-link" th:href="@{/search(expr=${expr},page=${page -1})}">Previous</a>
+            </li>
+            <li class="page-item" th:if="${hasNextPage}">
+                <a class="page-link" th:href="@{/search(expr=${expr},page=${page + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
     <div th:replace="partials/footer :: footer"></div>
     <div th:replace="partials/script :: script"></div>
 </body>
