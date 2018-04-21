@@ -168,6 +168,45 @@ public class UserService {
     return false;
   }
 
+  public void follow(User me, User you) {
+    me.following.add(you);
+    you.followers.add(me);
+    save(me);
+    save(you);
+  }
+
+  public void unfollow(User me, User you) {
+    for (User possiblyYou : me.following) {
+      if (possiblyYou.id == you.id) {
+        me.following.remove(possiblyYou);
+        break;
+      }
+    }
+
+    for (User possiblyMe : you.followers) {
+      if (possiblyMe.id == me.id) {
+        you.followers.remove(possiblyMe);
+        break;
+      }
+    }
+
+    save(me);
+    save(you);
+  }
+
+  public void changeEmail(User user, String newEmail, String plaintextPassword) throws IllegalArgumentException {
+    if (userRepository.existsByCredentials_Email(newEmail)) {
+      throw new IllegalArgumentException(env.getProperty("user.duplicateEmail"));
+    }
+
+    if (!hashService.matches(plaintextPassword, user.getCredentials().getPassword())) {
+      throw new IllegalArgumentException(env.getProperty("user.badCredentials"));
+    }
+
+    user.getCredentials().setEmail(newEmail);
+    save(user);
+  }
+
   public static HttpSession session() {
     ServletRequestAttributes attr  = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
     return attr.getRequest().getSession(false);

@@ -148,10 +148,7 @@ public class UserAPIController {
       return env.getProperty("user.alreadyFollowing");
     }
 
-    me.following.add(toFollow);
-    toFollow.followers.add(me);
-    userService.save(me);
-    userService.save(toFollow);
+    userService.follow(me, toFollow);
     session.setAttribute("User", userService.getUserById(me.id));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
@@ -183,9 +180,7 @@ public class UserAPIController {
       return env.getProperty("user.notFollowing");
     }
 
-    unfollow(me, toUnfollow);
-    userService.save(toUnfollow);
-    userService.save(me);
+    userService.unfollow(me, toUnfollow);
     session.setAttribute("User", userService.getUserById(me.id));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
@@ -198,22 +193,6 @@ public class UserAPIController {
       }
     }
     return false;
-  }
-
-  private void unfollow(User me, User you) {
-    for (User possiblyYou : me.following) {
-      if (possiblyYou.id == you.id) {
-        me.following.remove(possiblyYou);
-        break;
-      }
-    }
-
-    for (User possiblyMe : you.followers) {
-      if (possiblyMe.id == me.id) {
-        you.followers.remove(possiblyMe);
-        break;
-      }
-    }
   }
 
   @PostMapping("/userMediaLists")
@@ -285,6 +264,36 @@ public class UserAPIController {
     }
 
     userService.delete(user);
+    session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @PostMapping("/user/changeEmail")
+  public String changeEmail(@Valid @RequestBody ChangeEmailRequest request,
+                            HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    try {
+      userService.changeEmail(user, request.getNewEmail(), request.getPassword());
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return e.getMessage();
+    }
+
+    user.getVerification().generateKey();
+    user.getVerification().setVerified(false);
+    userService.save(user);
+    String key = user.getVerification().getVerificationKey();
+    System.out.println(key);
+    mailService.sendVerificationEmail(user.getCredentials().getEmail(), key);
+
     session.invalidate();
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
