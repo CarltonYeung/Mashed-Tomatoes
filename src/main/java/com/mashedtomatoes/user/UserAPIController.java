@@ -1,9 +1,6 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.http.FollowRequest;
-import com.mashedtomatoes.http.LoginRequest;
-import com.mashedtomatoes.http.RegisterRequest;
-import com.mashedtomatoes.http.UserMediaListsRequest;
+import com.mashedtomatoes.http.*;
 import com.mashedtomatoes.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -45,14 +42,34 @@ public class UserAPIController {
 
   @GetMapping("/verify")
   public void verify(@RequestParam("email") String email,
-                       @RequestParam("key") String key,
-                       HttpServletResponse response) {
+                     @RequestParam("key") String key,
+                     HttpServletResponse response) {
 
     if (userService.verifyEmail(email, key)) {
       response.setStatus(HttpServletResponse.SC_OK);
     } else {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
+  }
+
+  @PostMapping("/resendVerificationEmail")
+  public String resendVerificationEmail(@Valid @RequestBody ResendVerificationEmailRequest request,
+                                      HttpServletResponse response) {
+
+    User user;
+    try {
+      user = userService.getUserByEmail(request.getEmail());
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.resendVerificationFailure");
+    }
+
+    user.verification.generateKey();
+    userService.save(user);
+    System.out.println(user.verification.getVerificationKey());
+    mailService.sendVerificationEmail(request.getEmail(), user.verification.getVerificationKey());
+    response.setStatus(HttpServletResponse.SC_OK);
+    return env.getProperty("user.resendVerificationSuccess");
   }
 
   @PostMapping("/login")
@@ -243,6 +260,34 @@ public class UserAPIController {
     } else {
       userService.removeNotInterested(user, request.getId());
     }
+  }
+
+  /**
+   * User deletes their own account.
+   * @param id
+   * @param response
+   * @return
+   */
+  @DeleteMapping("/user/{id}")
+  public String deleteUser(@PathVariable long id,
+                           HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (id != user.id) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.cannotDelete");
+    }
+
+    userService.delete(user);
+    session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
   }
 
 }

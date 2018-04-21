@@ -9,7 +9,10 @@ import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
@@ -70,6 +73,12 @@ public class UserService {
     return user;
   }
 
+  User getUserByEmail(String email) throws NoSuchElementException {
+    Optional<User> optional = userRepository.findFirstByCredentials_Email(email);
+    optional.orElseThrow(NoSuchElementException::new);
+    return optional.get();
+  }
+
   public Iterable<Audience> findAllAudience() {
     return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);
   }
@@ -86,6 +95,16 @@ public class UserService {
 
   public void save(User user) {
     userRepository.save(user);
+  }
+
+  public void delete(User user) {
+    user.following = null;
+    save(user);
+    for (User u : user.followers) {
+      u.following.remove(user);
+      save(u);
+    }
+    userRepository.delete(user);
   }
 
   void addWantToSee(User user, long mediaId) throws Exception {
@@ -147,5 +166,10 @@ public class UserService {
     }
 
     return false;
+  }
+
+  public static HttpSession session() {
+    ServletRequestAttributes attr  = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+    return attr.getRequest().getSession(false);
   }
 }

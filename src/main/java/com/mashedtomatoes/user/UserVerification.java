@@ -1,15 +1,9 @@
 package com.mashedtomatoes.user;
 
+import javax.persistence.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "UserVerifications")
@@ -42,10 +36,9 @@ public class UserVerification {
     return this.verified;
   }
 
-  String generateKey() {
+  void generateKey() {
     expiration = Instant.now().plus(timeToLive, ChronoUnit.DAYS).getEpochSecond();
     verificationKey = UUID.randomUUID().toString().replace("-", "");
-    return verificationKey;
   }
 
   @Id
