@@ -12,185 +12,67 @@
   <div class="container my-3 vertical-center">
     <div class="container" id="contents-container">
       <div class="m-5">
-        <h1 class="search-title">Search Result</h1>
+        <h1 class="search-title text-center">Search Results</h1>
       </div>
-      <h2 class="search-category mt-5 mb-4">Movies</h2>
-      <section class="col-xs-12 col-sm-6 col-md-12">
+      <h2 class="search-category mt-5 mb-4 text-center">Movies</h2>
+      <section class="col-md-12">
         <h3 th:if="${#lists.isEmpty(movies)}">No Movies Found</h3>
-        <article th:if="${not #lists.isEmpty(movies)}" class="search-result row">
-          <th:block th:each="movie : ${movies}">
-            <section class="media-section">
-              <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h1>
-              <div class="row">
-                <img class="col-md-4 media-info -poster" th:src="${movie.posterPath}">
-                <div class="col-md-8">
-                  <div class="col-md-6">
-                    <p class="text-center media-score -label">MashoMeter!</p>
-                    <div class="row">
-                      <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
-                    </div>
-                    <p class="text-center media-score -value">
-                      <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
-                    <p class="text-center media-score -stat">Total Reviews:
-                      <span th:text="${movie.totalCriticRating}"></span>
-                    </p>
-                    <p class="text-center media-score -stat">Average Rating:
-                      <span th:text="${movie.averageCriticRating}"></span>/10</p>
-                    <p class="text-center media-score -stat">Smash:
-                      <span th:text="${movie.smashCount}"></span>
-                    </p>
-                    <p class="text-center media-score -stat">Pass:
-                      <span th:text="${movie.passCount}"></span>
-                    </p>
-                  </div>
-                  <div class="col-md-6">
-                    <p class="text-center media-score -label">Audience Score</p>
-                    <div class="row">
-                      <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
-                    </div>
-                    <p class="text-center media-score -value">
-                      <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
-                    <p class="text-center media-score -stat">Total Ratings:
-                      <span th:text="${movie.totalAudienceRating}"></span>
-                    </p>
-                    <p class="text-center media-score -stat">Average Rating:
-                      <span th:text="${movie.averageAudienceRating}"></span>/5</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </th:block>
-        </article>
+        <div th:if="${not #lists.isEmpty(movies)}" class="d-flex flex-wrap justify-content-between">
+          <div class="card" style="width: 13rem;" th:each="movie: ${movies}">
+            <img class="card-img-top" th:src="${movie.posterPath}">
+            <div class="card-body">
+              <h5 class="card-title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h5>
+              <p class="card-text" th:if="${#strings.length(movie.description) < 125}" th:text="${movie.description}"></p>
+              <p class="card-text" th:if="${#strings.length(movie.description) >= 125}" th:text="${#strings.abbreviate(movie.description, 125)}"></p>
+              <a class="btn btn-danger" th:href="@{/movie/{id}(id=${movie.id})}">See more</a>
+            </div>
+          </div>
+        </div>
       </section>
-
-      <h2 class="search-category mt-5 mb-4">TV Show</h2>
+      <h2 class="search-category mt-5 mb-4">TV Shows</h2>
       <section class="col-xs-12 col-sm-6 col-md-12">
         <h3 th:if="${#lists.isEmpty(tvShows)}">No TV Shows Found</h3>
-        <article th:if="${not #lists.isEmpty(tvShows)}" class="search-result row">
-          <th:block th:each="tvshow : ${tvShows}">
-            <section class="media-section">
-              <h1 class="media-section -title" th:text="#{tvshow.heading(${tvshow.title}, ${#calendars.format(tvshow.startDate, 'yyyy')}, ${#calendars.format(tvshow.endDate, 'yyyy')})}"></h1>
-              <div class="d-flex justify-content-between">
-                <img class="col-md-4 media-info -poster" th:src="${tvshow.posterPath}">
-                <div class="col-md-8">
-                  <p class="row media-info" th:text="${tvshow.description}">
-                  </p>
-                  <div class="row mt-2">
-                    <div class="col-md-7 px-0">
-                      <div class="media-info">
-                        <p class="media-info -key">Genre(s):
-                          <span class="media-info -value" th:text="${tvshow.commaSeperatedGenres}"></span>
-                        </p>
-                      </div>
-                      <div class="media-info">
-                        <p class="media-info -key">Creator:
-                          <a class="media-info -value" th:text="${tvshow.creator.name}" th:href="@{/celebrity/{id}(id=${tvshow.creator.id})}"></a>
-                        </p>
-                      </div>
-                      <div class="media-info" th:if="${not #strings.isEmpty(tvshow.productionCompany)}">
-                        <p class="media-info -key">Production:
-                          <span class="media-info -value" th:text="${tvshow.productionCompany}"></span>
-                        </p>
-                      </div>
-                      <div class="media-info">
-                        <p class="media-info -key">Network:
-                          <span class="media-info -value" th:text="${tvshow.network}"></span>
-                        </p>
-                      </div>
-                      <div class="media-info">
-                        <p class="media-info -key">Season:
-                          <span class="media-info -value" th:text="${tvshow.seasons}"></span>
-                      </div>
-                      <div class="media-info">
-                        <p class="media-info -key">Episodes:
-                          <span class="media-info -value" th:text="${tvshow.episodes}"></span>
-                      </div>
-                    </div>
-                    <div class="row col-md-5 px-0">
-                      <div class="col-md-6">
-                        <p class="text-center media-score -label">MashoMeter!</p>
-                        <div class="row">
-                          <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
-                        </div>
-                        <p class="text-center media-score -value">
-                          <span th:text="${tvshow.averageCriticRating} * 100"></span>%</p>
-                        <p class="text-center media-score -stat">Total Reviews:
-                          <span th:text="${tvshow.totalCriticRating}"></span>
-                        </p>
-                        <p class="text-center media-score -stat">Average Rating:
-                          <span th:text="${tvshow.averageCriticRating}"></span>/10</p>
-                        <p class="text-center media-score -stat">Smash:
-                          <span th:text="${tvshow.smashCount}"></span>
-                        </p>
-                        <p class="text-center media-score -stat">Pass:
-                          <span th:text="${tvshow.passCount}"></span>
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="text-center media-score -label">Audience Score</p>
-                        <div class="row">
-                          <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
-                        </div>
-                        <p class="text-center media-score -value">
-                          <span th:text="${tvshow.averageAudienceRating} * 100"></span>%</p>
-                        <p class="text-center media-score -stat">Total Ratings:
-                          <span th:text="${tvshow.totalAudienceRating}"></span>
-                        </p>
-                        <p class="text-center media-score -stat">Average Rating:
-                          <span th:text="${tvshow.averageAudienceRating}"></span>/5</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </th:block>
-        </article>
+        <div th:if="${not #lists.isEmpty(tvShows)}" class="d-flex flex-wrap justify-content-between">
+          <div class="card" style="width: 13rem;" th:each="tvShow: ${tvShows}">
+            <img class="card-img-top" th:src="${tvShow.posterPath}">
+            <div class="card-body">
+              <h5 class="card-title" th:text="#{tvshow.heading(${tvShow.title}, ${#calendars.format(tvShow.startDate, 'yyyy')}, ${#calendars.format(tvShow.endDate, 'yyyy')})}"></h5>
+              <p class="card-text" th:if="${#strings.length(tvShow.description) < 125}" th:text="${tvShow.description}"></p>
+              <p class="card-text" th:if="${#strings.length(tvShow.description) >= 125}" th:text="${#strings.abbreviate(tvShow.description, 125)}"></p>
+              <a class="btn btn-danger" th:href="@{/tv/{id}(id=${tvShow.id})}">See more</a>
+            </div>
+          </div>
+        </div>
       </section>
       <h2 class="search-category mt-5 mb-4">Celebrity</h2>
       <section class="col-xs-12 col-sm-6 col-md-12">
         <h3 th:if="${#lists.isEmpty(celebrities)}">No Celebrities Found</h3>
-        <article th:if="${not #lists.isEmpty(celebrities)}" class="search-result row">
-          <th:block th:each="celebrity : ${celebrities}">
-            <section class="media-section">
-              <h1 class="media-section -title" th:text="${celebrity.name}"></h1>
-              <div class="d-flex justify-content-between">
-                <img class="col-md-4 media-info -poster" th:src="${celebrity.profilePath}">
-                <div class="col-md-8">
-                  <p class="row media-info" th:text="${celebrity.biography}">
-                  </p>
-                  <div class="row mt-2">
-                    <div class="col-md-7 px-0">
-                      <div class="media-info">
-                        <p class="media-info -key">Birthdate:
-                          <span class="media-info -value" th:text="${#calendars.format(celebrity.birthday, 'MM/dd/yyyy')}"></span>
-                        </p>
-                      </div>
-                      <div class="media-info">
-                        <p class="media-info -key">Birthplace:
-                          <span class="media-info -value" th:text="${celebrity.birthplace}"></span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </th:block>
-        </article>
+        <div th:if="${not #lists.isEmpty(celebrities)}" class="d-flex flex-wrap justify-content-between">
+          <div class="card" style="width: 13rem;" th:each="celebrity: ${celebrities}">
+            <img class="card-img-top" th:src="${celebrity.profilePath}">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${celebrity.name}"></h5>
+              <p class="card-text" th:if="${#strings.length(celebrity.biography) < 125}" th:text="${celebrity.biography}"></p>
+              <p class="card-text" th:if="${#strings.length(celebrity.biography) >= 125}" th:text="${#strings.abbreviate(celebrity.biography, 125)}"></p>
+              <a class="btn btn-danger" th:href="@{/celebrity/{id}(id=${celebrity.id})}">See more</a>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </div>
-  <nav>
-    <ul id="page-btns" class="pagination" th:if="${hasPrevPage || hasNextPage}">
-      <li class="page-item" th:if="${hasPrevPage}">
-        <a class="page-link" th:href="@{/search(expr=${expr},page=${page -1})}">Previous</a>
-      </li>
-      <li class="page-item" th:if="${hasNextPage}">
-        <a class="page-link" th:href="@{/search(expr=${expr},page=${page + 1})}">Next</a>
-      </li>
-    </ul>
-  </nav>
+  <br />
+  <br />
+  <br />
+  <br />
+  <ul id="page-btns" class="mx-auto pagination" th:if="${hasPrevPage || hasNextPage}">
+    <li class="page-item ml-auto" th:if="${hasPrevPage}">
+      <a class="page-link" th:href="@{/search(expr=${expr},page=${page -1})}">Previous</a>
+    </li>
+    <li class="page-item mr-auto" th:if="${hasNextPage}">
+      <a class="page-link" th:href="@{/search(expr=${expr},page=${page + 1})}">Next</a>
+    </li>
+  </ul>
   <div th:replace="partials/footer :: footer"></div>
   <div th:replace="partials/script :: script"></div>
 </body>
