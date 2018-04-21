@@ -1,18 +1,20 @@
 package com.mashedtomatoes.user;
 
+import java.util.NoSuchElementException;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.NoSuchElementException;
-
 @Controller
 public class UserViewController {
-  @Autowired
-  UserService userService;
+  @Autowired UserService userService;
+
+  @Value("${mt.rank.upgrade.rate}")
+  private int rankUpgradeRate = 10;
 
   @GetMapping("/login")
   public String login() {
@@ -30,9 +32,7 @@ public class UserViewController {
   }
 
   @GetMapping("/user/{id}")
-  public String user(@PathVariable long id,
-                     HttpServletResponse response,
-                     Model model) {
+  public String user(@PathVariable long id, HttpServletResponse response, Model model) {
     User user;
     try {
       user = userService.getUserById(id);
@@ -42,7 +42,17 @@ public class UserViewController {
     }
     user.setProfileViews(user.getProfileViews() + 1);
     userService.save(user);
-    model.addAttribute("user", user);
+
+    if (user.getType() != UserType.AUDIENCE && user.getType() != UserType.CRITIC) {
+      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      return "error/500";
+    }
+
+    if (user.getType() == UserType.AUDIENCE) {
+      model.addAttribute("user", new AudienceViewModel((Audience) user, rankUpgradeRate));
+    } else if (user.getType() == UserType.CRITIC) {
+      model.addAttribute("user", new CriticViewModel((Critic) user));
+    }
     return "user/user";
   }
 }

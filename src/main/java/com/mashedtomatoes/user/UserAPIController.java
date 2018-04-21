@@ -1,33 +1,41 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.http.*;
+import com.mashedtomatoes.http.FollowRequest;
+import com.mashedtomatoes.http.LoginRequest;
+import com.mashedtomatoes.http.RegisterRequest;
+import com.mashedtomatoes.http.ResendVerificationEmailRequest;
+import com.mashedtomatoes.http.UserMediaListsRequest;
 import com.mashedtomatoes.mail.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.*;
-
+import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserAPIController {
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private MailService mailService;
-  @Autowired
-  private Environment env;
+  @Autowired private UserService userService;
+  @Autowired private MailService mailService;
+  @Autowired private Environment env;
 
   @PostMapping("/register")
-  public String register(@Valid @RequestBody RegisterRequest request,
-                         HttpServletResponse response) {
+  public String register(
+      @Valid @RequestBody RegisterRequest request, HttpServletResponse response) {
 
     Audience user;
     try {
-      user = userService.addAudience(request.getDisplayName(), request.getEmail(), request.getPassword());
+      user =
+          userService.addAudience(
+              request.getDisplayName(), request.getEmail(), request.getPassword());
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();
@@ -41,9 +49,10 @@ public class UserAPIController {
   }
 
   @GetMapping("/verify")
-  public void verify(@RequestParam("email") String email,
-                     @RequestParam("key") String key,
-                     HttpServletResponse response) {
+  public void verify(
+      @RequestParam("email") String email,
+      @RequestParam("key") String key,
+      HttpServletResponse response) {
 
     if (userService.verifyEmail(email, key)) {
       response.setStatus(HttpServletResponse.SC_OK);
@@ -53,8 +62,8 @@ public class UserAPIController {
   }
 
   @PostMapping("/resendVerificationEmail")
-  public String resendVerificationEmail(@Valid @RequestBody ResendVerificationEmailRequest request,
-                                      HttpServletResponse response) {
+  public String resendVerificationEmail(
+      @Valid @RequestBody ResendVerificationEmailRequest request, HttpServletResponse response) {
 
     User user;
     try {
@@ -64,20 +73,23 @@ public class UserAPIController {
       return env.getProperty("user.resendVerificationFailure");
     }
 
-    user.verification.generateKey();
+    user.getVerification().generateKey();
     userService.save(user);
-    System.out.println(user.verification.getVerificationKey());
-    mailService.sendVerificationEmail(request.getEmail(), user.verification.getVerificationKey());
+    System.out.println(user.getVerification().getVerificationKey());
+    mailService.sendVerificationEmail(
+        request.getEmail(), user.getVerification().getVerificationKey());
     response.setStatus(HttpServletResponse.SC_OK);
     return env.getProperty("user.resendVerificationSuccess");
   }
 
   @PostMapping("/login")
-  public String login(@Valid @RequestBody LoginRequest loginRequest,
-                      HttpServletRequest request,
-                      HttpServletResponse response) {
+  public String login(
+      @Valid @RequestBody LoginRequest loginRequest,
+      HttpServletRequest request,
+      HttpServletResponse response) {
 
-    User user = userService.getUserByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
+    User user =
+        userService.getUserByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
     if (user == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return env.getProperty("user.badCredentials");
@@ -93,8 +105,7 @@ public class UserAPIController {
   }
 
   @PostMapping("/logout")
-  public String logout(HttpServletRequest request,
-                     HttpServletResponse response) {
+  public String logout(HttpServletRequest request, HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -107,8 +118,7 @@ public class UserAPIController {
   }
 
   @GetMapping("/hello")
-  public void hello(HttpServletRequest request,
-                    HttpServletResponse response) {
+  public void hello(HttpServletRequest request, HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -119,9 +129,10 @@ public class UserAPIController {
   }
 
   @PostMapping("/user/follow")
-  public String follow(@Valid @RequestBody FollowRequest followRequest,
-                       HttpServletRequest request,
-                       HttpServletResponse response) {
+  public String follow(
+      @Valid @RequestBody FollowRequest followRequest,
+      HttpServletRequest request,
+      HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -130,7 +141,7 @@ public class UserAPIController {
     }
 
     User me = (User) session.getAttribute("User");
-    if (me.id == followRequest.getId()) {
+    if (me.getId() == followRequest.getId()) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return env.getProperty("user.followSelf");
     }
@@ -148,19 +159,20 @@ public class UserAPIController {
       return env.getProperty("user.alreadyFollowing");
     }
 
-    me.following.add(toFollow);
-    toFollow.followers.add(me);
+    me.getFollowing().add(toFollow);
+    toFollow.getFollowers().add(me);
     userService.save(me);
     userService.save(toFollow);
-    session.setAttribute("User", userService.getUserById(me.id));
+    session.setAttribute("User", userService.getUserById(me.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
 
   @PostMapping("/user/unfollow")
-  public String unfollow(@Valid @RequestBody FollowRequest followRequest,
-                         HttpServletRequest request,
-                         HttpServletResponse response) {
+  public String unfollow(
+      @Valid @RequestBody FollowRequest followRequest,
+      HttpServletRequest request,
+      HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -186,14 +198,14 @@ public class UserAPIController {
     unfollow(me, toUnfollow);
     userService.save(toUnfollow);
     userService.save(me);
-    session.setAttribute("User", userService.getUserById(me.id));
+    session.setAttribute("User", userService.getUserById(me.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
 
   private boolean isFollowing(User me, User you) {
-    for (User following : me.following) {
-      if (following.id == you.id) {
+    for (User following : me.getFollowing()) {
+      if (following.getId() == you.getId()) {
         return true;
       }
     }
@@ -201,25 +213,26 @@ public class UserAPIController {
   }
 
   private void unfollow(User me, User you) {
-    for (User possiblyYou : me.following) {
-      if (possiblyYou.id == you.id) {
-        me.following.remove(possiblyYou);
+    for (User possiblyYou : me.getFollowing()) {
+      if (possiblyYou.getId() == you.getId()) {
+        me.getFollowing().remove(possiblyYou);
         break;
       }
     }
 
-    for (User possiblyMe : you.followers) {
-      if (possiblyMe.id == me.id) {
-        you.followers.remove(possiblyMe);
+    for (User possiblyMe : you.getFollowers()) {
+      if (possiblyMe.getId() == me.getId()) {
+        you.getFollowers().remove(possiblyMe);
         break;
       }
     }
   }
 
   @PostMapping("/userMediaLists")
-  public String userMediaLists(@Valid @RequestBody UserMediaListsRequest umlRequest,
-                               HttpServletRequest request,
-                               HttpServletResponse response) {
+  public String userMediaLists(
+      @Valid @RequestBody UserMediaListsRequest umlRequest,
+      HttpServletRequest request,
+      HttpServletResponse response) {
 
     HttpSession session = request.getSession(false);
     if (session == null) {
@@ -232,16 +245,18 @@ public class UserAPIController {
     try {
       switch (umlRequest.getList()) {
         case WTS:
-          wantToSee(me, umlRequest); break;
+          wantToSee(me, umlRequest);
+          break;
         case NI:
-          notInterested(me, umlRequest); break;
+          notInterested(me, umlRequest);
+          break;
       }
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();
     }
 
-    session.setAttribute("User", userService.getUserById(me.id));
+    session.setAttribute("User", userService.getUserById(me.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
@@ -264,13 +279,13 @@ public class UserAPIController {
 
   /**
    * User deletes their own account.
+   *
    * @param id
    * @param response
    * @return
    */
   @DeleteMapping("/user/{id}")
-  public String deleteUser(@PathVariable long id,
-                           HttpServletResponse response) {
+  public String deleteUser(@PathVariable long id, HttpServletResponse response) {
 
     HttpSession session = UserService.session();
     if (session == null) {
@@ -279,7 +294,7 @@ public class UserAPIController {
     }
 
     User user = (User) session.getAttribute("User");
-    if (id != user.id) {
+    if (id != user.getId()) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return env.getProperty("user.cannotDelete");
     }
@@ -289,5 +304,4 @@ public class UserAPIController {
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
-
 }

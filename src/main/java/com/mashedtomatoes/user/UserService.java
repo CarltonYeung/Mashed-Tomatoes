@@ -6,33 +6,31 @@ import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaService;
 import com.mashedtomatoes.security.HashService;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-
 @Service
 public class UserService {
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private AudienceRepository audienceRepository;
-  @Autowired
-  private MediaService mediaService;
-  @Autowired
-  private HashService hashService;
-  @Autowired
-  private Environment env;
+  @Autowired private UserRepository userRepository;
+  @Autowired private AudienceRepository audienceRepository;
+  @Autowired private MediaService mediaService;
+  @Autowired private HashService hashService;
+  @Autowired private Environment env;
 
-  public Audience addAudience(String displayName,
-                              String email,
-                              String password) throws Exception {
+  public static HttpSession session() {
+    ServletRequestAttributes attr =
+        (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+    return attr.getRequest().getSession(false);
+  }
+
+  public Audience addAudience(String displayName, String email, String password) throws Exception {
 
     if (audienceRepository.existsByDisplayName(displayName)) {
       throw new DuplicateDisplayNameException(env.getProperty("user.duplicateDisplayName"));
@@ -44,8 +42,7 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  boolean verifyEmail(String email,
-                      String verificationKey) {
+  boolean verifyEmail(String email, String verificationKey) {
 
     Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
@@ -59,8 +56,7 @@ public class UserService {
     return verification.isVerified();
   }
 
-  User getUserByCredentials(String email,
-                            String plaintextPassword) {
+  User getUserByCredentials(String email, String plaintextPassword) {
 
     Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
@@ -98,10 +94,10 @@ public class UserService {
   }
 
   public void delete(User user) {
-    user.following = null;
+    user.setFollowing(null);
     save(user);
-    for (User u : user.followers) {
-      u.following.remove(user);
+    for (User u : user.getFollowers()) {
+      u.getFollowing().remove(user);
       save(u);
     }
     userRepository.delete(user);
@@ -113,15 +109,15 @@ public class UserService {
     }
 
     Media media = mediaService.getMediaById(mediaId);
-    if (user.wantToSee.add(media)) {
+    if (user.getWantToSee().add(media)) {
       save(user);
     }
   }
 
   void removeWantToSee(User user, long mediaId) {
-    for (Media media : user.wantToSee) {
+    for (Media media : user.getWantToSee()) {
       if (media.getId() == mediaId) {
-        user.wantToSee.remove(media);
+        user.getWantToSee().remove(media);
         save(user);
         break;
       }
@@ -134,15 +130,15 @@ public class UserService {
     }
 
     Media media = mediaService.getMediaById(mediaId);
-    if (user.notInterested.add(media)) {
+    if (user.getNotInterested().add(media)) {
       save(user);
     }
   }
 
   void removeNotInterested(User user, long mediaId) {
-    for (Media media : user.notInterested) {
+    for (Media media : user.getNotInterested()) {
       if (media.getId() == mediaId) {
-        user.notInterested.remove(media);
+        user.getNotInterested().remove(media);
         save(user);
         break;
       }
@@ -154,9 +150,11 @@ public class UserService {
 
     switch (type) {
       case WTS:
-        list = user.wantToSee; break;
+        list = user.getWantToSee();
+        break;
       case NI:
-        list = user.notInterested; break;
+        list = user.getNotInterested();
+        break;
     }
 
     for (Media media : list) {
@@ -166,10 +164,5 @@ public class UserService {
     }
 
     return false;
-  }
-
-  public static HttpSession session() {
-    ServletRequestAttributes attr  = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-    return attr.getRequest().getSession(false);
   }
 }
