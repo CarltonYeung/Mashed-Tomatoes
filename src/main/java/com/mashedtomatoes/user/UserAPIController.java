@@ -1,5 +1,7 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.http.ChangeEmailRequest;
+import com.mashedtomatoes.http.ChangePasswordRequest;
 import com.mashedtomatoes.http.FollowRequest;
 import com.mashedtomatoes.http.LoginRequest;
 import com.mashedtomatoes.http.RegisterRequest;
@@ -159,10 +161,7 @@ public class UserAPIController {
       return env.getProperty("user.alreadyFollowing");
     }
 
-    me.getFollowing().add(toFollow);
-    toFollow.getFollowers().add(me);
-    userService.save(me);
-    userService.save(toFollow);
+    userService.follow(me, toFollow);
     session.setAttribute("User", userService.getUserById(me.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
@@ -195,9 +194,7 @@ public class UserAPIController {
       return env.getProperty("user.notFollowing");
     }
 
-    unfollow(me, toUnfollow);
-    userService.save(toUnfollow);
-    userService.save(me);
+    userService.unfollow(me, toUnfollow);
     session.setAttribute("User", userService.getUserById(me.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
@@ -210,22 +207,6 @@ public class UserAPIController {
       }
     }
     return false;
-  }
-
-  private void unfollow(User me, User you) {
-    for (User possiblyYou : me.getFollowing()) {
-      if (possiblyYou.getId() == you.getId()) {
-        me.getFollowing().remove(possiblyYou);
-        break;
-      }
-    }
-
-    for (User possiblyMe : you.getFollowers()) {
-      if (possiblyMe.getId() == me.getId()) {
-        you.getFollowers().remove(possiblyMe);
-        break;
-      }
-    }
   }
 
   @PostMapping("/userMediaLists")
@@ -300,6 +281,60 @@ public class UserAPIController {
     }
 
     userService.delete(user);
+    session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @PostMapping("/user/changeEmail")
+  public String changeEmail(
+      @Valid @RequestBody ChangeEmailRequest request, HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    try {
+      userService.changeEmail(user, request.getNewEmail(), request.getPassword());
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return e.getMessage();
+    }
+
+    user.getVerification().generateKey();
+    user.getVerification().setVerified(false);
+    userService.save(user);
+    String key = user.getVerification().getVerificationKey();
+    System.out.println(key);
+    mailService.sendVerificationEmail(user.getCredentials().getEmail(), key);
+
+    session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @PostMapping("/user/changePassword")
+  public String changePassword(
+      @Valid @RequestBody ChangePasswordRequest request, HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    try {
+      userService.changePassword(
+          user, request.getOldPlaintextPassword(), request.getNewPlaintextPassword());
+    } catch (IllegalArgumentException e) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return e.getMessage();
+    }
+
     session.invalidate();
     response.setStatus(HttpServletResponse.SC_OK);
     return "";

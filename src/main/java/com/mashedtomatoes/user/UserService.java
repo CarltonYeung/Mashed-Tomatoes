@@ -165,4 +165,54 @@ public class UserService {
 
     return false;
   }
+
+  public void follow(User me, User you) {
+    me.getFollowing().add(you);
+    you.getFollowers().add(me);
+    save(me);
+    save(you);
+  }
+
+  public void unfollow(User me, User you) {
+    for (User possiblyYou : me.getFollowing()) {
+      if (possiblyYou.getId() == you.getId()) {
+        me.getFollowing().remove(possiblyYou);
+        break;
+      }
+    }
+
+    for (User possiblyMe : you.getFollowers()) {
+      if (possiblyMe.getId() == me.getId()) {
+        you.getFollowers().remove(possiblyMe);
+        break;
+      }
+    }
+
+    save(me);
+    save(you);
+  }
+
+  public void changeEmail(User user, String newEmail, String plaintextPassword)
+      throws IllegalArgumentException {
+    if (userRepository.existsByCredentials_Email(newEmail)) {
+      throw new IllegalArgumentException(env.getProperty("user.duplicateEmail"));
+    }
+
+    if (!hashService.matches(plaintextPassword, user.getCredentials().getPassword())) {
+      throw new IllegalArgumentException(env.getProperty("user.badCredentials"));
+    }
+
+    user.getCredentials().setEmail(newEmail);
+    save(user);
+  }
+
+  public void changePassword(User user, String oldPlaintextPassword, String newPlaintextPassword)
+      throws IllegalArgumentException {
+    if (!hashService.matches(oldPlaintextPassword, user.getCredentials().getPassword())) {
+      throw new IllegalArgumentException(env.getProperty("user.badCredentials"));
+    }
+
+    user.getCredentials().setPassword(hashService.hash(newPlaintextPassword));
+    save(user);
+  }
 }
