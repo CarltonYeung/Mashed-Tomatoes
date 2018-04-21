@@ -207,6 +207,15 @@ public class UserService {
     save(user);
   }
 
+  public void changePassword(User user, String oldPlaintextPassword, String newPlaintextPassword) throws IllegalArgumentException {
+    if (!hashService.matches(oldPlaintextPassword, user.getCredentials().getPassword())) {
+      throw new IllegalArgumentException(env.getProperty("user.badCredentials"));
+    }
+
+    user.getCredentials().setPassword(hashService.hash(newPlaintextPassword));
+    save(user);
+  }
+
   public static HttpSession session() {
     ServletRequestAttributes attr  = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
     return attr.getRequest().getSession(false);

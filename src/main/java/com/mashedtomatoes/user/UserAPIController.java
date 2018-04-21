@@ -299,4 +299,27 @@ public class UserAPIController {
     return "";
   }
 
+  @PostMapping("/user/changePassword")
+  public String changePassword(@Valid @RequestBody ChangePasswordRequest request,
+                               HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    try {
+      userService.changePassword(user, request.getOldPlaintextPassword(), request.getNewPlaintextPassword());
+    } catch (IllegalArgumentException e) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return e.getMessage();
+    }
+
+    session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
 }
