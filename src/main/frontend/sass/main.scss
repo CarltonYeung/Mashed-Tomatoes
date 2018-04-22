@@ -7,10 +7,12 @@
 @import 'rating/all';
 @import 'user/all';
 @import 'search/all';
+@import 'slick/all';
 
 * {
-    font-family: $body-typeface;
+    //font-family: $body-typeface;
 }
+
 
 main {
     width: 85%!important;
@@ -21,24 +23,60 @@ main {
     text-align: center;
 }
 
-.nav-item,
-.btn,
+body {
+    background-color: $body-bg-color;
+
+}
+
+.loader {
+	background: none repeat scroll 0 0 #343a40;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999; 
+}
+
+.loader .loader_inner {
+	background-image: url("/img/base/loader.gif");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+	// background-color: #fff;
+	height: 100%;
+	width: 100%;
+	// margin-top: -30px;
+	// margin-left: -30px;
+	// left: 50%;
+	// top: 50%;
+	position: absolute; 
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.btn {
+    font-family: 'Patua One', cursive;
+    color: black;
+}
+
+span, p {
+    color: $span-p-color;
+}
+
+a,
 .form-control,
 h1,
+h2,
 label,
 h3,
 h5 {
-    font-family: $header-typeface;
-}
-
-.nav-item {
-    font-size: 18px;
-    color: yellow !important;
-}
-
-.nav-link {
-    align-items: center;
-    text-align: center;
+    font-family: 'PT Sans Narrow', sans-serif;
+    color: #C0C0C0;
 }
 
 .carousel {
@@ -55,6 +93,7 @@ h5 {
     padding-top: 1px;
     margin-bottom: -60px;
     padding-bottom: 40px;
+    width: 100%;
     /* background-color: #BDCCB8 !important; */
 }
 
@@ -85,4 +124,8 @@ td {
 td a {
     text-decoration: none !important;
     color: black;
+}
+
+.chart-heading {
+    margin-left: -50px;
 }

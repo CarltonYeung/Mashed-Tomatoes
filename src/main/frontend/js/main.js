@@ -1,16 +1,24 @@
 require('bootstrap');
 
 const $ = require('jquery');
+window.jQuery = $;
+window.jqeury = $;
+window.$ = $;
 const _ = require('lodash');
+require('slick-carousel');
+require('flip');
 
 const components = [
   require('./base/nav-bar'),
+  // require('./flip/jquery.flip'),
   require('./search/search-form'),
   require('./media/media-update-list'),
   require('./rating/rating-form-post-btn'),
   require('./user/login-form'),
   require('./user/registration-form'),
   require('./user/logout-btn'),
+  // require('./slick/slick'),
+  require('./base/carousel')
 ];
 
 const areDepsMet = deps => {
@@ -37,3 +45,10 @@ window.onload = () => {
     } 
   });
 };
+
+$(document).ready(function(){
+
+	$(".loader_inner").delay(1300).fadeOut(500);
+	$(".loader").delay(1300).fadeOut(500);
+
+});

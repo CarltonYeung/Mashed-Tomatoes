@@ -1,20 +1,24 @@
-$body-bg-color: #ffffff;
-$header-bg-color:#4d9632;
-$header-fg-color: yellow; 
+$body-bg-color: rgb(33, 33, 33);
+$header-bg-color:rgb(5, 5, 5);
+$header-fg-color: #C0C0C0;
+$footer-bg-color: $header-bg-color;
+// $container-bg-color: #696969;
+$chart-bg-color: #696969;
 
 $site-title-text-color: #000000;
 
-$nav-bar-bg-color: #4d9632;
+//$nav-bar-bg-color: yellow;
 
-$login-btn-bg-color: #dbbd2d;
+$login-btn-bg-color: rgb(184, 10, 16);;
 $login-btn-fg-color: #000000;
 
-$search-form-action-bg-color: #d8746a;
+$search-form-action-bg-color: silver;
 $search-form-action-fg-color: #ffffff;
 
-$footer-bg-color: $header-fg-color;
+$span-p-color : #ff9f9f;
+
 
 $dominant-color: red;
 $background-color: blue;
 $soft-accent-color: green;
-$hard-accent-color: orange;
+$hard-accent-color: orange; 

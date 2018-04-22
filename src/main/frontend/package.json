@@ -28,9 +28,11 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "flip": "github:nnattawat/flip",
     "jquery": "^3.3.1",
     "knockout": "^3.4.2",
     "lodash": "^4.17.5",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "slick-carousel": "^1.8.1"
   }
 }
