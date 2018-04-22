@@ -1,20 +1,21 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const urlBuilder = require('../url-builder');
+const alert = require('../alert');
 
 module.exports.deps = [
-  '#registration-form'
+  '#registration-form',
+  '#alert-danger',
+  '#alert-success'
 ];
 
 module.exports.init = () => {
+  alert.init();
+
   $('#registration-form').submit(evt => {
     const displayNameSelector = $('#register-display-name');
-    console.log(displayNameSelector.val());
     const emailSelector = $('#register-email');
-    console.log(emailSelector.val());
     const passwordSelector = $('#register-password');
-    console.log(passwordSelector);
-    console.log(passwordSelector.val());
 
     const data = {
       displayName: displayNameSelector.val(),
@@ -22,22 +23,29 @@ module.exports.init = () => {
       password: passwordSelector.val()
     };
 
-    console.log(data);
-    
     $.ajax(
       urlBuilder.buildRegister(),
       {
         method: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: res => {
-          console.log('...redirecting...');
-          window.location.href = '/';
+        success: (body, status, xhr) => {
+          console.log(xhr);
+          console.log(body);
+          console.log(status);
+          if (_.isEqual(xhr.status, 201)) {
+            alert.display('You have been registered!', false);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1000);
+          }
+
+          console.error(`Unexpected success code: ${res.status}`);
         },
-        error: res => {
-          console.error(res.status);
+        error: (xhr, status, err) => {
+          alert.display(xhr.responseText, true);
         }
       });
-    e.preventDefault();
+    evt.preventDefault();
   });
 };
