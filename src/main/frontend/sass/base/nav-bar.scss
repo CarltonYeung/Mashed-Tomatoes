@@ -9,8 +9,56 @@
 //   }
 
 .navbar{
-    background-color: $nav-bar-bg-color;
+    //background-color: $nav-bar-bg-color;
     // Animation
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
+
+.nav-item {
+    font-family: $header-typeface;
+    font-size: 30px;
+    color: $header-fg-color;
+    background-color: $header-bg-color;
+}
+
+.nav-link {
+    align-items: center;
+    text-align: center;
+}
+
+.nav-link:hover {
+    color: red;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+// #sub-menu {
+//     background-color: $header-bg-color;
+    
+// }
+
+.sub-menus-divs{
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.sub-menus {
+    font-family: $header-typeface;
+    color: silver;
+    margin-left: 7px;
+}
+
+.sub-menus:hover {
+    color: red;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+@media (min-width: 979px) {
+    li.dropdown li.dropdown:hover > div.dropdown-menu {
+      display: block;
+    }
+  }
+
+  .dropdown-menu{
+    width: 250px;
+  }

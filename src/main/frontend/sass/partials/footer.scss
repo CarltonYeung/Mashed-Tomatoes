@@ -1,0 +1,19 @@
+@import 'modules/colors';
+
+.footer {
+    background-color: $footer-bg-color;
+}
+
+.footer-item:hover {
+    color: red !important;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.newsletter-btn{
+    color: black !important;
+    background-color: silver !important;
+}
+.newsletter-btn:hover {
+    color: red !important;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
