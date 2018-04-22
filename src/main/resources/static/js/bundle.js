@@ -27644,8 +27644,10 @@ const components = [
   __webpack_require__(16),
   __webpack_require__(17),
   __webpack_require__(18),
+  __webpack_require__(19),
+  __webpack_require__(20),
   // require('./slick/slick'),
-  __webpack_require__(19)
+  __webpack_require__(21)
 ];
 
 const areDepsMet = deps => {
@@ -37665,7 +37667,7 @@ const _ = __webpack_require__(1);
 const ko = __webpack_require__(14);
 const urlBuilder = __webpack_require__(2);
 
-const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+const mediaId = $('[data-media-id]').attr('data-media-id');
 
 const updateList = (isWantToSee) => {
   $.ajax(
@@ -37673,11 +37675,10 @@ const updateList = (isWantToSee) => {
     {
       method: "PATCH",
       data: {
-        movieSlug: movieSlug,
+        mediaId: mediaId,
         isWantToSee: isWantToSee
       },
       contentType: "application/json",
-      dataType: "application/json",
       success: res => {
         if (res.status == 204) {
           console.log('List updated');
@@ -37732,7 +37733,7 @@ class ViewModel {
 
 module.exports.deps = [
   '#media-update-list',
-  '[data-media-slug]'
+  '[data-media-id]'
 ];
 
 module.exports.init = () => {
@@ -43705,7 +43706,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43724,7 +43725,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43778,10 +43779,9 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
@@ -43827,56 +43827,12 @@ module.exports.init = () => {
 
     evt.preventDefault();
   });
-=======
-const $ = __webpack_require__(0);
-const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(4);
-
-module.exports.deps = [
-  '#login-form'
-];
-
-module.exports.init = () => {
-  alert.init();
-
-  $('#login-form').submit(evt => {
-    const emailSelector = $('#login-email');
-    const passwordSelector = $('#login-password');
-    const data = {
-      email: emailSelector.val(),
-      password: passwordSelector.val()
-    };
-
-    $.ajax(
-      urlBuilder.buildLogin(),
-      {
-        method: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: (body, status, xhr) => {
-          if (_.isEqual(xhr.status, 200)) {
-            alert.display('Welcome!', false);
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 1000);
-          }
-        },
-        error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
-        }
-      });
-
-    evt.preventDefault();
-  });
->>>>>>> e3aa97a5c9e15f346e619390511256e326e5a558
 };
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
@@ -43932,63 +43888,10 @@ module.exports.init = () => {
     evt.preventDefault();
   });
 };
-=======
-const $ = __webpack_require__(0);
-const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(4);
-
-module.exports.deps = [
-  '#registration-form',
-  '#alert-danger',
-  '#alert-success'
-];
-
-module.exports.init = () => {
-  alert.init();
-
-  $('#registration-form').submit(evt => {
-    const displayNameSelector = $('#register-display-name');
-    const emailSelector = $('#register-email');
-    const passwordSelector = $('#register-password');
-
-    const data = {
-      displayName: displayNameSelector.val(),
-      email: emailSelector.val(),
-      password: passwordSelector.val()
-    };
-
-    $.ajax(
-      urlBuilder.buildRegister(),
-      {
-        method: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: (body, status, xhr) => {
-          console.log(xhr);
-          console.log(body);
-          console.log(status);
-          if (_.isEqual(xhr.status, 201)) {
-            alert.display('You have been registered!', false);
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 1000);
-          }
-
-          console.error(`Unexpected success code: ${res.status}`);
-        },
-        error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
-        }
-      });
-    evt.preventDefault();
-  });
-};
->>>>>>> e3aa97a5c9e15f346e619390511256e326e5a558
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44016,7 +43919,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

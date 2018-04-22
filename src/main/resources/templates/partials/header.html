@@ -1,78 +1,77 @@
 <header th:fragment="header" id="nav" class="navbar navbar-expand-sm header">
-    <div class="grid w-100">
-        <div class="row">
-            <a href="/" class="ml-3 navbar-brand ">
+  <div class="grid w-100">
+    <div class="row">
+      <a href="/" class="ml-3 navbar-brand ">
                 <img src="/img/base/logo.png" class="icon">
             </a>
-            <div id="search-bar" class="mx-3 my-auto d-inline w-75">
-                <form id="search-form">
-                    <div class="input-group search-form">
-                        <input id="search-input" type="text" class="form-control field " placeholder="Search for movies, tv shows, and celebrities">
-                        <input type="submit" id="search-btn" value="Search" class="btn action"></input>
-                    </div>
-                </form>
-            </div>
-            <a th:if="${#session == null}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
-            <button th:if="${#session != null}" id="logout-btn" class="ml-4 my-4 h-50 btn login-button">Logout</button>
-        </div>
-        <div id="menus" class="collapse navbar-collapse">
-            <ul class="w-100 m-auto navbar-nav menu-bar">
-                <li id="dropdown-movies" class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#" id="movies-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div id="search-bar" class="mx-3 my-auto d-inline w-75">
+        <form id="search-form">
+          <div class="input-group search-form">
+            <input id="search-input" type="text" class="form-control field " placeholder="Search for movies, tv shows, and celebrities">
+            <input type="submit" id="search-btn" value="Search" class="btn action"></input>
+          </div>
+        </form>
+      </div>
+      <a th:if="${#session == null}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+      <button th:if="${#session != null}" id="logout-btn" class="ml-4 my-4 h-50 btn login-button">Logout</button>
+    </div>
+    <div id="menus" class="collapse navbar-collapse">
+      <ul class="w-100 m-auto navbar-nav menu-bar">
+        <li id="dropdown-movies" class="dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="#" id="movies-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Movies
                     </a>
-                    <div id="movies-sub-menu" class="nav-item dropdown-menu" aria-labelledby="movies-navbarDropdownMenuLink">
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movies Main</a>
-                        </div>    
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movie Trailer</a>
-                        </div>
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Coming Soon</a>
-                        </div>    
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movie Genres</a>
-                        </div>   
-                    </div>
-                </li>
-                <li id="dropdown-tv-shows" class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#" id="tv-shows-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div id="movies-sub-menu" class="nav-item dropdown-menu" aria-labelledby="movies-navbarDropdownMenuLink">
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Movies Main</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Movie Trailer</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Coming Soon</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Movie Genres</a>
+            </div>
+          </div>
+        </li>
+        <li id="dropdown-tv-shows" class="dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="#" id="tv-shows-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         TV Shows
                     </a>
-                    <div id="tv-shows-sub-menu" class="nav-item dropdown-menu" aria-labelledby="tv-shows-navbarDropdownMenuLink">
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">TV Main</a>
-                        </div>    
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Late Night</a>
-                        </div>
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Recaps</a>
-                        </div>    
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">TV Genres</a>
-                        </div>   
-                    </div>
-                </li>
-                <li id="dropdown-critics" class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#" id="critics-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div id="tv-shows-sub-menu" class="nav-item dropdown-menu" aria-labelledby="tv-shows-navbarDropdownMenuLink">
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">TV Main</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Late Night</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Recaps</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">TV Genres</a>
+            </div>
+          </div>
+        </li>
+        <li id="dropdown-critics" class="dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="#" id="critics-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Critics
                     </a>
-                    <div id="critics-sub-menu" class="nav-item dropdown-menu" aria-labelledby="critics-navbarDropdownMenuLink">
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Critics Main</a>
-                        </div>    
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Reviews</a>
-                        </div>
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Critic List</a>
-                        </div>    
-                    </div>
-                </li>
-            </ul>
-        </div>
+          <div id="critics-sub-menu" class="nav-item dropdown-menu" aria-labelledby="critics-navbarDropdownMenuLink">
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Critics Main</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Reviews</a>
+            </div>
+            <div class="sub-menus-divs">
+              <a href="#" class="sub-menus">Critic List</a>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </header>
