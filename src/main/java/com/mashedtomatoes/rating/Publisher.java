@@ -1,15 +1,11 @@
 package com.mashedtomatoes.rating;
 
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,10 +14,19 @@ public class Publisher {
   private long id;
   private String name;
   private URL website;
-  private Set<CriticRating> ratings;
 
-  public Publisher() {
-    this.ratings = new HashSet<>();
+  public Publisher() {}
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setWebsite(URL website) {
+    this.website = website;
   }
 
   @Id
@@ -30,34 +35,13 @@ public class Publisher {
     return id;
   }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
   @Column(nullable = false)
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   @Column(nullable = false)
   public URL getWebsite() {
     return website;
-  }
-
-  public void setWebsite(URL website) {
-    this.website = website;
-  }
-
-  @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
-  public Set<CriticRating> getRatings() {
-    return ratings;
-  }
-
-  public void setRatings(Set<CriticRating> ratings) {
-    this.ratings = ratings;
   }
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.user.User;
-import java.time.Instant;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,18 +30,46 @@ public abstract class Rating {
   private String review;
   private Media media;
   private User author;
-  private long created;
-  private long updated;
+  private Date created;
+  private Date updated;
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
+
+  public void setReview(String review) {
+    this.review = review;
+  }
+
+  public void setMedia(Media media) {
+    this.media = media;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public void setUpdated(Date updated) {
+    this.updated = updated;
+  }
 
   @PrePersist
-  protected void onCreate() {
-    this.created = Instant.now().getEpochSecond();
+  private void onCreate() {
+    this.created = new Date();
     this.updated = this.created;
   }
 
   @PreUpdate
-  protected void onUpdate() {
-    this.updated = Instant.now().getEpochSecond();
+  private void onUpdate() {
+    this.updated = new Date();
   }
 
   @Id
@@ -51,30 +79,14 @@ public abstract class Rating {
     return id;
   }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
   @Column(nullable = false)
   @Range(min = 1, max = 5)
   public int getScore() {
     return score;
   }
 
-  public void setScore(int score) {
-    this.score = score;
-  }
-
-  public void setUpdated(long updated) {
-    this.updated = updated;
-  }
-
   public String getReview() {
     return review;
-  }
-
-  public void setReview(String review) {
-    this.review = review;
   }
 
   @ManyToOne
@@ -83,31 +95,19 @@ public abstract class Rating {
     return media;
   }
 
-  public void setMedia(Media media) {
-    this.media = media;
-  }
-
   @ManyToOne
   @JoinColumn(name = "authorID", nullable = false)
   public User getAuthor() {
     return author;
   }
 
-  public void setAuthor(User author) {
-    this.author = author;
-  }
-
   @Column(nullable = false, updatable = false)
-  public long getCreated() {
+  public Date getCreated() {
     return created;
   }
 
-  public void setCreated(long created) {
-    this.created = created;
-  }
-
   @Column(nullable = false)
-  public long getUpdated() {
+  public Date getUpdated() {
     return updated;
   }
 }

@@ -1,0 +1,25 @@
+<section class="mt-5 media-section">
+  <h1 class="media-section -title">Cast</h1>
+  <div class="d-flex justify-content-between flex-wrap" th:if="${not #lists.isEmpty(@@media.characters)}">
+    <th:block th:each="character, iterStat : ${@@media.characters}">
+      <div class="pb-2 media-box -cast" th:hidden="${iterStat.index < 5} ? 'false' : 'true'">
+        <img class="media-box -thumbnail mx-auto" th:src="${character.celebrity.profilePath}">
+        <div class="row">
+          <a class="mx-auto media-box -text" th:href="@{/celebrity/{id}(id=${character.celebrity.id})}" th:text="${character.celebrity.name}"></a>
+        </div>
+        <div class="row">
+          <p class="mx-auto media-box -text">as</p>
+        </div>
+        <div class="row">
+          <p class="mx-auto media-box -text" th:text="${character.name}"></p>
+        </div>
+      </div>
+    </th:block>
+  </div>
+  <button id="see-more-cast" class="btn mt-1 pull-right" th:if="${not #lists.isEmpty(@@media.characters) && #lists.size(@@media.characters) > 4}">See more</button>
+  <div class="text-center" th:if="${#lists.isEmpty(@@media.characters)}">
+    <div class="text-center">
+      <h3>No characters...</h3>
+    </div>
+  </div>
+</section>

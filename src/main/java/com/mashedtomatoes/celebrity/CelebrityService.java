@@ -1,33 +1,53 @@
 package com.mashedtomatoes.celebrity;
 
-import com.mashedtomatoes.search.SearchService;
+import com.mashedtomatoes.media.Movie;
+import com.mashedtomatoes.media.MovieRepository;
+import com.mashedtomatoes.media.TVShow;
+import com.mashedtomatoes.media.TVShowRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class CelebrityService {
+  private static final int MAX_CELEBRITY_SEARCH_COUNT = 10;
+  private static final String URL_SPACE_DELIM = "+";
 
-  @Autowired
-  CelebrityRepository celebrityRepository;
-  @Autowired
-  SearchService searchService;
+  @Autowired private CelebrityRepository celebrityRepository;
 
-  public Celebrity getCelebrityByID(long ID) {
-    Optional<Celebrity> optional = celebrityRepository.findById(ID);
-    if (optional.isPresent()) {
-      return optional.get();
-    }
-    return null;
+  @Autowired private CharacterRepository characterRepository;
+
+  @Autowired private MovieRepository movieRepository;
+
+  @Autowired private TVShowRepository tvShowRepository;
+
+  public Celebrity getCelebrityById(long id) {
+    return celebrityRepository.findFirstById(id);
   }
 
-  @Cacheable("Celebrities")
-  public Iterable<Celebrity> getAllCelebrities(String expr){
-    if (expr == null || expr.trim().length() == 0)
-      return celebrityRepository.findAll();
+  @Cacheable("CelebrityDirectedMovies")
+  public List<Movie> getDirectedMovies(long id) {
+    return movieRepository.findAllByDirector_Id(id);
+  }
 
-    return searchService.search(Celebrity.class, "name", expr, 0);
+  @Cacheable("CelebrityProducedMovies")
+  public List<Movie> getProducedMovies(long id) {
+    return movieRepository.findAllByProducer_Id(id);
+  }
+
+  @Cacheable("CelebrityWrittenMovies")
+  public List<Movie> getWrittenMovies(long id) {
+    return movieRepository.findAllByWriter_Id(id);
+  }
+
+  @Cacheable("CelebrityCreatedTVShows")
+  public List<TVShow> getCreatedTVShows(long id) {
+    return tvShowRepository.findAllByCreator_Id(id);
+  }
+
+  @Cacheable("CelebrityCharacters")
+  public List<Character> getAllPlayedCharacters(long id) {
+    return characterRepository.findAllByCelebrity_Id(id);
   }
 }

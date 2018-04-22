@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.Rating;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -22,52 +23,21 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.ngram.NGramFilterFactory;
-import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
-import org.apache.lucene.analysis.standard.StandardFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.AnalyzerDef;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Parameter;
-import org.hibernate.search.annotations.TokenFilterDef;
-import org.hibernate.search.annotations.TokenizerDef;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Media")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Indexed
-@AnalyzerDef(
-  name = "searchAnalyzer",
-  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-  filters = {
-    @TokenFilterDef(factory = StandardFilterFactory.class),
-    @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-    @TokenFilterDef(
-      factory = SnowballPorterFilterFactory.class,
-      params = {@Parameter(name = "language", value = "English")}
-    ),
-    @TokenFilterDef(
-      factory = NGramFilterFactory.class,
-      params = {
-        @Parameter(name = "minGramSize", value = "1"),
-        @Parameter(name = "maxGramSize", value = "3")
-      }
-    )
-  }
-)
 public abstract class Media {
   protected long id;
   protected String title;
   protected String description;
   protected String posterPath;
   protected String productionCompany;
-  protected Set<Character> characters;
+  protected List<Character> characters;
   protected Set<Rating> ratings;
   protected Set<Genre> genres;
+  protected Set<String> photos;
 
   public void setId(long id) {
     this.id = id;
@@ -89,7 +59,7 @@ public abstract class Media {
     this.productionCompany = productionCompany;
   }
 
-  public void setCharacters(Set<Character> characters) {
+  public void setCharacters(List<Character> characters) {
     this.characters = characters;
   }
 
@@ -101,6 +71,10 @@ public abstract class Media {
     this.genres = genres;
   }
 
+  public void setPhotos(Set<String> photos) {
+    this.photos = photos;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("id")
@@ -109,8 +83,6 @@ public abstract class Media {
   }
 
   @Column(nullable = false)
-  @Field
-  @Analyzer(definition = "searchAnalyzer")
   public String getTitle() {
     return title;
   }
@@ -129,16 +101,16 @@ public abstract class Media {
   }
 
   @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  public Set<Character> getCharacters() {
+  public List<Character> getCharacters() {
     return characters;
   }
 
-  @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   public Set<Rating> getRatings() {
     return ratings;
   }
 
-  @ElementCollection(targetClass = Genre.class)
+  @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)
   @CollectionTable(
     name = "MediaGenres",
     joinColumns = {@JoinColumn(name = "mediaId")}
@@ -147,5 +119,20 @@ public abstract class Media {
   @Column(name = "genre", nullable = false, length = 32)
   public Set<Genre> getGenres() {
     return genres;
+  }
+
+  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+  @CollectionTable(
+    name = "MediaPhotos",
+    joinColumns = {@JoinColumn(name = "mediaId")}
+  )
+  @Column(name = "photo", nullable = false)
+  public Set<String> getPhotos() {
+    return photos;
+  }
+
+  @Override
+  public String toString() {
+    return title;
   }
 }

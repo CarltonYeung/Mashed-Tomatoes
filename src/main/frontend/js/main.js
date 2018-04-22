@@ -13,6 +13,8 @@ const components = [
   // require('./flip/jquery.flip'),
   require('./search/search-form'),
   require('./media/media-update-list'),
+  require('./media/media-box-cast'),
+  require('./media/media-box-photo'),
   require('./rating/rating-form-post-btn'),
   require('./user/login-form'),
   require('./user/registration-form'),
@@ -27,6 +29,7 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
+    console.log(missingDeps);
     return false;
   }
 

@@ -23,13 +23,33 @@ public class AudienceFavorite {
     this.audience = audience;
   }
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setAudience(Audience audience) {
+    this.audience = audience;
+  }
+
+  public void setMovie(String movie) {
+    this.movie = movie;
+  }
+
+  public void setTvShow(String tvShow) {
+    this.tvShow = tvShow;
+  }
+
+  public void setCelebrity(String celebrity) {
+    this.celebrity = celebrity;
+  }
+
+  public void setGenre(String genre) {
+    this.genre = genre;
+  }
+
   @Id
   public long getId() {
     return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
   }
 
   @MapsId
@@ -39,39 +59,19 @@ public class AudienceFavorite {
     return audience;
   }
 
-  public void setAudience(Audience audience) {
-    this.audience = audience;
-  }
-
   public String getMovie() {
     return movie;
-  }
-
-  public void setMovie(String movie) {
-    this.movie = movie;
   }
 
   public String getTvShow() {
     return tvShow;
   }
 
-  public void setTvShow(String tvShow) {
-    this.tvShow = tvShow;
-  }
-
   public String getCelebrity() {
     return celebrity;
   }
 
-  public void setCelebrity(String celebrity) {
-    this.celebrity = celebrity;
-  }
-
   public String getGenre() {
     return genre;
-  }
-
-  public void setGenre(String genre) {
-    this.genre = genre;
   }
 }

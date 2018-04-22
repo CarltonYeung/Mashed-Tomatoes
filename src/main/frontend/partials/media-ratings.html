@@ -1,0 +1,81 @@
+<section class="mt-5 media-section">
+  <h1 class="media-section -title">Critic Reviews</h1>
+  <div class="card-columns" th:if="${not #lists.isEmpty(@@media.criticRatings)}">
+    <div class="card bg-light" th:each="rating: ${@@media.criticRatings}">
+      <div class="card-body">
+        <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+        <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
+        <footer class="blockquote-footer">
+          <small class="text-muted">
+            <p>Last updated on
+              <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
+            </p>
+            <a th:href="@{/critic/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a> in
+            <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
+          </small>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <a class="float-right" th:if="${not #lists.isEmpty(@@media.criticRatings) && #lists.size(@@media.criticRatings) > 8}" th:href="@{/@@media/{id}/critic-rating(id=${@@media.id})}">See more</a>
+  <div class="text-center" th:if="${#lists.isEmpty(@@media.criticRatings)}">
+    <h3>No reviews posted. Not many fans of this stuff huh?</h3>
+  </div>
+</section>
+<section class="mt-5 media-section">
+  <h1 class="media-section -title">Audience Reviews</h1>
+  <div class="card-columns" th:if="${not #lists.isEmpty(@@media.audienceRatings)}">
+    <div class="card bg-light">
+      <div class="card-body" th:each="rating: ${@@media.audienceRatings}">
+        <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
+        <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
+        <footer class="blockquote-footer">
+          <small class="text-muted">
+            <p>Last updated on
+              <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
+            </p>
+            <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
+          </small>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <a class="float-right" th:if="${not #lists.isEmpty(@@media.audienceRatings) && #lists.size(@@media.audienceRatings) > 8}" th:href="@{/@@media/{id}/audience-rating(id=${@@media.id})}">See more</a>
+  <div class="text-center" th:if="${#lists.isEmpty(@@media.audienceRatings)}">
+    <h3>No ratings posted.</h3>
+  </div>
+</section>
+<section class="mt-4 media-section">
+  <h1 class="media-section -title">Your Thoughts</h1>
+  <div id="media-update-list" class="mt-3">
+    <h2 class="media-section -secondary-title">Save This @@mediaPretty</h2>
+    <div class="d-flex justify-content-center">
+      <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+      <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested == null || !inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
+      <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+      <button class="ml-5 btn list-btn" th:if="${inWantToSee == null || !inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
+    </div>
+  </div>
+  <div id="rating-form" class="mt-3">
+    <h2 class="media-section -secondary-title">Add your rating</h2>
+    <div class="row mt-2">
+      <fieldset class="mx-auto star-rating-bar">
+        <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
+        <label class="full" for="star5"></label>
+        <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
+        <label class="full" for="star4"></label>
+        <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
+        <label class="full" for="star3"></label>
+        <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
+        <label class="full" for="star2"></label>
+        <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
+        <label class="full" for="star1"></label>
+      </fieldset>
+    </div>
+    <div class="row mt-2">
+      <textarea id="rating-form-comment-box" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
+    </div>
+    <div class="row mt-2">
+      <button id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</button>
+    </div>
+</section>

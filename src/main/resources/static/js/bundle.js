@@ -27654,6 +27654,7 @@ const areDepsMet = deps => {
   });
 
   if (!_.isEmpty(missingDeps)) {
+    console.log(missingDeps);
     return false;
   }
 
@@ -43684,6 +43685,44 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 }());
 })();
 
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.deps = [
+  '#see-more-cast',
+];
+
+module.exports.init = () => {
+  $('#see-more-cast').on('click', () => {
+    $('.-cast').each((i, el) => {
+      $(el).prop('hidden', false);
+    });
+    $('#see-more-cast').prop('hidden', true);
+  });
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.deps = [
+  '#see-more-photo'
+];
+
+module.exports.init = () => {
+  $('#see-more-photo').on('click', () => {
+    $('.-photo').each((i, el) => {
+      $(el).prop('hidden', false);
+    });
+    $('#see-more-photo').prop('hidden', true);
+  });
+};
 
 /***/ }),
 /* 15 */
