@@ -1,19 +1,21 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.exception.DuplicateKeyException;
+import com.mashedtomatoes.http.ChangeFavoritesRequest;
 import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaService;
 import com.mashedtomatoes.security.HashService;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpSession;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -212,6 +214,23 @@ public class UserService {
     }
 
     user.getCredentials().setPassword(hashService.hash(newPlaintextPassword));
+    save(user);
+  }
+
+  public void changeFavorites(User user, ChangeFavoritesRequest request) {
+    Favorite userFavorites = user.getFavorites();
+    if (request.getMovie() != null) {
+      userFavorites.setMovie(request.getMovie());
+    }
+    if (request.getCelebrity() != null) {
+      userFavorites.setCelebrity(request.getCelebrity());
+    }
+    if (request.getTvShow() != null) {
+      userFavorites.setTvShow(request.getTvShow());
+    }
+    if (request.getGenre() != null) {
+      userFavorites.setGenre(request.getGenre());
+    }
     save(user);
   }
 }

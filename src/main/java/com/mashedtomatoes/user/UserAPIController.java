@@ -1,28 +1,17 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.exception.DuplicateKeyException;
-import com.mashedtomatoes.http.ChangeEmailRequest;
-import com.mashedtomatoes.http.ChangePasswordRequest;
-import com.mashedtomatoes.http.FollowRequest;
-import com.mashedtomatoes.http.LoginRequest;
-import com.mashedtomatoes.http.RegisterRequest;
-import com.mashedtomatoes.http.ResendVerificationEmailRequest;
-import com.mashedtomatoes.http.UserMediaListsRequest;
+import com.mashedtomatoes.http.*;
 import com.mashedtomatoes.mail.MailService;
-import java.util.NoSuchElementException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.NoSuchElementException;
 
 @RestController
 public class UserAPIController {
@@ -340,6 +329,23 @@ public class UserAPIController {
     }
 
     session.invalidate();
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @PostMapping("/user/changeFavorites")
+  public String changeFavorites(@Valid @RequestBody ChangeFavoritesRequest request,
+                                HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    userService.changeFavorites(user, request);
+
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
