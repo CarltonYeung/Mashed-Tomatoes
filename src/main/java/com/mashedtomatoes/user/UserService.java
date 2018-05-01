@@ -242,4 +242,9 @@ public class UserService {
     audience.setDisplayName(displayName);
     save(audience);
   }
+
+  public void changePrivacy(Audience audience, boolean isPublic) {
+    audience.setPublicProfile(isPublic);
+    save(audience);
+  }
 }

@@ -378,4 +378,27 @@ public class UserAPIController {
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
+
+  @PostMapping("/user/changePrivacy")
+  public String changePrivacy(@Valid @RequestBody ChangePrivacyRequest request,
+                              HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Audience)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notAudience");
+    }
+
+    userService.changePrivacy((Audience) user, request.isPublicProfile());
+
+    session.setAttribute("User", userService.getUserById(user.getId()));
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
 }
