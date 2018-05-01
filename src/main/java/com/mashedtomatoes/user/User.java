@@ -2,29 +2,11 @@ package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.rating.Rating;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -43,6 +25,7 @@ public abstract class User {
   private long profileViews;
   private Date created;
   private Date updated;
+  private Favorite favorites;
 
   public User() {}
 
@@ -53,6 +36,7 @@ public abstract class User {
     this.wantToSee = new HashSet<>();
     this.notInterested = new HashSet<>();
     this.type = type;
+    this.favorites = new Favorite(this);
   }
 
   public void setId(long id) {
@@ -105,6 +89,10 @@ public abstract class User {
 
   public void setUpdated(Date updated) {
     this.updated = updated;
+  }
+
+  public void setFavorites(Favorite favorites) {
+    this.favorites = favorites;
   }
 
   @PrePersist
@@ -198,5 +186,11 @@ public abstract class User {
   @Column(nullable = false)
   public Date getUpdated() {
     return updated;
+  }
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  public Favorite getFavorites() {
+    return favorites;
   }
 }

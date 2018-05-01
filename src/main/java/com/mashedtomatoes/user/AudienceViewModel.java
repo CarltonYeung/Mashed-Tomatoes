@@ -2,7 +2,7 @@ package com.mashedtomatoes.user;
 
 public class AudienceViewModel extends UserViewModel {
   private final String displayName;
-  private final AudienceFavorite favorites;
+  private final Favorite favorites;
   private final boolean publicProfile;
   private final AudienceRank rank;
 
@@ -29,7 +29,7 @@ public class AudienceViewModel extends UserViewModel {
     return displayName;
   }
 
-  public AudienceFavorite getFavorites() {
+  public Favorite getFavorites() {
     return favorites;
   }
 
