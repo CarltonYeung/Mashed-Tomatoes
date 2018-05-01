@@ -233,4 +233,13 @@ public class UserService {
     }
     save(user);
   }
+
+  public void changeDisplayName(Audience audience, String displayName) throws IllegalArgumentException {
+    if (audienceRepository.existsByDisplayName(displayName)) {
+      throw new IllegalArgumentException(env.getProperty("user.duplicateDisplayName"));
+    }
+
+    audience.setDisplayName(displayName);
+    save(audience);
+  }
 }
