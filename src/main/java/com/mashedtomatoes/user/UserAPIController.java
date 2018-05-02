@@ -20,14 +20,12 @@ public class UserAPIController {
   @Autowired private Environment env;
 
   @PostMapping("/register")
-  public String register(
-      @Valid @RequestBody RegisterRequest request, HttpServletResponse response) {
+  public String register(@Valid @RequestBody RegisterRequest request,
+                         HttpServletResponse response) {
 
-    Audience user;
+    User user;
     try {
-      user =
-          userService.addAudience(
-              request.getDisplayName(), request.getEmail(), request.getPassword());
+      user = userService.addUser(request.isWantToBeAdmin(), request.getDisplayName(), request.getEmail(), request.getPassword());
     } catch (DuplicateKeyException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();
@@ -362,13 +360,9 @@ public class UserAPIController {
     }
 
     User user = (User) session.getAttribute("User");
-    if (!(user instanceof Audience)) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return env.getProperty("user.notAudience");
-    }
 
     try {
-      userService.changeDisplayName((Audience) user, request.getDisplayName());
+      userService.changeDisplayName(user, request.getDisplayName());
     } catch (IllegalArgumentException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();

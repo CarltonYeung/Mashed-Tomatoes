@@ -21,7 +21,6 @@ import java.util.Set;
 @Service
 public class UserService {
   @Autowired private UserRepository userRepository;
-  @Autowired private AudienceRepository audienceRepository;
   @Autowired private CriticApplicationRepository criticApplicationRepository;
   @Autowired private MediaService mediaService;
   @Autowired private HashService hashService;
@@ -33,42 +32,50 @@ public class UserService {
     return attr.getRequest().getSession(false);
   }
 
-  public Audience addAudience(String displayName, String email, String password) throws Exception {
-
-    if (audienceRepository.existsByDisplayName(displayName)) {
+  public User addUser(boolean wantToBeAdmin, String displayName, String email, String password) throws Exception {
+    if (userRepository.existsByDisplayName(displayName)) {
       throw new DuplicateKeyException(env.getProperty("user.duplicateDisplayName"));
     }
+
     if (userRepository.existsByCredentials_Email(email)) {
       throw new DuplicateKeyException(env.getProperty("user.duplicateEmail"));
     }
-    Audience user = new Audience(displayName, email, hashService.hash(password));
+
+    User user = wantToBeAdmin
+            ? new Administrator(displayName, email, hashService.hash(password))
+            : new Audience(displayName, email, hashService.hash(password));
+
     return userRepository.save(user);
   }
 
   boolean verifyEmail(String email, String verificationKey) {
-
     Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
       return false;
     }
+
     User user = optionalUser.get();
     UserVerification verification = user.getVerification();
+
     if (verification.verify(verificationKey)) {
       userRepository.save(user);
     }
+
     return verification.isVerified();
   }
 
   User getUserByCredentials(String email, String plaintextPassword) {
-
     Optional<User> optionalUser = userRepository.findFirstByCredentials_Email(email);
     if (!optionalUser.isPresent()) {
       return null;
     }
+
     User user = optionalUser.get();
+
     if (!hashService.matches(plaintextPassword, user.getCredentials().getPassword())) {
       return null;
     }
+
     return user;
   }
 
@@ -99,10 +106,12 @@ public class UserService {
   public void delete(User user) {
     user.setFollowing(null);
     save(user);
+
     for (User u : user.getFollowers()) {
       u.getFollowing().remove(user);
       save(u);
     }
+
     userRepository.delete(user);
   }
 
@@ -236,13 +245,13 @@ public class UserService {
     save(user);
   }
 
-  public void changeDisplayName(Audience audience, String displayName) throws IllegalArgumentException {
-    if (audienceRepository.existsByDisplayName(displayName)) {
+  public void changeDisplayName(User user, String displayName) throws IllegalArgumentException {
+    if (userRepository.existsByDisplayName(displayName)) {
       throw new IllegalArgumentException(env.getProperty("user.duplicateDisplayName"));
     }
 
-    audience.setDisplayName(displayName);
-    save(audience);
+    user.setDisplayName(displayName);
+    save(user);
   }
 
   public void changePrivacy(User user, boolean isPublic) {

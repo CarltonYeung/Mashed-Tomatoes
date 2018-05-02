@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Audiences")
 public class Audience extends User {
-  private String displayName;
   private CriticApplication criticApplication;
 
   public Audience() {}
@@ -14,16 +13,7 @@ public class Audience extends User {
     super(UserType.AUDIENCE);
     super.getCredentials().setEmail(email);
     super.getCredentials().setPassword(hashedPassword);
-    this.displayName = displayName;
-  }
-
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
-  }
-
-  @Column(nullable = false, unique = true)
-  public String getDisplayName() {
-    return displayName;
+    super.setDisplayName(displayName);
   }
 
   @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)

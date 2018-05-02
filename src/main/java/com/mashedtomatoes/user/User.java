@@ -27,6 +27,7 @@ public abstract class User {
   private Date updated;
   private Favorite favorites;
   private boolean publicProfile;
+  private String displayName;
 
   public User() {}
 
@@ -203,5 +204,14 @@ public abstract class User {
 
   public void setPublicProfile(boolean publicProfile) {
     this.publicProfile = publicProfile;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  @Column(nullable = false, unique = true)
+  public String getDisplayName() {
+    return displayName;
   }
 }
