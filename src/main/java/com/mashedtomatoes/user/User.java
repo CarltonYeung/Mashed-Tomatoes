@@ -26,6 +26,7 @@ public abstract class User {
   private Date created;
   private Date updated;
   private Favorite favorites;
+  private boolean publicProfile;
 
   public User() {}
 
@@ -37,6 +38,7 @@ public abstract class User {
     this.notInterested = new HashSet<>();
     this.type = type;
     this.favorites = new Favorite(this);
+    this.publicProfile = true;
   }
 
   public void setId(long id) {
@@ -192,5 +194,14 @@ public abstract class User {
   @PrimaryKeyJoinColumn
   public Favorite getFavorites() {
     return favorites;
+  }
+
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  public boolean isPublicProfile() {
+    return publicProfile;
+  }
+
+  public void setPublicProfile(boolean publicProfile) {
+    this.publicProfile = publicProfile;
   }
 }

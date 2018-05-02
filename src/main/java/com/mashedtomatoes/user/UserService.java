@@ -245,9 +245,9 @@ public class UserService {
     save(audience);
   }
 
-  public void changePrivacy(Audience audience, boolean isPublic) {
-    audience.setPublicProfile(isPublic);
-    save(audience);
+  public void changePrivacy(User user, boolean isPublic) {
+    user.setPublicProfile(isPublic);
+    save(user);
   }
 
   public void submitCriticApplication(Audience applicant, CriticApplicationRequest request) throws Exception {

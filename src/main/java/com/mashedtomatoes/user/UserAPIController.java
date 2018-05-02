@@ -390,13 +390,7 @@ public class UserAPIController {
     }
 
     User user = (User) session.getAttribute("User");
-    if (!(user instanceof Audience)) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return env.getProperty("user.notAudience");
-    }
-
-    userService.changePrivacy((Audience) user, request.isPublicProfile());
-
+    userService.changePrivacy(user, request.isPublicProfile());
     session.setAttribute("User", userService.getUserById(user.getId()));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";

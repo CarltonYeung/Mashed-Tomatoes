@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "Audiences")
 public class Audience extends User {
   private String displayName;
-  private boolean publicProfile;
   private CriticApplication criticApplication;
 
   public Audience() {}
@@ -16,25 +15,15 @@ public class Audience extends User {
     super.getCredentials().setEmail(email);
     super.getCredentials().setPassword(hashedPassword);
     this.displayName = displayName;
-    this.publicProfile = true;
   }
 
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
   }
 
-  public void setPublicProfile(boolean publicProfile) {
-    this.publicProfile = publicProfile;
-  }
-
   @Column(nullable = false, unique = true)
   public String getDisplayName() {
     return displayName;
-  }
-
-  @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  public boolean isPublicProfile() {
-    return publicProfile;
   }
 
   @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
