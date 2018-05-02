@@ -401,4 +401,31 @@ public class UserAPIController {
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
+
+  @PostMapping("/user/criticApplication/apply")
+  public String applyToBecomeACritic(@Valid @RequestBody CriticApplicationRequest request,
+                                     HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Audience)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notAudience");
+    }
+
+    try {
+      userService.submitCriticApplication((Audience) user, request);
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return e.getMessage();
+    }
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
 }

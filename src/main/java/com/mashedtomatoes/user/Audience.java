@@ -1,14 +1,13 @@
 package com.mashedtomatoes.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Audiences")
 public class Audience extends User {
   private String displayName;
   private boolean publicProfile;
+  private CriticApplication criticApplication;
 
   public Audience() {}
 
@@ -36,5 +35,15 @@ public class Audience extends User {
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
   public boolean isPublicProfile() {
     return publicProfile;
+  }
+
+  @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  public CriticApplication getCriticApplication() {
+    return criticApplication;
+  }
+
+  public void setCriticApplication(CriticApplication criticApplication) {
+    this.criticApplication = criticApplication;
   }
 }
