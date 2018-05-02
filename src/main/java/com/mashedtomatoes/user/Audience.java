@@ -7,16 +7,18 @@ import javax.persistence.*;
 public class Audience extends User {
   private CriticApplication criticApplication;
 
-  public Audience() {}
+  public Audience() {
+    super(UserType.AUDIENCE);
+  }
 
   public Audience(String displayName, String email, String hashedPassword) {
-    super(UserType.AUDIENCE);
+    this();
     super.getCredentials().setEmail(email);
     super.getCredentials().setPassword(hashedPassword);
     super.setDisplayName(displayName);
   }
 
-  @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "applicant", cascade = CascadeType.REMOVE)
   @PrimaryKeyJoinColumn
   public CriticApplication getCriticApplication() {
     return criticApplication;

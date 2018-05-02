@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 public class UserAPIController {
   @Autowired private UserService userService;
   @Autowired private MailService mailService;
+  @Autowired private CriticApplicationService criticApplicationService;
   @Autowired private Environment env;
 
   @PostMapping("/register")
@@ -407,10 +408,42 @@ public class UserAPIController {
     }
 
     try {
-      userService.submitCriticApplication((Audience) user, request);
+      criticApplicationService.submitCriticApplication((Audience) user, request);
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return e.getMessage();
+    }
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @DeleteMapping("/user/criticApplication/{applicantId}")
+  public String acceptOrRejectCriticApplication(@Valid @RequestBody CriticApplicationStatusRequest request,
+                                                @PathVariable long applicantId,
+                                                HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Administrator)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notAdministrator");
+    }
+
+    try {
+      if (request.isAccepted()) {
+        criticApplicationService.accept(applicantId);
+      } else {
+        criticApplicationService.reject(applicantId);
+      }
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("criticApplication.doesNotExist");
     }
 
     response.setStatus(HttpServletResponse.SC_OK);

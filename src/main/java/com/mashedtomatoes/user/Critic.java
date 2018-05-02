@@ -11,13 +11,14 @@ public class Critic extends User {
   private String lastName;
   private boolean topCritic;
 
-  public Critic() {}
+  public Critic() {
+    super(UserType.CRITIC);
+  }
 
   public Critic(String firstName, String lastName) {
-    super(UserType.CRITIC);
+    this();
     this.firstName = firstName;
     this.lastName = lastName;
-    this.topCritic = false;
   }
 
   public void setFirstName(String firstName) {

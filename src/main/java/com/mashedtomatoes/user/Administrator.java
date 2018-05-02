@@ -8,10 +8,11 @@ import javax.persistence.Table;
 public class Administrator extends User {
 
   public Administrator() {
+    super(UserType.ADMINISTRATOR);
   }
 
   public Administrator(String displayName, String email, String hashedPassword) {
-    super(UserType.ADMINISTRATOR);
+    this();
     super.getCredentials().setEmail(email);
     super.getCredentials().setPassword(hashedPassword);
     super.setDisplayName(displayName);

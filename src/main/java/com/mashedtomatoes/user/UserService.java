@@ -2,7 +2,6 @@ package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.exception.DuplicateKeyException;
 import com.mashedtomatoes.http.ChangeFavoritesRequest;
-import com.mashedtomatoes.http.CriticApplicationRequest;
 import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaService;
@@ -21,7 +20,6 @@ import java.util.Set;
 @Service
 public class UserService {
   @Autowired private UserRepository userRepository;
-  @Autowired private CriticApplicationRepository criticApplicationRepository;
   @Autowired private MediaService mediaService;
   @Autowired private HashService hashService;
   @Autowired private Environment env;
@@ -257,18 +255,5 @@ public class UserService {
   public void changePrivacy(User user, boolean isPublic) {
     user.setPublicProfile(isPublic);
     save(user);
-  }
-
-  public void submitCriticApplication(Audience applicant, CriticApplicationRequest request) throws Exception {
-    if (criticApplicationRepository.existsByApplicant_Id(applicant.getId())) {
-      throw new Exception(env.getProperty("user.duplicateCriticApplication"));
-    }
-
-    CriticApplication app = new CriticApplication();
-    app.setApplicant((Audience) userRepository.findFirstById(applicant.getId()).get());
-    app.setFirstName(request.getFirstName());
-    app.setLastName(request.getLastName());
-    app.setBody(request.getBody());
-    criticApplicationRepository.save(app);
   }
 }
