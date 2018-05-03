@@ -2,14 +2,12 @@ package com.mashedtomatoes.user;
 
 public class AudienceViewModel extends UserViewModel {
   private final String displayName;
-  private final Favorite favorites;
   private final boolean publicProfile;
   private final AudienceRank rank;
 
   public AudienceViewModel(Audience base, Integer rankUpgradeRate) {
     super(base);
     displayName = base.getDisplayName();
-    favorites = base.getFavorites();
     publicProfile = base.isPublicProfile();
     Integer followerCount = getFollowers().size();
     if (followerCount < rankUpgradeRate) {
@@ -27,10 +25,6 @@ public class AudienceViewModel extends UserViewModel {
 
   public String getDisplayName() {
     return displayName;
-  }
-
-  public Favorite getFavorites() {
-    return favorites;
   }
 
   public boolean isPublicProfile() {

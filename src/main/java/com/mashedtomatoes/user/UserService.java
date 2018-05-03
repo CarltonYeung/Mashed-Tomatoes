@@ -1,7 +1,6 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.exception.DuplicateKeyException;
-import com.mashedtomatoes.http.ChangeFavoritesRequest;
 import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaService;
@@ -227,23 +226,6 @@ public class UserService {
     }
 
     user.getCredentials().setPassword(hashService.hash(newPlaintextPassword));
-    save(user);
-  }
-
-  public void changeFavorites(User user, ChangeFavoritesRequest request) {
-    Favorite userFavorites = user.getFavorites();
-    if (request.getMovie() != null) {
-      userFavorites.setMovie(request.getMovie());
-    }
-    if (request.getCelebrity() != null) {
-      userFavorites.setCelebrity(request.getCelebrity());
-    }
-    if (request.getTvShow() != null) {
-      userFavorites.setTvShow(request.getTvShow());
-    }
-    if (request.getGenre() != null) {
-      userFavorites.setGenre(request.getGenre());
-    }
     save(user);
   }
 

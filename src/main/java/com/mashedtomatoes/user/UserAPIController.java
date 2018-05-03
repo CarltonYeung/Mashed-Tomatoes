@@ -332,24 +332,6 @@ public class UserAPIController {
     return "";
   }
 
-  @PostMapping("/user/changeFavorites")
-  public String changeFavorites(@Valid @RequestBody ChangeFavoritesRequest request,
-                                HttpServletResponse response) {
-
-    HttpSession session = UserService.session();
-    if (session == null) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return env.getProperty("user.notLoggedIn");
-    }
-
-    User user = (User) session.getAttribute("User");
-    userService.changeFavorites(user, request);
-
-    session.setAttribute("User", userService.getUserById(user.getId()));
-    response.setStatus(HttpServletResponse.SC_OK);
-    return "";
-  }
-
   @PostMapping("/user/changeDisplayName")
   public String changeDisplayName(@Valid @RequestBody ChangeDisplayNameRequest request,
                                   HttpServletResponse response) {

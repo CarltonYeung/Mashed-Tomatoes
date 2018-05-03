@@ -25,7 +25,6 @@ public abstract class User {
   private long profileViews;
   private Date created;
   private Date updated;
-  private Favorite favorites;
   private boolean publicProfile;
   private String displayName;
 
@@ -38,7 +37,6 @@ public abstract class User {
     this.wantToSee = new HashSet<>();
     this.notInterested = new HashSet<>();
     this.type = type;
-    this.favorites = new Favorite(this);
     this.publicProfile = true;
   }
 
@@ -92,10 +90,6 @@ public abstract class User {
 
   public void setUpdated(Date updated) {
     this.updated = updated;
-  }
-
-  public void setFavorites(Favorite favorites) {
-    this.favorites = favorites;
   }
 
   @PrePersist
@@ -189,12 +183,6 @@ public abstract class User {
   @Column(nullable = false)
   public Date getUpdated() {
     return updated;
-  }
-
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  public Favorite getFavorites() {
-    return favorites;
   }
 
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
