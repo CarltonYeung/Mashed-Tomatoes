@@ -101,7 +101,11 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  public void delete(User user) {
+  public void delete(long id) throws NoSuchElementException {
+    Optional<User> optional = userRepository.findFirstById(id);
+    optional.orElseThrow(NoSuchElementException::new);
+    User user = optional.get();
+
     user.setFollowing(null);
     save(user);
 

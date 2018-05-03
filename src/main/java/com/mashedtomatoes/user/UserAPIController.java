@@ -250,13 +250,6 @@ public class UserAPIController {
     }
   }
 
-  /**
-   * User deletes their own account.
-   *
-   * @param id
-   * @param response
-   * @return
-   */
   @DeleteMapping("/user/{id}")
   public String deleteUser(@PathVariable long id, HttpServletResponse response) {
 
@@ -266,14 +259,21 @@ public class UserAPIController {
       return env.getProperty("user.notLoggedIn");
     }
 
-    User user = (User) session.getAttribute("User");
-    if (id != user.getId()) {
+    User loggedInUser = (User) session.getAttribute("User");
+    if (id != loggedInUser.getId() && loggedInUser.getType() != UserType.ADMINISTRATOR) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return env.getProperty("user.cannotDelete");
     }
 
-    userService.delete(user);
-    session.invalidate();
+    try {
+      userService.delete(id);
+      if (id == loggedInUser.getId()) {
+        session.invalidate();
+      }
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.notFound");
+    }
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }
