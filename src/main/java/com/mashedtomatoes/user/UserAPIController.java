@@ -18,6 +18,7 @@ public class UserAPIController {
   @Autowired private UserService userService;
   @Autowired private MailService mailService;
   @Autowired private CriticApplicationService criticApplicationService;
+  @Autowired private UserReportService userReportService;
   @Autowired private Environment env;
 
   @PostMapping("/register")
@@ -426,6 +427,57 @@ public class UserAPIController {
     } catch (NoSuchElementException e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return env.getProperty("criticApplication.doesNotExist");
+    }
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @PostMapping("/user/report")
+  public String reportUser(@Valid @RequestBody UserReportRequest request,
+                           HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    try {
+      userReportService.addReport(request);
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("user.notFound");
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return e.getMessage();
+    }
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
+  @DeleteMapping("/user/report/{userId}")
+  public String reportUser(@PathVariable long userId,
+                           HttpServletResponse response) {
+
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notLoggedIn");
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Administrator)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return env.getProperty("user.notAdministrator");
+    }
+
+    try {
+      userReportService.removeReport(userId);
+    } catch (NoSuchElementException e) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return env.getProperty("userReport.notFound");
     }
 
     response.setStatus(HttpServletResponse.SC_OK);

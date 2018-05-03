@@ -27,6 +27,7 @@ public abstract class User {
   private Date updated;
   private boolean publicProfile;
   private String displayName;
+  private UserReport report;
 
   public User() {}
 
@@ -201,5 +202,15 @@ public abstract class User {
   @Column(nullable = false, unique = true)
   public String getDisplayName() {
     return displayName;
+  }
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+  @PrimaryKeyJoinColumn
+  public UserReport getReport() {
+    return report;
+  }
+
+  public void setReport(UserReport report) {
+    this.report = report;
   }
 }
