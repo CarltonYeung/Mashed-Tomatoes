@@ -121,7 +121,7 @@ public class UserService {
 
     for (Rating r : user.getRatings()) {
       Media m = mediaService.getMediaById(r.getMedia().getId());
-      ratingService.deleteAudienceRating(m, user, r.getId());
+      ratingService.deleteRating(m, user, r.getId());
     }
 
     user.setRatings(null);

@@ -1,40 +1,42 @@
 package com.mashedtomatoes.rating;
 
 import com.mashedtomatoes.media.Media;
-import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
+import com.mashedtomatoes.user.UserType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 
 @Service
 public class RatingService {
-  private AudienceRatingRepository audRatingRepository;
-  private RatingRepository ratingRepository;
-  private UserRepository userRepository;
+  @Autowired private AudienceRatingRepository audRatingRepository;
+  @Autowired private CriticRatingRepository criticRatingRepository;
+  @Autowired private RatingRepository ratingRepository;
+  @Autowired private UserRepository userRepository;
 
-  public RatingService(AudienceRatingRepository audRatingRepository,
-                       RatingRepository ratingRepository,
-                       UserRepository userRepository) {
-
-    this.audRatingRepository = audRatingRepository;
-    this.ratingRepository = ratingRepository;
-    this.userRepository = userRepository;
+  public boolean submitRating(Media media, User user, int rating, String review) {
+    boolean hasRated = ratingRepository.existsByAuthorAndMedia(user, media);
+    if(hasRated){
+      return false;
+    }
+    if(user.getType() == UserType.AUDIENCE || user.getType() == UserType.ADMINISTRATOR){
+      AudienceRating audienceRating = new AudienceRating(rating, review, media, user);
+      user.getRatings().add(audienceRating);
+      media.getRatings().add(audienceRating);
+      audRatingRepository.save(audienceRating);
+    }
+    else{
+      CriticRating criticRating = new CriticRating(rating, review, media, user);
+      user.getRatings().add(criticRating);
+      media.getRatings().add(criticRating);
+      criticRatingRepository.save(criticRating);
+    }
+    return true;
   }
 
-  public void submitAudienceRating(Movie movie, User user, int rating, String review) {
-    AudienceRating audienceRating = new AudienceRating();
-    audienceRating.setScore(rating);
-    audienceRating.setReview(review);
-    audienceRating.setMedia(movie);
-    audienceRating.setAuthor(user);
-    user.getRatings().add(audienceRating);
-    movie.getRatings().add(audienceRating);
-    audRatingRepository.save(audienceRating);
-  }
-
-  public boolean deleteAudienceRating(Media media, User user, long ratingId) {
+  public boolean deleteRating(Media media, User user, long ratingId) {
     AudienceRating audienceRating = audRatingRepository.findFirstById(ratingId);
     if (audienceRating == null) {
       return false;
@@ -60,8 +62,10 @@ public class RatingService {
     userRepository.save(user);
     return true;
   }
-  public boolean updateAudienceRating(Media media, User user, int rating, String review){
+  public boolean updateRating(Media media, User user, int rating, String review){
     return true;
   }
+
+  
 
 }

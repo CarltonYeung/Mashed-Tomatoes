@@ -67,14 +67,15 @@ public class MovieAPIController {
       return;
     }
     User user = (User) session.getAttribute("User");
-    if (user.getType() == UserType.AUDIENCE || user.getType() == UserType.ADMINISTRATOR) {
-      ratingService.submitAudienceRating(
+
+     boolean isSubmitted =  ratingService.submitRating(
               movie, user, rateRequest.getRating(), rateRequest.getReview());
-    }
-    else{
-      //ratingService.submitCriticRating(movie, user, rateRequest.getRating(), rateRequest.getReview());
-    }
-    response.setStatus(HttpStatus.SC_OK);
+     if(isSubmitted){
+       response.setStatus(HttpStatus.SC_OK);
+     }
+     else{
+       response.setStatus(HttpStatus.SC_NOT_ACCEPTABLE);
+     }
   }
 
   @PatchMapping("/api/movie/{id}/rate/update/{ratingID}")
@@ -106,7 +107,7 @@ public class MovieAPIController {
       response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;
     }
-    boolean deleted = ratingService.deleteAudienceRating(movie, user, ratingID);
+    boolean deleted = ratingService.deleteRating(movie, user, ratingID);
     if (deleted) {
       movieService.updateMovie(movie);
       response.setStatus(HttpStatus.SC_OK);
