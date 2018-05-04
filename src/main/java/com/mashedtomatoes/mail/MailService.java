@@ -36,6 +36,14 @@ public class MailService {
     send(to, env.getProperty("mt.verifyEmailSubject"), "emailverification", context);
   }
 
+  public void sendResetPasswordEmail(String to, String password) {
+    String link = "http://" + serverHost + ":" + serverPort + "/login";
+    Context context = new Context();
+    context.setVariable("password", password);
+    context.setVariable("loginLink", link);
+    send(to, env.getProperty("mt.resetPasswordSubject"), "resetpassword", context);
+  }
+
   public void send(String to, String subject, String templateName, Context context) {
     MimeMessage mail = mailSender.createMimeMessage();
     String body = templateEngine.process(templateName, context);

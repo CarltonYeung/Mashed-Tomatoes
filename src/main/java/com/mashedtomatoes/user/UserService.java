@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -240,6 +241,17 @@ public class UserService {
 
     user.getCredentials().setPassword(hashService.hash(newPlaintextPassword));
     save(user);
+  }
+
+  public String resetPassword(String email) throws NoSuchElementException {
+    Optional<User> optional = userRepository.findFirstByCredentials_Email(email);
+    optional.orElseThrow(NoSuchElementException::new);
+    User user = optional.get();
+
+    String plaintextPassword = UUID.randomUUID().toString().replace("-", "");
+    user.getCredentials().setPassword(hashService.hash(plaintextPassword));
+    save(user);
+    return plaintextPassword;
   }
 
   public void changeDisplayName(User user, String displayName) throws IllegalArgumentException {

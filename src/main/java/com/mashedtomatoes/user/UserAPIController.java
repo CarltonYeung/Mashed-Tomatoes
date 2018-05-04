@@ -333,6 +333,22 @@ public class UserAPIController {
     return "";
   }
 
+  @PostMapping("/user/resetPassword")
+  public String resetPassword(@Valid @RequestBody ForgotPasswordRequest request,
+                               HttpServletResponse response) {
+
+    try {
+      String plaintextPassword = userService.resetPassword(request.getEmail());
+      System.out.println(plaintextPassword);
+      mailService.sendResetPasswordEmail(request.getEmail(), plaintextPassword);
+    } catch (NoSuchElementException e) {
+      // Even if this email is not registered, don't let an attacker know that
+    }
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    return "";
+  }
+
   @PostMapping("/user/changeDisplayName")
   public String changeDisplayName(@Valid @RequestBody ChangeDisplayNameRequest request,
                                   HttpServletResponse response) {
