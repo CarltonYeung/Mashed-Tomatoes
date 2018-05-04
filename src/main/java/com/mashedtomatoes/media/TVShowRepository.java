@@ -28,7 +28,7 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
 
   @Query(
     value =
-        "SELECT md.title, tv.id, if(rt.mediaID IS NOT NULL ,avg(rt.score),-1) "
+        "SELECT md.title, tv.id, if(rt.mediaID IS NOT NULL ,avg(rt.score),-1), md.posterPath "
             + "FROM (TVShows tv left join Ratings rt on tv.id = rt.mediaID), Media md WHERE md.id = tv.id GROUP By tv.id ORDER BY avg(rt.score) DESC",
     nativeQuery = true
   )
@@ -36,8 +36,9 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
 
   @Query(
     value =
-        "SELECT md.title, tv.id, if(rt.mediaID IS NOT NULL, avg(rt.score), -1) FROM (TVShows tv left join Ratings rt on tv.id = rt.mediaID), Media md WHERE md.id = tv.id AND tv.startDate <= :currentDate AND tv.endDate >= :currentDate "
-            + "GROUP By tv.id ORDER BY avg(rt.score) DESC",
+        "SELECT md.title, tv.id, if(rt.mediaID IS NOT NULL, avg(rt.score), -1), md.posterPath "
+                + "FROM (TVShows tv left join Ratings rt on tv.id = rt.mediaID), Media md WHERE md.id = tv.id AND tv.startDate <= :currentDate AND tv.endDate >= :currentDate "
+                + "GROUP By tv.id ORDER BY avg(rt.score) DESC",
     nativeQuery = true
   )
   Page<Object[]> findNowAiringTVShows(Pageable pageable, @Param("currentDate") Date currentDate);

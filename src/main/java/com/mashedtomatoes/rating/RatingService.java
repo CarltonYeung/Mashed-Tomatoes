@@ -55,11 +55,13 @@ public class RatingService {
         break;
       }
     }
-    // audienceRating.setReview("Saved worked");
     audRatingRepository.deleteAudienceRating(audienceRating.getId());
     ratingRepository.deleteRating(audienceRating.getId());
-    // ratingRepository.deleteFirstById(audienceRating.getId());
     userRepository.save(user);
     return true;
   }
+  public boolean updateAudienceRating(Media media, User user, int rating, String review){
+    return true;
+  }
+
 }

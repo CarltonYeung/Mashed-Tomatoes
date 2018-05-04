@@ -15,12 +15,15 @@ public class MovieRatingQuery {
 
     private Date releaseDate;
 
-    public MovieRatingQuery(double avgRating, String title, long id, double boxOffice, Date releaseDate) {
+    private String posterPath;
+
+    public MovieRatingQuery(double avgRating, String title, long id, double boxOffice, Date releaseDate, String posterPath) {
         this.avgRating = avgRating;
         this.title = title;
         this.id = id;
         this.boxOffice = boxOffice;
         this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
     }
 
     public double getAvgRating() {
@@ -62,4 +65,8 @@ public class MovieRatingQuery {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public String getPosterPath(){ return posterPath; }
+
+    public void setPosterPath(String posterPath){ this.posterPath = posterPath; }
 }

@@ -24,7 +24,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "SELECT if(rt.mediaID IS NOT Null , avg(rt.score), -1) as avgRating, media.title, media.id, me.boxOffice, me.releaseDate "
+        "SELECT if(rt.mediaID IS NOT Null , avg(rt.score), -1) as avgRating, media.title, media.id, me.boxOffice, me.releaseDate, media.posterPath "
             + "FROM (Movies me left join Ratings rt on rt.mediaID = me.id), Media media WHERE media.id = me.id GROUP By me.id ORDER BY me.boxOffice DESC",
     nativeQuery = true
   )
@@ -32,7 +32,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "Select if(rt.mediaID IS NOT Null , avg(rt.score), -1)as avgRating, md.title, md.id, me.boxOffice, me.releaseDate "
+        "Select if(rt.mediaID IS NOT Null , avg(rt.score), -1)as avgRating, md.title, md.id, me.boxOffice, me.releaseDate, md.posterPath "
             + "FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md WHERE md.id = me.id GROUP By me.id ORDER BY avg(rt.score) DESC",
     nativeQuery = true
   )
@@ -40,7 +40,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1) as avgRating, media.title, movie.id, movie.boxOffice, movie.releaseDate "
+        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1) as avgRating, media.title, movie.id, movie.boxOffice, movie.releaseDate, media.posterPath "
             + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media WHERE movie.id=media.id AND movie.releaseDate <= :timeAhead AND movie.releaseDate >= :currentDate "
             + "GROUP By movie.id ORDER By movie.releaseDate DESC",
     nativeQuery = true
@@ -52,7 +52,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1) as avgRating, media.title, movie.id, movie.boxOffice, movie.releaseDate "
+        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1) as avgRating, media.title, movie.id, movie.boxOffice, movie.releaseDate, media.posterPath "
             + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media WHERE movie.id=media.id AND movie.releaseDate >= :timeBefore AND movie.releaseDate <= :currentDate "
             + "GROUP By movie.id ORDER By movie.releaseDate DESC",
     nativeQuery = true
@@ -64,7 +64,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
   @Query(
     value =
-        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1), media.title, movie.id, movie.boxOffice, ows.year "
+        "SELECT if(rt.mediaID IS NOT NULL, avg(rt.score), -1), media.title, movie.id, movie.boxOffice, ows.year, media.posterPath "
             + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media, OscarWinnerSet ows "
             + "WHERE movie.id = media.id AND media.id = ows.bestPictureId Group By movie.id ORDER By ows.year DESC",
     nativeQuery = true

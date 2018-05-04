@@ -67,12 +67,13 @@ public class MovieAPIController {
       return;
     }
     User user = (User) session.getAttribute("User");
-    if (user.getType() != UserType.AUDIENCE) {
-      response.setStatus(HttpStatus.SC_FORBIDDEN);
-      return;
+    if (user.getType() == UserType.AUDIENCE || user.getType() == UserType.ADMINISTRATOR) {
+      ratingService.submitAudienceRating(
+              movie, user, rateRequest.getRating(), rateRequest.getReview());
     }
-    ratingService.submitAudienceRating(
-        movie, user, rateRequest.getRating(), rateRequest.getReview());
+    else{
+      //ratingService.submitCriticRating(movie, user, rateRequest.getRating(), rateRequest.getReview());
+    }
     response.setStatus(HttpStatus.SC_OK);
   }
 

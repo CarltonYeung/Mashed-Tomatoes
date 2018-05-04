@@ -3,13 +3,18 @@ package com.mashedtomatoes.media;
 public class TVShowRatingQuery {
 
     private String title;
+
     private int id;
+
     private double avgRating;
 
-    public TVShowRatingQuery(String title, int id, double avgRating) {
+    private String posterPath;
+
+    public TVShowRatingQuery(String title, int id, double avgRating, String posterPath) {
         this.title = title;
         this.id = id;
         this.avgRating = avgRating;
+        this.posterPath = posterPath;
     }
 
     public String getTitle() {
@@ -35,4 +40,8 @@ public class TVShowRatingQuery {
     public void setAvgRating(double avgRating) {
         this.avgRating = avgRating;
     }
+
+    public String getPosterPath(){ return posterPath; }
+
+    public void setPosterPath(String posterPath){ this.posterPath = posterPath; }
 }

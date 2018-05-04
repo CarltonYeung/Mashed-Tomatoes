@@ -26,7 +26,8 @@ public class TVShowService {
           new TVShowRatingQuery(
               (String) columns[0],
               ((BigInteger) columns[1]).intValue(),
-              ((BigDecimal) columns[2]).doubleValue());
+              ((BigDecimal) columns[2]).doubleValue(),
+              (String) columns[3]);
       tvShowRatingQueries.add(tempTVShowRatingQuery);
     }
     return tvShowRatingQueries;

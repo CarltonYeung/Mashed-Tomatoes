@@ -32,7 +32,8 @@ public class MovieService {
               (String) columns[1],
               ((BigInteger) columns[2]).intValue(),
               (double) columns[3],
-              (Date) columns[4]);
+              (Date) columns[4],
+              (String) columns[5]);
       movieRatingQueries.add(tempMovieRatingQuery);
     }
     return movieRatingQueries;
