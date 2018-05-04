@@ -1,10 +1,9 @@
 package com.mashedtomatoes.rating;
 
+import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.Movie;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -35,8 +34,8 @@ public class RatingService {
     audRatingRepository.save(audienceRating);
   }
 
-  public boolean deleteAudienceRating(Movie movie, User user, int ratingId) {
-    AudienceRating audienceRating = audRatingRepository.findFirstById((long) ratingId);
+  public boolean deleteAudienceRating(Media media, User user, long ratingId) {
+    AudienceRating audienceRating = audRatingRepository.findFirstById(ratingId);
     if (audienceRating == null) {
       return false;
     }
@@ -48,11 +47,11 @@ public class RatingService {
         break;
       }
     }
-    Iterator<Rating> movieRatingsIterator = movie.getRatings().iterator();
+    Iterator<Rating> movieRatingsIterator = media.getRatings().iterator();
     while (movieRatingsIterator.hasNext()) {
       Rating movieRating = movieRatingsIterator.next();
       if (movieRating.getId() == ratingId) {
-        movie.getRatings().remove(movieRating);
+        media.getRatings().remove(movieRating);
         break;
       }
     }

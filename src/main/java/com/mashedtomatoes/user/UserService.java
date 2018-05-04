@@ -3,7 +3,10 @@ package com.mashedtomatoes.user;
 import com.mashedtomatoes.exception.DuplicateKeyException;
 import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
+import com.mashedtomatoes.media.MediaRepository;
 import com.mashedtomatoes.media.MediaService;
+import com.mashedtomatoes.rating.Rating;
+import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -19,7 +22,9 @@ import java.util.Set;
 @Service
 public class UserService {
   @Autowired private UserRepository userRepository;
+  @Autowired private MediaRepository mediaRepository;
   @Autowired private MediaService mediaService;
+  @Autowired private RatingService ratingService;
   @Autowired private HashService hashService;
   @Autowired private Environment env;
 
@@ -112,6 +117,14 @@ public class UserService {
       u.getFollowing().remove(user);
       save(u);
     }
+
+    for (Rating r : user.getRatings()) {
+      Media m = mediaService.getMediaById(r.getMedia().getId());
+      ratingService.deleteAudienceRating(m, user, r.getId());
+    }
+
+    user.setRatings(null);
+    save(user);
 
     userRepository.delete(user);
   }

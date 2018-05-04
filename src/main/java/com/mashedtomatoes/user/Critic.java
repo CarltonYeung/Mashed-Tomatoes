@@ -15,8 +15,9 @@ public class Critic extends User {
     super(UserType.CRITIC);
   }
 
-  public Critic(String firstName, String lastName) {
+  public Critic(String displayName, String firstName, String lastName) {
     this();
+    super.setDisplayName(displayName);
     this.firstName = firstName;
     this.lastName = lastName;
   }

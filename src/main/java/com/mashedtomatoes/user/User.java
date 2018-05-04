@@ -35,6 +35,8 @@ public abstract class User {
     this.credentials = new UserCredentials(this);
     this.verification = new UserVerification(this);
     this.ratings = new HashSet<>();
+    this.following = new HashSet<>();
+    this.followers = new HashSet<>();
     this.wantToSee = new HashSet<>();
     this.notInterested = new HashSet<>();
     this.type = type;

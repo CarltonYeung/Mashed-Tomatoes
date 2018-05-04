@@ -12,6 +12,7 @@ import java.util.Optional;
 public class CriticApplicationService {
   @Autowired private CriticApplicationRepository criticApplicationRepository;
   @Autowired private UserRepository userRepository;
+  @Autowired private UserService userService;
   @Autowired private Environment env;
 
   public void submitCriticApplication(Audience applicant, CriticApplicationRequest request) throws Exception {
@@ -40,15 +41,39 @@ public class CriticApplicationService {
     criticApplicationRepository.delete(app);
   }
 
-  public void accept(long id) throws NoSuchElementException {
-    CriticApplication app = getApplicationByApplicantId(id);
+  public void accept(long userId) throws NoSuchElementException {
+    CriticApplication app = getApplicationByApplicantId(userId);
     Audience applicant = app.getApplicant();
-    applicant.setType(UserType.CRITIC);
+    Critic critic = audienceToCritic(applicant, app.getFirstName(), app.getLastName());
     deleteApplication(app);
+    userService.delete(userId);
+    userRepository.save(critic);
   }
 
-  public void reject(long id) throws NoSuchElementException {
-    CriticApplication app = getApplicationByApplicantId(id);
+  private Critic audienceToCritic(Audience audience, String firstName, String lastName) {
+    Critic critic = new Critic(audience.getDisplayName(), firstName, lastName);
+    critic.getCredentials().setEmail(audience.getCredentials().getEmail());
+    critic.getCredentials().setPassword(audience.getCredentials().getPassword());
+    critic.getVerification().setUser(critic);
+    critic.getVerification().setVerified(audience.getVerification().isVerified());
+    critic.getVerification().setVerificationKey(audience.getVerification().getVerificationKey());
+    critic.getVerification().setExpiration(audience.getVerification().getExpiration());
+    critic.setBirthDate(audience.getBirthDate());
+    critic.setWantToSee(audience.getWantToSee());
+    critic.setNotInterested(audience.getNotInterested());
+    critic.setProfileViews(audience.getProfileViews());
+    critic.setPublicProfile(audience.isPublicProfile());
+    if (audience.getReport() != null) {
+      UserReport report = new UserReport();
+      report.setUser(critic);
+      report.setReason(audience.getReport().getReason());
+      critic.setReport(report);
+    }
+    return critic;
+  }
+
+  public void reject(long userId) throws NoSuchElementException {
+    CriticApplication app = getApplicationByApplicantId(userId);
     deleteApplication(app);
   }
 }
