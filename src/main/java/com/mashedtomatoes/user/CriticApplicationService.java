@@ -1,6 +1,7 @@
 package com.mashedtomatoes.user;
 
 import com.mashedtomatoes.http.CriticApplicationRequest;
+import com.mashedtomatoes.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class CriticApplicationService {
   @Autowired private CriticApplicationRepository criticApplicationRepository;
   @Autowired private UserRepository userRepository;
   @Autowired private UserService userService;
+  @Autowired private MailService mailService;
   @Autowired private Environment env;
 
   public void submitCriticApplication(Audience applicant, CriticApplicationRequest request) throws Exception {
@@ -41,14 +43,14 @@ public class CriticApplicationService {
     criticApplicationRepository.delete(app);
   }
 
-  public Critic accept(long userId) throws NoSuchElementException {
+  public void accept(long userId) throws NoSuchElementException {
     CriticApplication app = getApplicationByApplicantId(userId);
     Audience applicant = app.getApplicant();
     Critic critic = audienceToCritic(applicant, app.getFirstName(), app.getLastName());
     deleteApplication(app);
     userService.delete(userId);
     userRepository.save(critic);
-    return critic;
+    mailService.sendCriticApplicationStatusEmail(applicant.getCredentials().getEmail(), true);
   }
 
   private Critic audienceToCritic(Audience audience, String firstName, String lastName) {
@@ -76,5 +78,7 @@ public class CriticApplicationService {
   public void reject(long userId) throws NoSuchElementException {
     CriticApplication app = getApplicationByApplicantId(userId);
     deleteApplication(app);
+    Audience applicant = app.getApplicant();
+    mailService.sendCriticApplicationStatusEmail(applicant.getCredentials().getEmail(), false);
   }
 }

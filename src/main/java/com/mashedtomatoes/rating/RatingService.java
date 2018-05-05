@@ -1,8 +1,10 @@
 package com.mashedtomatoes.rating;
 
 import com.mashedtomatoes.media.Media;
+import com.mashedtomatoes.media.MediaService;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
+import com.mashedtomatoes.user.UserService;
 import com.mashedtomatoes.user.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class RatingService {
   @Autowired private RatingRepository ratingRepository;
   @Autowired private UserRepository userRepository;
   @Autowired private ReviewReportRepository reviewReportRepository;
+  @Autowired private UserService userService;
+  @Autowired private MediaService mediaService;
 
   public boolean ratingExistsById(long id){
     return ratingRepository.existsById(id);
@@ -75,6 +79,7 @@ public class RatingService {
     userRepository.save(user);
     return true;
   }
+
   public boolean updateRating(Media media, User user, int ratingNum, String review) {
     Rating rating = ratingRepository.findFirstByAuthorAndMedia(user, media);
     if(rating == null){
@@ -98,6 +103,25 @@ public class RatingService {
     return true;
   }
 
-  
+  public void deleteAllRatings(User user) {
+    long[] ratingIds = new long[user.getRatings().size()];
+    int count = 0;
+    for (Rating r : user.getRatings()) {
+      ratingIds[count++] = r.getId();
+    }
 
+    for (long ratingId : ratingIds) {
+      Rating r;
+      Media m;
+      if (user.getType() == UserType.CRITIC) {
+        r = cRatingRepository.findFirstById(ratingId).get();
+      } else {
+        r = aRatingRepository.findFirstById(ratingId).get();
+      }
+      m = mediaService.getMediaById(r.getMedia().getId());
+      deleteRating(m, user, ratingId);
+    }
+
+    userService.save(user);
+  }
 }
