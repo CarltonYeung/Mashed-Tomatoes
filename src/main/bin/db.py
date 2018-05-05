@@ -1,5 +1,6 @@
 import os
 import mysql.connector
+import dateutil.parser
 
 CHARACTER_NAME_WIDTH = 255
 
@@ -39,7 +40,7 @@ _cnx = mysql.connector.connect(
     password=os.environ['MT_MYSQL_PASSWORD'],
     database=os.environ['MT_MYSQL_DB_NAME'])
 
-_cursor = _cnx.cursor()
+_cursor = _cnx.cursor(buffered=True)
 
 
 def close():
@@ -49,9 +50,9 @@ def close():
 
 
 def save_media(media):
-    _cursor.execute('select id from Media where title = %s', (media.title,))
+    _cursor.execute('select id,posterPath from Media where title = %s', (media.title,))
     row = _cursor.fetchone()
-    if row:
+    if row and row[1] and row[1] == media.poster_path:
         return row[0]
 
     add_media = ("insert into Media "
@@ -92,9 +93,9 @@ def save_media_genres(media_id, genres):
 def save_movie(movie, writer_id, director_id, producer_id):
     media_id = save_media(movie)
 
-    _cursor.execute('select id from Movies where id = %s', (media_id,))
+    _cursor.execute('select id, releaseDate from Movies where id = %s', (media_id,))
     row = _cursor.fetchone()
-    if row:
+    if row and movie.release_date and row[1] and row[1].date() == movie.release_date.date():
         return row[0]
 
     add_movie = ("insert into Movies "
@@ -113,9 +114,9 @@ def save_movie(movie, writer_id, director_id, producer_id):
 
 def save_tvshow(tvshow, creator_id):
     media_id = save_media(tvshow)
-    _cursor.execute('select id from TVShows where id = %s', (media_id,))
+    _cursor.execute('select id,startDate from TVShows where id = %s', (media_id,))
     row = _cursor.fetchone()
-    if row:
+    if row and tvshow.start_date and row[1] and row[1].date() == tvshow.start_date.date():
         return row[0]
 
     add_tvshow = ("insert into TVShows "
@@ -131,12 +132,25 @@ def save_tvshow(tvshow, creator_id):
 
     return media_id
 
+def save_tvshow_air_dates(tvshow_id, air_dates):
+    for air_date in air_dates:
+        add_air_date = ("insert into TVShowAirDates"
+                        "(mediaId, airDate)"
+                        "values (%s, %s)")
+
+        sql_air_date = (tvshow_id, air_date)
+        try:
+            _cursor.execute(add_air_date, sql_air_date)
+        except mysql.connector.errors.IntegrityError:
+            continue # sometimes duplicate dates slip through the cracks
+
+    _cnx.commit()
 
 def save_celebrity(celebrity):
     _cursor.execute(
-        'select id from Celebrities where name = %s', (celebrity.name,))
+        'select id,birthday from Celebrities where name = %s', (celebrity.name,))
     row = _cursor.fetchone()
-    if row:
+    if row and celebrity.birthday and row[1] and row[1].date() == celebrity.birthday.date():
         return row[0]
 
     add_celebrity = ("insert into Celebrities"
@@ -149,7 +163,6 @@ def save_celebrity(celebrity):
 
         _cursor.execute(add_celebrity, sql_celebrity)
     except Exception as e:
-        print (celebrity.biography)
         raise e
 
     _cnx.commit()

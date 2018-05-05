@@ -77,6 +77,11 @@ def store_movies(start_year, end_year, limit, basepath):
 
 def store_tvshow(api_tvshow_id, basepath):
     tvshow = net.get_tvshow(api_tvshow_id)
+    air_dates = []
+    for season_number in tvshow.season_numbers:
+        air_dates += net.get_tvshow_season_air_dates(api_tvshow_id, season_number)
+
+    air_dates = set(air_dates) # Drop duplicate air dates
 
     if basepath and tvshow.poster_path:
         net.download_file(net.get_poster_img_url(tvshow.poster_path), basepath)
@@ -84,6 +89,7 @@ def store_tvshow(api_tvshow_id, basepath):
     tvshow_credits = net.get_tvshow_credits(api_tvshow_id)
     creator_id = store_celebrity(tvshow.api_creator_id, basepath)
     tvshow_id = db.save_tvshow(tvshow, creator_id)
+    db.save_tvshow_air_dates(tvshow_id, air_dates)
     db.save_media_genres(tvshow_id, tvshow.genres)
     store_cast(tvshow_credits.cast, tvshow_id, basepath)
 

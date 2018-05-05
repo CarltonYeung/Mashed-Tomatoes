@@ -1,0 +1,28 @@
+.card {
+  background-color: lightgray;
+  width: 14em !important;
+  margin: .25em .25em .25em .25em;
+}
+
+.card-title {
+  color: black !important;
+  text-align: center;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-text {
+  color: white !important;
+  text-align: center;
+}
+
+.card-btn {
+  margin: .75em auto 0 auto;
+  text-align: center;
+}
+
+.card-img-top {
+  height: 20em;
+}

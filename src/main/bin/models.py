@@ -8,6 +8,7 @@ Movie = namedtuple('Movie', ['title', 'description',
 TVShow = namedtuple('TVShow', ['title', 'description', 'poster_path',
                                'production_company', 'start_date', 'end_date',
                                'episode_run_time', 'seasons', 'episodes',
+                               'season_numbers',
                                'genres', 'network_company', 'api_creator_id'])
 
 MediaCrewMember = namedtuple('MediaCrewMember', ['job', 'department',
