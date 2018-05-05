@@ -1,6 +1,10 @@
 const $ = require('jquery');
 
 module.exports.init = () => {
+  if ($(document).height() < 1500) {
+    return;
+  }
+
   $(window).scroll(function () {
     if ($(document).scrollTop() > 150) {
       $("#nav").css("position", "fixed");

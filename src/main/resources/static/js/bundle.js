@@ -27670,24 +27670,20 @@ const areDepsMet = deps => {
   return true;
 };
 
-window.onload = () => {
-  // init components if all deps are met or if no deps are given
-  _.forEach(components, component => {
-    if (_.has(component, 'deps')) {
-      if (areDepsMet(component.deps) && _.has(component, 'init')) {
-        component.init();
-      }
-    } else if (_.has(component, 'init')) {
-        component.init();
-    } 
-  });
-};
-
 $(document).ready(function(){
+    // init components if all deps are met or if no deps are given
+    _.forEach(components, component => {
+        if (_.has(component, 'deps')) {
+            if (areDepsMet(component.deps) && _.has(component, 'init')) {
+                component.init();
+            }
+        } else if (_.has(component, 'init')) {
+            component.init();
+        }
+    });
 
 	$(".loader_inner").delay(1300).fadeOut(500);
 	$(".loader").delay(1300).fadeOut(500);
-
 });
 
 
@@ -37583,6 +37579,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 const $ = __webpack_require__(0);
 
 module.exports.init = () => {
+  if ($(document).height() < 1500) {
+    return;
+  }
+
   $(window).scroll(function () {
     if ($(document).scrollTop() > 150) {
       $("#nav").css("position", "fixed");

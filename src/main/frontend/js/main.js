@@ -35,22 +35,18 @@ const areDepsMet = deps => {
   return true;
 };
 
-window.onload = () => {
-  // init components if all deps are met or if no deps are given
-  _.forEach(components, component => {
-    if (_.has(component, 'deps')) {
-      if (areDepsMet(component.deps) && _.has(component, 'init')) {
-        component.init();
-      }
-    } else if (_.has(component, 'init')) {
-        component.init();
-    } 
-  });
-};
-
 $(document).ready(function(){
+    // init components if all deps are met or if no deps are given
+    _.forEach(components, component => {
+        if (_.has(component, 'deps')) {
+            if (areDepsMet(component.deps) && _.has(component, 'init')) {
+                component.init();
+            }
+        } else if (_.has(component, 'init')) {
+            component.init();
+        }
+    });
 
 	$(".loader_inner").delay(1300).fadeOut(500);
 	$(".loader").delay(1300).fadeOut(500);
-
 });

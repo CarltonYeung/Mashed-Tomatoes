@@ -11,7 +11,7 @@
   <div th:replace="partials/header :: header"></div>
   <main class="container" th:data-media-id="${tvshow.id}">
     <section class="media-section">
-      <h1 class="media-section -title" th:text="#{tvshow.heading(${tvshow.title}, ${#calendars.format(tvshow.startDate, 'yyyy')}, ${#calendars.format(tvshow.endDate, 'yyyy')})}"></h1>
+      <h1 class="pt-5 media-section -title" th:text="#{tvshow.heading(${tvshow.title}, ${#calendars.format(tvshow.startDate, 'yyyy')}, ${#calendars.format(tvshow.endDate, 'yyyy')})}"></h1>
       <div class="d-flex justify-content-between">
         <img class="col-md-4 media-info -poster" th:src="${tvshow.posterPath}">
         <div class="col-md-8">
@@ -104,7 +104,7 @@
     </section>
     <section class="mt-5 media-section">
       <h1 class="media-section -title">Cast</h1>
-      <div class="d-flex justify-content-between flex-wrap" th:if="${not #lists.isEmpty(tvshow.characters)}">
+      <div class="d-flex flex-wrap" th:if="${not #lists.isEmpty(tvshow.characters)}">
         <th:block th:each="character, iterStat : ${tvshow.characters}">
           <div class="pb-2 media-box -cast" th:hidden="${iterStat.index < 5} ? 'false' : 'true'">
             <img class="media-box -thumbnail mx-auto" th:src="${character.celebrity.profilePath}">
