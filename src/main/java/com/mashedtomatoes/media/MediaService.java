@@ -16,4 +16,13 @@ public class MediaService {
     optional.orElseThrow(NoSuchElementException::new);
     return optional.get();
   }
+
+  void addMedia(Media media) {
+    mediaRepository.save(media);
+  }
+
+  void updateMedia(Media media) {
+    addMedia(media);
+  }
+
 }
