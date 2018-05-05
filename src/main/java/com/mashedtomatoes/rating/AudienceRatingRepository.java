@@ -7,9 +7,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface AudienceRatingRepository extends CrudRepository<AudienceRating, Long> {
-  AudienceRating findFirstById(Long id);
+
+  Optional<AudienceRating> findFirstById(long id);
 
   @Transactional
   void deleteFirstById(Long id);
