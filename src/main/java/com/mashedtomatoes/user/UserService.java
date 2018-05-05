@@ -5,7 +5,8 @@ import com.mashedtomatoes.http.UserMediaList;
 import com.mashedtomatoes.media.Media;
 import com.mashedtomatoes.media.MediaRepository;
 import com.mashedtomatoes.media.MediaService;
-import com.mashedtomatoes.rating.Rating;
+import com.mashedtomatoes.rating.AudienceRatingRepository;
+import com.mashedtomatoes.rating.CriticRatingRepository;
 import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class UserService {
   @Autowired private MediaRepository mediaRepository;
   @Autowired private MediaService mediaService;
   @Autowired private RatingService ratingService;
+  @Autowired private AudienceRatingRepository aRatingRepository;
+  @Autowired private CriticRatingRepository cRatingRepository;
   @Autowired private HashService hashService;
   @Autowired private Environment env;
 
@@ -88,10 +91,6 @@ public class UserService {
     return optional.get();
   }
 
-  public Iterable<Audience> findAllAudience() {
-    return (Iterable<Audience>) this.findAllByType(UserType.AUDIENCE);
-  }
-
   private Iterable<? extends User> findAllByType(UserType userType) {
     return userRepository.findAllByType(userType);
   }
@@ -112,21 +111,14 @@ public class UserService {
     User user = optional.get();
 
     user.setFollowing(null);
-    save(user);
-
     for (User u : user.getFollowers()) {
       u.getFollowing().remove(user);
       save(u);
     }
 
-    for (Rating r : user.getRatings()) {
-      Media m = mediaService.getMediaById(r.getMedia().getId());
-      ratingService.deleteRating(m, user, r.getId());
-    }
+    ratingService.deleteAllRatings(user);
 
-    user.setRatings(null);
     save(user);
-
     userRepository.delete(user);
   }
 
