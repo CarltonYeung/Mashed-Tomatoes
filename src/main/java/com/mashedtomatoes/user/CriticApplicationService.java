@@ -41,13 +41,14 @@ public class CriticApplicationService {
     criticApplicationRepository.delete(app);
   }
 
-  public void accept(long userId) throws NoSuchElementException {
+  public Critic accept(long userId) throws NoSuchElementException {
     CriticApplication app = getApplicationByApplicantId(userId);
     Audience applicant = app.getApplicant();
     Critic critic = audienceToCritic(applicant, app.getFirstName(), app.getLastName());
     deleteApplication(app);
     userService.delete(userId);
     userRepository.save(critic);
+    return critic;
   }
 
   private Critic audienceToCritic(Audience audience, String firstName, String lastName) {
