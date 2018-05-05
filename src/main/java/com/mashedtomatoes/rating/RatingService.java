@@ -114,9 +114,9 @@ public class RatingService {
       Rating r;
       Media m;
       if (user.getType() == UserType.CRITIC) {
-        r = cRatingRepository.findFirstById(ratingId).get();
+        r = criticRatingRepository.findFirstById(ratingId).get();
       } else {
-        r = aRatingRepository.findFirstById(ratingId).get();
+        r = audRatingRepository.findFirstById(ratingId).get();
       }
       m = mediaService.getMediaById(r.getMedia().getId());
       deleteRating(m, user, ratingId);
