@@ -55,11 +55,11 @@ public class RatingService {
         break;
       }
     }
-    Iterator<Rating> movieRatingsIterator = media.getRatings().iterator();
-    while (movieRatingsIterator.hasNext()) {
-      Rating movieRating = movieRatingsIterator.next();
-      if (movieRating.getId() == ratingId) {
-        media.getRatings().remove(movieRating);
+    Iterator<Rating> mediaRatingsIterator = media.getRatings().iterator();
+    while (mediaRatingsIterator.hasNext()) {
+      Rating mediaRating = mediaRatingsIterator.next();
+      if (mediaRating.getId() == ratingId) {
+        media.getRatings().remove(mediaRating);
         break;
       }
     }
@@ -73,7 +73,14 @@ public class RatingService {
     userRepository.save(user);
     return true;
   }
-  public boolean updateRating(Media media, User user, int rating, String review){
+  public boolean updateRating(Media media, User user, int ratingNum, String review) {
+    Rating rating = ratingRepository.findFirstByAuthorAndMedia(user, media);
+    if(rating == null){
+      return false;
+    }
+    rating.setScore(ratingNum);
+    rating.setReview(review);
+    ratingRepository.save(rating);
     return true;
   }
 

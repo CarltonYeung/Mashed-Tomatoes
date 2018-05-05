@@ -85,7 +85,27 @@ public class MovieAPIController {
       @PathVariable int ratingID,
       @Valid @RequestBody RateRequest rateRequest,
       HttpServletRequest request,
-      HttpServletResponse response) {}
+      HttpServletResponse response) {
+    HttpSession httpSession = request.getSession(false);
+    Movie movie = movieService.getMovieById(id);
+    if(httpSession == null){
+      response.setStatus(HttpStatus.SC_FORBIDDEN);
+      return;
+    }
+    else if(movie == null){
+      response.setStatus(HttpStatus.SC_NOT_FOUND);
+      return;
+    }
+    User user = (User)httpSession.getAttribute("User");
+    boolean hasUpdated = ratingService.updateRating(movie, user, rateRequest.getRating() , rateRequest.getReview());
+    if(hasUpdated){
+      response.setStatus(HttpStatus.SC_OK);
+    }
+    else{
+      response.setStatus(HttpStatus.SC_UNAUTHORIZED);
+    }
+
+  }
 
   @DeleteMapping("/api/movie/{id}/rate/delete/{ratingID}")
   public void deleteRating(
@@ -105,7 +125,7 @@ public class MovieAPIController {
       return;
     }
     else if(ratingExists == false){
-      response.setStatus(HttpStatus.SC_NO_CONTENT);
+      response.setStatus(HttpStatus.SC_NOT_FOUND);
       return;
     }
     User user = (User) httpSession.getAttribute("User");

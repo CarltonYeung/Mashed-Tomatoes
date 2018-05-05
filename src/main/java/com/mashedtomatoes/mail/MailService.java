@@ -44,6 +44,16 @@ public class MailService {
     send(to, env.getProperty("mt.resetPasswordSubject"), "resetpassword", context);
   }
 
+  public void sendCriticApplicationStatusEmail(String to, boolean isApproved) {
+    String message = isApproved
+            ? env.getProperty("criticApplication.approved")
+            : env.getProperty("criticApplication.rejected");
+    Context context = new Context();
+    context.setVariable("message", message);
+    context.setVariable("isApproved", isApproved);
+    send(to, env.getProperty("mt.criticApplicationStatus"), "criticapplicationstatus", context);
+  }
+
   public void send(String to, String subject, String templateName, Context context) {
     MimeMessage mail = mailSender.createMimeMessage();
     String body = templateEngine.process(templateName, context);

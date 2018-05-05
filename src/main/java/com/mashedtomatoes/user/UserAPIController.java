@@ -434,9 +434,10 @@ public class UserAPIController {
       return env.getProperty("user.notAdministrator");
     }
 
+    User applicant = userService.getUserById(applicantId);
     try {
-      if (request.isAccepted()) {
-        criticApplicationService.accept(applicantId);
+      if (request.isApproved()) {
+        applicant = criticApplicationService.accept(applicantId);
       } else {
         criticApplicationService.reject(applicantId);
       }
@@ -444,6 +445,8 @@ public class UserAPIController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return env.getProperty("criticApplication.doesNotExist");
     }
+
+    mailService.sendCriticApplicationStatusEmail(applicant.getCredentials().getEmail(), request.isApproved());
 
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
