@@ -29,4 +29,5 @@ public interface RatingRepository extends CrudRepository<Rating, Long> {
 
   boolean existsById(Long id);
 
+  Rating findFirstByAuthorAndMedia(User user, Media media);
 }
