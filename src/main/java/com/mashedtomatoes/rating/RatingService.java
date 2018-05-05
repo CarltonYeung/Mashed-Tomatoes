@@ -15,8 +15,9 @@ public class RatingService {
   @Autowired private CriticRatingRepository criticRatingRepository;
   @Autowired private RatingRepository ratingRepository;
   @Autowired private UserRepository userRepository;
+  @Autowired private ReviewReportRepository reviewReportRepository;
 
-  public boolean getRatingById(long id){
+  public boolean ratingExistsById(long id){
     return ratingRepository.existsById(id);
   }
 
@@ -63,6 +64,7 @@ public class RatingService {
         break;
       }
     }
+    reviewReportRepository.deleteFirstByRating_Id(ratingId);
     if(user.getType() == UserType.CRITIC){
       criticRatingRepository.deleteById(ratingId);
     }
@@ -81,6 +83,18 @@ public class RatingService {
     rating.setScore(ratingNum);
     rating.setReview(review);
     ratingRepository.save(rating);
+    return true;
+  }
+  public boolean reportRating(long ratingID, String reason) {
+    Rating rating = ratingRepository.findFirstById(ratingID);
+    ReviewReport reviewReport = reviewReportRepository.findFirstByRating_Id(rating.getId());
+    if(reviewReport != null){
+      return false;
+    }
+    ReviewReport newReviewReport = new ReviewReport();
+    newReviewReport.setRating(rating);
+    newReviewReport.setReason(reason);
+    reviewReportRepository.save(newReviewReport);
     return true;
   }
 
