@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+
+import csv
+
+import dateutil.parser
+from commandr import command, Run
+
+import db
+import net
+import oscars
+import store
+
+
+@command('populate:movie')
+def cmd_movie(id, basepath):
+    store.store_movie(id, basepath)
+
+
+@command('populate:movies')
+def cmd_movies(basepath, start_year=1950, end_year=2018, limit=20):
+    for year in range(start_year, end_year + 1):
+        ids = net.get_top_movies(year, limit)
+        for id in ids:
+            store.store_movie(id, basepath)
+
+
+@command('populate:movies:now')
+def cmd_movies_now(basepath, start_page=1, end_page=3, limit=25):
+    for page in range(start_page, end_page + 1):
+        ids = net.get_movies_now_playing(page, limit)
+        for id in ids:
+            store.store_movie(id, basepath)
+
+
+@command('populate:movies:upcoming')
+def cmd_movies_upcoming(basepath, start_page=1, end_page=3, limit=25):
+    for page in range(start_page, end_page + 1):
+        ids = net.get_movies_coming_soon(page, limit)
+        for id in ids:
+            store.store_movie(id, basepath)
+
+
+@command('populate:tvshow')
+def cmd_tvshow(id, basepath):
+    store.store_tvshow(id, basepath)
+
+
+@command('populate:tvshows')
+def cmd_tvshows(basepath, start_year=1985, end_year=2018, limit=10):
+    for year in range(start_year, end_year + 1):
+        ids = net.get_top_tvshows(year, limit)
+        for id in ids:
+            store.store_tvshow(id, basepath)
+
+
+@command('populate:tvshows:now')
+def cmd_tvshows_now(basepath, start_page=1, end_page=3, limit=25):
+    for page in range(start_page, end_page + 1):
+        ids = net.get_tvshows_now_airing(page, limit)
+        for id in ids:
+            store.store_tvshow(id, basepath)
+
+
+@command('populate:oscars')
+def cmd_oscars(basepath):
+    oscar_winner_sets = oscars.get_oscar_winner_sets()
+    for oscar_winner_set in oscar_winner_sets:
+        best_picture_id = store.store_movie(oscar_winner_set.best_picture_id, basepath)
+        best_cinema_id = store.store_movie(oscar_winner_set.best_cinema_id, basepath)
+        best_editing_id = store.store_movie(oscar_winner_set.best_editing_id, basepath)
+        best_doc_id = store.store_movie(oscar_winner_set.best_doc_id, basepath)
+        best_animated_id = store.store_movie(oscar_winner_set.best_animated_id, basepath)
+        db.save_oscar_winner_set(best_picture_id, best_cinema_id, best_editing_id, best_doc_id, best_animated_id,
+                                 oscar_winner_set.year)
+        print('Saved oscars for {}'.format(oscar_winner_set.year))
+
+
+@command('generate:oscars')
+def cmd_generate_oscars(filename):
+    with open(filename) as f:
+        reader = csv.reader(f, delimiter=',')
+        results = []
+        for year, title in reader:
+            year_date = dateutil.parser.parse(year)
+            results.append(net.get_search_movie(title, year_date))
+        print(results)
+
+
+if __name__ == '__main__':
+    Run()

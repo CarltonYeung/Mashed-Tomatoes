@@ -1,6 +1,5 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.celebrity.Celebrity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +17,6 @@ public class OscarWinnerSet {
   private Movie bestCinematography;
   private Movie bestDocumentaryFeature;
   private Movie bestFilmEditing;
-  private Movie bestOriginalScreenplay;
-  private Celebrity bestDirector;
-  private Celebrity bestActor;
-  private Celebrity bestActress;
 
   public OscarWinnerSet() {}
 
@@ -47,22 +42,6 @@ public class OscarWinnerSet {
 
   public void setBestFilmEditing(Movie bestFilmEditing) {
     this.bestFilmEditing = bestFilmEditing;
-  }
-
-  public void setBestOriginalScreenplay(Movie bestOriginalScreenplay) {
-    this.bestOriginalScreenplay = bestOriginalScreenplay;
-  }
-
-  public void setBestDirector(Celebrity bestDirector) {
-    this.bestDirector = bestDirector;
-  }
-
-  public void setBestActor(Celebrity bestActor) {
-    this.bestActor = bestActor;
-  }
-
-  public void setBestActress(Celebrity bestActress) {
-    this.bestActress = bestActress;
   }
 
   @Id
@@ -99,29 +78,5 @@ public class OscarWinnerSet {
   @JoinColumn(name = "bestFilmEditingId")
   public Movie getBestFilmEditing() {
     return bestFilmEditing;
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "bestOriginalScreenplayId")
-  public Movie getBestOriginalScreenplay() {
-    return bestOriginalScreenplay;
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "bestDirectorId")
-  public Celebrity getBestDirector() {
-    return bestDirector;
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "bestActorId")
-  public Celebrity getBestActor() {
-    return bestActor;
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "bestActressId")
-  public Celebrity getBestActress() {
-    return bestActress;
   }
 }
