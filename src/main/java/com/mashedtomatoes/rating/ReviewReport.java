@@ -10,7 +10,7 @@ public class ReviewReport {
     private long id;
     private Rating rating;
     private String reason;
-    private int nummOfReports;
+    private int numOfReports;
 
     public ReviewReport(){
 
@@ -32,11 +32,11 @@ public class ReviewReport {
 
     public void setReason(String reason) { this.reason = reason; }
 
-    public int getNummOfReports() {
-        return nummOfReports;
+    public int getNumOfReports() {
+        return numOfReports;
     }
 
-    public void setNummOfReports(int nummOfReports) {
-        this.nummOfReports = nummOfReports;
+    public void setNumOfReports(int numOfReports) {
+        this.numOfReports = numOfReports;
     }
 }
