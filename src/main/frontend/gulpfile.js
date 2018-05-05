@@ -22,14 +22,13 @@ const resourceStaticRoot = `${resourceRoot}/static`;
 const resourceCSS = `${resourceStaticRoot}/css`;
 const resourceImage = `${resourceStaticRoot}/img`;
 const resourceJS = `${resourceStaticRoot}/js`;
-const targetRoot = '../../../target/classes';
+const targetRoot = '../../../target';
 const targetHTML = `${targetRoot}/templates`;
 const targetStaticRoot = `${targetRoot}/static`;
 const targetCSS = `${targetStaticRoot}/css`;
 const targetImage = `${targetStaticRoot}/img`;
 const targetJS = `${targetStaticRoot}/js`;
 const port = process.env.GULP_PORT || 3000;
-const usingThymeleaf = process.env.USING_THYMELEAF == 'true';
 
 gulp.task('html', () => {
   let stream = gulp.src(srcHTMLGlob)
@@ -86,7 +85,7 @@ gulp.task('image', () => {
   }
 });
 
-// If watch is reports ENOSPC, fix it by running
+// If watch reports ENOSPC, fix it by running
 // https://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc
 gulp.task('watch', () => {
   gulp.watch([srcHTMLGlob, srcHTMLPartialsGlob], ['html']);

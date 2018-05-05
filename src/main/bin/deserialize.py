@@ -22,11 +22,15 @@ def json_to_creator_id(node):
 
 
 def json_to_movie(node):
+    run_time = node['runtime']
+    if not run_time:
+        run_time = 0
+
     return models.Movie(title=node['original_title'], description=node['overview'],
                         poster_path=node['poster_path'],
                         release_date=dateutil.parser.parse(
                             node['release_date']),
-                        run_time=node['runtime'],  box_office=int(
+                        run_time=run_time,  box_office=int(
                             node['revenue']),
                         genres=json_to_genres(node['genres']), budget=int(node['budget']),
                         production_company=json_to_company(
@@ -35,18 +39,34 @@ def json_to_movie(node):
 
 
 def json_to_tvshow(node):
+    start_date = node.get('first_air_date', None)
+    if start_date:
+        start_date = dateutil.parser.parse(start_date)
+
+    end_date = node.get('last_air_date', None)
+    if end_date:
+        end_date = dateutil.parser.parse(end_date)
+
+    season_numbers = map(lambda season: int(season['season_number']), node['seasons'])
+
+    episode_run_time = node.get('episode_run_time', [])
+    if len(episode_run_time) == 0:
+        episode_run_time = 0
+    else:
+        episode_run_time = episode_run_time[0]
+
     return models.TVShow(title=node['original_name'], description=node['overview'],
                          poster_path=node['poster_path'],
-                         start_date=node['first_air_date'],
-                         end_date=node['last_air_date'],
-                         episode_run_time=node['episode_run_time'][0],
+                         start_date=start_date, end_date=end_date,
+                         episode_run_time=episode_run_time,
                          genres=json_to_genres(node['genres']),
                          production_company=json_to_company(
                              node['production_companies']),
                          network_company=json_to_company(node['networks']),
                          seasons=node['number_of_seasons'],
                          episodes=node['number_of_episodes'],
-                         api_creator_id=json_to_creator_id(node['created_by'])
+                         api_creator_id=json_to_creator_id(node['created_by']),
+                         season_numbers=season_numbers
                          )
 
 
@@ -87,7 +107,7 @@ def json_to_celebrity(node):
         biography=node.get('biography', None),
         birthday=birthday,
         birthplace=node.get('place_of_birth', 'Unknown'),
-        name=node['name'],
+        name=node.get('name', 'Unknown'),
         profile_path=node.get('profile_path', None)
     )
 
@@ -99,3 +119,14 @@ def json_to_api_movie_ids(node, limit):
             break
         ids.append(movie_node['id'])
     return ids
+
+
+def json_to_air_dates(node):
+    episodes = node['episodes']
+    air_dates = []
+    for episode_node in episodes:
+        air_date = episode_node.get('air_date', None)
+        if air_date:
+            air_dates.append(dateutil.parser.parse(air_date))
+    return air_dates
+

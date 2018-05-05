@@ -3,7 +3,7 @@ import requests
 import time
 
 from deserialize import json_to_movie, json_to_media_credits, \
-json_to_celebrity, json_to_api_movie_ids, json_to_tvshow
+json_to_celebrity, json_to_api_movie_ids, json_to_tvshow, json_to_air_dates
 
 API_BASE_URL = 'https://api.themoviedb.org/3'
 IMAGE_BASE_URL = 'https://image.tmdb.org/t/p'
@@ -28,6 +28,9 @@ def get_tvshow_url(tvshow_id):
 
 def get_tvshow_credits_url(tvshow_id):
     return get_tvshow_url(tvshow_id) + "/credits"
+
+def get_tvshow_season_url(tvshow_id, season_number):
+    return get_tvshow_url(tvshow_id) + "/season/" + str(season_number)
 
 def get_person_url(person_id):
     return API_BASE_URL + "/person/" + str(person_id)
@@ -77,6 +80,11 @@ def get_tvshow_credits(tvshow_id):
     delay_request()
     r = requests.get(get_tvshow_credits_url(tvshow_id), params={'api_key': API_KEY})
     return json_to_media_credits(r.json())
+
+def get_tvshow_season_air_dates(tvshow_id, season_number):
+    delay_request()
+    r = requests.get(get_tvshow_season_url(tvshow_id, season_number), params={'api_key': API_KEY})
+    return json_to_air_dates(r.json())
 
 def get_celebrity(celebrity_id):
     delay_request()
