@@ -1,6 +1,7 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.http.RateRequest;
+import com.mashedtomatoes.rating.Rating;
 import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserType;
@@ -95,6 +96,7 @@ public class MovieAPIController {
 
     HttpSession httpSession = request.getSession(false);
     Movie movie = movieService.getMovieById(id);
+    boolean ratingExists = ratingService.getRatingById(ratingID);
     if (httpSession == null) {
       response.setStatus(HttpStatus.SC_FORBIDDEN);
       return;
@@ -102,17 +104,17 @@ public class MovieAPIController {
       response.setStatus(HttpStatus.SC_NOT_FOUND);
       return;
     }
-    User user = (User) httpSession.getAttribute("User");
-    if (user.getType() != UserType.AUDIENCE) {
-      response.setStatus(HttpStatus.SC_FORBIDDEN);
+    else if(ratingExists == false){
+      response.setStatus(HttpStatus.SC_NO_CONTENT);
       return;
     }
+    User user = (User) httpSession.getAttribute("User");
     boolean deleted = ratingService.deleteRating(movie, user, ratingID);
     if (deleted) {
       movieService.updateMovie(movie);
       response.setStatus(HttpStatus.SC_OK);
     } else {
-      response.setStatus(HttpStatus.SC_BAD_REQUEST);
+      response.setStatus(HttpStatus.SC_UNAUTHORIZED);
     }
   }
 }

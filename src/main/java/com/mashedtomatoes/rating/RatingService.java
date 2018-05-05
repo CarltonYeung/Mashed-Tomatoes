@@ -16,6 +16,10 @@ public class RatingService {
   @Autowired private RatingRepository ratingRepository;
   @Autowired private UserRepository userRepository;
 
+  public boolean getRatingById(long id){
+    return ratingRepository.existsById(id);
+  }
+
   public boolean submitRating(Media media, User user, int rating, String review) {
     boolean hasRated = ratingRepository.existsByAuthorAndMedia(user, media);
     if(hasRated){
@@ -37,9 +41,11 @@ public class RatingService {
   }
 
   public boolean deleteRating(Media media, User user, long ratingId) {
-    AudienceRating audienceRating = audRatingRepository.findFirstById(ratingId);
-    if (audienceRating == null) {
-      return false;
+    if(user.getType() != UserType.ADMINISTRATOR){
+      boolean userOwns = ratingRepository.existsByAuthorAndIdAndMedia(user, ratingId, media);
+      if(userOwns == false){
+        return false;
+      }
     }
     Iterator<Rating> userRatingsIterator = user.getRatings().iterator();
     while (userRatingsIterator.hasNext()) {
@@ -57,8 +63,13 @@ public class RatingService {
         break;
       }
     }
-    audRatingRepository.deleteAudienceRating(audienceRating.getId());
-    ratingRepository.deleteRating(audienceRating.getId());
+    if(user.getType() == UserType.CRITIC){
+      criticRatingRepository.deleteById(ratingId);
+    }
+    else{
+      audRatingRepository.deleteAudienceRating(ratingId);
+    }
+    ratingRepository.deleteRating(ratingId);
     userRepository.save(user);
     return true;
   }
