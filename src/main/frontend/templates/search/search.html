@@ -12,11 +12,11 @@
     <div class="container my-3 vertical-center">
         <div class="container" id="contents-container">
             <div class="m-5">
-                <h1 class="search-title text-center">Search Results</h1>
+                <h1 class="text-center">Search Results</h1>
             </div>
-            <h2 class="search-category mt-5 mb-4 text-center">Movies</h2>
+            <h2 class="mt-5 mb-4 text-center">Movies</h2>
             <section class="col-md-12">
-                <h3 th:if="${#lists.isEmpty(movies)}">No Movies Found</h3>
+                <h3 th:if="${#lists.isEmpty(movies)}" class="text-center">No Movies Found</h3>
                 <div th:if="${not #lists.isEmpty(movies)}" class="d-flex flex-wrap">
                     <div class="card" th:each="movie: ${movies}">
                         <img class="card-img-top" th:src="${movie.posterPath}">
@@ -27,9 +27,9 @@
                     </div>
                 </div>
             </section>
-            <h2 class="search-category mt-5 mb-4">TV Shows</h2>
+            <h2 class="mt-5 mb-4 text-center">TV Shows</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
-                <h3 th:if="${#lists.isEmpty(tvShows)}">No TV Shows Found</h3>
+                <h3 th:if="${#lists.isEmpty(tvShows)}" class="text-center">No TV Shows Found</h3>
                 <div th:if="${not #lists.isEmpty(tvShows)}" class="d-flex flex-wrap">
                     <div class="card" th:each="tvShow: ${tvShows}">
                         <img class="card-img-top" th:src="${tvShow.posterPath}">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
             </section>
-            <h2 class="search-category mt-5 mb-4">Celebrity</h2>
+            <h2 class="mt-5 mb-4 text-center">Celebrity</h2>
             <section class="col-xs-12 col-sm-6 col-md-12">
-                <h3 th:if="${#lists.isEmpty(celebrities)}">No Celebrities Found</h3>
+                <h3 th:if="${#lists.isEmpty(celebrities)}" class="text-center">No Celebrities Found</h3>
                 <div th:if="${not #lists.isEmpty(celebrities)}" class="d-flex flex-wrap">
                     <div class="card" th:each="celebrity: ${celebrities}">
                         <img class="card-img-top" th:src="${celebrity.profilePath}">
