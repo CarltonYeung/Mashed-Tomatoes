@@ -61,7 +61,6 @@ public class CriticApplicationService {
     critic.getVerification().setVerified(audience.getVerification().isVerified());
     critic.getVerification().setVerificationKey(audience.getVerification().getVerificationKey());
     critic.getVerification().setExpiration(audience.getVerification().getExpiration());
-    critic.setBirthDate(audience.getBirthDate());
     critic.setWantToSee(audience.getWantToSee());
     critic.setNotInterested(audience.getNotInterested());
     critic.setProfileViews(audience.getProfileViews());

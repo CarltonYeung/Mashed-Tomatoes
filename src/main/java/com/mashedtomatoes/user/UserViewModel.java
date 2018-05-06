@@ -6,7 +6,6 @@ public class UserViewModel extends User {
 		super.setCredentials(base.getCredentials());
 		super.setVerification(base.getVerification());
 		super.setType(base.getType());
-		super.setBirthDate(base.getBirthDate());
 		super.setRatings(base.getRatings());
 		super.setFollowing(base.getFollowing());
 		super.setFollowers(base.getFollowers());
