@@ -20,6 +20,7 @@ const components = [
     require('./user/registration-form'),
     require('./user/logout-btn'),
     require('./user/change-email-form'),
+    require('./user/change-display-name-form'),
     require('./base/carousel')
 ];
 
