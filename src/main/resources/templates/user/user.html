@@ -10,7 +10,7 @@
 <body>
   <div th:replace="partials/header :: header"></div>
   <main class="container">
-    <h1 class="main-title">John Doe</h1>
+    <h1 class="main-title my-4" th:text="${user.displayName}">John Doe</h1>
     <div class="row">
       <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
         <li class="pr-3 nav-item user-tab -item">
