@@ -1,11 +1,15 @@
 package com.mashedtomatoes.media;
 
+import com.mashedtomatoes.user.User;
+import com.mashedtomatoes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MovieViewController {
@@ -16,6 +20,8 @@ public class MovieViewController {
   private int smashThreshold = 50;
 
   @Autowired private MovieService movieService;
+
+  @Autowired private UserService userService;
 
   @GetMapping("/movie")
   public String getMovies(Model m) {
@@ -32,6 +38,14 @@ public class MovieViewController {
 
     MovieViewModel viewModel = new MovieViewModel(filesUri, smashThreshold, movie);
     m.addAttribute("movie", viewModel);
+    HttpSession session = userService.session();
+    if (session != null) {
+      User user = (User) session.getAttribute("User");
+      boolean inWantToSee = user.getWantToSee().stream().anyMatch(media -> media.getId() == movie.getId());
+      boolean inNotInterested = user.getNotInterested().stream().anyMatch(media -> media.getId() == movie.getId());
+      m.addAttribute("inWantToSee", inWantToSee);
+      m.addAttribute("inNotInterested", inNotInterested);
+    }
     return "media/movie";
   }
 }
