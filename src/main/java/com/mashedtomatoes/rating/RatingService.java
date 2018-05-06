@@ -1,6 +1,7 @@
 package com.mashedtomatoes.rating;
 
 import com.mashedtomatoes.media.Media;
+import com.mashedtomatoes.media.MediaRepository;
 import com.mashedtomatoes.media.MediaService;
 import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserRepository;
@@ -20,6 +21,7 @@ public class RatingService {
   @Autowired private ReviewReportRepository reviewReportRepository;
   @Autowired private UserService userService;
   @Autowired private MediaService mediaService;
+  @Autowired private MediaRepository mediaRepository;
 
   public boolean ratingExistsById(long id){
     return ratingRepository.existsById(id);
@@ -34,14 +36,13 @@ public class RatingService {
       AudienceRating audienceRating = new AudienceRating(rating, review, media, user);
       user.getRatings().add(audienceRating);
       media.getRatings().add(audienceRating);
-      audRatingRepository.save(audienceRating);
     }
     else{
       CriticRating criticRating = new CriticRating(rating, review, media, user);
       user.getRatings().add(criticRating);
       media.getRatings().add(criticRating);
-      criticRatingRepository.save(criticRating);
     }
+    mediaRepository.save(media);
     return true;
   }
 
@@ -76,7 +77,6 @@ public class RatingService {
       audRatingRepository.deleteAudienceRating(ratingId);
     }
     ratingRepository.deleteRating(ratingId);
-    userRepository.save(user);
     return true;
   }
 
