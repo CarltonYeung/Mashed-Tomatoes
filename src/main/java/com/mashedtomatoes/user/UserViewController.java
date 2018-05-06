@@ -77,6 +77,17 @@ public class UserViewController {
     }
 
     model.addAttribute("viewingOwnProfile", viewingOwnProfile);
+    boolean isFollowing = false;
+    if (session != null && !viewingOwnProfile) {
+      for (User user: sessionUser.getFollowing()) {
+        if (user.getId() == dbUser.getId()) {
+          isFollowing = true;
+          break;
+        }
+      }
+    }
+
+    model.addAttribute("isFollowing", isFollowing);
     if (dbUser.getType() == UserType.AUDIENCE) {
       model.addAttribute("user", new AudienceViewModel((Audience) dbUser, rankUpgradeRate));
     } else if (dbUser.getType() == UserType.CRITIC) {

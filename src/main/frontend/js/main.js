@@ -26,6 +26,7 @@ const components = [
     require('./user/delete-user-btn'),
     require('./user/resend-email-form'),
     require('./user/forgot-password-form'),
+    require('./user/follow-user-btn'),
     require('./base/carousel')
 ];
 
@@ -35,7 +36,6 @@ const areDepsMet = deps => {
     });
 
     if (!_.isEmpty(missingDeps)) {
-        console.log(missingDeps);
         return false;
     }
 

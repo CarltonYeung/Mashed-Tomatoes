@@ -11,14 +11,27 @@
     <div th:replace="partials/header :: header"></div>
     <main class="container">
         <h1 class="main-title my-4" th:text="${user.displayName}">John Doe</h1>
+        <th:block th:if="${#session != null && !viewingOwnProfile}">
+            <div id="follow-user-btn-row" class="row" th:attr="data-user-id=${user.id}, data-user-is-following=${isFollowing}">
+                <button th:if="${!isFollowing}" id="follow-user-btn" class="mx-auto mb-4 btn btn-primary" data-bind="css: followCSS, text: followText, click: onFollow">Follow</button>
+                <button th:if="${isFollowing}" id="follow-user-btn" class="mx-auto mb-4 btn btn-danger" data-bind="css: followCSS, text: followText, click: onFollow">Unfollow</button>
+            </div>
+        </th:block>
         <div class="row">
             <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
-                <li class="pr-3 nav-item user-tab -item">
-                    <a class="nav-link active user-tab -item-link" data-toggle="pill" href="#pills-account">Account</a>
-                </li>
-                <li class="px-3 nav-item user-tab -item">
-                    <a class="nav-link user-tab -item-link" data-toggle="pill" href="#pills-about">About</a>
-                </li>
+                <th:block th:if="${viewingOwnProfile}">
+                    <li class="pr-3 nav-item user-tab -item">
+                        <a class="nav-link active user-tab -item-link" data-toggle="pill" href="#pills-account">Account</a>
+                    </li>
+                    <li class="px-3 nav-item user-tab -item">
+                        <a class="nav-link user-tab -item-link" data-toggle="pill" href="#pills-about">About</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${!viewingOwnProfile}">
+                    <li class="pr-3 nav-item user-tab -item">
+                        <a class="nav-link active user-tab -item-link" data-toggle="pill" href="#pills-about">About</a>
+                    </li>
+                </th:block>
                 <li class="px-3 nav-item user-tab -item">
                     <a class="nav-link user-tab -item-link" id="pills-ratings-tab" data-toggle="pill" href="#pills-ratings">Ratings</a>
                 </li>
@@ -34,7 +47,7 @@
             </ul>
         </div>
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active user-pane" id="pills-account" role="tabpanel">
+            <div th:if="${viewingOwnProfile}" class="tab-pane fade show active user-pane" id="pills-account" role="tabpanel">
                 <h1 class="user-pane -title">Account Settings</h1>
                 <div class="user-pane -account-item">
                     <p class="user-pane -account-item -label">Email Address</p>
@@ -62,7 +75,7 @@
                     <p class="user-pane -account-item -description">Terminate your Mashed Tomatoes account.</p>
                 </div>
             </div>
-            <div class="tab-pane fade user-pane" id="pills-about" role="tabpanel">
+            <div th:if="${!viewingOwnProfile}" class="tab-pane fade show active user-pane" id="pills-about" role="tabpanel">
                 <h1 class="user-pane -title">About John Doe</h1>
                 <div class="user-pane -about-item">
                     <p class="user-pane -about-item -label">Member Since</p>
