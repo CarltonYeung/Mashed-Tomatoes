@@ -1,7 +1,8 @@
 <div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane"
      id="pills-ratings" role="tabpanel">
     <h1 class="user-pane -title">Ratings</h1>
-    <div class="d-flex flex-wrap justify-content-between">
+    <h3 th:if="${#lists.isEmpty(user.ratings)}">So much empty...</h3>
+    <div th:if="${!#lists.isEmpty(user.ratings)}" class="d-flex flex-wrap justify-content-between">
         <div th:each="rating: ${user.ratings}" class="bg-dark review-card">
             <div class="card-body">
                 <h2 class="my-4" th:text="${rating.media.title}"></h2>

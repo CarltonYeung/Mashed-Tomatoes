@@ -17,7 +17,13 @@ public class UserViewModel extends User {
 		super.setFollowing(base.getFollowing());
 		super.setFollowers(base.getFollowers());
 		super.setWantToSee(base.getWantToSee());
+		base.getWantToSee().stream().forEach(media -> {
+			media.setPosterPath(Util.resolveFilesUrl(fileUri, media.getPosterPath()));
+		});
 		super.setNotInterested(base.getNotInterested());
+		base.getNotInterested().stream().forEach(media -> {
+			media.setPosterPath(Util.resolveFilesUrl(fileUri, media.getPosterPath()));
+		});
 		super.setProfileViews(base.getProfileViews());
 		super.setCreated(base.getCreated());
 		super.setUpdated(base.getUpdated());
