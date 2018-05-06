@@ -23,6 +23,7 @@ const components = [
     require('./user/change-display-name-form'),
     require('./user/change-password-form'),
     require('./user/change-privacy-form'),
+    require('./user/delete-user-btn'),
     require('./base/carousel')
 ];
 

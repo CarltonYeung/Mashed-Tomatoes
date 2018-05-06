@@ -27551,6 +27551,30 @@ return jQuery;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+const $ = __webpack_require__(0);
+
+module.exports.init = () => {
+  $('#alert-success').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+
+  $('#alert-danger').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+};
+
+module.exports.display = (message, isDanger) => {
+  const alertSelector = $(isDanger ? '#alert-danger' : '#alert-success');
+  alertSelector.find('strong').text(message);
+  alertSelector.prop('hidden', false);
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 const _ = __webpack_require__(1);
 
 module.exports = {
@@ -27576,30 +27600,6 @@ module.exports = {
 
     return `/search?expr=${expr}`;
   }
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0);
-
-module.exports.init = () => {
-  $('#alert-success').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-
-  $('#alert-danger').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-};
-
-module.exports.display = (message, isDanger) => {
-  const alertSelector = $(isDanger ? '#alert-danger' : '#alert-success');
-  alertSelector.find('strong').text(message);
-  alertSelector.prop('hidden', false);
 };
 
 /***/ }),
@@ -27658,7 +27658,8 @@ const components = [
     __webpack_require__(22),
     __webpack_require__(23),
     __webpack_require__(24),
-    __webpack_require__(25)
+    __webpack_require__(25),
+    __webpack_require__(26)
 ];
 
 const areDepsMet = deps => {
@@ -37684,7 +37685,7 @@ window.onscroll = function() {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
+const urlBuilder = __webpack_require__(3);
 
 module.exports.deps = [
   '#search-form',
@@ -37710,7 +37711,7 @@ module.exports.init = () => {
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const ko = __webpack_require__(14);
-const urlBuilder = __webpack_require__(2);
+const urlBuilder = __webpack_require__(3);
 
 const mediaId = $('[data-media-id]').attr('data-media-id');
 
@@ -43775,7 +43776,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
+const urlBuilder = __webpack_require__(3);
 
 module.exports.deps = [
   '[data-media-slug]',
@@ -43829,8 +43830,8 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(3);
+const urlBuilder = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
   '#login-form'
@@ -43880,8 +43881,8 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(3);
+const urlBuilder = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
   '#registration-form',
@@ -43941,7 +43942,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(2);
+const urlBuilder = __webpack_require__(3);
 
 module.exports.deps = [
   '#logout-btn',
@@ -43969,7 +43970,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const alert = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
     '#change-email-form'
@@ -44018,7 +44019,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const alert = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
     '#change-display-name-form'
@@ -44066,7 +44067,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const alert = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
     '#change-password-form'
@@ -44115,7 +44116,7 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const alert = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
     '#change-privacy-form'
@@ -44161,6 +44162,47 @@ module.exports.init = () => {
 
 /***/ }),
 /* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '#delete-user-btn'
+];
+
+module.exports.init = () => {
+    alert.init();
+    const userId = $('[data-user-id]').attr('data-user-id');
+    $('#delete-user-btn').on('click', () => {
+        $.ajax(
+            `/user/${userId}`,
+            {
+                method: "DELETE",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('User deleted!', false);
+                        setTimeout(() => {
+                            window.location.href = "/";
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+    });
+};
+
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
