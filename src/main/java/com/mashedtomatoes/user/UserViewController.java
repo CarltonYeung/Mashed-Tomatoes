@@ -32,6 +32,11 @@ public class UserViewController {
     return "user/recover";
   }
 
+  @GetMapping("/resend")
+  public String resend() {
+    return "user/resend";
+  }
+
   @GetMapping("/user/me")
   public String user(HttpServletResponse response) {
     HttpSession session = UserService.session();

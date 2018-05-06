@@ -27659,7 +27659,8 @@ const components = [
     __webpack_require__(23),
     __webpack_require__(24),
     __webpack_require__(25),
-    __webpack_require__(26)
+    __webpack_require__(26),
+    __webpack_require__(27)
 ];
 
 const areDepsMet = deps => {
@@ -27668,7 +27669,6 @@ const areDepsMet = deps => {
     });
 
     if (!_.isEmpty(missingDeps)) {
-        console.log(missingDeps);
         return false;
     }
 
@@ -44203,6 +44203,52 @@ module.exports.init = () => {
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '#resend-email-form'
+];
+
+module.exports.init = () => {
+    alert.init();
+
+    $('#resend-email-form').submit(evt => {
+        console.log('..sending..');
+        const data = {
+            email: $('#email').val(),
+        };
+
+        $.ajax(
+            "/resendVerificationEmail",
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Verification link sent! Check your email', false);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+        evt.preventDefault();
+    });
+};
+
+
+/***/ }),
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
