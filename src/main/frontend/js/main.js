@@ -22,6 +22,7 @@ const components = [
     require('./user/change-email-form'),
     require('./user/change-display-name-form'),
     require('./user/change-password-form'),
+    require('./user/change-privacy-form'),
     require('./base/carousel')
 ];
 

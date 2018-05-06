@@ -27657,7 +27657,8 @@ const components = [
     __webpack_require__(21),
     __webpack_require__(22),
     __webpack_require__(23),
-    __webpack_require__(24)
+    __webpack_require__(24),
+    __webpack_require__(25)
 ];
 
 const areDepsMet = deps => {
@@ -44110,6 +44111,56 @@ module.exports.init = () => {
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(3);
+
+module.exports.deps = [
+    '#change-privacy-form'
+];
+
+module.exports.init = () => {
+    alert.init();
+
+    $('#change-privacy-form').submit(evt => {
+        const val = $('input[name=publicProfile]:checked').val();
+
+        const data = {
+            publicProfile: _.isEqual(val, 'public'),
+        };
+
+        $.ajax(
+            '/user/changePrivacy',
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Privacy setting changed!', false);
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+        evt.preventDefault();
+    });
+};
+
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
