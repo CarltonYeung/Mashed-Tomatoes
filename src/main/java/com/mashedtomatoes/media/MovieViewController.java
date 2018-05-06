@@ -38,14 +38,7 @@ public class MovieViewController {
 
     MovieViewModel viewModel = new MovieViewModel(filesUri, smashThreshold, movie);
     m.addAttribute("movie", viewModel);
-    HttpSession session = userService.session();
-    if (session != null) {
-      User user = (User) session.getAttribute("User");
-      boolean inWantToSee = user.getWantToSee().stream().anyMatch(media -> media.getId() == movie.getId());
-      boolean inNotInterested = user.getNotInterested().stream().anyMatch(media -> media.getId() == movie.getId());
-      m.addAttribute("inWantToSee", inWantToSee);
-      m.addAttribute("inNotInterested", inNotInterested);
-    }
+    userService.setMediaListAttributes(m, movie.getId());
     return "media/movie";
   }
 }

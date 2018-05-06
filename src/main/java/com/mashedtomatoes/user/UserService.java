@@ -12,6 +12,7 @@ import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -258,5 +259,16 @@ public class UserService {
   public void changePrivacy(User user, boolean isPublic) {
     user.setPublicProfile(isPublic);
     save(user);
+  }
+
+  public void setMediaListAttributes(Model model, long id) {
+    HttpSession session = session();
+    if (session != null) {
+      User user = (User) session.getAttribute("User");
+      boolean inWantToSee = user.getWantToSee().stream().anyMatch(media -> media.getId() == id);
+      boolean inNotInterested = user.getNotInterested().stream().anyMatch(media -> media.getId() == id);
+      model.addAttribute("inWantToSee", inWantToSee);
+      model.addAttribute("inNotInterested", inNotInterested);
+    }
   }
 }
