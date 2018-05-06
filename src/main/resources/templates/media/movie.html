@@ -187,28 +187,29 @@
           <button class="ml-5 btn list-btn" th:if="${!inWantToSee}" data-bind="css: wtsCSS, click: onWTS">+ Want To See</button>
         </div>
       </div>
-      <div id="rating-form" class="mt-3">
+      <form id="rating-form" class="mt-3">
         <h2 class="media-section -secondary-title">Add your rating</h2>
         <div class="row mt-2">
           <fieldset class="mx-auto star-rating-bar">
-            <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
+            <input type="radio" id="star5" name="rating" value="5" />
             <label class="full" for="star5"></label>
-            <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
+            <input type="radio" id="star4" name="rating" value="4" />
             <label class="full" for="star4"></label>
-            <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
+            <input type="radio" id="star3" name="rating" value="3" />
             <label class="full" for="star3"></label>
-            <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
+            <input type="radio" id="star2" name="rating" value="2" />
             <label class="full" for="star2"></label>
-            <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
+            <input type="radio" id="star1" name="rating" value="1" />
             <label class="full" for="star1"></label>
           </fieldset>
         </div>
         <div class="row mt-2">
-          <textarea id="rating-form-comment-box" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
+          <textarea id="rating-form-comment-box" name="comment" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
         </div>
         <div class="row mt-2">
-          <button id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</button>
+          <input type="submit" data-media-id="${movie.id}" id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</input>
         </div>
+      </form>
     </section>
     <br />
     <br />

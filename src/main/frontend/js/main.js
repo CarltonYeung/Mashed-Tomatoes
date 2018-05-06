@@ -15,7 +15,7 @@ const components = [
     require('./media/media-update-list'),
     require('./media/media-box-cast'),
     require('./media/media-box-photo'),
-    require('./rating/rating-form-post-btn'),
+    require('./rating/rating-form'),
     require('./user/login-form'),
     require('./user/registration-form'),
     require('./user/logout-btn'),
@@ -35,6 +35,7 @@ const areDepsMet = deps => {
     });
 
     if (!_.isEmpty(missingDeps)) {
+        console.log(missingDeps);
         return false;
     }
 

@@ -27670,6 +27670,7 @@ const areDepsMet = deps => {
     });
 
     if (!_.isEmpty(missingDeps)) {
+        console.log(missingDeps);
         return false;
     }
 
@@ -43788,51 +43789,58 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
-const urlBuilder = __webpack_require__(3);
+const alert = __webpack_require__(2);
 
 module.exports.deps = [
-  '[data-media-slug]',
-  '#rating-form-post-btn',
-  '#rating-form-comment-box',
-  'input[name=rating-form-star-rating]'
+  '[data-media-id]',
+  '#rating-form'
 ];
 
 module.exports.init = () => {
-  const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+  const mediaId = $('[data-media-id]').attr('data-media-id');
 
-  $('#rating-form-post-btn').on('click', () => {
-    const commentBoxSelector = $('#rating-form-comment-box');
-    const checkedStarSelector = $('input[name=rating-form-star-rating]:checked');
-    if (_.isNil(checkedStarSelector.val())) {
-      console.log("No rating picked");
-    } else {
+  $('#rating-form').submit(evt => {
+      evt.preventDefault();
+      const commentBoxSelector = $('#rating-form-comment-box');
+      const checkedStarSelector = $('input[name=rating]:checked');
+      if (_.isEqual(checkedStarSelector.length, 0)) {
+          alert.display('Please select a rating', true);
+          return;
+      }
+
       const comment = commentBoxSelector.val();
       const rating = parseInt(checkedStarSelector.val());
       let data = {
-        rating
+          rating,
       };
 
       if (!_.isEmpty(comment)) {
-        data.comment = comment;
+          data.review = comment;
       }
 
       $.ajax(
-        urlBuilder.buildCreateRating(movieSlug),
-        {
-          method: "POST",
-          data: data,
-          contentType: "application/json",
-          dataType: "application/json",
-          success: res => {
-            if (res.status == 204) {
-              console.log('Review added');
-            }
-          },
-          error: res => {
-            console.error(res.status);
-          }
-      });
-    }
+          `/api/media/${mediaId}/rate`,
+          {
+              method: "POST",
+              data: JSON.stringify(data),
+              contentType: "application/json",
+              success: (body, status, xhr) => {
+                  if (_.isEqual(xhr.status, 200)) {
+                      alert.display('Review added', false);
+                      setTimeout(() => {
+                          window.location.reload(true);
+                      }, 1000);
+                  }
+              },
+              error: (xhr, status, err) => {
+                  if (xhr.status !== 500) {
+                      alert.display(xhr.responseText, true);
+                  } else if (xhr.status ===  500) {
+                      alert.display("Something's wrong with our server. Please try again later", true);
+                  }
+              }
+          });
+      evt.preventDefault();
   });
 };
 
