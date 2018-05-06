@@ -122,9 +122,9 @@ public class UserService {
     userRepository.delete(user);
   }
 
-  void addWantToSee(User user, long mediaId) throws Exception {
+  void addWantToSee(User user, long mediaId) {
     if (inList(user, mediaId, UserMediaList.NI)) {
-      throw new Exception(env.getProperty("user.existsInNotInterested"));
+      removeNotInterested(user, mediaId);
     }
 
     Media media = mediaService.getMediaById(mediaId);
@@ -143,9 +143,9 @@ public class UserService {
     }
   }
 
-  void addNotInterested(User user, long mediaId) throws Exception {
+  void addNotInterested(User user, long mediaId) {
     if (inList(user, mediaId, UserMediaList.WTS)) {
-      throw new Exception(env.getProperty("user.existsInWantToSee"));
+      removeWantToSee(user, mediaId);
     }
 
     Media media = mediaService.getMediaById(mediaId);

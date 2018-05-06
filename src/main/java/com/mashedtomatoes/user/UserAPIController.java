@@ -216,18 +216,13 @@ public class UserAPIController {
 
     User me = (User) session.getAttribute("User");
 
-    try {
-      switch (umlRequest.getList()) {
-        case WTS:
-          wantToSee(me, umlRequest);
-          break;
-        case NI:
-          notInterested(me, umlRequest);
-          break;
-      }
-    } catch (Exception e) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      return e.getMessage();
+    switch (umlRequest.getList()) {
+      case WTS:
+        wantToSee(me, umlRequest);
+        break;
+      case NI:
+        notInterested(me, umlRequest);
+        break;
     }
 
     session.setAttribute("User", userService.getUserById(me.getId()));
@@ -235,7 +230,7 @@ public class UserAPIController {
     return "";
   }
 
-  private void wantToSee(User user, UserMediaListsRequest request) throws Exception {
+  private void wantToSee(User user, UserMediaListsRequest request) {
     if (request.isAdd()) {
       userService.addWantToSee(user, request.getId());
     } else {
@@ -243,7 +238,7 @@ public class UserAPIController {
     }
   }
 
-  private void notInterested(User user, UserMediaListsRequest request) throws Exception {
+  private void notInterested(User user, UserMediaListsRequest request) {
     if (request.isAdd()) {
       userService.addNotInterested(user, request.getId());
     } else {
