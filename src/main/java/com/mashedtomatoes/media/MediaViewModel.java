@@ -28,7 +28,7 @@ public class MediaViewModel extends Media {
     super.setTitle(base.getTitle());
     super.setGenres(base.getGenres());
     super.setDescription(base.getDescription());
-    super.setPosterPath(fileUri + base.getPosterPath());
+    super.setPosterPath(Util.resolveFilesUrl(fileUri,base.getPosterPath()));
     super.setCharacters(
         base.getCharacters()
             .stream()

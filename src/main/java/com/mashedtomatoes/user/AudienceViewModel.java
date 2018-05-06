@@ -5,8 +5,8 @@ public class AudienceViewModel extends UserViewModel {
   private final boolean publicProfile;
   private final AudienceRank rank;
 
-  public AudienceViewModel(Audience base, Integer rankUpgradeRate) {
-    super(base);
+  public AudienceViewModel(Audience base, String fileUri, Integer rankUpgradeRate) {
+    super(base, fileUri);
     displayName = base.getDisplayName();
     publicProfile = base.isPublicProfile();
     Integer followerCount = getFollowers().size();

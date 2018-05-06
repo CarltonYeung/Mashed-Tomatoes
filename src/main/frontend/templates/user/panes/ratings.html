@@ -1,0 +1,18 @@
+<div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane"
+     id="pills-ratings" role="tabpanel">
+    <h1 class="user-pane -title">Ratings</h1>
+    <div class="d-flex flex-wrap justify-content-between">
+        <div th:each="rating: ${user.ratings}" class="bg-dark review-card">
+            <div class="card-body">
+                <h2 class="my-4" th:text="${rating.media.title}"></h2>
+                <a th:href="@{/media/{id}(id=${rating.media.id})}">
+                    <img class="card-img-top user-pane -rating-img" th:src="${rating.media.posterPath}">
+                </a>
+                <div class="my-4 d-flex justify-content-between">
+                    <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
+                </div>
+                <p class="pt-2 card-text" th:text="${rating.review}"></p>
+            </div>
+        </div>
+    </div>
+</div>

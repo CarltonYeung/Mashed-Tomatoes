@@ -17,6 +17,9 @@ public class UserViewController {
   @Value("${mt.rank.upgrade.rate}")
   private int rankUpgradeRate = 10;
 
+  @Value("${mt.files.uri}")
+  private String filesUri = "/files";
+
   @GetMapping("/login")
   public String login() {
     return "user/login";
@@ -89,9 +92,9 @@ public class UserViewController {
 
     model.addAttribute("isFollowing", isFollowing);
     if (dbUser.getType() == UserType.AUDIENCE) {
-      model.addAttribute("user", new AudienceViewModel((Audience) dbUser, rankUpgradeRate));
+      model.addAttribute("user", new AudienceViewModel((Audience) dbUser, filesUri, rankUpgradeRate));
     } else if (dbUser.getType() == UserType.CRITIC) {
-      model.addAttribute("user", new CriticViewModel((Critic) dbUser));
+      model.addAttribute("user", new CriticViewModel((Critic) dbUser, filesUri));
     }
     return "user/user";
   }

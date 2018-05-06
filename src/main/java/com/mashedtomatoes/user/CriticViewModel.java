@@ -6,8 +6,8 @@ public class CriticViewModel extends UserViewModel {
   private final String fullName;
   private final boolean topCritic;
 
-  public CriticViewModel(Critic base) {
-    super(base);
+  public CriticViewModel(Critic base, String fileUri) {
+    super(base, fileUri);
     firstName = base.getFirstName();
     lastName = base.getFirstName();
     fullName = String.format("%s %s", firstName, lastName);
