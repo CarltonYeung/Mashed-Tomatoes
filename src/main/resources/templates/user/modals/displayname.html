@@ -1,0 +1,24 @@
+<div th:fragment="modal" class="modal fade" id="displayNameModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change your display name</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body">
+        <form id="change-display-name-form">
+          <div class="form-group">
+            <label for="displayName">New Display Name</label>
+            <input type="text" class="form-control" id="displayName" name="displayName" minlength="3" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input form="change-display-name-form" type="submit" class="btn btn-primary" value="Update" />
+      </div>
+    </div>
+  </div>
+</div>
