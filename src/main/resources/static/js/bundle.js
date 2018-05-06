@@ -27545,7 +27545,7 @@ return jQuery;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(10)(module)))
 
 /***/ }),
 /* 2 */
@@ -27580,6 +27580,30 @@ module.exports = {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.init = () => {
+  $('#alert-success').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+
+  $('#alert-danger').on('close.bs.alert', evt => {
+    evt.preventDefault();
+    $(evt.currentTarget).prop('hidden', true);
+  });
+};
+
+module.exports.display = (message, isDanger) => {
+  const alertSelector = $(isDanger ? '#alert-danger' : '#alert-success');
+  alertSelector.find('strong').text(message);
+  alertSelector.prop('hidden', false);
+};
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 var g;
@@ -27606,30 +27630,6 @@ module.exports = g;
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0);
-
-module.exports.init = () => {
-  $('#alert-success').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-
-  $('#alert-danger').on('close.bs.alert', evt => {
-    evt.preventDefault();
-    $(evt.currentTarget).prop('hidden', true);
-  });
-};
-
-module.exports.display = (message, isDanger) => {
-  const alertSelector = $(isDanger ? '#alert-danger' : '#alert-success');
-  alertSelector.find('strong').text(message);
-  alertSelector.prop('hidden', false);
-};
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27639,38 +27639,39 @@ const $ = __webpack_require__(0);
 window.jQuery = $;
 window.jqeury = $;
 window.$ = $;
-const _ = __webpack_require__(1);
+__webpack_require__(8);
 __webpack_require__(9);
-__webpack_require__(10);
+
+const _ = __webpack_require__(1);
 
 const components = [
-  __webpack_require__(11),
-  // require('./flip/jquery.flip'),
-  __webpack_require__(12),
-  __webpack_require__(13),
-  __webpack_require__(15),
-  __webpack_require__(16),
-  __webpack_require__(17),
-  __webpack_require__(18),
-  __webpack_require__(19),
-  __webpack_require__(20),
-  // require('./slick/slick'),
-  __webpack_require__(21)
+    __webpack_require__(11),
+    __webpack_require__(12),
+    __webpack_require__(13),
+    __webpack_require__(15),
+    __webpack_require__(16),
+    __webpack_require__(17),
+    __webpack_require__(18),
+    __webpack_require__(19),
+    __webpack_require__(20),
+    __webpack_require__(21),
+    __webpack_require__(22)
 ];
 
 const areDepsMet = deps => {
-  const missingDeps = _.filter(deps, dep => {
-    return $(dep).length == 0;
-  });
+    const missingDeps = _.filter(deps, dep => {
+        return $(dep).length == 0;
+    });
 
-  if (!_.isEmpty(missingDeps)) {
-    return false;
-  }
+    if (!_.isEmpty(missingDeps)) {
+        console.log(missingDeps);
+        return false;
+    }
 
-  return true;
+    return true;
 };
 
-$(document).ready(function(){
+$(document).ready(function () {
     // init components if all deps are met or if no deps are given
     _.forEach(components, component => {
         if (_.has(component, 'deps')) {
@@ -27682,8 +27683,8 @@ $(document).ready(function(){
         }
     });
 
-	$(".loader_inner").delay(1300).fadeOut(500);
-	$(".loader").delay(1300).fadeOut(500);
+    $(".loader_inner").delay(1300).fadeOut(500);
+    $(".loader").delay(1300).fadeOut(500);
 });
 
 
@@ -34147,38 +34148,10 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -37198,7 +37171,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /*! flip - v1.1.2 - 2016-10-20
@@ -37570,6 +37543,34 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   };
 
 }( jQuery ));
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
 
 
 /***/ }),
@@ -43826,7 +43827,7 @@ module.exports.init = () => {
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(4);
+const alert = __webpack_require__(3);
 
 module.exports.deps = [
   '#login-form'
@@ -43877,7 +43878,7 @@ module.exports.init = () => {
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(2);
-const alert = __webpack_require__(4);
+const alert = __webpack_require__(3);
 
 module.exports.deps = [
   '#registration-form',
@@ -43961,6 +43962,55 @@ module.exports.init = () => {
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(3);
+
+module.exports.deps = [
+    '#change-email-form'
+];
+
+module.exports.init = () => {
+    alert.init();
+
+    $('#change-email-form').submit(evt => {
+        const data = {
+            newEmail: $('#email').val(),
+            password: $('#password').val()
+        };
+
+        $.ajax(
+            '/user/changeEmail',
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Email changed. Please verify it.', false);
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+        evt.preventDefault();
+    });
+};
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

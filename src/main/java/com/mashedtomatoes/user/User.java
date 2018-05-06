@@ -16,7 +16,6 @@ public abstract class User {
   private UserCredentials credentials;
   private UserVerification verification;
   private UserType type;
-  private Date birthDate;
   private Set<Rating> ratings;
   private Set<User> following;
   private Set<User> followers;
@@ -57,10 +56,6 @@ public abstract class User {
 
   public void setType(UserType type) {
     this.type = type;
-  }
-
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
   }
 
   public void setRatings(Set<Rating> ratings) {
@@ -128,10 +123,6 @@ public abstract class User {
   @Column(nullable = false, length = 32)
   public UserType getType() {
     return type;
-  }
-
-  public Date getBirthDate() {
-    return birthDate;
   }
 
   @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
