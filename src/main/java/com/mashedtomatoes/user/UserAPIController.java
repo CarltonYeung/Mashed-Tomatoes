@@ -112,17 +112,6 @@ public class UserAPIController {
     return "";
   }
 
-  @GetMapping("/hello")
-  public void hello(HttpServletRequest request, HttpServletResponse response) {
-
-    HttpSession session = request.getSession(false);
-    if (session == null) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    } else {
-      response.setStatus(HttpServletResponse.SC_OK);
-    }
-  }
-
   @PostMapping("/user/follow")
   public String follow(
       @Valid @RequestBody FollowRequest followRequest,

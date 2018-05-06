@@ -25,6 +25,7 @@ const components = [
     require('./user/change-privacy-form'),
     require('./user/delete-user-btn'),
     require('./user/resend-email-form'),
+    require('./user/forgot-password-form'),
     require('./base/carousel')
 ];
 

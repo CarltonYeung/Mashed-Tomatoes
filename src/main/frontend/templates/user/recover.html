@@ -14,18 +14,22 @@
       <div class="m-5">
         <h1>Forgot Your Password</h1>
       </div>
+      <form id="forgot-password-form">
       <div class="row">
         <div class="recover-body form-group my-3 w-50">
-          <label for="usr">Email Address:</label>
+          <label for="email">Email Address:</label>
           <p class="my-3">Please enter your email address and we will email you a new password.</p>
-          <input type="text" class="form-control" id="usr">
+          <input type="email" class="form-control" id="email" name="email" required>
         </div>
       </div>
+      </form>
       <div class="row">
-        <a href="#" class="recover-body recover-page-btn btn btn-warning my-4">SUBMIT</a>
+        <input type="submit" form="forgot-password-form" class="mx-auto recover-page-btn btn btn-warning" value="Send">
       </div>
     </div>
   </div>
+  <div th:replace="partials/alert :: success"></div>
+  <div th:replace="partials/alert :: danger"></div>
   <div th:replace="partials/footer :: footer"></div>
   <div th:replace="partials/script :: script"></div>
 </body>

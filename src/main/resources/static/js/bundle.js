@@ -27660,7 +27660,8 @@ const components = [
     __webpack_require__(24),
     __webpack_require__(25),
     __webpack_require__(26),
-    __webpack_require__(27)
+    __webpack_require__(27),
+    __webpack_require__(28)
 ];
 
 const areDepsMet = deps => {
@@ -44217,7 +44218,6 @@ module.exports.init = () => {
     alert.init();
 
     $('#resend-email-form').submit(evt => {
-        console.log('..sending..');
         const data = {
             email: $('#email').val(),
         };
@@ -44249,6 +44249,51 @@ module.exports.init = () => {
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '#forgot-password-form'
+];
+
+module.exports.init = () => {
+    alert.init();
+
+    $('#forgot-password-form').submit(evt => {
+        const data = {
+            email: $('#email').val(),
+        };
+
+        $.ajax(
+            "/user/resetPassword",
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('New password sent! Check your email', false);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+        evt.preventDefault();
+    });
+};
+
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

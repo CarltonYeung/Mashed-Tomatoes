@@ -3,26 +3,26 @@ const _ = require('lodash');
 const alert = require('../alert');
 
 module.exports.deps = [
-    '#resend-email-form'
+    '#forgot-password-form'
 ];
 
 module.exports.init = () => {
     alert.init();
 
-    $('#resend-email-form').submit(evt => {
+    $('#forgot-password-form').submit(evt => {
         const data = {
             email: $('#email').val(),
         };
 
         $.ajax(
-            "/resendVerificationEmail",
+            "/user/resetPassword",
             {
                 method: "POST",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
-                        alert.display('Verification link sent! Check your email', false);
+                        alert.display('New password sent! Check your email', false);
                     }
                 },
                 error: (xhr, status, err) => {
