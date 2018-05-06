@@ -27656,7 +27656,8 @@ const components = [
     __webpack_require__(20),
     __webpack_require__(21),
     __webpack_require__(22),
-    __webpack_require__(23)
+    __webpack_require__(23),
+    __webpack_require__(24)
 ];
 
 const areDepsMet = deps => {
@@ -44060,6 +44061,55 @@ module.exports.init = () => {
 
 /***/ }),
 /* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(3);
+
+module.exports.deps = [
+    '#change-password-form'
+];
+
+module.exports.init = () => {
+    alert.init();
+
+    $('#change-password-form').submit(evt => {
+        const data = {
+            oldPlaintextPassword: $('#oldPassword').val(),
+            newPlaintextPassword: $('#newPassword').val(),
+        };
+
+        $.ajax(
+            '/user/changePassword',
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Password changed!', false);
+                        setTimeout(() => {
+                            window.location.href = "/login";
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status != 500) {
+                        alert.display('Wrong password. Try again', true);
+                    } else if (xhr.status ==  500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+        evt.preventDefault();
+    });
+};
+
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
