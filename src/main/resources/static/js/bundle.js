@@ -44340,6 +44340,7 @@ const updateIsFollowing = (isFollowing) => {
                     } else {
                         console.log('User followed');
                     }
+                    window.location.reload(true);
                 }
             },
             error: (xhr, status, err) => {

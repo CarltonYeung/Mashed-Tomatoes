@@ -17,6 +17,7 @@
                 <button th:if="${isFollowing}" id="follow-user-btn" class="mx-auto mb-4 btn btn-danger" data-bind="css: followCSS, text: followText, click: onFollow">Unfollow</button>
             </div>
         </th:block>
+        <h3 class="my-4 text-center">Profile Views: <span th:text="${user.profileViews}"></span></h3>
         <div class="row">
             <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
                 <li th:if="${viewingOwnProfile}" class="pr-3 nav-item user-tab -item">
@@ -28,11 +29,8 @@
                 <li class="px-3 nav-item user-tab -item">
                     <a class="nav-link user-tab -item-link" id="pills-lists-tab" data-toggle="pill" href="#pills-lists">WTS/NI</a>
                 </li>
-                <li class="px-3 nav-item user-tab -item">
-                    <a class="nav-link user-tab -item-link" id="pills-quotes-tab" data-toggle="pill" href="#pills-quotes">Quotes</a>
-                </li>
                 <li class="pl-3 nav-item user-tab -item">
-                    <a class="nav-link user-tab -item-link" id="pills-critics-tab" data-toggle="pill" href="#pills-stats">Stats</a>
+                    <a class="nav-link user-tab -item-link" id="pills-quotes-tab" data-toggle="pill" href="#pills-follow">Followers/Following</a>
                 </li>
             </ul>
         </div>
@@ -42,8 +40,7 @@
             </th:block>
             <div th:replace="user/panes/ratings :: pane"></div>
             <div th:replace="user/panes/lists :: pane"></div>
-            <div th:replace="user/panes/quotes :: pane"></div>
-            <div th:replace="user/panes/stats :: pane"></div>
+            <div th:replace="user/panes/follow :: pane"></div>
         </div>
         <div th:replace="user/modals/email :: modal"></div>
         <div th:replace="user/modals/displayname :: modal"></div>
