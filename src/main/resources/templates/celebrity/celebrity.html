@@ -135,7 +135,7 @@
                 <a th:text="${tvshow.title}" th:href="@{/tv/{id}(id=${tvshow.id})}"></a>
               </td>
               <td>Creator</td>
-              <td th:text="${#calendars.format(tvshow.firstAirDate, 'yyyy')}"></td>
+              <td th:text="${#calendars.format(tvshow.startDate, 'yyyy')}"></td>
             </tr>
           </th:block>
         </tbody>

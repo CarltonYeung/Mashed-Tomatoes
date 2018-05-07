@@ -14,9 +14,10 @@
                 <p class="pb-2 card-text" th:text="${rating.review}"></p>
             </div>
             <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
-                <button class="btn btn-primary" th:attr="data-rating-id=${rating.id}">Edit</button>
+                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
                 <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
             </div>
         </div>
     </div>
+    <div th:replace="user/modals/editrating :: modal"></div>
 </div>
