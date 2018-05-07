@@ -27,6 +27,7 @@ const components = [
     require('./user/resend-email-form'),
     require('./user/forgot-password-form'),
     require('./user/follow-user-btn'),
+    require('./user/delete-rating-btn'),
     require('./base/carousel')
 ];
 

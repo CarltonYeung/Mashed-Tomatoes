@@ -1,7 +1,7 @@
 <div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane"
      id="pills-ratings" role="tabpanel">
     <h2 th:if="${#lists.isEmpty(user.ratings)}" class="my-4 text-center">So much empty...</h2>
-    <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap justify-content-between">
+    <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap">
         <div th:each="rating: ${user.ratings}" class="bg-dark review-card">
             <div class="card-body">
                 <h2 class="my-4" th:text="${rating.media.title}"></h2>
@@ -11,7 +11,11 @@
                 <div class="my-4 d-flex justify-content-between">
                     <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
                 </div>
-                <p class="pt-2 card-text" th:text="${rating.review}"></p>
+                <p class="pb-2 card-text" th:text="${rating.review}"></p>
+            </div>
+            <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
+                <button class="btn btn-primary" th:attr="data-rating-id=${rating.id}">Edit</button>
+                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
             </div>
         </div>
     </div>
