@@ -136,12 +136,13 @@
             <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
             <footer class="blockquote-footer">
               <small class="text-muted">
-            <p>Last updated on
-              <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-            </p>
-            <a th:href="@{/critic/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a> in
-            <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
-          </small>
+                        <p>Last updated on
+                            <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
+                        </p>
+                        <a th:href="@{/user/{id}(id=${rating.author.id})}" th:text="${rating.author.displayName}"></a>
+                        in
+                        <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
+                    </small>
             </footer>
           </div>
         </div>
@@ -153,18 +154,22 @@
     </section>
     <section class="mt-5 media-section">
       <h1 class="media-section -title">Audience Reviews</h1>
-      <div class="card-columns" th:if="${not #lists.isEmpty(tvshow.audienceRatings)}">
-        <div class="card bg-light">
-          <div class="card-body" th:each="rating: ${tvshow.audienceRatings}">
-            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
-            <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
+      <div class="mx-auto d-flex flex-wrap" th:if="${not #lists.isEmpty(tvshow.audienceRatings)}">
+        <div class="card bg-dark" th:each="rating: ${tvshow.audienceRatings}">
+          <div class="card-body">
+            <div class="my-4 d-flex justify-content-between">
+              <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
+            </div>
+            <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+            <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
             <footer class="blockquote-footer">
               <small class="text-muted">
-            <p>Last updated on
-              <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-            </p>
-            <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
-          </small>
+                        <p>Last updated on
+                            <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
+                        </p>
+                        Author: <a class="pt-5 lead" th:href="@{/user/{id}(id=${rating.author.id})}"
+                                   th:text="${rating.author.displayName}"></a>
+                    </small>
             </footer>
           </div>
         </div>
@@ -179,10 +184,18 @@
       <div id="media-update-list" class="mt-3">
         <h2 class="media-section -secondary-title">Save This TV Show</h2>
         <div class="d-flex justify-content-center">
-          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onNI">- Not Interested</button>
-          <button class="mr-5 btn list-btn" th:if="${!inNotInterested}" data-bind="css: ntCSS, click: onNI">- Not Interested</button>
-          <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onWTS">+ Want To See</button>
-          <button class="ml-5 btn list-btn" th:if="${!inWantToSee}" data-bind="css: wtsCSS, click: onWTS">+ Want To See</button>
+          <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onNI">- Not
+                Interested
+            </button>
+          <button class="mr-5 btn list-btn" th:if="${!inNotInterested}" data-bind="css: ntCSS, click: onNI">- Not
+                Interested
+            </button>
+          <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onWTS">+ Want
+                To See
+            </button>
+          <button class="ml-5 btn list-btn" th:if="${!inWantToSee}" data-bind="css: wtsCSS, click: onWTS">+ Want To
+                See
+            </button>
         </div>
       </div>
       <form id="rating-form" class="mt-3">

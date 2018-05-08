@@ -10,12 +10,20 @@
         <div class="my-4 d-flex justify-content-between">
           <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
         </div>
-        <p class="pb-2 card-text" th:text="${rating.review}"></p>
+        <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+        <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
       </div>
       <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
         <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
         <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
       </div>
+      <footer class="py-2 blockquote-footer text-center">
+        <small class="text-muted">
+                    <p class="text-center">Last updated on
+                        <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
+                    </p>
+                </small>
+      </footer>
     </div>
   </div>
   <div th:replace="user/modals/editrating :: modal"></div>

@@ -5,9 +5,8 @@ import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
 import com.mashedtomatoes.util.Util;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import org.thymeleaf.util.StringUtils;
 
@@ -44,15 +43,15 @@ public class MediaViewModel extends Media {
             .stream()
             .map(photo -> Util.resolveFilesUrl(fileUri, photo))
             .collect(Collectors.toSet()));
-
+    super.setRatings(base.getRatings());
     if (getRatings() == null || getRatings().isEmpty()) {
       criticRatings = new HashSet<>();
       audienceRatings = new HashSet<>();
-      this.averageCriticRating = 0.0;
+      this.averageCriticRating = 0D;
       this.totalCriticRating = 0L;
       this.smashCount = 0L;
       this.passCount = 0L;
-      this.averageAudienceRating = 0.0;
+      this.averageAudienceRating = 0D;
       this.totalAudienceRating = 0L;
     } else {
       criticRatings =
@@ -67,18 +66,30 @@ public class MediaViewModel extends Media {
               .filter(rating -> rating instanceof AudienceRating)
               .map(rating -> (AudienceRating) rating)
               .collect(Collectors.toSet());
-      this.averageCriticRating =
-          criticRatings.stream().mapToInt(CriticRating::getScore).average().getAsDouble();
-      this.totalCriticRating = new Long(criticRatings.size());
+      OptionalDouble optionalAvgCriticRating = criticRatings.stream().mapToInt(CriticRating::getScore).average();
+      if (optionalAvgCriticRating.isPresent()) {
+        this.averageCriticRating = optionalAvgCriticRating.getAsDouble();
+      } else {
+        this.averageCriticRating = 0D;
+      }
+
+
+      this.totalCriticRating = (long) criticRatings.size();
       this.smashCount =
           criticRatings
               .stream()
               .filter(criticRating -> criticRating.getScore() > smashThreshold)
               .count();
       this.passCount = this.totalCriticRating - this.smashCount;
-      this.averageAudienceRating =
-          audienceRatings.stream().mapToInt(AudienceRating::getScore).average().getAsDouble();
-      this.totalAudienceRating = new Long(audienceRatings.size());
+      OptionalDouble optionalAvgAudienceRating =
+          audienceRatings.stream().mapToInt(AudienceRating::getScore).average();
+      if (optionalAvgAudienceRating.isPresent()) {
+        this.averageAudienceRating = optionalAvgAudienceRating.getAsDouble();
+      } else {
+        this.averageAudienceRating = 0D;
+      }
+
+      this.totalAudienceRating = (long) audienceRatings.size();
     }
   }
 
