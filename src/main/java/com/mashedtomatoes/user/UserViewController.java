@@ -40,6 +40,11 @@ public class UserViewController {
     return "user/resend";
   }
 
+  @GetMapping("/critic/apply")
+  public String criticApply() {
+  	return "user/criticapply";
+  }
+
   @GetMapping("/user/me")
   public String user(HttpServletResponse response) {
     HttpSession session = UserService.session();

@@ -29,6 +29,7 @@ const components = [
     require('./user/follow-user-btn'),
     require('./user/delete-rating-btn'),
     require('./user/edit-rating-btn'),
+    require('./user/critic-apply-form'),
     require('./base/carousel')
 ];
 
