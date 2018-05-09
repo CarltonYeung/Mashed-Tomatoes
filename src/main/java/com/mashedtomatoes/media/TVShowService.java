@@ -3,6 +3,7 @@ package com.mashedtomatoes.media;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,23 @@ public class TVShowService {
     ArrayList<TVShowRatingQuery> tvShowRatingQueries =
         makeTVShowRatingQueryList(pageTVShow.iterator());
     return tvShowRatingQueries;
+  }
+
+  public Iterable<TVShowRatingQuery> getTVAiringToday(int limit){
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    int month = calendar.get(Calendar.MONTH);
+    int year = calendar.get(Calendar.YEAR);
+    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    calendar.clear();
+    calendar.set(Calendar.MONTH, month);
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+    Date date = calendar.getTime();
+    Page<Object[]> pageTVShow = tvShowRepository.findTVAiringToday(PageRequest.of(0, limit), date);
+    ArrayList<TVShowRatingQuery> tvShowRatingQueries = makeTVShowRatingQueryList(pageTVShow.iterator());
+    return tvShowRatingQueries;
+
   }
 
   TVShow getTVShowById(long id) {

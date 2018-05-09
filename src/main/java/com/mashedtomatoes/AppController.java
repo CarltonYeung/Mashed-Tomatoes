@@ -1,14 +1,12 @@
 package com.mashedtomatoes;
 
-import com.mashedtomatoes.media.MovieRatingQuery;
-import com.mashedtomatoes.media.MovieService;
-import com.mashedtomatoes.media.TVShowRatingQuery;
-import com.mashedtomatoes.media.TVShowService;
+import com.mashedtomatoes.media.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import java.util.Iterator;
 
 import java.util.List;
 
@@ -17,6 +15,8 @@ public class AppController {
   @Autowired MovieService movieService;
 
   @Autowired TVShowService tvShowService;
+
+  @Autowired MediaService mediaService;
 
   @Autowired private Environment env;
 
@@ -30,6 +30,7 @@ public class AppController {
     int limit = Integer.parseInt(env.getProperty("mt.homepage.categories.limit"));
     int daysInterval =
         Integer.parseInt(env.getProperty("mt.homepage.categories.daysAheadAndBeforeCurrentDate"));
+    int nowPlayingDaysAhead = Integer.parseInt(env.getProperty("mt.homepage.nowPlaying.daysAhead"));
     Iterable<MovieRatingQuery> topBoxOffice = movieService.getTopBoxOfficeMovies(limit);
     Iterable<MovieRatingQuery> topRatedFilms = movieService.getTopRatedFilms(limit);
     Iterable<MovieRatingQuery> comingSoonFilms =
@@ -39,6 +40,8 @@ public class AppController {
     Iterable<TVShowRatingQuery> nowAiringTVShows = tvShowService.getNowAiringTVShows(limit);
     Iterable<TVShowRatingQuery> topRatedTVShows = tvShowService.getTopRatedTVShows(limit);
     Iterable<MovieRatingQuery> bestPictureWinner = movieService.getBestPictureWinner(limit);
+    Iterable<TVShowRatingQuery> tvAiringToday = tvShowService.getTVAiringToday(limit);
+    Iterable<MediaRatingQuery> nowPlaying = mediaService.getNowPlaying(limit,nowPlayingDaysAhead);
 
     model.addAttribute("topBoxOffice", topBoxOffice);
     model.addAttribute("topRatedFilms", topRatedFilms);
@@ -47,6 +50,8 @@ public class AppController {
     model.addAttribute("nowAiringTVShows", nowAiringTVShows);
     model.addAttribute("topRatedTVShows", topRatedTVShows);
     model.addAttribute("bestPictureWinner", bestPictureWinner);
+    model.addAttribute("tvAiringToday", tvAiringToday);
+    model.addAttribute("nowPlaying", nowPlaying);
     return "index";
   }
 }
