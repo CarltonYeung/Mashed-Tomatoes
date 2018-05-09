@@ -72,11 +72,6 @@ public class UserViewController {
       return "error/404";
     }
 
-    if (dbUser.getType() != UserType.AUDIENCE && dbUser.getType() != UserType.CRITIC) {
-      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-      return "error/500";
-    }
-
     User sessionUser = null;
     HttpSession session = UserService.session();
     if (session != null) {
@@ -105,7 +100,10 @@ public class UserViewController {
       model.addAttribute("user", new AudienceViewModel((Audience) dbUser, filesUri, rankUpgradeRate));
     } else if (dbUser.getType() == UserType.CRITIC) {
       model.addAttribute("user", new CriticViewModel((Critic) dbUser, filesUri));
+    } else {
+      model.addAttribute("user", new AdministratorViewModel((Administrator) dbUser, filesUri));
     }
+
     return "user/user";
   }
 

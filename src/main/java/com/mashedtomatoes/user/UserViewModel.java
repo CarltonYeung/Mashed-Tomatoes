@@ -28,4 +28,16 @@ public class UserViewModel extends User {
 		super.setCreated(base.getCreated());
 		super.setUpdated(base.getUpdated());
 	}
+
+	public boolean isAdmin() {
+		return getType().equals(UserType.ADMINISTRATOR);
+	}
+
+	public boolean isCritic() {
+		return getType().equals(UserType.CRITIC);
+	}
+
+	public boolean isAudience() {
+		return getType().equals(UserType.AUDIENCE);
+	}
 }
