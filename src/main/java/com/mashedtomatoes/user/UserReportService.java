@@ -43,4 +43,8 @@ public class UserReportService {
 
     userReportRepository.delete(report);
   }
+
+  public Iterable<UserReport> findAll() {
+    return userReportRepository.findAll();
+  }
 }

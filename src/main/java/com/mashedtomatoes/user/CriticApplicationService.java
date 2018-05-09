@@ -80,4 +80,8 @@ public class CriticApplicationService {
     Audience applicant = app.getApplicant();
     mailService.sendCriticApplicationStatusEmail(applicant.getCredentials().getEmail(), false);
   }
+
+  public Iterable<CriticApplication> findAll() {
+    return criticApplicationRepository.findAll();
+  }
 }
