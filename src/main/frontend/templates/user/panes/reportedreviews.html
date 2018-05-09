@@ -3,10 +3,10 @@
     <div th:if="${!#lists.isEmpty(reviewReports)}" class="mt-4 mx-auto d-flex flex-wrap">
         <div th:each="report: ${reviewReports}" class="mx-4 my-2 bg-dark review-card">
             <div class="card-body">
-                <h2 style="color: white">Reason: </h2>
+                <h2>Reason: </h2>
                 <p class="py-4 card-text" th:text="${report.reason}"></p>
                 <br />
-                <h2 style="color: white">Review: </h2>
+                <h2>Review: </h2>
                 <div class="my-4 d-flex justify-content-between">
                     <div th:each="i: ${#numbers.sequence(1, report.rating.score)}" class="star"></div>
                 </div>
