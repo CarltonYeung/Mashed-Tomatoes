@@ -14,12 +14,8 @@ public class AudienceViewModel extends UserViewModel {
       rank = AudienceRank.BRONZE;
     } else if (followerCount < rankUpgradeRate * 2) {
       rank = AudienceRank.SILVER;
-    } else if (followerCount < rankUpgradeRate * 3) {
-      rank = AudienceRank.GOLD;
-    } else if (followerCount < rankUpgradeRate * 4) {
-      rank = AudienceRank.PLATINUM;
     } else {
-      rank = AudienceRank.DIAMOND;
+      rank = AudienceRank.GOLD;
     }
   }
 
@@ -33,5 +29,17 @@ public class AudienceViewModel extends UserViewModel {
 
   public AudienceRank getRank() {
     return rank;
+  }
+
+  public boolean isBronze() {
+    return getRank().equals(AudienceRank.BRONZE);
+  }
+
+  public boolean isSilver() {
+    return getRank().equals(AudienceRank.SILVER);
+  }
+
+  public boolean isGold() {
+    return getRank().equals(AudienceRank.GOLD);
   }
 }
