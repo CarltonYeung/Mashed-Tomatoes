@@ -33,11 +33,11 @@ public class UserAPIController {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return env.getProperty("google.recaptcha.missing");
       }
-    }
 
-    if (!recaptchaService.verifyRecaptcha(httpRequest.getRemoteAddr(), request.getRecaptchaResponse())) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      return env.getProperty("google.recaptcha.fail");
+      if (!recaptchaService.verifyRecaptcha(httpRequest.getRemoteAddr(), request.getRecaptchaResponse())) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return env.getProperty("google.recaptcha.fail");
+      }
     }
 
     User user;
