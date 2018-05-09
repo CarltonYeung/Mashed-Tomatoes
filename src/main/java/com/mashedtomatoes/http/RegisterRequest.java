@@ -48,7 +48,6 @@ public class RegisterRequest {
     this.wantToBeAdmin = wantToBeAdmin;
   }
 
-  @NotEmpty
   public String getRecaptchaResponse() {
     return recaptchaResponse;
   }

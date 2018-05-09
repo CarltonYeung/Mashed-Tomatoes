@@ -28,6 +28,13 @@ public class UserAPIController {
                          HttpServletResponse response,
                          HttpServletRequest httpRequest) {
 
+    if (!request.isWantToBeAdmin()) {
+      if (request.getRecaptchaResponse() == null || request.getRecaptchaResponse().isEmpty()) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return env.getProperty("google.recaptcha.missing");
+      }
+    }
+
     if (!recaptchaService.verifyRecaptcha(httpRequest.getRemoteAddr(), request.getRecaptchaResponse())) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return env.getProperty("google.recaptcha.fail");
