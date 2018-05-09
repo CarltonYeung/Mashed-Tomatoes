@@ -33609,7 +33609,8 @@ const components = [
     __webpack_require__(30),
     __webpack_require__(31),
     __webpack_require__(32),
-    __webpack_require__(33)
+    __webpack_require__(33),
+    __webpack_require__(34)
 ];
 
 const areDepsMet = deps => {
@@ -43854,6 +43855,64 @@ module.exports.init = () => {
 
 const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '#report-rating-form',
+    '#reportRatingModal',
+    '.report-rating-btn'
+];
+
+module.exports.init = () => {
+    alert.init();
+    let ratingId = null;
+    let mediaId = null;
+
+    $('.report-rating-btn').on('click', (evt) => {
+        ratingId = $(evt.currentTarget).attr('data-rating-id');
+        mediaId = $(evt.currentTarget).attr('data-media-id');
+        $('#reportRatingModal').modal('show');
+    });
+
+    $('#report-rating-form').submit(evt => {
+        evt.preventDefault();
+        let data = {
+            reason: $('#report-reason').val()
+        };
+
+        $.ajax(
+            `/api/media/${mediaId}/rate/report/${ratingId}`,
+            {
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Rating reported!', false);
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status !== 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status === 500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+
+    });
+};
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(3);
 const alert = __webpack_require__(2);
 
@@ -43900,7 +43959,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43961,7 +44020,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43989,7 +44048,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44038,7 +44097,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44086,7 +44145,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44135,7 +44194,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44185,7 +44244,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44226,7 +44285,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44271,7 +44330,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44316,7 +44375,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44397,7 +44456,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44438,7 +44497,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44513,7 +44572,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44563,7 +44622,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44615,7 +44674,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

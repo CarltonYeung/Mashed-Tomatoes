@@ -16,6 +16,7 @@ const components = [
     require('./media/media-box-cast'),
     require('./media/media-box-photo'),
     require('./rating/rating-form'),
+    require('./rating/report-rating-btn'),
     require('./user/login-form'),
     require('./user/registration-form'),
     require('./user/logout-btn'),
