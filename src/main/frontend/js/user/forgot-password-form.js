@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#forgot-password-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             email: $('#email').val(),
         };
@@ -33,7 +34,5 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };

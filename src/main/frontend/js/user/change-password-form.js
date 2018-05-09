@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-password-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             oldPlaintextPassword: $('#oldPassword').val(),
             newPlaintextPassword: $('#newPassword').val(),
@@ -37,7 +38,5 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };

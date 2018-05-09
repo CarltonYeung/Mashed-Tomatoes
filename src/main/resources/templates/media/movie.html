@@ -173,6 +173,13 @@
                                    th:text="${rating.author.displayName}"></a>
                     </small>
             </footer>
+            <th:block th:if="${#session != null}">
+              <br/>
+              <div th:if="${rating.author.id != session.User.id}" class="d-flex justify-content-between w-100 mx-auto py-2">
+                <button class="report-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${movie.id}">Report</button>
+                <button th:if="${session.ViewUser.isAdmin()}" class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
+              </div>
+            </th:block>
           </div>
         </div>
       </div>
@@ -224,6 +231,31 @@
         </div>
       </form>
     </section>
+    <div class="modal fade" id="reportRatingModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Report Rating</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body">
+            <form id="report-rating-form">
+              <div class="form-group">
+                <textarea id="report-reason" name="reason" class="mx-auto w-100 rating-form -comment-box" placeholder="Reason (required)"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input form="report-rating-form" type="submit" class="btn btn-primary" value="Report" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <br />
     <br />
   </main>

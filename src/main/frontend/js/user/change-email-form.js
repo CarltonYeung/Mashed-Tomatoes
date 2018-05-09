@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-email-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             newEmail: $('#email').val(),
             password: $('#password').val()
@@ -37,7 +38,5 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };

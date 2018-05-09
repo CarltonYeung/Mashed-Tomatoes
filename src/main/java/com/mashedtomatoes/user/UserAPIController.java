@@ -3,7 +3,9 @@ package com.mashedtomatoes.user;
 import com.mashedtomatoes.exception.DuplicateKeyException;
 import com.mashedtomatoes.http.*;
 import com.mashedtomatoes.mail.MailService;
+import com.mashedtomatoes.security.RecaptchaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +21,28 @@ public class UserAPIController {
   @Autowired private MailService mailService;
   @Autowired private CriticApplicationService criticApplicationService;
   @Autowired private UserReportService userReportService;
+  @Autowired private RecaptchaService recaptchaService;
   @Autowired private Environment env;
+
+  @Value("${mt.files.uri}")
+  private String filesUri = "/files";
 
   @PostMapping("/register")
   public String register(@Valid @RequestBody RegisterRequest request,
-                         HttpServletResponse response) {
+                         HttpServletResponse response,
+                         HttpServletRequest httpRequest) {
+
+    if (!request.isWantToBeAdmin()) {
+      if (request.getRecaptchaResponse() == null || request.getRecaptchaResponse().isEmpty()) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return env.getProperty("google.recaptcha.missing");
+      }
+
+      if (!recaptchaService.verifyRecaptcha(httpRequest.getRemoteAddr(), request.getRecaptchaResponse())) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return env.getProperty("google.recaptcha.fail");
+      }
+    }
 
     User user;
     try {
@@ -95,6 +114,7 @@ public class UserAPIController {
     }
     HttpSession session = request.getSession(true);
     session.setAttribute("User", user);
+    session.setAttribute("ViewUser", new UserViewModel(user, filesUri));
     response.setStatus(HttpServletResponse.SC_OK);
     return "";
   }

@@ -3,38 +3,41 @@ const _ = require('lodash');
 const alert = require('../alert');
 
 module.exports.deps = [
-    '#change-privacy-form'
+    '#report-user-form',
+    '#reportUserModal',
 ];
 
 module.exports.init = () => {
     alert.init();
 
-    $('#change-privacy-form').submit(evt => {
+    $('#report-user-form').on('submit', evt => {
         evt.preventDefault();
-        const val = $('input[name=publicProfile]:checked').val();
+        const userId = $('#report-user-id').val();
+        const reason = $('#report-reason').val();
 
-        const data = {
-            publicProfile: _.isEqual(val, 'public'),
+        let data = {
+            userId,
+            reason
         };
 
         $.ajax(
-            '/user/changePrivacy',
+            `/user/report`,
             {
                 method: "POST",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
-                        alert.display('Privacy setting changed!', false);
+                        alert.display('User reported!', false);
                         setTimeout(() => {
                             window.location.reload(true);
                         }, 1000);
                     }
                 },
                 error: (xhr, status, err) => {
-                    if (xhr.status != 500) {
+                    if (xhr.status !== 500) {
                         alert.display(xhr.responseText, true);
-                    } else if (xhr.status ==  500) {
+                    } else if (xhr.status ===  500) {
                         alert.display("Something's wrong with our server. Please try again later", true);
                     }
                 }

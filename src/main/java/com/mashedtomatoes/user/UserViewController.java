@@ -1,18 +1,23 @@
 package com.mashedtomatoes.user;
 
-import java.util.NoSuchElementException;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.NoSuchElementException;
+
 @Controller
 public class UserViewController {
-  @Autowired UserService userService;
+  @Autowired private UserService userService;
+  @Autowired private UserReportService userReportService;
+  @Autowired private CriticApplicationService criticApplicationService;
+  @Autowired private Environment env;
 
   @Value("${mt.rank.upgrade.rate}")
   private int rankUpgradeRate = 10;
@@ -67,11 +72,6 @@ public class UserViewController {
       return "error/404";
     }
 
-    if (dbUser.getType() != UserType.AUDIENCE && dbUser.getType() != UserType.CRITIC) {
-      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-      return "error/500";
-    }
-
     User sessionUser = null;
     HttpSession session = UserService.session();
     if (session != null) {
@@ -100,7 +100,46 @@ public class UserViewController {
       model.addAttribute("user", new AudienceViewModel((Audience) dbUser, filesUri, rankUpgradeRate));
     } else if (dbUser.getType() == UserType.CRITIC) {
       model.addAttribute("user", new CriticViewModel((Critic) dbUser, filesUri));
+    } else {
+      model.addAttribute("user", new AdministratorViewModel((Administrator) dbUser, filesUri));
     }
+
     return "user/user";
+  }
+
+  @GetMapping("/user/criticApplications")
+  public String criticApplications(HttpServletResponse response, Model model) {
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return "error/401";
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Administrator)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return "error/401";
+    }
+
+    model.addAttribute("applications", criticApplicationService.findAll());
+    return "/user/criticApplications";
+  }
+
+  @GetMapping("/user/reports")
+  public String userReports(HttpServletResponse response, Model model) {
+    HttpSession session = UserService.session();
+    if (session == null) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return "error/401";
+    }
+
+    User user = (User) session.getAttribute("User");
+    if (!(user instanceof Administrator)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return "error/401";
+    }
+
+    model.addAttribute("reports", userReportService.findAll());
+    return "/user/reports";
   }
 }

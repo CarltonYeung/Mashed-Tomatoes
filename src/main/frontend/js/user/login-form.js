@@ -11,6 +11,7 @@ module.exports.init = () => {
   alert.init();
 
   $('#login-form').submit(evt => {
+    evt.preventDefault();
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
     const data = {
@@ -41,6 +42,5 @@ module.exports.init = () => {
         }
       });
 
-    evt.preventDefault();
   });
 };

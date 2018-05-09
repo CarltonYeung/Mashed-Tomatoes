@@ -5,6 +5,7 @@
   <div th:replace="partials/meta :: meta"></div>
   <title>Mashed Tomatoes</title>
   <div th:replace="partials/style :: style"></div>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -32,6 +33,9 @@
         <div class="register-body form-group my-3 w-50">
           <label for="register-password">Password:</label>
           <input id="register-password" type="password" class="form-control" name="password" required="required" />
+        </div>
+        <div class="my-4">
+          <div align="center" class="g-recaptcha" data-sitekey="6LdEV1gUAAAAAFE4gsjRVW6CKy0InvehqXDueLU-"></div>
         </div>
         <p class="register-agree-already">
           By clicking "Sign up", I agree to the
