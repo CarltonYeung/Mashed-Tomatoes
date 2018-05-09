@@ -48,7 +48,7 @@
                     <br/>
                     <div th:if="${rating.author.id != session.User.id}" class="d-flex justify-content-between w-100 mx-auto py-2">
                         <button class="report-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${@@media.id}">Report</button>
-                        <!-- <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button> -->
+                        <button th:if="${session.ViewUser.isAdmin()}" class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
                     </div>
                 </th:block>
             </div>
