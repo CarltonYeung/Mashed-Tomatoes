@@ -1,5 +1,6 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.rating.ReviewReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -16,6 +17,7 @@ import java.util.NoSuchElementException;
 public class UserViewController {
   @Autowired private UserService userService;
   @Autowired private UserReportService userReportService;
+  @Autowired private ReviewReportService reviewReportService;
   @Autowired private CriticApplicationService criticApplicationService;
   @Autowired private Environment env;
 
@@ -107,8 +109,8 @@ public class UserViewController {
     return "user/user";
   }
 
-  @GetMapping("/user/criticApplications")
-  public String criticApplications(HttpServletResponse response, Model model) {
+  @GetMapping("/user/admin")
+  public String admin(HttpServletResponse response, Model model) {
     HttpSession session = UserService.session();
     if (session == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -122,24 +124,9 @@ public class UserViewController {
     }
 
     model.addAttribute("applications", criticApplicationService.findAll());
-    return "/user/criticApplications";
-  }
+    model.addAttribute("userReports", userReportService.findAll());
+    model.addAttribute("reviewReports", reviewReportService.findAll());
 
-  @GetMapping("/user/reports")
-  public String userReports(HttpServletResponse response, Model model) {
-    HttpSession session = UserService.session();
-    if (session == null) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return "error/401";
-    }
-
-    User user = (User) session.getAttribute("User");
-    if (!(user instanceof Administrator)) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return "error/401";
-    }
-
-    model.addAttribute("reports", userReportService.findAll());
-    return "/user/reports";
+    return "user/admin";
   }
 }
