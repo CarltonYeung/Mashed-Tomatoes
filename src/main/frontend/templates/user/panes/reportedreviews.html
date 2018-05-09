@@ -1,0 +1,22 @@
+<div th:fragment="pane" class="tab-pane fade user-pane" id="pills-reported-reviews" role="tabpanel">
+    <h2 th:if="${#lists.isEmpty(reviewReports)}" class="my-4 text-center">So much empty...</h2>
+    <div th:if="${!#lists.isEmpty(reviewReports)}" class="mt-4 mx-auto d-flex flex-wrap">
+        <div th:each="report: ${reviewReports}" class="mx-4 my-2 bg-dark review-card">
+            <div class="card-body">
+                <h2 style="color: white">Reason: </h2>
+                <p class="py-4 card-text" th:text="${report.reason}"></p>
+                <br />
+                <h2 style="color: white">Review: </h2>
+                <div class="my-4 d-flex justify-content-between">
+                    <div th:each="i: ${#numbers.sequence(1, report.rating.score)}" class="star"></div>
+                </div>
+                <p class="my-2" th:text="${report.rating.review}"></p>
+            </div>
+            <div class="d-flex justify-content-center w-75 mx-auto py-2">
+                <a class="btn btn-primary mr-2" th:href="@{/user/{id}(id=${report.rating.author.id})}">View User</a>
+                <button class="delete-rating-btn btn btn-danger ml-2" th:attr="data-rating-id=${report.rating.id}, data-media-id=${report.rating.media.id}">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
