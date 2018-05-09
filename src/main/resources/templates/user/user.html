@@ -21,9 +21,10 @@
                 </button>
           <button th:if="${isFollowing}" id="follow-user-btn" class="mr-2 btn btn-danger" data-bind="css: followCSS, text: followText, click: onFollow">Unfollow
                 </button>
-          <button id="report-user-btn" class="ml-2 btn btn-danger" data-toggle="modal" data-target="#reportUserModal">
+          <button id="report-user-btn" class="mx-2 btn btn-danger" data-toggle="modal" data-target="#reportUserModal">
                     Report User
                 </button>
+          <button th:if="${session.ViewUser.isAdmin()}" id="delete-user-btn" class="mx-2 btn btn-danger" th:attr="data-user-id=${user.id}">Delete User</button>
         </div>
       </th:block>
       <h3 class="my-4 text-center">Profile Views: <span th:text="${user.profileViews}"></span></h3>
