@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-privacy-form').submit(evt => {
+        evt.preventDefault();
         const val = $('input[name=publicProfile]:checked').val();
 
         const data = {
@@ -38,7 +39,5 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };

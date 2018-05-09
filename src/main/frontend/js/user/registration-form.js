@@ -11,16 +11,18 @@ module.exports.deps = [
 
 module.exports.init = () => {
   alert.init();
-
   $('#registration-form').submit(evt => {
+    evt.preventDefault();
     const displayNameSelector = $('#register-display-name');
     const emailSelector = $('#register-email');
     const passwordSelector = $('#register-password');
+    const recaptchaResponse = $('[name=g-recaptcha-response]').val();
 
     const data = {
       displayName: displayNameSelector.val(),
       email: emailSelector.val(),
-      password: passwordSelector.val()
+      password: passwordSelector.val(),
+      recaptchaResponse
     };
 
     $.ajax(
@@ -50,6 +52,5 @@ module.exports.init = () => {
           }
         }
       });
-    evt.preventDefault();
   });
 };

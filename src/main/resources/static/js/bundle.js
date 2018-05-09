@@ -43924,6 +43924,7 @@ module.exports.init = () => {
   alert.init();
 
   $('#login-form').submit(evt => {
+    evt.preventDefault();
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
     const data = {
@@ -43954,7 +43955,6 @@ module.exports.init = () => {
         }
       });
 
-    evt.preventDefault();
   });
 };
 
@@ -43975,16 +43975,18 @@ module.exports.deps = [
 
 module.exports.init = () => {
   alert.init();
-
   $('#registration-form').submit(evt => {
+    evt.preventDefault();
     const displayNameSelector = $('#register-display-name');
     const emailSelector = $('#register-email');
     const passwordSelector = $('#register-password');
+    const recaptchaResponse = $('[name=g-recaptcha-response]').val();
 
     const data = {
       displayName: displayNameSelector.val(),
       email: emailSelector.val(),
-      password: passwordSelector.val()
+      password: passwordSelector.val(),
+      recaptchaResponse
     };
 
     $.ajax(
@@ -44014,7 +44016,6 @@ module.exports.init = () => {
           }
         }
       });
-    evt.preventDefault();
   });
 };
 
@@ -44063,6 +44064,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-email-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             newEmail: $('#email').val(),
             password: $('#password').val()
@@ -44090,8 +44092,6 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };
 
@@ -44112,6 +44112,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-display-name-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             displayName: $('#displayName').val(),
         };
@@ -44139,7 +44140,6 @@ module.exports.init = () => {
                 }
             });
 
-        evt.preventDefault();
     });
 };
 
@@ -44160,6 +44160,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-password-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             oldPlaintextPassword: $('#oldPassword').val(),
             newPlaintextPassword: $('#newPassword').val(),
@@ -44187,8 +44188,6 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };
 
@@ -44209,6 +44208,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-privacy-form').submit(evt => {
+        evt.preventDefault();
         const val = $('input[name=publicProfile]:checked').val();
 
         const data = {
@@ -44237,8 +44237,6 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };
 
@@ -44300,6 +44298,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#resend-email-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             email: $('#email').val(),
         };
@@ -44324,7 +44323,6 @@ module.exports.init = () => {
                 }
             });
 
-        evt.preventDefault();
     });
 };
 
@@ -44345,6 +44343,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#forgot-password-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             email: $('#email').val(),
         };
@@ -44368,8 +44367,6 @@ module.exports.init = () => {
                     }
                 }
             });
-
-        evt.preventDefault();
     });
 };
 
@@ -44587,6 +44584,7 @@ module.exports.init = () => {
   alert.init();
 
   $('#critc-apply-form').submit(evt => {
+    evt.preventDefault();
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
     const data = {
@@ -44616,8 +44614,6 @@ module.exports.init = () => {
           }
         }
       });
-
-    evt.preventDefault();
   });
 };
 

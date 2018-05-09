@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#resend-email-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             email: $('#email').val(),
         };
@@ -34,6 +35,5 @@ module.exports.init = () => {
                 }
             });
 
-        evt.preventDefault();
     });
 };

@@ -10,6 +10,7 @@ module.exports.init = () => {
     alert.init();
 
     $('#change-display-name-form').submit(evt => {
+        evt.preventDefault();
         const data = {
             displayName: $('#displayName').val(),
         };
@@ -37,6 +38,5 @@ module.exports.init = () => {
                 }
             });
 
-        evt.preventDefault();
     });
 };
