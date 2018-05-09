@@ -56,8 +56,9 @@
                 <div class="row">
                   <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
                 </div>
-                <p class="text-center media-score -value">
-                  <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
+                <p th:if="${movie.averageCriticRating != 0}" class="text-center media-score -value">
+                  <span th:text="${movie.averageCriticRating} / 5.0 * 100"></span>%</p>
+                <p th:if="${movie.averageCriticRating == 0}" class="text-center media-score -value">0%</p>
                 <p class="text-center media-score -stat">Total Reviews:
                   <span th:text="${movie.totalCriticRating}"></span>
                 </p>
@@ -75,8 +76,9 @@
                 <div class="row">
                   <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
                 </div>
-                <p class="text-center media-score -value">
-                  <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
+                <p th:if="${movie.averageAudienceRating != 0}" class="text-center media-score -value">
+                  <span th:text="${movie.averageAudienceRating} / 5.0 * 100"></span>%</p>
+                <p th:if="${movie.averageAudienceRating == 0}" class="text-center media-score -value">0%</p>
                 <p class="text-center media-score -stat">Total Ratings:
                   <span th:text="${movie.totalAudienceRating}"></span>
                 </p>
