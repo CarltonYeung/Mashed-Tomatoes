@@ -8,6 +8,7 @@ public class RegisterRequest {
   private String password;
   private String displayName;
   private boolean wantToBeAdmin;
+  private String recaptchaResponse;
 
   public RegisterRequest() {}
 
@@ -45,5 +46,14 @@ public class RegisterRequest {
 
   public void setWantToBeAdmin(boolean wantToBeAdmin) {
     this.wantToBeAdmin = wantToBeAdmin;
+  }
+
+  @NotEmpty
+  public String getRecaptchaResponse() {
+    return recaptchaResponse;
+  }
+
+  public void setRecaptchaResponse(String recaptchaResponse) {
+    this.recaptchaResponse = recaptchaResponse;
   }
 }
