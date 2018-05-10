@@ -24,6 +24,8 @@ public class CriticViewModel extends UserViewModel {
     topCritic = base.isTopCritic();
     bestReviewed = sortRatings(true);
     worstReviewed = sortRatings(false);
+    bestReviewed = bestReviewed.subList(0, bestReviewed.size() - bestReviewed.size() / 2);
+    worstReviewed = worstReviewed.subList(0, worstReviewed.size() / 2);
   }
 
   private List<Rating> sortRatings(boolean descending) {
@@ -66,15 +68,7 @@ public class CriticViewModel extends UserViewModel {
     return bestReviewed;
   }
 
-  public void setBestReviewed(List<Rating> bestReviewed) {
-    this.bestReviewed = bestReviewed;
-  }
-
   public List<Rating> getWorstReviewed() {
     return worstReviewed;
-  }
-
-  public void setWorstReviewed(List<Rating> worstReviewed) {
-    this.worstReviewed = worstReviewed;
   }
 }
