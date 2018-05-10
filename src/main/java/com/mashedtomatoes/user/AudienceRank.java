@@ -3,9 +3,7 @@ package com.mashedtomatoes.user;
 public enum AudienceRank {
 	BRONZE("Bronze"),
 	SILVER("Silver"),
-	GOLD("Gold"),
-	PLATINUM("Platinum"),
-	DIAMOND("Diamond");
+	GOLD("Gold");
 
 	private String name;
 

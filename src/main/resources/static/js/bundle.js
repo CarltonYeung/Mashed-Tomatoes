@@ -33610,7 +33610,8 @@ const components = [
     __webpack_require__(31),
     __webpack_require__(32),
     __webpack_require__(33),
-    __webpack_require__(34)
+    __webpack_require__(34),
+    __webpack_require__(35)
 ];
 
 const areDepsMet = deps => {
@@ -43942,7 +43943,7 @@ module.exports.init = () => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Welcome!', false);
             setTimeout(() => {
-              window.location.href = '/';
+              window.location.href = '/user/me';
             }, 1000);
           }
         },
@@ -44671,6 +44672,52 @@ module.exports.init = () => {
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '.delete-application-btn'
+];
+
+module.exports.init = () => {
+    alert.init();
+    $('.delete-application-btn').on('click', (evt) => {
+        const applicantId = $(evt.currentTarget).attr('data-applicant-id');
+        const isApproved = _.isEqual($(evt.currentTarget).attr('data-approved'), 'true');
+
+        $.ajax(
+            `/user/criticApplication/${applicantId}`,
+            {
+                method: "DELETE",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    approved: isApproved,
+                }),
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Critic application processed!', false);
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status !== 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status === 500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+    });
+};
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
