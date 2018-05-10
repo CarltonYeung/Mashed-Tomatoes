@@ -15,8 +15,6 @@ public class MediaViewModel extends Media {
 
   private final Double averageCriticRating;
   private final Long totalCriticRating;
-  private final Long smashCount;
-  private final Long passCount;
   private final Double averageAudienceRating;
   private final Long totalAudienceRating;
   private final Set<AudienceRating> audienceRatings;
@@ -49,8 +47,6 @@ public class MediaViewModel extends Media {
       audienceRatings = new HashSet<>();
       this.averageCriticRating = 0D;
       this.totalCriticRating = 0L;
-      this.smashCount = 0L;
-      this.passCount = 0L;
       this.averageAudienceRating = 0D;
       this.totalAudienceRating = 0L;
     } else {
@@ -75,12 +71,6 @@ public class MediaViewModel extends Media {
 
 
       this.totalCriticRating = (long) criticRatings.size();
-      this.smashCount =
-          criticRatings
-              .stream()
-              .filter(criticRating -> criticRating.getScore() > smashThreshold)
-              .count();
-      this.passCount = this.totalCriticRating - this.smashCount;
       OptionalDouble optionalAvgAudienceRating =
           audienceRatings.stream().mapToInt(AudienceRating::getScore).average();
       if (optionalAvgAudienceRating.isPresent()) {
@@ -99,14 +89,6 @@ public class MediaViewModel extends Media {
 
   public Long getTotalCriticRating() {
     return totalCriticRating;
-  }
-
-  public Long getSmashCount() {
-    return smashCount;
-  }
-
-  public Long getPassCount() {
-    return passCount;
   }
 
   public Double getAverageAudienceRating() {
