@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.awt.print.Pageable;
-import java.util.Iterator;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MovieViewController {
@@ -70,7 +68,7 @@ public class MovieViewController {
           @RequestParam(required = false, value = "page") Integer pageInt,
           Model m) {
     if(!validateReqParam(category, genre, sort)){
-      return "error/404";
+      return "media/moviefilter";
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){
@@ -97,14 +95,26 @@ public class MovieViewController {
         movies = movieService.getFilteredMovies(genre, sort, page, limit);
         break;
       default:
-        return "error/404";
+        return "media/moviefilter";
     }
     ArrayList<MovieViewModel> movieViewModelList = new ArrayList<MovieViewModel>();
     for (Iterator moviesIterator = movies.iterator(); moviesIterator.hasNext(); ) {
       movieViewModelList.add(new MovieViewModel(filesUri, smashThreshold, (Movie)moviesIterator.next()));
     }
     m.addAttribute("movies", movieViewModelList);
-    return "search/search";
+    return "media/moviefilter";
+  }
+
+  @GetMapping("/movie/academy-award")
+  public String getAcademyMovies(
+          @RequestParam(required = false, value = "year") Integer year,
+          Model m){
+    if(year == null){
+      year = Calendar.getInstance().get(Calendar.YEAR)-1;
+    }
+    OscarWinnerSet oscarWinnerSet = movieService.getOscarWinnerByYear(year.intValue());
+    m.addAttribute("academyAward",oscarWinnerSet);
+    return "media/academyfilter";
   }
 
   @GetMapping("/movie/{id}")

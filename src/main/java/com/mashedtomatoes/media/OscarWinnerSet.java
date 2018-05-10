@@ -1,12 +1,7 @@
 package com.mashedtomatoes.media;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "OscarWinnerSet")
@@ -50,31 +45,31 @@ public class OscarWinnerSet {
     return year;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch= FetchType.LAZY)
   @JoinColumn(name = "bestPictureId")
   public Movie getBestPicture() {
     return bestPicture;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name = "bestAnimatedFeatureId")
   public Movie getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name = "bestCinematographyId")
   public Movie getBestCinematography() {
     return bestCinematography;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name = "bestDocumetaryFeatureId")
   public Movie getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name = "bestFilmEditingId")
   public Movie getBestFilmEditing() {
     return bestFilmEditing;

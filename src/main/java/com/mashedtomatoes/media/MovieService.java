@@ -16,6 +16,8 @@ public class MovieService {
 
   @Autowired MovieRepository movieRepository;
 
+  @Autowired OscarWinnerSetRepository oscarWinnerSetRepository;
+
   public Iterable<Movie> getAllMovies() {
     return movieRepository.findAll();
   }
@@ -165,6 +167,16 @@ public class MovieService {
         break;
     }
     return movies;
+  }
+
+  public OscarWinnerSet getOscarWinnerByYear(int year){
+    Calendar calendar = Calendar.getInstance();
+    calendar.clear();
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, Calendar.MAY);
+    calendar.set(Calendar.DAY_OF_MONTH, 5);
+    System.out.println(calendar.getTime().toString());
+    return oscarWinnerSetRepository.findFirstByYear(calendar.getTime());
   }
 
   Movie getMovieById(long id) {
