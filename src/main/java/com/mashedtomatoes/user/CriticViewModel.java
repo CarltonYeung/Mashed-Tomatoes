@@ -24,8 +24,18 @@ public class CriticViewModel extends UserViewModel {
     topCritic = base.isTopCritic();
     bestReviewed = sortRatings(true);
     worstReviewed = sortRatings(false);
-    bestReviewed = bestReviewed.subList(0, bestReviewed.size() - bestReviewed.size() / 2);
-    worstReviewed = worstReviewed.subList(0, worstReviewed.size() / 2);
+
+    for (Rating r : bestReviewed) {
+      if (r.getScore() < 3) {
+        bestReviewed.remove(r);
+      }
+    }
+
+    for (Rating r : worstReviewed) {
+      if (r.getScore() >= 3) {
+        worstReviewed.remove(r);
+      }
+    }
   }
 
   private List<Rating> sortRatings(boolean descending) {
