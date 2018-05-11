@@ -1,125 +1,134 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.celebrity.Celebrity;
-import com.mashedtomatoes.rating.AudienceRating;
-import com.mashedtomatoes.rating.CriticRating;
+import com.mashedtomatoes.user.User;
+import com.mashedtomatoes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.thymeleaf.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.awt.print.Pageable;
+import java.util.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MovieViewController {
-	private static final String FILES_URI = "/files";
+  @Value("${mt.files.uri}")
+  private String filesUri = "/files";
 
-  @Autowired
-  private MovieService movieService;
+  @Value("${mt.smash.threshold}")
+  private int smashThreshold = 50;
+
+  @Autowired private MovieService movieService;
+
+  @Autowired private UserService userService;
+
+  @Autowired private Environment env;
+
+  private boolean validGenre(String genre){
+    if(genre.equals("all")){
+      return true;
+    }
+    for(Genre g: Genre.values()){
+      if(g.name().equals(genre)){
+        return true;
+      }
+    }
+    return false;
+
+  }
+
+  private boolean validateReqParam(String category, String genre, String sort){
+    if(!category.equals("new-releases") && !category.equals("coming-soon")
+            & !category.equals("opening-this-week") && !category.equals("all")){
+      return false;
+    }
+    else if(!validGenre(genre)){
+      return false;
+    }
+    else if(!sort.equals("release-date") && !sort.equals("most-popular")
+            && !sort.equals("critic-rating") && !sort.equals("top-box-office")){
+      return false;
+    }
+    return true;
+  }
 
   @GetMapping("/movie")
-  public String getMovies(Model m) {
-    m.addAttribute("movies", movieService.getAllMovies(null));
-    return "movies";
+  public String getMovies(
+          @RequestParam(required = false, defaultValue = "all", value = "category") String category,
+          @RequestParam(required = false, defaultValue = "all", value = "genre") String genre,
+          @RequestParam(required = false, defaultValue = "release-date", value = "sort") String sort,
+          @RequestParam(required = false, value = "page") Integer pageInt,
+          Model m) {
+    if(!validateReqParam(category, genre, sort)){
+      return "media/moviefilter";
+    }
+    int page;
+    if(pageInt == null || pageInt.intValue() < 0){
+      page = 0;
+    }
+    else{
+      page = pageInt.intValue();
+    }
+    int limit = Integer.parseInt(env.getProperty("mt.filteredPage.limit"));
+    int daysInterval = Integer.parseInt(env.getProperty("mt.homepage.categories.daysAheadAndBeforeCurrentDate"));
+
+    Iterable<Movie> movies;
+    switch (category){
+      case "new-releases":
+        movies = movieService.getFilteredMoviesByNewReleases(genre, sort, page, limit, daysInterval);
+        break;
+      case "coming-soon":
+        movies = movieService.getFilteredMoviesByComingSoon(genre, sort, page, limit, daysInterval);
+        break;
+      case "opening-this-week":
+        movies = movieService.getFilteredMoviesByOpeningThisWeek(genre, sort, page, limit);
+        break;
+      case "all":
+        movies = movieService.getFilteredMovies(genre, sort, page, limit);
+        break;
+      default:
+        return "media/moviefilter";
+    }
+    ArrayList<MovieViewModel> movieViewModelList = new ArrayList<MovieViewModel>();
+    for (Iterator moviesIterator = movies.iterator(); moviesIterator.hasNext(); ) {
+      movieViewModelList.add(new MovieViewModel(filesUri, smashThreshold, (Movie)moviesIterator.next()));
+    }
+    m.addAttribute("movies", movieViewModelList);
+    return "media/moviefilter";
+  }
+
+  @GetMapping("/movie/academy-award")
+  public String getAcademyMovies(
+          @RequestParam(required = false, value = "year") Integer year,
+          Model m){
+    if(year == null){
+      year = Calendar.getInstance().get(Calendar.YEAR)-1;
+    }
+    OscarWinnerSet oscarWinnerSet = movieService.getOscarWinnerByYear(year.intValue());
+    m.addAttribute("academyAward",oscarWinnerSet);
+    return "media/academyfilter";
   }
 
   @GetMapping("/movie/{id}")
   public String getMovie(@PathVariable long id, Model m) {
-    ViewModel viewModel = new ViewModel(movieService.getMovieById(id));
+    Movie movie = movieService.getMovieById(id);
+    if (movie == null) {
+      return "error/404";
+    }
+
+    MovieViewModel viewModel = new MovieViewModel(filesUri, smashThreshold, movie);
     m.addAttribute("movie", viewModel);
+    userService.setMediaListAttributes(m, movie.getId());
     return "media/movie";
   }
 
-  public static class ViewModel extends Movie {
 
-    private Double averageCriticRating = 0.0;
 
-    private Integer totalCriticRating = 0;
-
-    private Integer smashCount = 0;
-
-    private Integer passCount = 0;
-
-    private Double averageAudienceRating = 0.0;
-
-    private Integer totalAudienceRating = 0;
-
-    public ViewModel(Movie movie) {
-      super.setId(movie.getId());
-      super.setTitle(movie.getTitle());
-      super.setGenres(movie.getGenres());
-      super.setDescription(movie.getDescription());
-      super.setReleaseDate(movie.getReleaseDate());
-      super.setRunTime(movie.getRunTime());
-      super.setPosterPath(FILES_URI + movie.getPosterPath());
-      super.setCharacters(movie.getCharacters());
-      super.getCharacters().forEach(character -> {
-      	Celebrity c = character.getCelebrity();
-      	character.getCelebrity().setProfilePath(FILES_URI + c.getProfilePath());
-      });
-	    super.setDirector(movie.getDirector());
-	    super.setProducer(movie.getProducer());
-	    super.setWriter(movie.getWriter());
-	    super.setProductionCompany(movie.getProductionCompany());
-      super.setBoxOffice(movie.getBoxOffice());
-      super.setBudget(movie.getBudget());
-    }
-
-    public Double getAverageCriticRating() {
-    	return averageCriticRating;
-    }
-
-	  public Integer getTotalCriticRating() {
-    	return totalCriticRating;
-	  }
-
-	  public Integer getSmashCount() {
-		  return smashCount;
-	  }
-
-	  public Integer getPassCount() {
-		  return passCount;
-	  }
-
-	  public Double getAverageAudienceRating() {
-		  return averageAudienceRating;
-	  }
-
-	  public Integer getTotalAudienceRating() {
-		  return totalAudienceRating;
-	  }
-
-	  public void setTotalAudienceRating(Integer totalAudienceRating) {
-      this.totalAudienceRating = totalAudienceRating;
-    }
-
-    public String getCommaSeperatedGenres() {
-      return getGenres()
-          .stream()
-          .map(g -> StringUtils.capitalize(g.toString().toLowerCase()))
-          .collect(Collectors.joining(","));
-    }
-
-    public List<String> getPhotos() {
-    	return new ArrayList<>();
-    }
-
-    public List<String> getVideos() {
-    	return new ArrayList<>();
-    }
-
-    public List<CriticRating> getCriticRatings() {
-      return null;
-    }
-
-    public List<AudienceRating> getAudienceRatings() {
-      return null;
-    }
-
-  }
 }

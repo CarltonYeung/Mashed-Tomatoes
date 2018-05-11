@@ -1,0 +1,14 @@
+@import 'modules/colors';
+
+.header {
+    background-color: $header-bg-color;
+}
+
+#search-btn {
+    background-color: $search-form-action-bg-color;
+    color: black;
+}
+
+#search-btn:hover {
+    color: red;
+}

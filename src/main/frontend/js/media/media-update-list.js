@@ -1,29 +1,33 @@
 const $ = require('jquery');
 const _ = require('lodash');
 const ko = require('knockout');
-const urlBuilder = require('../url-builder');
+const alert = require('../alert');
 
-const movieSlug = $('[data-media-slug]').attr('data-media-slug');
+const mediaId = $('[data-media-id]').attr('data-media-id');
 
-const updateList = (isWantToSee) => {
+const updateList = (isWantToSee, adding) => {
   $.ajax(
-    urlBuilder.buildUpdateList(),
+    "/userMediaLists",
     {
-      method: "PATCH",
-      data: {
-        movieSlug: movieSlug,
-        isWantToSee: isWantToSee
-      },
+      method: "POST",
+      data: JSON.stringify({
+        id: mediaId,
+        add:  adding,
+        list: isWantToSee ? "WTS" : "NI"
+      }),
       contentType: "application/json",
-      dataType: "application/json",
-      success: res => {
-        if (res.status == 204) {
-          console.log('List updated');
+        success: (body, status, xhr) => {
+            if (_.isEqual(xhr.status, 200)) {
+                console.log('List updated');
+            }
+        },
+        error: (xhr, status, err) => {
+            if (xhr.status != 500) {
+                alert.display(xhr.responseText, true);
+            } else if (xhr.status ==  500) {
+                alert.display("Something's wrong with our server. Please try again later", true);
+            }
         }
-      },
-      error: res => {
-        console.error(res.status);
-      }
     });
 };
 
@@ -47,30 +51,36 @@ class ViewModel {
     });
   }
 
-  onAddToNI() {
-    if (!this.inNI()) {
-      this.inNI(true);
-      updateList(false);
-      if (this.inWTS()) {
-        this.inWTS(false);
-      }
+  onNI() {
+    if (this.inNI()) {
+      this.inNI(false);
+      updateList(false, false);
+    } else {
+        this.inNI(true);
+        if (this.inWTS()) {
+            this.inWTS(false);
+        }
+        updateList(false, true);
     }
   }
 
-  onAddToWTS() {
-    if (!this.inWTS()) {
-      this.inWTS(true);
-      updateList(true);
-      if (this.inNI()) {
-        this.inNI(false);
-      }
+  onWTS() {
+    if (this.inWTS()) {
+        this.inWTS(false);
+        updateList(true, false);
+    } else {
+        this.inWTS(true);
+        if (this.inNI()) {
+            this.inNI(false);
+        }
+        updateList(true, true);
     }
   }
 }
 
 module.exports.deps = [
   '#media-update-list',
-  '[data-media-slug]'
+  '[data-media-id]'
 ];
 
 module.exports.init = () => {

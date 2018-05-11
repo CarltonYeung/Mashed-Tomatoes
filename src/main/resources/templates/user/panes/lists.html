@@ -1,0 +1,30 @@
+<div th:fragment="pane" class="tab-pane fade user-pane" id="pills-lists" role="tabpanel">
+  <div class="d-flex">
+    <div class="user-pane -list">
+      <h2 class="user-pane -list -title">Want To See</h2>
+      <p th:if="${#lists.isEmpty(user.wantToSee)}" class="user-pane -list -no-item">So much empty...</p>
+      <div th:if="${!#lists.isEmpty(user.wantToSee)}" class="d-flex flex-wrap">
+        <div class="card" th:each="media: ${user.wantToSee}">
+          <img class="card-img-top" th:src="${media.posterPath}">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${media.title}"></h5>
+            <a class="cart-btn btn btn-danger" th:href="@{/media/{id}(id=${media.id})}">See more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="user-pane -list">
+      <h2 class="user-pane -list -title">Not Interested</h2>
+      <p th:if="${#lists.isEmpty(user.notInterested)}" class="user-pane -list -no-item">So much empty...</p>
+      <div th:if="${!#lists.isEmpty(user.notInterested)}" class="d-flex flex-wrap">
+        <div class="card" th:each="media: ${user.notInterested}">
+          <img class="card-img-top" th:src="${media.posterPath}">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${media.title}"></h5>
+            <a class="cart-btn btn btn-danger" th:href="@{/media/{id}(id=${media.id})}">See more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,7 @@
 package com.mashedtomatoes.user;
 
-import com.mashedtomatoes.rating.Publisher;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,17 +9,29 @@ import javax.persistence.Table;
 public class Critic extends User {
   private String firstName;
   private String lastName;
-  private Publisher publisher;
   private boolean topCritic;
-  private String slug;
 
-  public Critic() {}
-
-  public Critic(String firstName, String lastName) {
+  public Critic() {
     super(UserType.CRITIC);
+  }
+
+  public Critic(String displayName, String firstName, String lastName) {
+    this();
+    super.setDisplayName(displayName);
     this.firstName = firstName;
     this.lastName = lastName;
-    this.topCritic = false;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public void setTopCritic(boolean topCritic) {
+    this.topCritic = topCritic;
   }
 
   @Column(nullable = false)
@@ -30,43 +39,13 @@ public class Critic extends User {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
   @Column(nullable = false)
   public String getLastName() {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "publisherID", nullable = false)
-  public Publisher getPublisher() {
-    return publisher;
-  }
-
-  public void setPublisher(Publisher publisher) {
-    this.publisher = publisher;
-  }
-
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
   public boolean isTopCritic() {
     return topCritic;
-  }
-
-  public void setTopCritic(boolean topCritic) {
-    this.topCritic = topCritic;
-  }
-
-  public String getSlug() {
-    return slug;
-  }
-
-  public void setSlug(String slug) {
-    this.slug = slug;
   }
 }

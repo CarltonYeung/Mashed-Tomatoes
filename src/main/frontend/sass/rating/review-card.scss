@@ -1,11 +1,33 @@
 .review-card {
-    width: 18rem;
-    &.-tomato {
-        height: 36px;
-        width: 36px;
-    }
-    &.-text {
-        font-size: 16px;
-    }
-    &.-link {}
+  width: 18rem !important;
+  margin: .25em .25em .25em .25em;
+
+  &.-tomato {
+    height: 36px;
+    width: 36px;
+  }
+  &.-text {
+    font-size: 16px;
+  }
+  &.-link {
+  }
+
+}
+
+.star {
+  height: 48px;
+  width: 48px;
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  text-align: center;
+  background: yellow;
+  color: white;
+}
+
+.star::before {
+  display: inline-block;
+  height: 100%;
+  background: blue;
+  vertical-align: middle;
+  content: '';
 }

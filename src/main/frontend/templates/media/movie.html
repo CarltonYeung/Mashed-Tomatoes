@@ -9,217 +9,61 @@
 
 <body>
     <div th:replace="partials/header :: header"></div>
-    <main class="container" th:data-media-slug="${movie.slug}">
+    <main class="container" th:data-media-id="${movie.id}">
         <section class="media-section">
-            <h1 class="media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}">Movie Title (Movie Year)</h1>
+            <h1 class="pt-5 media-section -title" th:text="#{movie.heading(${movie.title}, ${#calendars.format(movie.releaseDate, 'yyyy')})}"></h1>
             <div class="d-flex justify-content-between">
-                <img class="media-info -poster" th:src="${movie.posterPath}">
+                <img class="col-md-4 media-info -poster" th:src="${movie.posterPath}">
                 <div class="col-md-8">
                     <p class="row media-info" th:text="${movie.description}">
-                        In the year 2045, people can escape their harsh reality in the OASIS, an immersive virtual world where you can go anywhere,
-                        do anything, be anyone-the only limits are your own imagination. OASIS creator James Halliday left
-                        his immense fortune and control of the Oasis to the winner of a contest designed to find a worthy
-                        heir. When unlikely hero Wade Watts conquers the first challenge of the reality-bending treasure
-                        hunt, he and his friends-known as the High Five-are hurled into a fantastical universe of discovery
-                        and danger to save the OASIS and their world.
                     </p>
                     <div class="row mt-2">
                         <div class="col-md-7 px-0">
                             <div class="media-info">
-                                <p class="media-info -key">Genre: </p>
-                                <p class="media-info -value" th:text="${movie.commaSeperatedGenres}"></p>
+                                <p class="media-info -key">Genre(s):
+                                    <span class="media-info -value" th:text="${movie.commaSeperatedGenres}"></span>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Directed By: </p>
-                                <p class="media-info -value" th:text="${movie.director.name}"></p>
+                                <p class="media-info -key" th:if="${movie.director != null}">Director:
+                                    <a class="media-info -value" th:text="${movie.director.name}" th:href="@{/celebrity/{id}(id=${movie.director.id})}"></a>
+                                </p>
+                            </div>
+                            <div class="media-info" th:if="${movie.writer != null}">
+                                <p class="media-info -key">Writer:
+                                    <a class="media-info -value" th:text="${movie.writer.name}" th:href="@{/celebrity/{id}(id=${movie.writer.id})}"></a>
+                                </p>
+                            </div>
+                            <div class="media-info" th:if="${movie.producer != null}">
+                                <p class="media-info -key">Producer:
+                                    <a class="media-info -value" th:text="${movie.producer.name}" th:href="@{/celebrity/{id}(id=${movie.producer.id})}"></a>
+                                </p>
                             </div>
                             <div class="media-info">
-                                <p class="media-info -key">Written By: </p>
-                                <p class="media-info -value" th:text="${movie.writer.name}"></p>
-                                <div class="media-info">
-                                    <p class="media-info -key">Produced By: </p>
-                                    <p class="media-info -value" th:text="${movie.producer.name}"></p>
-                                </div>
+                                <p class="media-info -key">Release Date:
+                                    <span class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></span>
+                                </p>
                             </div>
-                            <div class="media-info">
-                                <p class="media-info -key">Release Date: </p>
-                                <p class="media-info -value" th:text="${#calendars.format(movie.releaseDate, 'MMM dd, yyyy')}"></p>
+                            <div class="media-info" th:if="${not #strings.isEmpty(movie.productionCompany)}">
+                                <p class="media-info -key">Production:
+                                    <span class="media-info -value" th:text="${movie.productionCompany}"></span>
+                                </p>
                             </div>
-                            <div class="media-info">
-                                <p class="media-info -key">Production Company: </p>
-                                <p class="media-info -value" th:text="${movie.productionCompany}"></p>
-                            </div>
-
                         </div>
                         <div class="row col-md-5 px-0">
-                            <div class="col-md-6">
-                                <p class="text-center media-score -label">MashoMeter!</p>
-                                <div class="row">
-                                    <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
-                                </div>
-                                <p class="text-center media-score -value">
-                                    <span th:text="${movie.averageCriticRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Reviews:
-                                    <span th:text="${movie.totalCriticRating}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Average Rating:
-                                    <span th:text="${movie.averageCriticRating}"></span>/10</p>
-                                <p class="text-center media-score -stat">Smash:
-                                    <span th:text="${movie.smashCount}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Pass:
-                                    <span th:text="${movie.passCount}"></span>
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-center media-score -label">Audience Score</p>
-                                <div class="row">
-                                    <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
-                                </div>
-                                <p class="text-center media-score -value">
-                                    <span th:text="${movie.averageAudienceRating} * 100"></span>%</p>
-                                <p class="text-center media-score -stat">Total Ratings:
-                                    <span th:text="${movie.totalAudienceRating}"></span>
-                                </p>
-                                <p class="text-center media-score -stat">Average Rating:
-                                    <span th:text="${movie.averageAudienceRating}"></span>/5</p>
-                            </div>
+                            @@include('media-stats.html', { "media" : "movie" })
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Photos</h1>
-            <!--
-            <div class="d-flex justify-content-between">
-                <img class="media-section -photo" th:each="photo: ${movie.photos}" th:src="${photo}">
-            </div>
-            <a class="mt-2 float-right" th:if="${#lists.size(movie.photos) > 4}" th:href="@{/movie/{slug}/photo(slug=${movie.slug})}">See more</a>
-            -->
-            <div class="text-center">
-                <h3>No photos...</h3>
-            </div>
-        </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Videos</h1>
-            <!--
-            <div class="d-flex justify-content-between">
-                <div class="media-section -video-thumbnail" th:each="video: ${movie.videos}">
-                    <a th:href="${video.videoPath}">
-                        <img th:src="${video.thumbnailPath}">
-                    </a>
-                </div>
-            </div>
-            <a class="mt-2 float-right" th:if="${#lists.size(movie.videos) > 4}" th:href="@{/movie/{slug}/video(slug=${movie.slug})}">See more</a>
-            -->
-            <div class="text-center">
-                <h3>No videos...</h3>
-            </div>
-        </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Cast</h1>
-            <!--
-            <div class="d-flex justify-content-between" th:if="${not #lists.isEmpty(movie.characters)}">
-                <div class="talent-box" th:each="character: ${movie.characters}">
-                    <img class="talent-box -profile" th:src="${character.celebrity.profilePath}">
-                    <p class="talent-box -celebrity" th:text="${character.celebrity.name}"></p>
-                    <p class="talent-box -character">as
-                        <span th:text="${character.name}"></span>
-                    </p>
-                </div>
-            </div>
-            <a class="mt-1 float-right" th:if="${not #lists.isEmpty(movie.characters) && #lists.size(movie.characters) > 8}" th:href="@{/movie/{slug}/character(slug=${movie.slug})}">See more</a>
-            <div class="text-center" th:if="${#lists.isEmpty(movie.characters)}">
-            -->
-            <div class="text-center">
-                <h3>No characters...</h3>
-            </div>
-        </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Critic Reviews</h1>
-            <div class="card-columns" th:if="${not #lists.isEmpty(movie.criticRatings)}">
-                <div class="card bg-light" th:each="rating: ${movie.criticRatings}">
-                    <div class="card-body">
-                        <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
-                        <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
-                        <footer class="blockquote-footer">
-                            <small class="text-muted">
-                                <p>Last updated on
-                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-                                </p>
-                                <a th:href="@{/critic/{slug}(slug=${rating.author.slug})}" th:text="${rating.author.name}"></a> in
-                                <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
-                            </small>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <a class="float-right" th:if="${not #lists.isEmpty(movie.criticRatings) && #lists.size(movie.criticRatings) > 8}" th:href="@{/movie/{slug}/critic-rating(slug=${movie.slug})}">See more</a>
-            <div class="text-center" th:if="${#lists.isEmpty(movie.criticRatings)}">
-                <h3>No reviews posted. Not many fans of this stuff huh?</h3>
-            </div>
-        </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Audience Reviews</h1>
-            <div class="card-columns" th:if="${not #lists.isEmpty(movie.audienceRatings)}">
-                <div class="card bg-light">
-                    <div class="card-body" th:each="rating: ${movie.audienceRatings}">
-                        <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
-                        <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
-                        <footer class="blockquote-footer">
-                            <small class="text-muted">
-                                <p>Last updated on
-                                    <span th:text="${#calendars.(rating.updated, 'MMM dd, yyyy')}"></span>
-                                </p>
-                                <a th:href="@{/audience/{id}(id=${rating.author.id})}" th:text="${rating.author.name}"></a>
-                            </small>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <a class="float-right" th:if="${not #lists.isEmpty(movie.audienceRatings) && #lists.size(movie.audienceRatings) > 8}" th:href="@{/movie/{slug}/audience-rating(slug=${movie.slug})}">See more</a>
-            <div class="text-center" th:if="${#lists.isEmpty(movie.audienceRatings)}">
-                <h3>No ratings posted.</h3>
-            </div>
-        </section>
-        <section class="mt-4 media-section">
-            <h1 class="media-section -title">Your Thoughts</h1>
-            <div id="media-update-list" class="mt-3">
-                <h2 class="media-section -secondary-title">Save This Movie</h2>
-                <div class="d-flex justify-content-center">
-                    <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
-                    <button class="mr-5 btn list-btn -ni" th:if="${inNotInterested == null || !inNotInterested}" data-bind="css: ntCSS, click: onAddToNI">- Not Interested</button>
-                    <button class="ml-5 btn list-btn -wts" th:if="${inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
-                    <button class="ml-5 btn list-btn" th:if="${inWantToSee == null || !inWantToSee}" data-bind="css: wtsCSS, click: onAddToWTS">+ Want To See</button>
-                </div>
-            </div>
-            <div id="rating-form" class="mt-3">
-                <h2 class="media-section -secondary-title">Add your rating</h2>
-                <div class="row mt-2">
-                    <fieldset class="mx-auto star-rating-bar">
-                        <input type="radio" id="star5" name="rating-form-star-rating" value="5" required/>
-                        <label class="full" for="star5"></label>
-                        <input type="radio" id="star4" name="rating-form-star-rating" value="4" />
-                        <label class="full" for="star4"></label>
-                        <input type="radio" id="star3" name="rating-form-star-rating" value="3" />
-                        <label class="full" for="star3"></label>
-                        <input type="radio" id="star2" name="rating-form-star-rating" value="2" />
-                        <label class="full" for="star2"></label>
-                        <input type="radio" id="star1" name="rating-form-star-rating" value="1" />
-                        <label class="full" for="star1"></label>
-                    </fieldset>
-                </div>
-                <div class="row mt-2">
-                    <textarea id="rating-form-comment-box" class="mx-auto w-75 rating-form -comment-box" placeholder="Add a review (optional)"></textarea>
-                </div>
-                <div class="row mt-2">
-                    <button id="rating-form-post-btn" class="mx-auto btn btn-success rating-form -post-btn">Post</button>
-                </div>
-        </section>
+        @@include('media-photos.html', { "media": "movie" }) @@include('media-cast.html', { "media": "movie" }) @@include('media-ratings.html',
+        { "media": "movie", "mediaPretty": "Movie" })
         <br />
         <br />
     </main>
+    <div th:replace="partials/alert :: danger"></div>
+    <div th:replace="partials/alert :: success"></div>
     <div th:replace="partials/footer :: footer"></div>
     <div th:replace="partials/script :: script"></div>
 </body>

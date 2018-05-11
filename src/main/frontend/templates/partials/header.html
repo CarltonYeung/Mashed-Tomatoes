@@ -1,7 +1,7 @@
-<header th:fragment="header" id="nav" class="navbar navbar-expand-sm navbar-dark bg-success">
+<header th:fragment="header" id="nav" class="navbar navbar-expand-sm header">
     <div class="grid w-100">
         <div class="row">
-            <a href="index.html" class="ml-3 navbar-brand ">
+            <a href="/" class="ml-3 navbar-brand ">
                 <img src="/img/base/logo.png" class="icon">
             </a>
             <div id="search-bar" class="mx-3 my-auto d-inline w-75">
@@ -17,28 +17,58 @@
         </div>
         <div id="menus" class="collapse navbar-collapse">
             <ul class="w-100 m-auto navbar-nav menu-bar">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li id="dropdown-movies" class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#" id="movies-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Movies
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <p>Movie Megamenu</p>
+                    <div id="movies-sub-menu" class="nav-item dropdown-menu" aria-labelledby="movies-navbarDropdownMenuLink">
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Movies Main</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Movie Trailer</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Coming Soon</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Movie Genres</a>
+                        </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li id="dropdown-tv-shows" class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#" id="tv-shows-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         TV Shows
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <p>TV Show Megamenu</p>
+                    <div id="tv-shows-sub-menu" class="nav-item dropdown-menu" aria-labelledby="tv-shows-navbarDropdownMenuLink">
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">TV Main</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Late Night</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Recaps</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">TV Genres</a>
+                        </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        News
+                <li id="dropdown-critics" class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#" id="critics-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Critics
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <p>News Megamenu</p>
+                    <div id="critics-sub-menu" class="nav-item dropdown-menu" aria-labelledby="critics-navbarDropdownMenuLink">
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Critics Main</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Reviews</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Critic List</a>
+                        </div>
                     </div>
                 </li>
             </ul>

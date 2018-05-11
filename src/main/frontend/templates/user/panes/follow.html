@@ -1,0 +1,18 @@
+<div th:fragment="pane" class="tab-pane fade user-pane" id="pills-follow" role="tabpanel">
+    <div class="d-flex">
+        <div class="col-md-6">
+            <h2 class="my-4 text-center">Following</h2>
+            <p th:if="${#lists.isEmpty(user.following)}" class="text-center">So much empty...</p>
+            <div th:if="${!#lists.isEmpty(user.following)}"  class="list-group">
+                <a th:each="followee: ${user.following}" th:text="${followee.displayName}" th:href="@{/user/{id}(id=${followee.id})}" class="list-group-item list-group-item-action list-group-item-dark text-center"></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="my-4 text-center">Followers</h2>
+            <p th:if="${#lists.isEmpty(user.followers)}" class="text-center">So much empty...</p>
+            <div th:if="${!#lists.isEmpty(user.followers)}"  class="list-group">
+                <a th:each="follower: ${user.followers}" th:text="${follower.displayName}" th:href="@{/user/{id}(id=${follower.id})}" class="list-group-item list-group-item-action list-group-item-dark text-center"></a>
+            </div>
+        </div>
+    </div>
+</div>

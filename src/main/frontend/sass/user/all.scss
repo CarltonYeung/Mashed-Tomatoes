@@ -5,3 +5,13 @@
 @import 'register';
 @import 'user-pane';
 @import 'user-tab';
+
+.red .active a,
+.red .active a:hover {
+  background-color: red;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: red;
+}

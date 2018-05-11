@@ -7,6 +7,8 @@ public class RegisterRequest {
   private String email;
   private String password;
   private String displayName;
+  private boolean wantToBeAdmin;
+  private String recaptchaResponse;
 
   public RegisterRequest() {}
 
@@ -16,9 +18,17 @@ public class RegisterRequest {
     return email;
   }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
   @NotEmpty
   public String getPassword() {
     return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   @NotEmpty
@@ -26,15 +36,23 @@ public class RegisterRequest {
     return displayName;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
+  }
+
+  public boolean isWantToBeAdmin() {
+    return wantToBeAdmin;
+  }
+
+  public void setWantToBeAdmin(boolean wantToBeAdmin) {
+    this.wantToBeAdmin = wantToBeAdmin;
+  }
+
+  public String getRecaptchaResponse() {
+    return recaptchaResponse;
+  }
+
+  public void setRecaptchaResponse(String recaptchaResponse) {
+    this.recaptchaResponse = recaptchaResponse;
   }
 }

@@ -1,75 +1,71 @@
 package com.mashedtomatoes.search;
 
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.FullTextQuery;
-import org.hibernate.search.query.dsl.QueryBuilder;
+import com.mashedtomatoes.celebrity.CelebrityRepository;
+import com.mashedtomatoes.media.MovieRepository;
+import com.mashedtomatoes.media.TVShowRepository;
+import com.mashedtomatoes.util.FuzzyStringMatchComparator;
+import com.mashedtomatoes.util.Pair;
+import com.mashedtomatoes.util.Util;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import java.util.List;
-
 @Service
 public class SearchService {
-  public static final int MAX_RESULTS_PER_PAGE = 10;
+  private static final String URL_SPACE_DELIM = "+";
 
-  @Autowired
-  EntityManagerFactory emf;
+  @Autowired MovieRepository movieRepository;
 
-  @Cacheable("searchResults")
-  public List search(Class klass, String field, String value, int page) {
-    EntityManager em = emf.createEntityManager();
-    FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-    em.getTransaction().begin();
+  @Autowired TVShowRepository tvShowRepository;
 
-    QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(klass).get();
-    org.apache.lucene.search.Query query = qb
-            .keyword()
-            .onField(field)
-            .matching(value)
-            .createQuery();
+  @Autowired CelebrityRepository celebrityRepository;
 
-    javax.persistence.Query persistenceQuery =
-            fullTextEntityManager.createFullTextQuery(query, klass);
+  private String buildRegex(String expr) {
+    if (expr == null) {
+      return null;
+    }
+    List<String> parts =
+        Arrays.asList(expr.split("/" + URL_SPACE_DELIM)); // escape regex meta character
+    StringBuilder builder = new StringBuilder();
+    builder.append(".*(");
+    builder.append(String.join("-", parts));
+    builder.append(").*");
+    return builder.toString();
+  }
 
-    // use page 0 to return everything
-    if (page > 0) {
-      persistenceQuery.setFirstResult(MAX_RESULTS_PER_PAGE * (page - 1));
-      persistenceQuery.setMaxResults(MAX_RESULTS_PER_PAGE);
+  @Cacheable("searchobjects")
+  public List<Object> getAllObjectsMatching(String expr) {
+    ArrayList<Object> objects = new ArrayList<>();
+    if (expr == null) {
+      objects.addAll(movieRepository.findAll());
+      objects.addAll(tvShowRepository.findAll());
+      objects.addAll(celebrityRepository.findAll());
+      return objects;
     }
 
-    List result = persistenceQuery.getResultList();
-
-    em.getTransaction().commit();
-    em.close();
-
-    return result;
+    String regex = buildRegex(expr);
+    objects.addAll(movieRepository.findSimilarMovies(regex));
+    objects.addAll(tvShowRepository.findSimilarTVShows(regex));
+    objects.addAll(celebrityRepository.findSimilarCelebrities(regex));
+    String originalExpr = expr.replace(URL_SPACE_DELIM, " ");
+    FuzzyStringMatchComparator<Object> comparator =
+        new FuzzyStringMatchComparator<>(originalExpr, Object::toString);
+    objects.sort(comparator);
+    return objects;
   }
 
-  @Cacheable("searchResultsCount")
-  public int count(Class klass, String field, String value) {
-    EntityManager em = emf.createEntityManager();
-    FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-    em.getTransaction().begin();
+  public Pair<List<Object>, Boolean> getListPage(
+      List<Object> list, Integer pageNumber, Integer pageSize) {
+    Integer start = pageNumber * pageSize;
+    if (start >= list.size()) {
+      return null;
+    }
 
-    QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(klass).get();
-    org.apache.lucene.search.Query query = qb
-            .keyword()
-            .onField(field)
-            .matching(value)
-            .createQuery();
-
-    javax.persistence.Query persistenceQuery =
-            fullTextEntityManager.createFullTextQuery(query, klass);
-
-    int numOfResults = ((FullTextQuery) persistenceQuery).getResultSize();
-
-    em.getTransaction().commit();
-    em.close();
-
-    return numOfResults;
+    Integer end = Util.clamp(start + pageSize, 0, list.size());
+    Boolean hasNext = end != list.size();
+    return new Pair<>(list.subList(start, end), hasNext);
   }
-
 }

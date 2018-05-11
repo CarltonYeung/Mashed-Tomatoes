@@ -3,15 +3,18 @@ package com.mashedtomatoes.media;
 import com.mashedtomatoes.celebrity.Celebrity;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Table(name = "TVShows")
-@Indexed
 public class TVShow extends Media {
   private Date startDate;
   private Date endDate;
@@ -20,6 +23,7 @@ public class TVShow extends Media {
   private int episodes;
   private String network;
   private Celebrity creator;
+  private Set<Date> airDates;
 
   public TVShow() {
     super.ratings = new HashSet<>();
@@ -54,6 +58,10 @@ public class TVShow extends Media {
     this.creator = creator;
   }
 
+  public void setAirDates(Set<Date> airDates) {
+    this.airDates = airDates;
+  }
+
   public Date getStartDate() {
     return startDate;
   }
@@ -82,5 +90,15 @@ public class TVShow extends Media {
   @JoinColumn(name = "creatorId")
   public Celebrity getCreator() {
     return creator;
+  }
+
+  @ElementCollection(targetClass = Date.class, fetch = FetchType.EAGER)
+  @CollectionTable(
+    name = "TVShowAirDates",
+    joinColumns = {@JoinColumn(name = "mediaId")}
+  )
+  @Column(name = "airDate", nullable = false)
+  public Set<Date> getAirDates() {
+    return airDates;
   }
 }

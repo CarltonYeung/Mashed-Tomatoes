@@ -1,6 +1,10 @@
 const $ = require('jquery');
 
 module.exports.init = () => {
+  if ($(document).height() < 1500) {
+    return;
+  }
+
   $(window).scroll(function () {
     if ($(document).scrollTop() > 150) {
       $("#nav").css("position", "fixed");
@@ -26,6 +30,51 @@ module.exports.init = () => {
     }
   });
 };
+
+  $("#dropdown-movies").hover(
+    function() {
+     
+      $("#dropdown-movies").addClass("show");
+      $('#movies-navbarDropdownMenuLink').attr("aria-expanded", "true");
+      $("#movies-sub-menu").addClass("show");
+  },
+  function() {
+     
+    $("#dropdown-movies").removeClass("show");
+    $('#movies-navbarDropdownMenuLink').attr("aria-expanded", "false");
+    $("#movies-sub-menu").removeClass("show");
+  });
+
+
+  $("#dropdown-tv-shows").hover(
+    function() {
+     
+      $("#dropdown-tv-shows").addClass("show");
+      $('#tv-shows-navbarDropdownMenuLink').attr("aria-expanded", "true");
+      $("#tv-shows-sub-menu").addClass("show");
+  },
+  function() {
+     
+    $("#dropdown-tv-shows").removeClass("show");
+    $('#tv-shows-navbarDropdownMenuLink').attr("aria-expanded", "false");
+    $("#tv-shows-sub-menu").removeClass("show");
+  });
+
+  $("#dropdown-critics").hover(
+    function() {
+     
+      $("#dropdown-critics").addClass("show");
+      $('#critics-navbarDropdownMenuLink').attr("aria-expanded", "true");
+      $("#critics-sub-menu").addClass("show");
+  },
+  function() {
+     
+    $("#dropdown-critics").removeClass("show");
+    $('#critics-navbarDropdownMenuLink').attr("aria-expanded", "false");
+    $("#critics-sub-menu").removeClass("show");
+  });
+
+
 /* 
 
 Ethan's Legacy Code

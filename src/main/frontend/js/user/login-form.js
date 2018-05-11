@@ -11,6 +11,7 @@ module.exports.init = () => {
   alert.init();
 
   $('#login-form').submit(evt => {
+    evt.preventDefault();
     const emailSelector = $('#login-email');
     const passwordSelector = $('#login-password');
     const data = {
@@ -28,15 +29,18 @@ module.exports.init = () => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Welcome!', false);
             setTimeout(() => {
-              window.location.href = '/';
+              window.location.href = '/user/me';
             }, 1000);
           }
         },
         error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
+          if (xhr.status == 401) {
+            alert.display(xhr.responseText, true);
+          } else if (xhr.status ==  500) {
+            alert.display("Something's wrong with our server. Please try again later", true);
+          }
         }
       });
 
-    evt.preventDefault();
   });
 };

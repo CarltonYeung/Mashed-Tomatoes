@@ -11,16 +11,18 @@ module.exports.deps = [
 
 module.exports.init = () => {
   alert.init();
-
   $('#registration-form').submit(evt => {
+    evt.preventDefault();
     const displayNameSelector = $('#register-display-name');
     const emailSelector = $('#register-email');
     const passwordSelector = $('#register-password');
+    const recaptchaResponse = $('[name=g-recaptcha-response]').val();
 
     const data = {
       displayName: displayNameSelector.val(),
       email: emailSelector.val(),
-      password: passwordSelector.val()
+      password: passwordSelector.val(),
+      recaptchaResponse
     };
 
     $.ajax(
@@ -43,9 +45,12 @@ module.exports.init = () => {
           console.error(`Unexpected success code: ${res.status}`);
         },
         error: (xhr, status, err) => {
-          alert.display(xhr.responseText, true);
+          if (xhr.status == 400) {
+            alert.display(xhr.responseText, true);
+          } else if (xhr.status == 500) {
+            alert.display("Something's wrong with our server. Please try again later", true);
+          }
         }
       });
-    evt.preventDefault();
   });
 };

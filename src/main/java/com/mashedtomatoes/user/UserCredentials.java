@@ -1,13 +1,6 @@
 package com.mashedtomatoes.user;
 
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "UserCredentials")
@@ -16,17 +9,11 @@ public class UserCredentials {
   private User user;
   private String email;
   private String password;
-  private String resetKey;
 
   UserCredentials() {}
 
   UserCredentials(User user) {
     this.user = user;
-  }
-
-  public String generateKey() {
-    this.resetKey = UUID.randomUUID().toString().replace("-", "");
-    return this.resetKey;
   }
 
   @Id
@@ -65,13 +52,5 @@ public class UserCredentials {
 
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public String getResetKey() {
-    return resetKey;
-  }
-
-  public void setResetKey(String resetKey) {
-    this.resetKey = resetKey;
   }
 }
