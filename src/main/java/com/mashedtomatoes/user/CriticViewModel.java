@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CriticViewModel extends UserViewModel {
 
@@ -25,17 +26,8 @@ public class CriticViewModel extends UserViewModel {
     bestReviewed = sortRatings(true);
     worstReviewed = sortRatings(false);
 
-    for (Rating r : bestReviewed) {
-      if (r.getScore() < 3) {
-        bestReviewed.remove(r);
-      }
-    }
-
-    for (Rating r : worstReviewed) {
-      if (r.getScore() >= 3) {
-        worstReviewed.remove(r);
-      }
-    }
+    bestReviewed = bestReviewed.stream().filter(r -> r.getScore() >= 3).collect(Collectors.toList());
+    worstReviewed = worstReviewed.stream().filter(r -> r.getScore() < 3).collect(Collectors.toList());
   }
 
   private List<Rating> sortRatings(boolean descending) {
