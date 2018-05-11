@@ -15,7 +15,7 @@
         <h1 class="main-title my-4" th:if="${user.isCritic()}" th:text="${user.fullName}">John Doe</h1>
         <h2 class="text-center">This profile is private.</h2>
     </th:block>
-    <th:block th:if="${(viewingOwnProfile) || (!viewingOwnProfile && user.publicProfile)}">
+    <th:block th:if="${viewingOwnProfile || (!viewingOwnProfile && user.publicProfile)}">
         <h1 class="main-title my-4" th:if="${user.isAudience() || user.isAdmin()}" th:text="${user.displayName}">John Doe</h1>
         <h1 class="main-title my-4" th:if="${user.isCritic()}" th:text="${user.fullName}">John Doe</h1>
         <div class="mx-auto text-center">
