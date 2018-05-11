@@ -8,6 +8,7 @@ public class UserViewModel extends User {
 		super.setCredentials(base.getCredentials());
 		super.setVerification(base.getVerification());
 		super.setType(base.getType());
+		super.setPublicProfile(base.isPublicProfile());
 		super.setRatings(base.getRatings());
 		getRatings().stream().forEach(rating -> {
 			final String path = rating.getMedia().getPosterPath();
