@@ -71,6 +71,82 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   )
   Page<Object[]> findBestPictureWinner(Pageable pageable);
 
+  List<Movie> findAllByOrderByReleaseDateDesc(Pageable pageable);
+
+  List<Movie> findAllByGenresContainingOrderByReleaseDateDesc(Pageable pageable, Genre genre);
+
+  List<Movie> findAllByOrderByBoxOfficeDesc(Pageable pageable);
+
+  List<Movie> findAllByGenresContainingOrderByBoxOfficeDesc(Pageable pageable, Genre genre);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md WHERE md.id = me.id GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredMovieByMostPopular(Pageable pageable);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, mediagenres mg "
+                  + "WHERE md.id = me.id AND mg.mediaId = md.id AND mg.genre = :genre GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredMovieByMostPopularAndGenre(Pageable pageable, @Param("genre") String genre);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, CriticRatings crts "
+                  + "WHERE md.id = me.id AND crts.id = rt.id GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredMovieByCriticRating(Pageable pageable);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, mediagenres mg, CriticRatings crts "
+                  + "WHERE md.id = me.id AND mg.mediaId = md.id AND crts.id = rt.id  AND mg.genre = :genre GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredMovieByCriticRatingAndGenre(Pageable pageable, @Param("genre") String genre);
+
+  List<Movie> findAllByReleaseDateBetweenOrderByReleaseDateDesc(Pageable page, Date bef, Date aft);
+
+  List<Movie> findAllByReleaseDateBetweenAndGenresContainingOrderByReleaseDateDesc(Pageable page, Date bef, Date aft, Genre genre);
+
+  List<Movie> findAllByReleaseDateBetweenOrderByBoxOfficeDesc(Pageable page, Date bef, Date aft);
+
+  List<Movie> findAllByReleaseDateBetweenAndGenresContainingOrderByBoxOfficeDesc(Pageable page, Date bef, Date aft, Genre genre);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md "
+                  + "WHERE md.id = me.id AND me.releaseDate >= :beforeDate AND me.releaseDate <= :afterDate "
+                  + "GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredByDateMovieByMostPopular(Pageable pageable, @Param("beforeDate") Date beforeDate, @Param("afterDate") Date afterDate);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, mediagenres mg "
+                  + "WHERE md.id = me.id AND mg.mediaId = md.id AND mg.genre = :genre AND me.releaseDate >= :beforeDate AND me.releaseDate <= :afterDate "
+                  + "GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredByDateMovieByMostPopularAndGenre(Pageable pageable, @Param("genre") String genre, @Param("beforeDate") Date beforeDate, @Param("afterDate") Date afterDate);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, CriticRatings crts "
+                  + "WHERE md.id = me.id AND crts.id = rt.id AND me.releaseDate >= :beforeDate AND me.releaseDate <= :afterDate "
+                  + "GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredByDateMovieByCriticRating(Pageable pageable, @Param("beforeDate") Date beforeDate, @Param("afterDate") Date afterDate);
+
+  @Query(
+          value = "Select Me.*, md.* FROM (Movies me left join Ratings rt on rt.mediaID=me.id), Media md, mediagenres mg, CriticRatings crts " +
+                  "WHERE md.id = me.id AND mg.mediaId = md.id AND crts.id = rt.id  AND me.releaseDate >= :beforeDate AND me.releaseDate <= :afterDate AND mg.genre = :genre " +
+                  "GROUP By me.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<Movie> findFilteredDateMovieByCriticRatingAndGenre(Pageable pageable, @Param("genre") String genre, @Param("beforeDate") Date beforeDate, @Param("afterDate") Date afterDate);
+
+
   List<Movie> findAllByWriter_Id(long id);
 
   List<Movie> findAllByDirector_Id(long id);
