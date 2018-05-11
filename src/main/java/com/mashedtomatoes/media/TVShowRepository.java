@@ -52,4 +52,40 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
     nativeQuery = true
   )
   Page<Object[]> findTVAiringToday(Pageable pageable, @Param("currentDate") Date currentDate);
+
+  List<TVShow> findAllByOrderByStartDateDesc(Pageable pageable);
+
+  List<TVShow> findAllByGenresContainingOrderByStartDateDesc(Pageable pageable, Genre genre);
+
+  List<TVShow> findAllByStartDateIsBetweenOrderByStartDateDesc(Pageable pageable, Date beforeDate, Date afterDate);
+
+  List<TVShow> findAllByStartDateIsBetweenAndGenresContainingOrderByStartDateDesc(Pageable pageable, Date beforeDate, Date afterDate, Genre genre);
+
+  @Query(
+          value = "Select tv.*, md.* FROM (TVShows tv left join Ratings rt on rt.mediaID=tv.id), Media md "
+                  + "WHERE md.id = tv.id GROUP By tv.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<TVShow> findTVShowByMostPopularOrderByMostPopularDesc(Pageable pageable);
+
+  @Query(
+          value = "Select tv.*, md.* FROM (TVShows tv left join Ratings rt on rt.mediaID=tv.id), Media md, mediagenres mg "
+                  + "WHERE md.id = tv.id AND mg.mediaId = md.id AND mg.genre = :genre GROUP By tv.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<TVShow> findTVShowByMostPopularAndGenreOrderByMostPopularDesc(Pageable pageable, @Param("genre") String genre);
+
+  @Query(
+          value = "Select tv.*, md.* FROM (TVShows tv left join Ratings rt on rt.mediaID=tv.id), Media md, CriticRatings crts "
+                  + "WHERE md.id = tv.id AND crts.id = rt.id GROUP By tv.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<TVShow> findTVShowByCriticRatingOrderByCriticRatingDesc(Pageable pageable);
+
+  @Query(
+          value = "Select tv.*, md.* FROM (TVShows tv left join Ratings rt on rt.mediaID=tv.id), Media md, mediagenres mg, CriticRatings crts "
+                  + "WHERE md.id = tv.id AND crts.id = rt.id AND mg.genre = :genre GROUP By tv.id ORDER BY avg(rt.score) DESC",
+          nativeQuery = true
+  )
+  List<TVShow> findTVShowByCriticRatingAndGenreOrderByCriticRatingDesc(Pageable pageable, @Param("genre") String genre);
 }
