@@ -35,7 +35,6 @@ public class MovieViewController {
     if(genre.equals("all")){
       return true;
     }
-    System.err.println("GOT HERE");
     for(Genre g: Genre.values()){
       if(g.name().equals(genre)){
         return true;

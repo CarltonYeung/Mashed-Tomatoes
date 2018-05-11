@@ -2,6 +2,8 @@ package com.mashedtomatoes.media;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,6 +66,40 @@ public class TVShowService {
     ArrayList<TVShowRatingQuery> tvShowRatingQueries = makeTVShowRatingQueryList(pageTVShow.iterator());
     return tvShowRatingQueries;
 
+  }
+
+  public Iterable<TVShow> getFilteredTVShows(String genre, String sort, int page, int limit, int timeInterval){
+    Iterable<TVShow> tvShows = new ArrayList<TVShow>();
+    switch (sort){
+      case "most-popular":
+        if(genre.equals("all"))
+          tvShows = tvShowRepository.findTVShowByMostPopularOrderByMostPopularDesc(PageRequest.of(page, limit));
+        else
+          tvShows = tvShowRepository.findTVShowByMostPopularAndGenreOrderByMostPopularDesc(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
+        break;
+      case "critic-rating":
+        if(genre.equals("all"))
+          tvShows = tvShowRepository.findTVShowByCriticRatingOrderByCriticRatingDesc(PageRequest.of(page,limit));
+        else
+          tvShows = tvShowRepository.findTVShowByCriticRatingAndGenreOrderByCriticRatingDesc(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
+        break;
+      case "new-shows":
+        Date beforeDate = new Date(Instant.now().minus(timeInterval, ChronoUnit.DAYS).toEpochMilli());
+        Date afterDate = new Date(Instant.now().plus(timeInterval, ChronoUnit.DAYS).toEpochMilli());
+
+        if(genre.equals("all"))
+          tvShows = tvShowRepository.findAllByStartDateIsBetweenOrderByStartDateDesc(PageRequest.of(page, limit), beforeDate, afterDate);
+        else
+          tvShows = tvShowRepository.findAllByStartDateIsBetweenAndGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), beforeDate, afterDate, Genre.valueOf(genre));
+        break;
+      case "all":
+        if(genre.equals("all"))
+          tvShows = tvShowRepository.findAllByOrderByStartDateDesc(PageRequest.of(page, limit));
+        else
+          tvShows = tvShowRepository.findAllByGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), Genre.valueOf(genre));
+        break;
+    }
+    return tvShows;
   }
 
   TVShow getTVShowById(long id) {
