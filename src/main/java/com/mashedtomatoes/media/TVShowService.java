@@ -58,14 +58,12 @@ public class TVShowService {
         else
           tvShows = tvShowRepository.findTVShowByCriticRatingAndGenreOrderByCriticRatingDesc(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
         break;
-      case "new-shows":
-        Date beforeDate = new Date(Instant.now().minus(timeInterval, ChronoUnit.DAYS).toEpochMilli());
-        Date afterDate = new Date(Instant.now().plus(timeInterval, ChronoUnit.DAYS).toEpochMilli());
-
+      case "now-airing":
+        Date currentDate = new Date();
         if(genre.equals("all"))
-          tvShows = tvShowRepository.findAllByStartDateIsBetweenOrderByStartDateDesc(PageRequest.of(page, limit), beforeDate, afterDate);
+          tvShows = tvShowRepository.findAllByStartDateLessThanAndEndDateGreaterThanOrderByStartDateDesc(PageRequest.of(page, limit), currentDate, currentDate);
         else
-          tvShows = tvShowRepository.findAllByStartDateIsBetweenAndGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), beforeDate, afterDate, Genre.valueOf(genre));
+          tvShows = tvShowRepository.findAllByStartDateLessThanAndEndDateGreaterThanAndGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), currentDate, currentDate, Genre.valueOf(genre));
         break;
       case "airing-today":
         Calendar calendar = Calendar.getInstance();

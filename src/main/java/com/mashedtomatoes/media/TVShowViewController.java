@@ -47,7 +47,7 @@ public class TVShowViewController {
       return false;
     }
     else if(!sort.equals("most-popular") && !sort.equals("new-shows")
-            && !sort.equals("critic-rating")&& !sort.equals("airing-today") && !sort.equals("all")){
+            && !sort.equals("critic-rating")&& !sort.equals("now-airing") && !sort.equals("all")){
       return false;
     }
     return true;

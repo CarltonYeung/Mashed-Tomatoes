@@ -66,9 +66,9 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
 
   List<TVShow> findAllByGenresContainingOrderByStartDateDesc(Pageable pageable, Genre genre);
 
-  List<TVShow> findAllByStartDateIsBetweenOrderByStartDateDesc(Pageable pageable, Date beforeDate, Date afterDate);
+  List<TVShow> findAllByStartDateLessThanAndEndDateGreaterThanOrderByStartDateDesc(Pageable pageable, Date todayDate, Date todayDateAgain);
 
-  List<TVShow> findAllByStartDateIsBetweenAndGenresContainingOrderByStartDateDesc(Pageable pageable, Date beforeDate, Date afterDate, Genre genre);
+  List<TVShow> findAllByStartDateLessThanAndEndDateGreaterThanAndGenresContainingOrderByStartDateDesc(Pageable pageable, Date beforeDate, Date afterDate, Genre genre);
 
   @Query(
           value = "Select tv.*, md.* FROM (TVShows tv left join Ratings rt on rt.mediaID=tv.id), Media md "
