@@ -67,6 +67,22 @@ public class TVShowService {
         else
           tvShows = tvShowRepository.findAllByStartDateIsBetweenAndGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), beforeDate, afterDate, Genre.valueOf(genre));
         break;
+      case "airing-today":
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.clear();
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        Date date = calendar.getTime();
+        if(genre.equals("all"))
+          tvShows = tvShowRepository.findTVAiringToday(PageRequest.of(0, limit), date);
+        else
+          tvShows = tvShowRepository.findTVAiringTodayByGenre(PageRequest.of(0, limit), date, Genre.valueOf(genre).getName());
+        break;
       case "all":
         if(genre.equals("all"))
           tvShows = tvShowRepository.findAllByOrderByStartDateDesc(PageRequest.of(page, limit));

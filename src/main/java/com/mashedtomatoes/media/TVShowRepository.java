@@ -52,6 +52,16 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
   )
   List<TVShow> findTVAiringToday(Pageable pageable, @Param("currentDate") Date currentDate);
 
+  @Query(
+          value =
+                  "SELECT md.*, tv.* "
+                          + "FROM TVShows tv, Media md, tvshowairdates tvShowAir, mediagenres mg "
+                          + "WHERE md.id = tv.id AND tvShowAir.mediaId = md.id AND tvShowAir.airDate = :currentDate AND mg.mediaId = md.id AND mg.genre = :genre "
+                          + "GROUP By tv.id ORDER BY tvShowAir.airDate DESC",
+          nativeQuery = true
+  )
+  List<TVShow> findTVAiringTodayByGenre(Pageable pageable, @Param("currentDate") Date currentDate, @Param("genre") String genre);
+
   List<TVShow> findAllByOrderByStartDateDesc(Pageable pageable);
 
   List<TVShow> findAllByGenresContainingOrderByStartDateDesc(Pageable pageable, Genre genre);

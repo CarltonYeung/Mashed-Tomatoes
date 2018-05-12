@@ -61,7 +61,7 @@ public class AppController {
     List<MovieViewModel> bestPictureWinner = createMovieViewModelList(movieService.getBestPictureWinner(limit));
     List<TVShowViewModel> tvAiringToday = createTVShowViewModelList(tvShowService.getTVAiringToday(limit));
     List<MovieViewModel> openingThisWeek = createMovieViewModelList(movieService.getOpeningThisWeek(limit));
-    
+
     model.addAttribute("topBoxOffice", topBoxOffice);
     model.addAttribute("topRatedFilms", topRatedFilms);
     model.addAttribute("comingSoonFilms", comingSoonFilms);
