@@ -151,10 +151,7 @@ public class UserViewController {
     for(Iterator criticsIterator = critics.iterator(); criticsIterator.hasNext();){
       criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
     }
-    m.addAttribute("critics",filesUri);
-    for(CriticViewModel critic : criticViewModelList){
-      System.out.println(critic.getLastName());
-    }
+    m.addAttribute("critics",criticViewModelList);
     return "user/criticfilter";
   }
 }
