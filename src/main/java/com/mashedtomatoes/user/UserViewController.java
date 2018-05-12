@@ -8,10 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Controller
 public class UserViewController {
@@ -128,5 +129,32 @@ public class UserViewController {
     model.addAttribute("reviewReports", reviewReportService.findAll());
 
     return "user/admin";
+  }
+
+  @GetMapping("/critic")
+  public String getCritics(@RequestParam(required = false, defaultValue = "all", value = "filter") String filter,
+                           @RequestParam(required = false, value = "page") Integer pageInt,
+                           Model m){
+    if(!filter.equals("all") && !filter.equals("top")){
+      return "user/criticfilter";
+    }
+    int page;
+    if(pageInt == null || pageInt.intValue() < 0){
+      page = 0;
+    }
+    else{
+      page = pageInt.intValue();
+    }
+    int limit = Integer.parseInt(env.getProperty("mt.filteredPage.limit"));
+    Iterable<Critic> critics = userService.getCritics(page, limit, filter);
+    List<CriticViewModel> criticViewModelList = new ArrayList<CriticViewModel>();
+    for(Iterator criticsIterator = critics.iterator(); criticsIterator.hasNext();){
+      criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
+    }
+    m.addAttribute("critics",filesUri);
+    for(CriticViewModel critic : criticViewModelList){
+      System.out.println(critic.getLastName());
+    }
+    return "user/criticfilter";
   }
 }

@@ -11,16 +11,14 @@ import com.mashedtomatoes.rating.RatingService;
 import com.mashedtomatoes.security.HashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -32,6 +30,7 @@ public class UserService {
   @Autowired private CriticRatingRepository cRatingRepository;
   @Autowired private HashService hashService;
   @Autowired private Environment env;
+  @Autowired private CriticRepository criticRepository;
 
   public static HttpSession session() {
     ServletRequestAttributes attr =
@@ -271,4 +270,21 @@ public class UserService {
       model.addAttribute("inNotInterested", inNotInterested);
     }
   }
+
+  public Iterable<Critic> getCritics(int page, int limit, String filter){
+    Iterable<Critic> critics = new ArrayList<Critic>();;
+
+    switch(filter){
+      case "all":
+        critics = criticRepository.findAllByOrderByFirstName(PageRequest.of(page, limit));
+        break;
+      case "top":
+        critics = criticRepository.findAllByTopCriticTrueOrderByFirstName(PageRequest.of(page, limit));
+        break;
+    }
+
+    return critics;
+
+  }
+
 }
