@@ -52,6 +52,25 @@ public class MovieService {
     List<Movie> movies = movieRepository.findBestPictureWinner(PageRequest.of(0, limit));
     return movies;
   }
+  public Iterable<Movie> getOpeningThisWeek(int limit){
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    int month = calendar.get(Calendar.MONTH);
+    int year = calendar.get(Calendar.YEAR);
+    int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+    int firstDayOfWeek = calendar.getFirstDayOfWeek();
+    calendar.clear();
+    calendar.set(Calendar.MONTH, month);
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.WEEK_OF_MONTH, weekOfMonth);
+    calendar.set(Calendar.DAY_OF_WEEK, firstDayOfWeek);
+    Date beforeDate = calendar.getTime();
+    calendar.add(Calendar.DATE, 6);
+    Date afterDate = calendar.getTime();
+    List<Movie> movies = movieRepository.findFilteredByDateMovieByMostPopular(PageRequest.of(0, limit), beforeDate, afterDate);
+    return movies;
+
+  }
 
   private Iterable<Movie> getFilteredMoviesByTimeInterval(String genre, String sort, int page, int limit, Date beforeTime, Date afterTime){
     Iterable<Movie> movies = new ArrayList<Movie>();

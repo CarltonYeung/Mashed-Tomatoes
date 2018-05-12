@@ -15,10 +15,13 @@ public interface MediaRepository extends CrudRepository<Media, Long> {
   public Optional<Media> findFirstById(long id);
 
   @Query (
-          value = "SELECT media.* "
-                  + "FROM (Media media left join Ratings rt on media.id = rt.mediaID left join Movies movie on media.id = movie.id left join TVShows tv on media.id = tv.id left join tvshowairdates tvShowAir on tvShowAir.mediaId = tv.id) "
+          value = "SELECT DISTINCT media.* "
+                  + "FROM (Media media left join Movies movie on media.id = movie.id left join TVShows tv on media.id = tv.id left join TVShowAirDates tvShowAir on tvShowAir.mediaId = tv.id) "
                   + "WHERE ((movie.releaseDate >= :beforeDate AND movie.releaseDate <= :afterDate) or (tvShowAir.airDate >= :beforeDate AND tvShowAir.airDate <= :afterDate))",
           nativeQuery = true
   )
   List<Media> getNowPlaying(Pageable pageable, @Param("beforeDate") Date beforeDate, @Param("afterDate") Date afterDate);
+
+  List<Media> findAllBy(Pageable pageable);
+
 }

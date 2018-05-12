@@ -25,7 +25,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   @Query(
     value =
         "SELECT media.*, me.* "
-            + "FROM (Movies me left join Ratings rt on rt.mediaID = me.id), Media media WHERE media.id = me.id GROUP By me.id ORDER BY me.boxOffice DESC",
+            + "FROM Movies me, Media media WHERE media.id = me.id GROUP By me.id ORDER BY me.boxOffice DESC",
     nativeQuery = true
   )
   List<Movie> findTopBoxOfficeDesc(Pageable pageable);
@@ -41,7 +41,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   @Query(
     value =
         "SELECT media.*, movie.* "
-            + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media WHERE movie.id=media.id AND movie.releaseDate <= :timeAhead AND movie.releaseDate >= :currentDate "
+            + "FROM Movies movie, Media media WHERE movie.id=media.id AND movie.releaseDate <= :timeAhead AND movie.releaseDate >= :currentDate "
             + "GROUP By movie.id ORDER By movie.releaseDate DESC",
     nativeQuery = true
   )
@@ -53,7 +53,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   @Query(
     value =
         "SELECT media.*, movie.* "
-            + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media WHERE movie.id=media.id AND movie.releaseDate >= :timeBefore AND movie.releaseDate <= :currentDate "
+            + "FROM Movies movie, Media media WHERE movie.id=media.id AND movie.releaseDate >= :timeBefore AND movie.releaseDate <= :currentDate "
             + "GROUP By movie.id ORDER By movie.releaseDate DESC",
     nativeQuery = true
   )
@@ -65,7 +65,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
   @Query(
     value =
         "SELECT media.*, movie.* "
-            + "FROM (Movies movie left join Ratings rt on movie.id = rt.mediaID), Media media, OscarWinnerSet ows "
+            + "FROM Movies movie, Media media, OscarWinnerSet ows "
             + "WHERE movie.id = media.id AND media.id = ows.bestPictureId Group By movie.id ORDER By ows.year DESC",
     nativeQuery = true
   )

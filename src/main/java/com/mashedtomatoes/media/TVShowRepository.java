@@ -36,8 +36,8 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
   @Query(
     value =
         "SELECT md.*, tv.* "
-                + "FROM (TVShows tv left join Ratings rt on tv.id = rt.mediaID), Media md WHERE md.id = tv.id AND tv.startDate <= :currentDate AND tv.endDate >= :currentDate "
-                + "GROUP By tv.id ORDER BY avg(rt.score) DESC",
+                + "FROM TVShows tv, Media md WHERE md.id = tv.id AND tv.startDate <= :currentDate AND tv.endDate >= :currentDate "
+                + "ORDER BY tv.startDate DESC",
     nativeQuery = true
   )
   List<TVShow> findNowAiringTVShows(Pageable pageable, @Param("currentDate") Date currentDate);
@@ -45,9 +45,9 @@ public interface TVShowRepository extends CrudRepository<TVShow, Long> {
   @Query(
     value =
         "SELECT md.*, tv.* "
-                + "FROM (TVShows tv left join Ratings rt on tv.id = rt.mediaID), Media md, tvshowairdates tvShowAir "
-                + "WHERE md.id = tv.id AND tvShowAir.mediaId = md.id AND airDate = :currentDate "
-                + "GROUP By tv.id ORDER BY avg(rt.score) DESC",
+                + "FROM TVShows tv, Media md, tvshowairdates tvShowAir "
+                + "WHERE md.id = tv.id AND tvShowAir.mediaId = md.id AND tvShowAir.airDate = :currentDate "
+                + "GROUP By tv.id ORDER BY tvShowAir.airDate DESC",
     nativeQuery = true
   )
   List<TVShow> findTVAiringToday(Pageable pageable, @Param("currentDate") Date currentDate);

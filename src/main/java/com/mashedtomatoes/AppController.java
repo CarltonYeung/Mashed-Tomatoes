@@ -37,14 +37,6 @@ public class AppController {
     return movieViewModels;
   }
 
-  private List<MediaViewModel> createMediaViewModelList(Iterable<Media> media){
-    List<MediaViewModel> mediaViewModels = new ArrayList<MediaViewModel>();
-    for (Iterator mediaIterator = media.iterator(); mediaIterator.hasNext(); ) {
-      mediaViewModels.add(new MediaViewModel(filesUri, smashThreshold, (Media)mediaIterator.next()));
-    }
-    return mediaViewModels;
-  }
-
   private List<TVShowViewModel> createTVShowViewModelList(Iterable<TVShow> tvShows){
     List<TVShowViewModel> tvShowsViewModels = new ArrayList<TVShowViewModel>();
     for (Iterator tvShowIterator = tvShows.iterator(); tvShowIterator.hasNext(); ) {
@@ -53,17 +45,11 @@ public class AppController {
     return tvShowsViewModels;
   }
 
-  /*
-  Returns dynamic data to the homepage.
-  SPECIAL NOTE!
-  The Date field returned for BEST PICTURE WINNER is the year they won not the release date. The date field is the release date for the other categories.
-   */
   @GetMapping("/")
   public String getIndex(Model model) {
     int limit = Integer.parseInt(env.getProperty("mt.homepage.categories.limit"));
     int daysInterval =
         Integer.parseInt(env.getProperty("mt.homepage.categories.daysAheadAndBeforeCurrentDate"));
-    int nowPlayingDaysAhead = Integer.parseInt(env.getProperty("mt.homepage.nowPlaying.daysAhead"));
     List<MovieViewModel> topBoxOffice = createMovieViewModelList(movieService.getTopBoxOfficeMovies(limit));
     List<MovieViewModel> topRatedFilms = createMovieViewModelList(movieService.getTopRatedFilms(limit));
     List<MovieViewModel> comingSoonFilms =
@@ -74,16 +60,8 @@ public class AppController {
     List<TVShowViewModel> topRatedTVShows = createTVShowViewModelList(tvShowService.getTopRatedTVShows(limit));
     List<MovieViewModel> bestPictureWinner = createMovieViewModelList(movieService.getBestPictureWinner(limit));
     List<TVShowViewModel> tvAiringToday = createTVShowViewModelList(tvShowService.getTVAiringToday(limit));
-//    List<MediaViewModel> nowPlaying = createMediaViewModelList(mediaService.getNowPlaying(limit,nowPlayingDaysAhead));
-
-//    System.out.println("Now Playing");
-//    for(MediaViewModel movie : nowPlaying){
-//      System.out.println(movie.getTitle());
-//    }
-
-
-
-
+    List<MovieViewModel> openingThisWeek = createMovieViewModelList(movieService.getOpeningThisWeek(limit));
+    
     model.addAttribute("topBoxOffice", topBoxOffice);
     model.addAttribute("topRatedFilms", topRatedFilms);
     model.addAttribute("comingSoonFilms", comingSoonFilms);
@@ -92,7 +70,7 @@ public class AppController {
     model.addAttribute("topRatedTVShows", topRatedTVShows);
     model.addAttribute("bestPictureWinner", bestPictureWinner);
     model.addAttribute("tvAiringToday", tvAiringToday);
-//    model.addAttribute("nowPlaying", nowPlaying);
+    model.addAttribute("openingThisWeek", openingThisWeek);
     return "index";
   }
 }
