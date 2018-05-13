@@ -14,7 +14,6 @@ public class UserViewModel extends User {
 			final String path = rating.getMedia().getPosterPath();
 			rating.getMedia().setPosterPath(Util.resolveFilesUrl(fileUri,path));
 		});
-
 		super.setFollowing(base.getFollowing());
 		super.setFollowers(base.getFollowers());
 		super.setWantToSee(base.getWantToSee());

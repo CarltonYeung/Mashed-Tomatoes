@@ -8,8 +8,10 @@ import com.mashedtomatoes.user.UserRepository;
 import com.mashedtomatoes.user.UserService;
 import com.mashedtomatoes.user.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 @Service
@@ -123,5 +125,19 @@ public class RatingService {
     }
 
     userService.save(user);
+  }
+
+  public Iterable<CriticRating> getReviews(int page, int limit, String filter){
+    Iterable<CriticRating> criticRatings = new ArrayList<CriticRating>();
+    switch(filter){
+      case "all":
+        criticRatings = criticRatingRepository.findAllByOrderByMedia_TitleAsc(PageRequest.of(page, limit));
+        break;
+      case "latest":
+        criticRatings = criticRatingRepository.findAllByOrderByUpdatedDesc(PageRequest.of(page, limit));
+        break;
+    }
+    return criticRatings;
+
   }
 }
