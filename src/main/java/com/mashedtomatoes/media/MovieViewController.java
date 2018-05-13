@@ -27,7 +27,7 @@ public class MovieViewController {
 
   @Autowired private Environment env;
 
-  public static final Map<String, String> movieCategoryFilter = new HashMap<String, String>();
+  private static final Map<String, String> movieCategoryFilter = new HashMap<String, String>();
   static{
     movieCategoryFilter.put("New Releases", "new-releases");
     movieCategoryFilter.put("Coming Soon", "coming-soon");
@@ -35,7 +35,7 @@ public class MovieViewController {
     movieCategoryFilter.put("All", "all");
   }
 
-  public static final Map<String, String> movieSortFilter = new HashMap<String, String>();
+  private static final Map<String, String> movieSortFilter = new HashMap<String, String>();
   static{
     movieSortFilter.put("Release Date", "release-date");
     movieSortFilter.put("Most Popular", "most-popular");
@@ -122,8 +122,8 @@ public class MovieViewController {
     m.addAttribute("category", category);
     m.addAttribute("page", page);
     m.addAttribute("movies", movieViewModelList);
-    m.addAttribute("categories", movieCategoryFilter);
-    m.addAttribute("sortFilters", movieSortFilter);
+    m.addAttribute("movieCategoryFilters", movieCategoryFilter);
+    m.addAttribute("movieSortFilters", movieSortFilter);
     m.addAttribute("genres", genres);
     return "media/moviefilter";
   }
