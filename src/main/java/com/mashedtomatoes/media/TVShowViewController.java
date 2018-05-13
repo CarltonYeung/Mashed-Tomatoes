@@ -81,6 +81,7 @@ public class TVShowViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
+    m.addAttribute("pageNumber", page);
     m.addAttribute("tvShows", tvShowViewModelList);
     m.addAttribute("genres", genres);
     return "media/tvfilter";

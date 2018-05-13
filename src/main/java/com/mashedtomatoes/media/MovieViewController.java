@@ -100,7 +100,6 @@ public class MovieViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
-    m.addAttribute("hasPrevPage", page > 0);
     m.addAttribute("pageNumber", page);
     m.addAttribute("movies", movieViewModelList);
     m.addAttribute("genres", genres);

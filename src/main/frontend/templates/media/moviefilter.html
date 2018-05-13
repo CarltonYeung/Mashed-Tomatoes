@@ -63,9 +63,9 @@
     <div class="text-center ">
       <ul class="pagination pagination-lg">
         <li th:if="${pageNumber > 0}" class="page-item">
-            <a class="page-link" th:href="@{/movie?page={page}(page=${pageNumber - 1})}">Previous</a>
+            <a class="page-link" th:href="@{/movie(page=${pageNumber - 1})}">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" th:href="@{/movie?page={page}(page=${pageNumber + 1})}">Next</a></li>
+        <li class="page-item"><a class="page-link" th:href="@{/movie(page=${pageNumber + 1})}">Next</a></li>
       </ul>
     </div>    
     </div>
