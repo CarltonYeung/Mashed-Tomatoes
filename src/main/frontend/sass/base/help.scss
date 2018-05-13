@@ -1,0 +1,22 @@
+.help-logo {
+    max-width: 70px;
+    margin-bottom: -15px;
+}
+
+.help-contact-h3 {
+    font-size: 40px;
+    margin-left: 40px;
+    margin-top: 40px;
+    
+}
+
+.member-logo {
+    max-height: 100px;
+    margin-right: 30px;
+    margin-bottom: -30px;
+}
+
+.help-contact-h3:hover {
+    color: red;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

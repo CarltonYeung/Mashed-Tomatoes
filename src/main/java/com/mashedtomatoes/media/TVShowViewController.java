@@ -41,4 +41,6 @@ public class TVShowViewController {
     userService.setMediaListAttributes(m, tvShow.getId());
     return "media/tvshow";
   }
+  @GetMapping("/tvfilter")
+  public String getMovieFilter() { return "media/tvfilter"; }
 }

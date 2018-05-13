@@ -1,0 +1,90 @@
+.filter{
+    color: black !important;
+    background-color: #CECECE;
+    font-size: 30px;
+    min-height: 60px;
+}
+
+.filter-container{
+    padding-top: 80px;
+}
+
+// .filtered-list-container{
+
+// }
+
+.filtered-list {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filtered-list-container{
+    padding-top: 80px;
+}
+
+.filtered-content {
+    border: 1px solid #ddd; /* Add a border to all links */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #CECECE; /* Grey background color */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove default text underline */
+    font-size: 18px; /* Increase the font-size */
+    color: black; /* Add a black text color */
+    display: block; /* Make it into a block element to fill the whole list */
+}
+
+.filtered-content:hover:not(.header) {
+    background-color: rgb(243, 227, 227); /* Add a hover effect to all links, except for headers */
+    color: red;
+}
+
+.filtered-img{
+    max-height: 300px;
+}
+
+.filtered-title{
+    color: black !important;
+    text-align: center;
+    margin: auto;
+    font-size: 60px;
+}
+
+.text-center{
+    margin-left: 370px;
+    margin-top: 30px;
+}
+
+.page-item{
+    background-color: #CECECE !important;
+}
+
+.pagination ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pagination li {
+    display: inline;
+  }
+  
+  .pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+.page-link{
+    background-color: #CECECE;
+}
+
+  .page-link:hover {
+    color: red !important;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+  }
+  
+  .pagination li:hover:not(.active) a {
+    background-color: rgb(243, 227, 227) !important;
+  }

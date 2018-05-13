@@ -49,48 +49,64 @@ $(document).ready(function(){
         $('#heading-now-playing').removeClass('heading-glow');
   });
 
+  $('#index-carousel-otw').hover(
+    function() {
+        $('#heading-opening-this-week').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-opening-this-week').removeClass('heading-glow');
+  });
+
+  $('#index-carousel-csm').hover(
+    function() {
+      $('#heading-coming-soon-movies').addClass('heading-glow');
+  },
+    function() {
+      $('#heading-coming-soon-movies').removeClass('heading-glow');
+  });
+
   $('#index-carousel-tbo').hover(
     function() {
       $('#heading-top-box-office').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-box-office').removeClass('heading-glow');
-});
+  },
+      function() {
+        $('#heading-top-box-office').removeClass('heading-glow');
+  });
+
+  $('#index-carousel-trm').hover(
+      function() {
+        $('#heading-top-rated-movies').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-top-rated-movies').removeClass('heading-glow');
+  });
 
 
-$('#index-carousel-trf').hover(
-    function() {
-      $('#heading-top-rated-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-films').removeClass('heading-glow');
-});
-
-$('#index-carousel-csf').hover(
-    function() {
-      $('#heading-coming-soon-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-coming-soon-films').removeClass('heading-glow');
-});
 
 
-$('#index-carousel-tat').hover(
-    function() {
-      $('#heading-tv-airing-today').addClass('heading-glow');
-},
-    function() {
-      $('#heading-tv-airing-today').removeClass('heading-glow');
-});
+  $('#index-carousel-at').hover(
+      function() {
+        $('#heading-airing-today').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-airing-today').removeClass('heading-glow');
+  });
 
+  $('#index-carousel-na').hover(
+      function() {
+        $('#heading-now-airing').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-now-airing').removeClass('heading-glow');
+  });
 
-$('#index-carousel-trt').hover(
-    function() {
-      $('#heading-top-rated-tv').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-tv').removeClass('heading-glow');
-});
+  $('#index-carousel-trt').hover(
+      function() {
+        $('#heading-top-rated-tv').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-top-rated-tv').removeClass('heading-glow');
+  });
 
 
 

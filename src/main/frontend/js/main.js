@@ -47,6 +47,24 @@ const areDepsMet = deps => {
     return true;
 };
 
+
+$('#movie-section').hover(
+    function() {
+      $('#section-header-movie').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-movie').removeClass('heading-glow');
+});
+
+$('#tv-section').hover(
+    function() {
+      $('#section-header-tv').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-tv').removeClass('heading-glow');
+});
+
+
 $(document).ready(function () {
     // init components if all deps are met or if no deps are given
     _.forEach(components, component => {
@@ -62,3 +80,7 @@ $(document).ready(function () {
     $(".loader_inner").delay(1300).fadeOut(500);
     $(".loader").delay(1300).fadeOut(500);
 });
+
+// $(document).ready(function() {
+//     $('.selectpicker').selectpicker();
+//  });

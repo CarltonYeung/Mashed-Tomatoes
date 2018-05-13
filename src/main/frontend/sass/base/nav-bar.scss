@@ -15,6 +15,18 @@
     transition: all 0.2s ease;
 }
 
+.pl-100 {
+    padding-left: 100px;
+}
+
+.pr-200 {
+    padding-right: 200px;
+}
+
+.ml-70{
+    margin-left: 70px;
+}
+
 .nav-item {
     font-family: $header-typeface;
     font-size: 30px;
@@ -30,6 +42,14 @@
 .nav-link:hover {
     color: red;
     transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.w-45 {
+    width: 45%;
+}
+
+.ml-20 {
+    margin-left: 20px;
 }
 
 // #sub-menu {
@@ -60,5 +80,5 @@
   }
 
   .dropdown-menu{
-    width: 250px;
+    width: 400px;
   }

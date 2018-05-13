@@ -36,9 +36,13 @@ public class MovieViewController {
       return "error/404";
     }
 
+
     MovieViewModel viewModel = new MovieViewModel(filesUri, smashThreshold, movie);
     m.addAttribute("movie", viewModel);
     userService.setMediaListAttributes(m, movie.getId());
     return "media/movie";
   }
+
+  @GetMapping("/moviefilter")
+  public String getMovieFilter() { return "media/moviefilter"; }
 }

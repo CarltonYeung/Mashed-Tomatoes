@@ -4,7 +4,7 @@
             <a href="/" class="ml-3 navbar-brand ">
                 <img src="/img/base/logo.png" class="icon">
             </a>
-            <div id="search-bar" class="mx-3 my-auto d-inline w-75">
+            <div id="search-bar" class="pl-100 pr-200 my-auto d-inline w-75">
                 <form id="search-form">
                     <div class="input-group search-form">
                         <input id="search-input" type="text" class="form-control field " placeholder="Search for movies, tv shows, and celebrities">
@@ -12,7 +12,7 @@
                     </div>
                 </form>
             </div>
-            <a th:if="${#session == null}" id="login-btn" class="ml-4 my-4 h-50 btn login-button" href="/login">Login</a>
+            <a th:if="${#session == null}" id="login-btn" class="ml-70 my-auto h-50 btn login-button" href="/login">Login</a>
             <button th:if="${#session != null}" id="logout-btn" class="ml-4 my-4 h-50 btn login-button">Logout</button>
         </div>
         <div id="menus" class="collapse navbar-collapse">
@@ -23,16 +23,22 @@
                     </a>
                     <div id="movies-sub-menu" class="nav-item dropdown-menu" aria-labelledby="movies-navbarDropdownMenuLink">
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movies Main</a>
+                            <a href="/movie?category=new-releases" class ="sub-menus">Now Playing</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movie Trailer</a>
+                            <a href="/movie?category=opening-this-week" class ="sub-menus">Opening This week</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Coming Soon</a>
+                            <a href="/movie?category=coming-soon" class ="sub-menus">Coming Soon</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Movie Genres</a>
+                            <a href="/movie?sort=top-box-office" class ="sub-menus">Top Box Office</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="/movie?sort=most-popular" class ="sub-menus">Top Rated</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                            <a href="#" class ="sub-menus">Academy Award Winners</a>
                         </div>
                     </div>
                 </li>
@@ -42,32 +48,32 @@
                     </a>
                     <div id="tv-shows-sub-menu" class="nav-item dropdown-menu" aria-labelledby="tv-shows-navbarDropdownMenuLink">
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">TV Main</a>
+                            <a href="/tv?sort=airing-today" class ="sub-menus">Airing Today</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Late Night</a>
+                            <a href="/tv?sort=new-shows" class ="sub-menus">Now Airing</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Recaps</a>
-                        </div>
-                        <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">TV Genres</a>
+                            <a href="/tv?sort=most-popular" class ="sub-menus">Top Rated</a>
                         </div>
                     </div>
                 </li>
                 <li id="dropdown-critics" class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#" id="critics-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-item nav-link dropdown-toggle" href="/critics?filter=all" id="critics-navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Critics
                     </a>
                     <div id="critics-sub-menu" class="nav-item dropdown-menu" aria-labelledby="critics-navbarDropdownMenuLink">
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Critics Main</a>
+                            <a href="/critic?filter=all" class ="sub-menus">All</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Reviews</a>
+                            <a href="/critic?filter=top" class ="sub-menus">Top</a>
                         </div>
                         <div class="sub-menus-divs">
-                            <a href="#" class ="sub-menus">Critic List</a>
+                            <a href="/review?filter=all" class ="sub-menus">All Reviews</a>
+                        </div>
+                        <div class="sub-menus-divs">
+                                <a href="/review?filter=latest" class ="sub-menus">Latest Reviews</a>
                         </div>
                     </div>
                 </li>

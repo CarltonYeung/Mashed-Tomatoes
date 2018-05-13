@@ -5,4 +5,23 @@
 
 .about-logo {
     max-width: 70px;
+    margin-bottom: -15px;
+}
+
+.about-social:hover {
+    color: red;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.about-contact-body{
+    font-size: 20px;
+}
+
+.about-contact-h3 {
+    font-size: 30px;
+}
+
+.about-contact-mailto:hover {
+    color: red;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

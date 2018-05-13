@@ -119,3 +119,20 @@ td {
 .chart-heading {
   margin-left: -50px;
 }
+
+.section-header {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 70px;
+  
+}
+
+.line-through{
+  text-decoration: line-through;
+  color: #C0C0C0;
+}
+
+.chart-heading:hover{
+  color: red;
+  transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

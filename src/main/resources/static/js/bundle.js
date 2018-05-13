@@ -33625,6 +33625,24 @@ const areDepsMet = deps => {
     return true;
 };
 
+
+$('#movie-section').hover(
+    function() {
+      $('#section-header-movie').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-movie').removeClass('heading-glow');
+});
+
+$('#tv-section').hover(
+    function() {
+      $('#section-header-tv').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-tv').removeClass('heading-glow');
+});
+
+
 $(document).ready(function () {
     // init components if all deps are met or if no deps are given
     _.forEach(components, component => {
@@ -33640,6 +33658,10 @@ $(document).ready(function () {
     $(".loader_inner").delay(1300).fadeOut(500);
     $(".loader").delay(1300).fadeOut(500);
 });
+
+// $(document).ready(function() {
+//     $('.selectpicker').selectpicker();
+//  });
 
 
 /***/ }),
@@ -43539,25 +43561,33 @@ module.exports.init = () => {
   }
 
   $(window).scroll(function () {
-    if ($(document).scrollTop() > 150) {
+    if ($(document).scrollTop() > 175) {
       $("#nav").css("position", "fixed");
       $("#nav").css("margin-top", "-17px");
-      $("#content-container").css("padding-top", "500px");
+      $("#popupstart").css("padding-top", "210px");
       $("#menus").insertBefore("#search-bar");
-      $("#menus").css("max-width", "45%");
+      $("#menus").css("max-width", "45%"); 
       $("#menus").css("float", "left");
+      $("#menus").css("margin-right", "-100px");
       $("#search-bar").removeClass("w-75");
+      $("#search-bar").addClass("w-45");
+      $("#search-bar").css("margin-right", "-110px");
       $("#nav").css("height", "80px");
+      $("#login-btn").removeClass("ml-70");
       // $("#nav").addClass("shrink");
     } else {
       $("#nav").css("position", "static");
       $("#nav").css("margin-top", "0px");
-      $("#content-container").css("margin-top", "0");
-      $("#nav").css("z-index", "2");
+      $("#popupstart").css("padding-top", "0");
+      $("#nav").css("z-index", "999");
       $("#menus").insertAfter("#login-btn");
       $("#menus").css("max-width", "100%");
+      $("#menus").css("margin-right", "0px");
+      $("#search-bar").removeClass("w-45");
       $("#search-bar").addClass("w-75");
+      $("#search-bar").css("margin-right", "0");
       $("#nav").css("height", "");
+      $("#login-btn").addClass("ml-70");
       // $("#nav").delay(10000).animate({ opacity: 1 }, 700);​
       // $("#nav").removeClass("shrink");
     }
@@ -44724,48 +44754,64 @@ $(document).ready(function(){
         $('#heading-now-playing').removeClass('heading-glow');
   });
 
+  $('#index-carousel-otw').hover(
+    function() {
+        $('#heading-opening-this-week').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-opening-this-week').removeClass('heading-glow');
+  });
+
+  $('#index-carousel-csm').hover(
+    function() {
+      $('#heading-coming-soon-movies').addClass('heading-glow');
+  },
+    function() {
+      $('#heading-coming-soon-movies').removeClass('heading-glow');
+  });
+
   $('#index-carousel-tbo').hover(
     function() {
       $('#heading-top-box-office').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-box-office').removeClass('heading-glow');
-});
+  },
+      function() {
+        $('#heading-top-box-office').removeClass('heading-glow');
+  });
+
+  $('#index-carousel-trm').hover(
+      function() {
+        $('#heading-top-rated-movies').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-top-rated-movies').removeClass('heading-glow');
+  });
 
 
-$('#index-carousel-trf').hover(
-    function() {
-      $('#heading-top-rated-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-films').removeClass('heading-glow');
-});
-
-$('#index-carousel-csf').hover(
-    function() {
-      $('#heading-coming-soon-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-coming-soon-films').removeClass('heading-glow');
-});
 
 
-$('#index-carousel-tat').hover(
-    function() {
-      $('#heading-tv-airing-today').addClass('heading-glow');
-},
-    function() {
-      $('#heading-tv-airing-today').removeClass('heading-glow');
-});
+  $('#index-carousel-at').hover(
+      function() {
+        $('#heading-airing-today').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-airing-today').removeClass('heading-glow');
+  });
 
+  $('#index-carousel-na').hover(
+      function() {
+        $('#heading-now-airing').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-now-airing').removeClass('heading-glow');
+  });
 
-$('#index-carousel-trt').hover(
-    function() {
-      $('#heading-top-rated-tv').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-tv').removeClass('heading-glow');
-});
+  $('#index-carousel-trt').hover(
+      function() {
+        $('#heading-top-rated-tv').addClass('heading-glow');
+  },
+      function() {
+        $('#heading-top-rated-tv').removeClass('heading-glow');
+  });
 
 
 

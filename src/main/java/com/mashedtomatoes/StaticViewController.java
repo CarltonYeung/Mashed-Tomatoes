@@ -15,4 +15,7 @@ public class StaticViewController {
   public String getNewsletter() {
     return "base/newsletter";
   }
+
+  @GetMapping("/help")
+  public String getHelp() { return "base/help"; }
 }
