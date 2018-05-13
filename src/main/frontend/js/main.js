@@ -32,6 +32,7 @@ const components = [
     require('./user/edit-rating-btn'),
     require('./user/critic-apply-form'),
     require('./user/report-user-form'),
+    require('./user/delete-application-btn'),
     require('./base/carousel')
 ];
 
@@ -46,7 +47,6 @@ const areDepsMet = deps => {
 
     return true;
 };
-
 
 $('#movie-section').hover(
     function() {
@@ -64,7 +64,6 @@ $('#tv-section').hover(
       $('#section-header-tv').removeClass('heading-glow');
 });
 
-
 $(document).ready(function () {
     // init components if all deps are met or if no deps are given
     _.forEach(components, component => {
@@ -80,7 +79,3 @@ $(document).ready(function () {
     $(".loader_inner").delay(1300).fadeOut(500);
     $(".loader").delay(1300).fadeOut(500);
 });
-
-// $(document).ready(function() {
-//     $('.selectpicker').selectpicker();
-//  });

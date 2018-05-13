@@ -9,6 +9,7 @@
                 Critic Submission
                 <span class="sr-only"></span>
             </a>
+<<<<<<< HEAD
       <a class="footer-item nav-item nav-link col-lg" href="/help">
                 Help
                 <span class="sr-only"></span>
@@ -32,6 +33,12 @@
                 </a>
       </p>
 
+=======
+      <a th:if="${#session != null && session.ViewUser.isAdmin()}" class="footer-item nav-item nav-link col-lg" href="/user/admin">
+                Admin
+                <span class="sr-only"></span>
+            </a>
+>>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
       <a th:if="${#session != null}" class="footer-item nav-item nav-link col-lg" href="/user/me">
                 User
                 <span class="sr-only"></span>

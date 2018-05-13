@@ -29,7 +29,7 @@ module.exports.init = () => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Welcome!', false);
             setTimeout(() => {
-              window.location.href = '/';
+              window.location.href = '/user/me';
             }, 1000);
           }
         },

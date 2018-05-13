@@ -1,5 +1,6 @@
 package com.mashedtomatoes.user;
 
+import com.mashedtomatoes.rating.ReviewReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -7,15 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Controller
 public class UserViewController {
   @Autowired private UserService userService;
   @Autowired private UserReportService userReportService;
+  @Autowired private ReviewReportService reviewReportService;
   @Autowired private CriticApplicationService criticApplicationService;
   @Autowired private Environment env;
 
@@ -107,8 +110,8 @@ public class UserViewController {
     return "user/user";
   }
 
-  @GetMapping("/user/criticApplications")
-  public String criticApplications(HttpServletResponse response, Model model) {
+  @GetMapping("/user/admin")
+  public String admin(HttpServletResponse response, Model model) {
     HttpSession session = UserService.session();
     if (session == null) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -122,24 +125,33 @@ public class UserViewController {
     }
 
     model.addAttribute("applications", criticApplicationService.findAll());
-    return "/user/criticApplications";
+    model.addAttribute("userReports", userReportService.findAll());
+    model.addAttribute("reviewReports", reviewReportService.findAll());
+
+    return "user/admin";
   }
 
-  @GetMapping("/user/reports")
-  public String userReports(HttpServletResponse response, Model model) {
-    HttpSession session = UserService.session();
-    if (session == null) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return "error/401";
+  @GetMapping("/critic")
+  public String getCritics(@RequestParam(required = false, defaultValue = "all", value = "filter") String filter,
+                           @RequestParam(required = false, value = "page") Integer pageInt,
+                           Model m){
+    if(!filter.equals("all") && !filter.equals("top")){
+      return "user/criticfilter";
     }
-
-    User user = (User) session.getAttribute("User");
-    if (!(user instanceof Administrator)) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return "error/401";
+    int page;
+    if(pageInt == null || pageInt.intValue() < 0){
+      page = 0;
     }
-
-    model.addAttribute("reports", userReportService.findAll());
-    return "/user/reports";
+    else{
+      page = pageInt.intValue();
+    }
+    int limit = Integer.parseInt(env.getProperty("mt.filteredPage.limit"));
+    Iterable<Critic> critics = userService.getCritics(page, limit, filter);
+    List<CriticViewModel> criticViewModelList = new ArrayList<CriticViewModel>();
+    for(Iterator criticsIterator = critics.iterator(); criticsIterator.hasNext();){
+      criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
+    }
+    m.addAttribute("critics", criticViewModelList);
+    return "user/criticfilter";
   }
 }

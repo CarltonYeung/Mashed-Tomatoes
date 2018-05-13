@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="col-md-6">
   <p class="text-center media-score -label">MashoMeter!</p>
   <div class="row">
@@ -29,4 +30,33 @@
   </p>
   <p class="text-center media-score -stat">Average Rating:
     <span th:text="${@@media.averageAudienceRating}"></span>/5</p>
+=======
+<div class="col-md-6">
+  <p class="text-center media-score -label">MashoMeter!</p>
+  <div class="row">
+    <img class="mx-auto media-score -icon" src="/img/rating/mashometer-tomato.png">
+  </div>
+  <p th:if="${@@media.averageCriticRating != 0}" class="text-center media-score -value">
+    <span th:text="${@@media.averageCriticRating} / 5.0 * 100"></span>%</p>
+  <p th:if="${@@media.averageCriticRating == 0}" class="text-center media-score -value">0%</p>
+  <p class="text-center media-score -stat">Total Reviews:
+    <span th:text="${@@media.totalCriticRating}"></span>
+  </p>
+  <p class="text-center media-score -stat">Average Rating:
+    <span th:text="${@@media.averageCriticRating}"></span>/10</p>
+</div>
+<div class="col-md-6">
+  <p class="text-center media-score -label">Audience Score</p>
+  <div class="row">
+    <img class="mx-auto media-score -icon" src="/img/rating/audience-star.png">
+  </div>
+  <p th:if="${@@media.averageAudienceRating != 0}" class="text-center media-score -value">
+    <span th:text="${@@media.averageAudienceRating} / 5.0 * 100"></span>%</p>
+  <p th:if="${@@media.averageAudienceRating == 0}" class="text-center media-score -value">0%</p>
+  <p class="text-center media-score -stat">Total Ratings:
+    <span th:text="${@@media.totalAudienceRating}"></span>
+  </p>
+  <p class="text-center media-score -stat">Average Rating:
+    <span th:text="${@@media.averageAudienceRating}"></span>/5</p>
+>>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
 </div>

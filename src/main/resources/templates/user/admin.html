@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <div th:replace="partials/meta :: meta"></div>
+  <title>Mashed Tomatoes | Admin Page</title>
+  <div th:replace="partials/style :: style"></div>
+</head>
+
+<body>
+  <div th:replace="partials/header :: header"></div>
+  <main class="container">
+    <h1 class="main-title my-4">Admin Portal</h1>
+    <div class="row">
+      <ul class="nav nav-pills mx-auto user-tab" id="pills-tab">
+        <li class="pr-3 nav-item user-tab -item">
+          <a class="nav-link user-tab active -item-link" id="pills-reported-users-tab" data-toggle="pill" href="#pills-reported-users">Reported Users</a>
+        </li>
+        <li class="px-3 nav-item user-tab -item">
+          <a class="nav-link user-tab -item-link" id="pills-reported-reviews-tab" data-toggle="pill" href="#pills-reported-reviews">Reported Reviews</a>
+        </li>
+        <li class="pl-3 nav-item user-tab -item">
+          <a class="nav-link user-tab -item-link" id="pills-critic-applications-tab" data-toggle="pill" href="#pills-critic-applications">Critic Applications</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+      <div th:replace="user/panes/reportedusers :: pane"></div>
+      <div th:replace="user/panes/reportedreviews :: pane"></div>
+      <div th:replace="user/panes/criticapplications :: pane"></div>
+    </div>
+  </main>
+  <div th:replace="partials/alert :: danger"></div>
+  <div th:replace="partials/alert :: success"></div>
+  <div th:replace="partials/footer :: footer"></div>
+  <div th:replace="partials/script :: script"></div>
+</body>
+
+</html>

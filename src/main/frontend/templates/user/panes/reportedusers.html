@@ -1,0 +1,14 @@
+<div th:fragment="pane" class="tab-pane active show fade user-pane" id="pills-reported-users" role="tabpanel">
+    <h2 th:if="${#lists.isEmpty(userReports)}" class="my-4 text-center">So much empty...</h2>
+    <div th:if="${!#lists.isEmpty(userReports)}" class="mt-4 mx-auto d-flex flex-wrap">
+        <div th:each="report: ${userReports}" class="mx-4 my-2 bg-dark review-card">
+            <div class="card-body">
+                <h2 class="my-2" th:text="${report.user.displayName}"></h2>
+                <p class="py-4 card-text" th:text="${report.reason}"></p>
+            </div>
+            <div class="d-flex justify-content-center w-75 mx-auto py-2">
+                <a class="btn btn-primary" th:href="@{/user/{id}(id=${report.user.id})}">View User</a>
+            </div>
+        </div>
+    </div>
+</div>

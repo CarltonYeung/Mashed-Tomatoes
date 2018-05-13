@@ -3,18 +3,33 @@
 
 <head>
   <div th:replace="partials/meta :: meta"></div>
-  <title>User Page</title>
+  <title>Mashed Tomatoes | User Page</title>
   <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
   <div th:replace="partials/header :: header"></div>
   <main class="container">
-    <h1 class="main-title my-4" th:text="${user.displayName}">John Doe</h1>
     <th:block th:if="${!viewingOwnProfile && !user.publicProfile}">
+      <h1 class="main-title my-4" th:if="${user.isAudience() || user.isAdmin()}" th:text="${user.displayName}">John Doe</h1>
+      <h1 class="main-title my-4" th:if="${user.isCritic()}" th:text="${user.fullName}">John Doe</h1>
       <h2 class="text-center">This profile is private.</h2>
     </th:block>
-    <th:block th:if="${(viewingOwnProfile) || (!viewingOwnProfile && user.publicProfile)}">
+    <th:block th:if="${viewingOwnProfile || (!viewingOwnProfile && user.publicProfile)}">
+      <h1 class="main-title my-4" th:if="${user.isAudience() || user.isAdmin()}" th:text="${user.displayName}">John Doe</h1>
+      <h1 class="main-title my-4" th:if="${user.isCritic()}" th:text="${user.fullName}">John Doe</h1>
+      <div class="mx-auto text-center">
+        <h3>
+          <span th:if="${user.isAudience()}" class="mx-auto text-center badge badge-secondary">Audience</span>
+          <span th:if="${user.isCritic()}" class="mx-auto text-center badge badge-secondary">Critic</span>
+          <span th:if="${user.isAdmin()}" class="mx-auto text-center badge badge-secondary">Admin</span>
+        </h3>
+        <th:block th:if="${user.isAudience()}">
+          <img th:if="${user.isBronze()}" height="32" width="32" src="/img/user/bronze.png" />
+          <img th:if="${user.isSilver()}" height="32" width="32" src="/img/user/silver.png" />
+          <img th:if="${user.isGold()}" height="32" width="32" src="/img/user/gold.png" />
+        </th:block>
+      </div>
       <th:block th:if="${#session != null && !viewingOwnProfile}">
         <div id="follow-user-btn-row" class="d-flex justify-content-center mx-auto mb-4" th:attr="data-user-id=${user.id}, data-user-is-following=${isFollowing}">
           <button th:if="${!isFollowing}" id="follow-user-btn" class="mr-2 btn btn-primary" data-bind="css: followCSS, text: followText, click: onFollow">Follow
