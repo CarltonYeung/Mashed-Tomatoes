@@ -28,6 +28,12 @@ public class UserViewController {
   @Value("${mt.files.uri}")
   private String filesUri = "/files";
 
+  private static final Map<String, String> criticFilter = new HashMap<String, String>();
+  static{
+    criticFilter.put("Top", "top");
+    criticFilter.put("All", "all");
+  }
+
   @GetMapping("/login")
   public String login() {
     return "user/login";
@@ -152,6 +158,7 @@ public class UserViewController {
       criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
     }
     m.addAttribute("critics", criticViewModelList);
+    m.addAttribute("criticFilters", criticFilter);
     return "user/criticfilter";
   }
 }

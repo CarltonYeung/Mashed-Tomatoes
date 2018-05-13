@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class RatingViewController {
@@ -20,6 +18,12 @@ public class RatingViewController {
 
     @Value("${mt.files.uri}")
     private String filesUri = "/files";
+
+    private static final Map<String, String> reviewFilter = new HashMap<String, String>();
+    static{
+        reviewFilter.put("Latest", "latest");
+        reviewFilter.put("All", "all");
+    }
 
     @GetMapping("/review")
     public String getReviews(@RequestParam(required = false, defaultValue = "all", value = "filter") String filter,
@@ -44,7 +48,9 @@ public class RatingViewController {
         for (CriticRatingViewModel criticRatingViewModel : criticRatingViewModels) {
             System.out.println(criticRatingViewModel.getReview());
         }
+        System.out.println(criticRatingViewModels.size());
         m.addAttribute("reviews", criticRatingViewModels);
+        m.addAttribute("reviewFilters", reviewFilter);
         return "ratings/reviewfilter";
     }
 }
