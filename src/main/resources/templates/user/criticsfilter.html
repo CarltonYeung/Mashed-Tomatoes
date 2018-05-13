@@ -11,12 +11,11 @@
   <div th:replace="partials/header :: header"></div>
   <div class="container my-3 vertical-center">
 
-    <h1 class="filter-heading">Academy Award Winner</h1>
-
     <div class="filter-container">
       <select class="form-control filter">
-            <option value="" disabled selected>Year</option>
-            <option th:each="year: ${#numbers.sequence(1950, 2018)}" value="${year}" th:text="${year}"></option>
+            <option value="" disabled selected>Category</option>
+            <option value="1">All</option>
+            <option value="2">Top</option>
         </select>
     </div>
 
@@ -74,17 +73,15 @@
     </div>
 
 
-    <!-- <div class="page">
+    <div class="page">
       <ul class="pagination pagination-lg">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item"><a class="page-link" href="/movie?page=0">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="/movie?page=0">1</a></li>
+        <li class="page-item"><a class="page-link" href="/movie?page=1">2</a></li>
+        <li class="page-item"><a class="page-link" href="/movie?page=2">3</a></li>
+        <li class="page-item"><a class="page-link" href="/movie?page=3">Next</a></li>
       </ul>
-    </div>   -->
-
-
+    </div>
   </div>
   <br />
   <br />

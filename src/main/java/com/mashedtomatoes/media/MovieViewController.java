@@ -27,6 +27,22 @@ public class MovieViewController {
 
   @Autowired private Environment env;
 
+  public static final Map<String, String> movieCategoryFilter = new HashMap<String, String>();
+  static{
+    movieCategoryFilter.put("New Releases", "new-releases");
+    movieCategoryFilter.put("Coming Soon", "coming-soon");
+    movieCategoryFilter.put("Opening This Week", "opening-this-week");
+    movieCategoryFilter.put("All", "all");
+  }
+
+  public static final Map<String, String> movieSortFilter = new HashMap<String, String>();
+  static{
+    movieSortFilter.put("Release Date", "release-date");
+    movieSortFilter.put("Most Popular", "most-popular");
+    movieSortFilter.put("Critic Rating", "critic-rating");
+    movieSortFilter.put("Top Box Office", "top-box-office");
+  }
+
   private boolean validGenre(String genre){
     if(genre.equals("all")){
       return true;
@@ -41,15 +57,15 @@ public class MovieViewController {
   }
 
   private boolean validateReqParam(String category, String genre, String sort){
-    if(!category.equals("new-releases") && !category.equals("coming-soon")
-            & !category.equals("opening-this-week") && !category.equals("all")){
+    if(!category.equals(movieCategoryFilter.get("New Releases")) && !category.equals(movieCategoryFilter.get("Coming Soon"))
+            & !category.equals(movieCategoryFilter.get("Opening This Week")) && !category.equals(movieCategoryFilter.get("All"))){
       return false;
     }
     else if(!validGenre(genre)){
       return false;
     }
-    else if(!sort.equals("release-date") && !sort.equals("most-popular")
-            && !sort.equals("critic-rating") && !sort.equals("top-box-office")){
+    else if(!sort.equals(movieSortFilter.get("Release Date")) && !sort.equals(movieSortFilter.get("Most Popular"))
+            && !sort.equals(movieSortFilter.get("Critic Rating")) && !sort.equals(movieSortFilter.get("Top Box Office"))){
       return false;
     }
     return true;
@@ -106,6 +122,8 @@ public class MovieViewController {
     m.addAttribute("category", category);
     m.addAttribute("pageNumber", page);
     m.addAttribute("movies", movieViewModelList);
+    m.addAttribute("categories", movieCategoryFilter);
+    m.addAttribute("sortFilters", movieSortFilter);
     m.addAttribute("genres", genres);
     return "media/moviefilter";
   }
