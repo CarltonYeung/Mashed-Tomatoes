@@ -45,50 +45,13 @@
 
     <div class="filtered-list-container">
         <ul class="filtered-list">
-            <li>
-                <a class="filtered-content" href="#">
+            <li th:each="movie: ${movies}">
+                <a class="filtered-content" th:href="@{/movie/{id}(id=${movie.id})}">
                     <div class="row">
                         <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel2.jpg">
+                            <img class="filtered-img" th:src="${movie.posterPath}">
                         </div>
-                        <div class="col-9 filtered-title">
-                            Ready Player One
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel7.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            Dead Pool2
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel17.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            EQ2
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel8.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            A Drift
+                        <div class="col-9 filtered-title" th:text="${movie.title}">
                         </div>
                     </div>
                 </a>
@@ -99,11 +62,10 @@
 
     <div class="text-center ">
       <ul class="pagination pagination-lg">
-        <li class="page-item"><a class="page-link" href="/movie?page=0">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="/movie?page=0">1</a></li>
-        <li class="page-item"><a class="page-link" href="/movie?page=1">2</a></li>
-        <li class="page-item"><a class="page-link" href="/movie?page=2">3</a></li>
-        <li class="page-item"><a class="page-link" href="/movie?page=3">Next</a></li>
+        <li th:if="${pageNumber > 0}" class="page-item">
+            <a class="page-link" th:href="@{/movie?page={page}(page=${pageNumber - 1})}">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" th:href="@{/movie?page={page}(page=${pageNumber + 1})}">Next</a></li>
       </ul>
     </div>    
     </div>
