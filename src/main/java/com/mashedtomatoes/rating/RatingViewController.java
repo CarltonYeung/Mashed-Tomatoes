@@ -30,7 +30,7 @@ public class RatingViewController {
                              @RequestParam(required = false, value = "page") Integer pageInt,
                              Model m){
         if(!filter.equals("all") && !filter.equals("latest")){
-            return "review/reviewfilter";
+            return "ratings/reviewfilter";
         }
         int page;
         if(pageInt == null || pageInt.intValue() < 0){
@@ -51,6 +51,6 @@ public class RatingViewController {
         System.out.println(criticRatingViewModels.size());
         m.addAttribute("reviews", criticRatingViewModels);
         m.addAttribute("reviewSortFilters", reviewSortFilter);
-        return "review/reviewfilter";
+        return "ratings/reviewfilter";
     }
 }
