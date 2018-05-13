@@ -77,8 +77,12 @@ public class TVShowViewController {
     for (Iterator tvShowsIterator = tvShows.iterator(); tvShowsIterator.hasNext(); ) {
       tvShowViewModelList.add(new TVShowViewModel(filesUri, smashThreshold, (TVShow)tvShowsIterator.next()));
     }
-    System.out.println(tvShowViewModelList.size());
+    ArrayList<String> genres = new ArrayList<String>();
+    for(Genre g: Genre.values()){
+      genres.add(g.name());
+    }
     m.addAttribute("tvShows", tvShowViewModelList);
+    m.addAttribute("genres", genres);
     return "media/tvfilter";
   }
 

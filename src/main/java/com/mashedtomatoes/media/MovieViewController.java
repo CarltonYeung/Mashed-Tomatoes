@@ -96,7 +96,12 @@ public class MovieViewController {
     for (Iterator moviesIterator = movies.iterator(); moviesIterator.hasNext(); ) {
       movieViewModelList.add(new MovieViewModel(filesUri, smashThreshold, (Movie)moviesIterator.next()));
     }
+    ArrayList<String> genres = new ArrayList<String>();
+    for(Genre g: Genre.values()){
+      genres.add(g.name());
+    }
     m.addAttribute("movies", movieViewModelList);
+    m.addAttribute("genres", genres);
     return "media/moviefilter";
   }
 
