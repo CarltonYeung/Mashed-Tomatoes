@@ -33576,94 +33576,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(7);
-
-const $ = __webpack_require__(0);
-window.jQuery = $;
-window.jqeury = $;
-window.$ = $;
-__webpack_require__(9);
-__webpack_require__(10);
-
-const _ = __webpack_require__(1);
-
-const components = [
-    __webpack_require__(12),
-    __webpack_require__(13),
-    __webpack_require__(14),
-    __webpack_require__(15),
-    __webpack_require__(16),
-    __webpack_require__(17),
-    __webpack_require__(18),
-    __webpack_require__(19),
-    __webpack_require__(20),
-    __webpack_require__(21),
-    __webpack_require__(22),
-    __webpack_require__(23),
-    __webpack_require__(24),
-    __webpack_require__(25),
-    __webpack_require__(26),
-    __webpack_require__(27),
-    __webpack_require__(28),
-    __webpack_require__(29),
-    __webpack_require__(30),
-    __webpack_require__(31),
-    __webpack_require__(32),
-    __webpack_require__(33),
-    __webpack_require__(34)
-];
-
-const areDepsMet = deps => {
-    const missingDeps = _.filter(deps, dep => {
-        return $(dep).length == 0;
-    });
-
-    if (!_.isEmpty(missingDeps)) {
-        return false;
-    }
-
-    return true;
-};
-
-
-$('#movie-section').hover(
-    function() {
-      $('#section-header-movie').addClass('heading-glow');
-},
-    function() {
-      $('#section-header-movie').removeClass('heading-glow');
-});
-
-$('#tv-section').hover(
-    function() {
-      $('#section-header-tv').addClass('heading-glow');
-},
-    function() {
-      $('#section-header-tv').removeClass('heading-glow');
-});
-
-
-$(document).ready(function () {
-    // init components if all deps are met or if no deps are given
-    _.forEach(components, component => {
-        if (_.has(component, 'deps')) {
-            if (areDepsMet(component.deps) && _.has(component, 'init')) {
-                component.init();
-            }
-        } else if (_.has(component, 'init')) {
-            component.init();
-        }
-    });
-
-    $(".loader_inner").delay(1300).fadeOut(500);
-    $(".loader").delay(1300).fadeOut(500);
-});
-
-// $(document).ready(function() {
-//     $('.selectpicker').selectpicker();
-//  });
-=======
 __webpack_require__(7);
 
 const $ = __webpack_require__(0);
@@ -33714,6 +33626,22 @@ const areDepsMet = deps => {
     return true;
 };
 
+$('#movie-section').hover(
+    function() {
+      $('#section-header-movie').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-movie').removeClass('heading-glow');
+});
+
+$('#tv-section').hover(
+    function() {
+      $('#section-header-tv').addClass('heading-glow');
+},
+    function() {
+      $('#section-header-tv').removeClass('heading-glow');
+});
+
 $(document).ready(function () {
     // init components if all deps are met or if no deps are given
     _.forEach(components, component => {
@@ -33729,7 +33657,6 @@ $(document).ready(function () {
     $(".loader_inner").delay(1300).fadeOut(500);
     $(".loader").delay(1300).fadeOut(500);
 });
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
 
 
 /***/ }),
@@ -44772,7 +44699,52 @@ module.exports.init = () => {
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
-<<<<<<< HEAD
+const _ = __webpack_require__(1);
+const alert = __webpack_require__(2);
+
+module.exports.deps = [
+    '.delete-application-btn'
+];
+
+module.exports.init = () => {
+    alert.init();
+    $('.delete-application-btn').on('click', (evt) => {
+        const applicantId = $(evt.currentTarget).attr('data-applicant-id');
+        const isApproved = _.isEqual($(evt.currentTarget).attr('data-approved'), 'true');
+
+        $.ajax(
+            `/user/criticApplication/${applicantId}`,
+            {
+                method: "DELETE",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    approved: isApproved,
+                }),
+                success: (body, status, xhr) => {
+                    if (_.isEqual(xhr.status, 200)) {
+                        alert.display('Critic application processed!', false);
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                },
+                error: (xhr, status, err) => {
+                    if (xhr.status !== 500) {
+                        alert.display(xhr.responseText, true);
+                    } else if (xhr.status === 500) {
+                        alert.display("Something's wrong with our server. Please try again later", true);
+                    }
+                }
+            });
+    });
+};
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
 
 // $("#card").flip();
 
@@ -44892,157 +44864,6 @@ $(document).ready(function(){
 //     autoplaySpeed: 2000,
 //   });
 
-=======
-const _ = __webpack_require__(1);
-const alert = __webpack_require__(2);
-
-module.exports.deps = [
-    '.delete-application-btn'
-];
-
-module.exports.init = () => {
-    alert.init();
-    $('.delete-application-btn').on('click', (evt) => {
-        const applicantId = $(evt.currentTarget).attr('data-applicant-id');
-        const isApproved = _.isEqual($(evt.currentTarget).attr('data-approved'), 'true');
-
-        $.ajax(
-            `/user/criticApplication/${applicantId}`,
-            {
-                method: "DELETE",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    approved: isApproved,
-                }),
-                success: (body, status, xhr) => {
-                    if (_.isEqual(xhr.status, 200)) {
-                        alert.display('Critic application processed!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
-                    }
-                },
-                error: (xhr, status, err) => {
-                    if (xhr.status !== 500) {
-                        alert.display(xhr.responseText, true);
-                    } else if (xhr.status === 500) {
-                        alert.display("Something's wrong with our server. Please try again later", true);
-                    }
-                }
-            });
-    });
-};
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0);
-
-// $("#card").flip();
-
-$(document).ready(function(){
-    $(".flip").flip({trigger: 'hover',axis: 'x'});
-  });
-
-
-
-$(document).ready(function(){
-    $('.center').slick({
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 3,
-        slideToScroll: 3,
-        autoplay: true,
-        autoplaySpeed: 3000,
-      });
-  });
-
-  $(document).ready(function(){
-    $('.center-2').slick({
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 5,
-        slideToScroll: 5,
-        autoplay: true,
-        autoplaySpeed: 1900,
-      });
-  });
-
-  $(document).ready(function(){
-    $('#index-carousel-np').mouseover({
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 5,
-        slideToScroll: 5,
-        autoplay: true,
-        autoplaySpeed: 1900,
-      });
-  });
-  
-  $('#index-carousel-np').hover(
-      function() {
-        $('#heading-now-playing').addClass('heading-glow');
-  },
-      function() {
-        $('#heading-now-playing').removeClass('heading-glow');
-  });
-
-  $('#index-carousel-tbo').hover(
-    function() {
-      $('#heading-top-box-office').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-box-office').removeClass('heading-glow');
-});
-
-
-$('#index-carousel-trf').hover(
-    function() {
-      $('#heading-top-rated-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-films').removeClass('heading-glow');
-});
-
-$('#index-carousel-csf').hover(
-    function() {
-      $('#heading-coming-soon-films').addClass('heading-glow');
-},
-    function() {
-      $('#heading-coming-soon-films').removeClass('heading-glow');
-});
-
-
-$('#index-carousel-tat').hover(
-    function() {
-      $('#heading-tv-airing-today').addClass('heading-glow');
-},
-    function() {
-      $('#heading-tv-airing-today').removeClass('heading-glow');
-});
-
-
-$('#index-carousel-trt').hover(
-    function() {
-      $('#heading-top-rated-tv').addClass('heading-glow');
-},
-    function() {
-      $('#heading-top-rated-tv').removeClass('heading-glow');
-});
-
-
-
-
-//   $('.autoplay').slick({
-//     slidesToShow: 3,
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 2000,
-//   });
-
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
 
 
 /***/ })

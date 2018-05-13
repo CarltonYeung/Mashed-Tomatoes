@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-package com.mashedtomatoes.rating;
-
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-@Repository
-public interface CriticRatingRepository extends CrudRepository<CriticRating, Long> {
-
-    @Transactional
-    void deleteById(long id);
-
-    public Optional<CriticRating> findFirstById(long id);
-
-}
-=======
 package com.mashedtomatoes.rating;
 
 import org.springframework.data.domain.Pageable;
@@ -40,4 +21,3 @@ public interface CriticRatingRepository extends CrudRepository<CriticRating, Lon
     public List<CriticRating> findAllByOrderByUpdatedDesc(Pageable pageable);
 
 }
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d

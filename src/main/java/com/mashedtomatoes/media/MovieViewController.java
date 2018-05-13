@@ -130,12 +130,4 @@ public class MovieViewController {
     userService.setMediaListAttributes(m, movie.getId());
     return "media/movie";
   }
-
-<<<<<<< HEAD
-  @GetMapping("/moviefilter")
-  public String getMovieFilter() { return "media/moviefilter"; }
-=======
-
-
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
 }

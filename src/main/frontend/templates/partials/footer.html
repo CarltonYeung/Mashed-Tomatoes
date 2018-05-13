@@ -9,12 +9,18 @@
                 Critic Submission
                 <span class="sr-only"></span>
             </a>
-<<<<<<< HEAD
             <a class="footer-item nav-item nav-link col-lg" href="/help">
                 Help
                 <span class="sr-only"></span>
             </a>
-
+            <a th:if="${#session != null && session.ViewUser.isAdmin()}" class="footer-item nav-item nav-link col-lg" href="/user/admin">
+                Admin
+                <span class="sr-only"></span>
+            </a>
+            <a th:if="${#session != null}" class="footer-item nav-item nav-link col-lg" href="/user/me">
+                User
+                <span class="sr-only"></span>
+            </a>
             <p>
                 <a href="https://www.facebook.com/mashed.tomatoes.98">
                     <img class="social-icons" alt="Facebook" src="/img/base/facebook.png">
@@ -32,17 +38,6 @@
                     <img class="social-icons" alt="Facebook" src="/img/base/twitter.png">
                 </a>
             </p>
-           
-=======
-            <a th:if="${#session != null && session.ViewUser.isAdmin()}" class="footer-item nav-item nav-link col-lg" href="/user/admin">
-                Admin
-                <span class="sr-only"></span>
-            </a>
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d
-            <a th:if="${#session != null}" class="footer-item nav-item nav-link col-lg" href="/user/me">
-                User
-                <span class="sr-only"></span>
-            </a>
         </div>
     </div>
 </footer>
