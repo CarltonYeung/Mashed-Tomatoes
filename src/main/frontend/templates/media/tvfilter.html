@@ -16,6 +16,7 @@
             <div class="col-sm">
                 <select id="tv-genre-select" class="form-control filter">
                     <option disabled selected>Genre</option>
+                    <option value="all">All</option>
                     <option th:each="genreOpt: ${genres}" th:value="${#strings.toLowerCase(genreOpt)}"
                             th:text="${#strings.capitalizeWords(#strings.toLowerCase(genreOpt))}">All</option>
                 </select>
@@ -23,11 +24,9 @@
             <div class="col-sm">
                 <select id="tv-sort-select" class="form-control filter">
                     <option disabled selected>Sort</option>
-                    <option value="1">All</option>
-                    <option value="2">Most Popular</option>
-                    <option value="3">Critic Rating</option>
-                    <option value="4">Now Airing</option>
-                    <option value="5">Airing Today</option>
+                    <option th:each="entry: ${sortFilters}"
+                            th:value="${entry.value}" th:text="${entry.key}">
+                    </option>
                 </select>
             </div>
         </div>
