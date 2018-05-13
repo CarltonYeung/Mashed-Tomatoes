@@ -51,7 +51,7 @@
     font-size: 60px;
 }
 
-.text-center{
+.page{
     margin-left: 370px;
     margin-top: 30px;
 }
@@ -87,4 +87,10 @@
   
   .pagination li:hover:not(.active) a {
     background-color: rgb(243, 227, 227) !important;
+  }
+
+  .filter-heading{
+    margin-left: -30px;
+    margin-top: 80px;
+    font-size: 70px;
   }

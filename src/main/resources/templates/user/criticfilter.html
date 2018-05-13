@@ -11,38 +11,14 @@
   <div th:replace="partials/header :: header"></div>
   <div class="container my-3 vertical-center">
 
-    <h1 class="filter-heading">Movies</h1>
+    <h1 class="filter-heading">Critics</h1>
 
     <div class="filter-container">
-      <div class="row">
-        <div class="col-sm">
-          <select class="form-control filter">
-                    <option value="" disabled selected>Category</option>
-                    <option value="1">All</option>
-                    <option value="2">New Release</option>
-                    <option value="3">Coming Soon</option>
-                    <option value="4">Opening This week</option>
-                </select>
-        </div>
-        <div class="col-sm">
-          <select class="form-control filter">
-                    <option value="" disabled selected>Genre</option>
-                    <option value="1">All</option>
-                    <option value="2">New Release</option>
-                    <option value="3">Coming Soon</option>
-                    <option value="4">Opening This week</option>
-                </select>
-        </div>
-        <div class="col-sm">
-          <select class="form-control filter">
-                    <option value="" disabled selected>Sort</option>
-                    <option value="1">Release Date (Default)</option>
-                    <option value="2">Most Popular</option>
-                    <option value="3">Critic Rating</option>
-                    <option value="4">Top Box Office</option>
-                </select>
-        </div>
-      </div>
+      <select class="form-control filter">
+            <option value="" disabled selected>Category</option>
+            <option value="1">All</option>
+            <option value="2">Top</option>
+        </select>
     </div>
 
     <div class="filtered-list-container">
