@@ -120,7 +120,7 @@ public class MovieViewController {
     m.addAttribute("genre", genre);
     m.addAttribute("sort", sort);
     m.addAttribute("category", category);
-    m.addAttribute("pageNumber", page);
+    m.addAttribute("page", page);
     m.addAttribute("movies", movieViewModelList);
     m.addAttribute("categories", movieCategoryFilter);
     m.addAttribute("sortFilters", movieSortFilter);

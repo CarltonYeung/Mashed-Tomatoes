@@ -13,37 +13,36 @@
     
         <h1 class="filter-heading">Movies</h1>
 
-    <div class="filter-container">
-        <div class="row">
-            <div class="col-sm">
-                <select class="form-control filter">
-                    <option value="" disabled selected>Category</option>
-                    <option value="1">All</option>
-                    <option value="2">New Release</option>
-                    <option value="3">Coming Soon</option>
-                    <option value="4">Opening This week</option>
-                </select>
+        <div class="filter-container" th:attr="data-page=${page},data-genre=${genre},data-sort=${sort},data-category=${category}">
+            <div class="row">
+                <div class="col-sm">
+                    <select id="movie-category-select" class="form-control filter">
+                        <option disabled selected>Category</option>
+                        <option th:each="entry: ${categories}"
+                                th:value="${entry.value}" th:text="${entry.key}">
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <select id="movie-genre-select" class="form-control filter">
+                        <option disabled selected>Genre</option>
+                        <option value="all">All</option>
+                        <option th:each="genreOpt: ${genres}" th:value="${#strings.toLowerCase(genreOpt)}"
+                                th:text="${#strings.capitalizeWords(#strings.toLowerCase(genreOpt))}">All</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <select id="movie-sort-select" class="form-control filter">
+                        <option disabled selected>Sort</option>
+                        <option th:each="entry: ${sortFilters}"
+                                th:value="${entry.value}" th:text="${entry.key}">
+                        </option>
+                    </select>
+                </div>
             </div>
-            <div class="col-sm">
-                <select class="form-control filter">
-                    <option value="" disabled selected>Genre</option>
-                    <option value="1">All</option>
-                    <option value="2">New Release</option>
-                    <option value="3">Coming Soon</option>
-                    <option value="4">Opening This week</option>
-                </select>
-            </div>
-            <div class="col-sm">
-                <select class="form-control filter">
-                    <option value="" disabled selected>Sort</option>
-                    <option value="1">Release Date (Default)</option>
-                    <option value="2">Most Popular</option>
-                    <option value="3">Critic Rating</option>
-                    <option value="4">Top Box Office</option>
-                </select>
+            <div class="mt-4 d-flex justify-content-center">
+                <button id="movie-filter-btn" class="btn btn-lg btn-success">Filter</button>
             </div>
         </div>
-    </div>
 
     <div class="filtered-list-container">
         <ul class="filtered-list">
@@ -64,10 +63,10 @@
 
     <div class="page">
       <ul class="pagination pagination-lg">
-        <li th:if="${pageNumber > 0}" class="page-item">
-            <a class="page-link" th:href="@{/movie(page=${pageNumber - 1},sort=${sort},genre=${genre},category=${category})}">Previous</a>
+        <li th:if="${page > 0}" class="page-item">
+            <a class="page-link" th:href="@{/movie(page=${page - 1},sort=${sort},genre=${genre},category=${category})}">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" th:href="@{/movie(page=${pageNumber + 1},sort=${sort},genre=${genre},category=${category})}">Next</a></li>
+        <li class="page-item"><a class="page-link" th:href="@{/movie(page=${page + 1},sort=${sort},genre=${genre},category=${category})}">Next</a></li>
       </ul>
     </div>    
     </div>

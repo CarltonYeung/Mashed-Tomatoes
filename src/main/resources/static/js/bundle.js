@@ -33612,7 +33612,8 @@ const components = [
     __webpack_require__(33),
     __webpack_require__(34),
     __webpack_require__(35),
-    __webpack_require__(36)
+    __webpack_require__(36),
+    __webpack_require__(37)
 ];
 
 const areDepsMet = deps => {
@@ -43821,6 +43822,46 @@ module.exports.init = () => {
 const $ = __webpack_require__(0);
 
 module.exports.deps = [
+    '#movie-filter-btn',
+    '#movie-category-select',
+    '#movie-sort-select',
+    '#movie-genre-select'
+];
+
+module.exports.init = () => {
+    $('#movie-filter-btn').on('click', () => {
+        let category = $('[data-sort]').attr('data-category');
+        let sort = $('[data-sort]').attr('data-sort');
+        let genre = $('[data-genre]').attr('data-genre');
+        const page = $('[data-page]').attr('data-page');
+        const categorySelect = $('#movie-category-select > option:selected');
+        const sortSelect = $('#movie-sort-select > option:selected');
+        const genreSelect = $('#movie-genre-select > option:selected');
+        if (!categorySelect.prop('disabled')) {
+            category = categorySelect.val();
+        }
+
+        if (!sortSelect.prop('disabled')) {
+            sort = sortSelect.val();
+        }
+
+        if (!genreSelect.prop('disabled')) {
+            genre = genreSelect.val();
+        }
+
+        window.location.href = `/movie?page=${page}&sort=${sort}&genre=${genre}&category=${category}`;
+    });
+};
+
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.deps = [
     '#tv-filter-btn',
     '#tv-sort-select',
     '#tv-genre-select'
@@ -43831,14 +43872,14 @@ module.exports.init = () => {
         let sort = $('[data-sort]').attr('data-sort');
         let genre = $('[data-genre]').attr('data-genre');
         const page = $('[data-page]').attr('data-page');
-        const selectSort = $('#tv-sort-select > option:selected');
-        const genreSort = $('#tv-genre-select > option:selected');
-        if (!selectSort.prop('disabled')) {
-            sort = selectSort.val();
+        const sortSelect = $('#tv-sort-select > option:selected');
+        const genreSelect = $('#tv-genre-select > option:selected');
+        if (!sortSelect.prop('disabled')) {
+            sort = sortSelect.val();
         }
 
-        if (!genreSort.prop('disabled')) {
-            genre = genreSort.val();
+        if (!genreSelect.prop('disabled')) {
+            genre = genreSelect.val();
         }
 
         window.location.href = `/tv?page=${page}&sort=${sort}&genre=${genre}`;
@@ -43847,7 +43888,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43908,7 +43949,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43966,7 +44007,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44017,7 +44058,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44079,7 +44120,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44107,7 +44148,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44155,7 +44196,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44203,7 +44244,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44251,7 +44292,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44300,7 +44341,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44341,7 +44382,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44386,7 +44427,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44430,7 +44471,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44511,7 +44552,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44552,7 +44593,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44627,7 +44668,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44676,7 +44717,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44728,7 +44769,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44774,7 +44815,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

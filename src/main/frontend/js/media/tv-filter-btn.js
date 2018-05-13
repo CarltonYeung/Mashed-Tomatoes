@@ -11,14 +11,14 @@ module.exports.init = () => {
         let sort = $('[data-sort]').attr('data-sort');
         let genre = $('[data-genre]').attr('data-genre');
         const page = $('[data-page]').attr('data-page');
-        const selectSort = $('#tv-sort-select > option:selected');
-        const genreSort = $('#tv-genre-select > option:selected');
-        if (!selectSort.prop('disabled')) {
-            sort = selectSort.val();
+        const sortSelect = $('#tv-sort-select > option:selected');
+        const genreSelect = $('#tv-genre-select > option:selected');
+        if (!sortSelect.prop('disabled')) {
+            sort = sortSelect.val();
         }
 
-        if (!genreSort.prop('disabled')) {
-            genre = genreSort.val();
+        if (!genreSelect.prop('disabled')) {
+            genre = genreSelect.val();
         }
 
         window.location.href = `/tv?page=${page}&sort=${sort}&genre=${genre}`;
