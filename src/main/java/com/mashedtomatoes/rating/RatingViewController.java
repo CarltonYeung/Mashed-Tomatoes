@@ -19,7 +19,7 @@ public class RatingViewController {
     @Value("${mt.files.uri}")
     private String filesUri = "/files";
 
-    public static final Map<String, String> reviewSortFilter = new HashMap<String, String>();
+    private static final Map<String, String> reviewSortFilter = new HashMap<String, String>();
     static{
         reviewSortFilter.put("Latest", "latest");
         reviewSortFilter.put("All", "all");
@@ -50,7 +50,7 @@ public class RatingViewController {
         }
         System.out.println(criticRatingViewModels.size());
         m.addAttribute("reviews", criticRatingViewModels);
-        m.addAttribute("sortFilters", reviewSortFilter);
+        m.addAttribute("reviewSortFilters", reviewSortFilter);
         return "review/reviewfilter";
     }
 }

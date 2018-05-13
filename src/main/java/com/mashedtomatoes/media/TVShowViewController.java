@@ -29,7 +29,7 @@ public class TVShowViewController {
 
   @Autowired private Environment env;
 
-  public static final Map<String, String> tvShowSortFilter = new HashMap<String, String>();
+  private static final Map<String, String> tvShowSortFilter = new HashMap<String, String>();
   static{
     tvShowSortFilter.put("Most Popular", "most-popular");
     tvShowSortFilter.put("Critic Rating", "critic-rating");
@@ -92,9 +92,8 @@ public class TVShowViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
-    System.out.println(tvShowViewModelList.size());
     m.addAttribute("tvShows", tvShowViewModelList);
-    m.addAttribute("sortFilters", tvShowSortFilter);
+    m.addAttribute("tvShowSortFilters", tvShowSortFilter);
     m.addAttribute("genres", genres);
     return "media/tvfilter";
   }
