@@ -100,6 +100,10 @@ public class MovieViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
+
+    m.addAttribute("genre", genre);
+    m.addAttribute("sort", sort);
+    m.addAttribute("category", category);
     m.addAttribute("pageNumber", page);
     m.addAttribute("movies", movieViewModelList);
     m.addAttribute("genres", genres);

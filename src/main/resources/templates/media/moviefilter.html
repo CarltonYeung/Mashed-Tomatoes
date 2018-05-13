@@ -60,12 +60,12 @@
     </div>
 
 
-    <div class="text-center ">
+    <div class="page">
       <ul class="pagination pagination-lg">
         <li th:if="${pageNumber > 0}" class="page-item">
-          <a class="page-link" th:href="@{/movie(page=${pageNumber - 1})}">Previous</a>
+          <a class="page-link" th:href="@{/movie(page=${pageNumber - 1},sort=${sort},genre=${genre},category=${category})}">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" th:href="@{/movie(page=${pageNumber + 1})}">Next</a></li>
+        <li class="page-item"><a class="page-link" th:href="@{/movie(page=${pageNumber + 1},sort=${sort},genre=${genre},category=${category})}">Next</a></li>
       </ul>
     </div>
   </div>
