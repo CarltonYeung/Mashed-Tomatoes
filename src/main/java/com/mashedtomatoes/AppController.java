@@ -15,6 +15,8 @@ import java.util.List;
 
 @Controller
 public class AppController {
+  private static final int OPTIMAL_MEDIA_SECTION_CT = 20;
+
   @Autowired MovieService movieService;
 
   @Autowired TVShowService tvShowService;
@@ -45,12 +47,23 @@ public class AppController {
     return tvShowsViewModels;
   }
 
+  private <E> List<E> getOptimalSublist(List<E> list) {
+    if (list.size() < OPTIMAL_MEDIA_SECTION_CT)  {
+      return list;
+    }
+
+    return list.subList(0, OPTIMAL_MEDIA_SECTION_CT);
+  }
+
   @GetMapping("/")
   public String getIndex(Model model) {
     int limit = Integer.parseInt(env.getProperty("mt.homepage.categories.limit"));
     int daysInterval =
         Integer.parseInt(env.getProperty("mt.homepage.categories.daysAheadAndBeforeCurrentDate"));
-    List<MovieViewModel> topBoxOffice = createMovieViewModelList(movieService.getTopBoxOfficeMovies(limit));
+    List<MovieViewModel> topBoxOffice = getOptimalSublist(
+            createMovieViewModelList(
+                    movieService.getTopBoxOfficeMovies(limit)));
+
     List<MovieViewModel> topRatedFilms = createMovieViewModelList(movieService.getTopRatedFilms(limit));
     List<MovieViewModel> comingSoonFilms =
         createMovieViewModelList(movieService.getComingSoonFilms(limit, daysInterval));
