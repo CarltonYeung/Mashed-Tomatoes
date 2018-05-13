@@ -1,6 +1,5 @@
 package com.mashedtomatoes.media;
 
-import com.mashedtomatoes.user.User;
 import com.mashedtomatoes.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,9 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 @Controller
 public class TVShowViewController {
@@ -29,6 +29,15 @@ public class TVShowViewController {
 
   @Autowired private Environment env;
 
+  public static final Map<String, String> tvShowSortFilter = new HashMap<String, String>();
+  static{
+    tvShowSortFilter.put("Most Popular", "most-popular");
+    tvShowSortFilter.put("Critic Rating", "critic-rating");
+    tvShowSortFilter.put("Now Airing", "now-airing");
+    tvShowSortFilter.put("Airing Today", "airing-today");
+    tvShowSortFilter.put("All", "all");
+  }
+
   private boolean validGenre(String genre){
     if(genre.equals("all")){
       return true;
@@ -43,11 +52,13 @@ public class TVShowViewController {
   }
 
   private boolean validateReqParam(String genre, String sort){
+    System.out.println(sort);
+    System.out.println(tvShowSortFilter.get("Airing Today"));
     if(!validGenre(genre)){
       return false;
     }
-    else if(!sort.equals("most-popular") && !sort.equals("new-shows")
-            && !sort.equals("critic-rating")&& !sort.equals("now-airing") && !sort.equals("all")){
+    else if(!sort.equals(tvShowSortFilter.get("Most Popular")) && !sort.equals(tvShowSortFilter.get("Airing Today"))
+            && !sort.equals(tvShowSortFilter.get("Critic Rating"))&& !sort.equals(tvShowSortFilter.get("Now Airing")) && !sort.equals(tvShowSortFilter.get("All"))){
       return false;
     }
     return true;
@@ -81,7 +92,9 @@ public class TVShowViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
+    System.out.println(tvShowViewModelList.size());
     m.addAttribute("tvShows", tvShowViewModelList);
+    m.addAttribute("sortFilters", tvShowSortFilter);
     m.addAttribute("genres", genres);
     return "media/tvfilter";
   }
