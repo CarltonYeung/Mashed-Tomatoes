@@ -39,7 +39,7 @@ public class TVShowViewController {
   }
 
   private boolean validGenre(String genre){
-    if(genre.equals("all")){
+    if(genre.equals("ALL")){
       return true;
     }
     for(Genre g: Genre.values()){

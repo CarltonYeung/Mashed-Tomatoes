@@ -47,20 +47,20 @@ public class TVShowService {
     Iterable<TVShow> tvShows = new ArrayList<TVShow>();
     switch (sort){
       case "most-popular":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           tvShows = tvShowRepository.findTVShowByMostPopularOrderByMostPopularDesc(PageRequest.of(page, limit));
         else
           tvShows = tvShowRepository.findTVShowByMostPopularAndGenreOrderByMostPopularDesc(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
         break;
       case "critic-rating":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           tvShows = tvShowRepository.findTVShowByCriticRatingOrderByCriticRatingDesc(PageRequest.of(page,limit));
         else
           tvShows = tvShowRepository.findTVShowByCriticRatingAndGenreOrderByCriticRatingDesc(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
         break;
       case "now-airing":
         Date currentDate = new Date();
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           tvShows = tvShowRepository.findAllByStartDateLessThanAndEndDateGreaterThanOrderByStartDateDesc(PageRequest.of(page, limit), currentDate, currentDate);
         else
           tvShows = tvShowRepository.findAllByStartDateLessThanAndEndDateGreaterThanAndGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), currentDate, currentDate, Genre.valueOf(genre));
@@ -76,13 +76,13 @@ public class TVShowService {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         Date date = calendar.getTime();
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           tvShows = tvShowRepository.findTVAiringToday(PageRequest.of(0, limit), date);
         else
           tvShows = tvShowRepository.findTVAiringTodayByGenre(PageRequest.of(0, limit), date, Genre.valueOf(genre).getName());
         break;
       case "all":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           tvShows = tvShowRepository.findAllByOrderByStartDateDesc(PageRequest.of(page, limit));
         else
           tvShows = tvShowRepository.findAllByGenresContainingOrderByStartDateDesc(PageRequest.of(page, limit), Genre.valueOf(genre));

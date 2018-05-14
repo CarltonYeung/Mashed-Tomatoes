@@ -76,25 +76,25 @@ public class MovieService {
     Iterable<Movie> movies = new ArrayList<Movie>();
     switch (sort){
       case "release-date":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findAllByReleaseDateBetweenOrderByReleaseDateDesc(PageRequest.of(page, limit),beforeTime,afterTime);
         else
           movies = movieRepository.findAllByReleaseDateBetweenAndGenresContainingOrderByReleaseDateDesc(PageRequest.of(page, limit),beforeTime,afterTime, Genre.valueOf(genre));
         break;
       case "most-popular":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findFilteredByDateMovieByMostPopular(PageRequest.of(page, limit),beforeTime,afterTime);
         else
           movies = movieRepository.findFilteredByDateMovieByMostPopularAndGenre(PageRequest.of(page, limit), Genre.valueOf(genre).getName(),beforeTime,afterTime);
         break;
       case "critic-rating":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findFilteredByDateMovieByCriticRating(PageRequest.of(page, limit),beforeTime,afterTime);
         else
           movies = movieRepository.findFilteredDateMovieByCriticRatingAndGenre(PageRequest.of(page, limit), Genre.valueOf(genre).getName(),beforeTime,afterTime);
         break;
       case "top-box-office":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findAllByReleaseDateBetweenOrderByBoxOfficeDesc(PageRequest.of(page, limit),beforeTime,afterTime);
         else
           movies = movieRepository.findAllByReleaseDateBetweenAndGenresContainingOrderByBoxOfficeDesc(PageRequest.of(page, limit),beforeTime,afterTime, Genre.valueOf(genre));
@@ -138,25 +138,25 @@ public class MovieService {
     Iterable<Movie> movies = new ArrayList<Movie>();
     switch (sort){
       case "release-date":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findAllByOrderByReleaseDateDesc(PageRequest.of(page, limit));
         else
           movies = movieRepository.findAllByGenresContainingOrderByReleaseDateDesc(PageRequest.of(page, limit), Genre.valueOf(genre));
         break;
       case "most-popular":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findFilteredMovieByMostPopular(PageRequest.of(page,limit));
         else
           movies = movieRepository.findFilteredMovieByMostPopularAndGenre(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
         break;
       case "critic-rating":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findFilteredMovieByCriticRating(PageRequest.of(page, limit));
         else
           movies = movieRepository.findFilteredMovieByCriticRatingAndGenre(PageRequest.of(page, limit), Genre.valueOf(genre).getName());
         break;
       case "top-box-office":
-        if(genre.equals("all"))
+        if(genre.equals("ALL"))
           movies = movieRepository.findAllByOrderByBoxOfficeDesc(PageRequest.of(page, limit));
         else
           movies = movieRepository.findAllByGenresContainingOrderByBoxOfficeDesc(PageRequest.of(page, limit), Genre.valueOf(genre));
