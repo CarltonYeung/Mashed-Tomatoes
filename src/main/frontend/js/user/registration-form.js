@@ -32,14 +32,9 @@ module.exports.init = () => {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: (body, status, xhr) => {
-          console.log(xhr);
-          console.log(body);
-          console.log(status);
           if (_.isEqual(xhr.status, 201)) {
             alert.display('You have been registered!', false);
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 1000);
+            window.location.href = '/';
           }
 
           console.error(`Unexpected success code: ${res.status}`);

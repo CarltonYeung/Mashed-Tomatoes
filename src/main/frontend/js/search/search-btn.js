@@ -27,8 +27,7 @@ module.exports.init = () => {
             contentType: "application/json",
             dataType: "application/json",
             success: res => {
-              if (res.status == 204) {
-                console.log('Search Success');
+              if (res.status === 204) {
                 window.location = '/';
               }
             },

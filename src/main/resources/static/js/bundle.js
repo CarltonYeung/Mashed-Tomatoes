@@ -43678,7 +43678,6 @@ module.exports.init = () => {
     inputValue = _.trim(inputValue);
     inputValue = _.replace(inputValue, /[^0-9a-z\s]/gi, '');
     const searchValue = _.replace(inputValue, /\s+/g, '+');
-    console.log(searchValue);
     window.location.href = urlBuilder.buildSearch(searchValue);
     evt.preventDefault();
   });
@@ -43958,9 +43957,7 @@ module.exports.init = () => {
               success: (body, status, xhr) => {
                   if (_.isEqual(xhr.status, 200)) {
                       alert.display('Review added', false);
-                      setTimeout(() => {
-                          window.location.reload(true);
-                      }, 1000);
+                      window.location.reload(true);
                   }
               },
               error: (xhr, status, err) => {
@@ -44015,9 +44012,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Rating reported!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44092,9 +44087,7 @@ module.exports.init = () => {
         success: (body, status, xhr) => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Welcome!', false);
-            setTimeout(() => {
-              window.location.href = '/user/me';
-            }, 1000);
+            window.location.href = '/user/me';
           }
         },
         error: (xhr, status, err) => {
@@ -44147,14 +44140,9 @@ module.exports.init = () => {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: (body, status, xhr) => {
-          console.log(xhr);
-          console.log(body);
-          console.log(status);
           if (_.isEqual(xhr.status, 201)) {
             alert.display('You have been registered!', false);
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 1000);
+            window.location.href = '/';
           }
 
           console.error(`Unexpected success code: ${res.status}`);
@@ -44230,9 +44218,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Email changed. Please verify it.', false);
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 1000);
+                        window.location.href = '/';
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44277,9 +44263,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Display name changed!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44326,9 +44310,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Password changed!', false);
-                        setTimeout(() => {
-                            window.location.href = "/login";
-                        }, 1000);
+                        window.location.href = "/login";
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44375,9 +44357,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Privacy setting changed!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44415,9 +44395,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('User deleted!', false);
-                        setTimeout(() => {
-                            window.location.href = "/";
-                        }, 1000);
+                        window.location.href = "/";
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44546,11 +44524,6 @@ const updateIsFollowing = (isFollowing) => {
             contentType: "application/json",
             success: (body, status, xhr) => {
                 if (_.isEqual(xhr.status, 200)) {
-                    if (isFollowing) {
-                        console.log('User unfollowed');
-                    } else {
-                        console.log('User followed');
-                    }
                     window.location.reload(true);
                 }
             },
@@ -44627,9 +44600,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Rating deleted!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44701,9 +44672,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Rating updated!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44752,9 +44721,7 @@ module.exports.init = () => {
         success: (body, status, xhr) => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Your application has been submitted', false);
-            setTimeout(() => {
-              window.location.href = '/user/me';
-            }, 1000);
+            window.location.href = '/user/me';
           }
         },
         error: (xhr, status, err) => {
@@ -44803,9 +44770,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('User reported!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {
@@ -44849,9 +44814,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Critic application processed!', false);
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
+                        window.location.reload(true);
                     }
                 },
                 error: (xhr, status, err) => {

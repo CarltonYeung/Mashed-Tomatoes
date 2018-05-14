@@ -27,9 +27,7 @@ module.exports.init = () => {
         success: (body, status, xhr) => {
           if (_.isEqual(xhr.status, 200)) {
             alert.display('Your application has been submitted', false);
-            setTimeout(() => {
-              window.location.href = '/user/me';
-            }, 1000);
+            window.location.href = '/user/me';
           }
         },
         error: (xhr, status, err) => {

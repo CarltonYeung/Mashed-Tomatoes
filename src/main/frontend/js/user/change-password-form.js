@@ -25,9 +25,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('Password changed!', false);
-                        setTimeout(() => {
-                            window.location.href = "/login";
-                        }, 1000);
+                        window.location.href = "/login";
                     }
                 },
                 error: (xhr, status, err) => {
