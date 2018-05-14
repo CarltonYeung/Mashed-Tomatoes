@@ -78,6 +78,7 @@ public class MovieViewController {
           @RequestParam(required = false, defaultValue = "release-date", value = "sort") String sort,
           @RequestParam(required = false, value = "page") Integer pageInt,
           Model m) {
+    genre = genre.toUpperCase();
     if(!validateReqParam(category, genre, sort)){
       return "media/moviefilter";
     }

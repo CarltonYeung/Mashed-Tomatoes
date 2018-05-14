@@ -70,6 +70,7 @@ public class TVShowViewController {
           @RequestParam(required = false, defaultValue = "all", value = "sort") String sort,
           @RequestParam(required = false, value = "page") Integer pageInt,
           Model m) {
+    genre = genre.toUpperCase();
     if(!validateReqParam(genre, sort)){
       return "media/tvfilter";
     }
