@@ -162,4 +162,14 @@ public class UserViewController {
     m.addAttribute("criticFilters", criticFilter);
     return "user/criticfilter";
   }
+
+  @GetMapping("/verify")
+  public String verify(
+          @RequestParam("email") String email,
+          @RequestParam("key") String key,
+          Model model) {
+
+    model.addAttribute("success", userService.verifyEmail(email, key));
+    return "user/verify";
+  }
 }
