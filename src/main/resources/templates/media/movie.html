@@ -85,17 +85,11 @@
       </div>
     </section>
 
-    <section class="mt-5 media-section">
-      <h1 class="media-section -title">Trailors</h1>
+    <section th:if="${movie.movieTrailer != null}" class="mt-5 media-section">
+      <h1 class="media-section -title">Trailer</h1>
       <div class="d-flex justify-content-between flex-wrap">
-        <video class="video" controls="" autoplay="" name="media"><source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></video>
+        <video class="video" controls="" autoplay="" name="media"><source th:src="${movie.movieTrailer.trailerPath}" type="video/mp4"></video>
       </div>
-      <!-- <button id="see-more-photo" class="btn mt-1 pull-right">See more</button>
-    <div class="text-center">
-        <div class="text-center">
-        <h3>No trailors...</h3>
-        </div>
-    </div> -->
     </section>
     <section class="mt-5 media-section">
       <h1 class="media-section -title">Photos</h1>

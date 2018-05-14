@@ -36,6 +36,9 @@ public class MovieViewModel extends MediaViewModel {
     this.boxOffice = base.getBoxOffice();
     this.budget = base.getBudget();
     this.movieTrailer = base.getMovieTrailer();
+    if (this.movieTrailer != null) {
+      this.movieTrailer.setTrailerPath(Util.resolveFilesUrl(fileUri, this.movieTrailer.getTrailerPath()));
+    }
   }
 
   public double getBoxOffice() {
