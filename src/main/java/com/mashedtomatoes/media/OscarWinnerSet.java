@@ -1,17 +1,17 @@
 package com.mashedtomatoes.media;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "OscarWinnerSet")
 public class OscarWinnerSet {
   private Date year;
-  private Long bestPicture;
-  private Long bestAnimatedFeature;
-  private Long bestCinematography;
-  private Long bestDocumentaryFeature;
-  private Long bestFilmEditing;
+  private Movie bestPicture;
+  private Movie bestAnimatedFeature;
+  private Movie bestCinematography;
+  private Movie bestDocumentaryFeature;
+  private Movie bestFilmEditing;
 
   public OscarWinnerSet() {}
 
@@ -19,23 +19,23 @@ public class OscarWinnerSet {
     this.year = year;
   }
 
-  public void setBestPicture(Long bestPicture) {
+  public void setBestPicture(Movie bestPicture) {
     this.bestPicture = bestPicture;
   }
 
-  public void setBestAnimatedFeature(Long bestAnimatedFeature) {
+  public void setBestAnimatedFeature(Movie bestAnimatedFeature) {
     this.bestAnimatedFeature = bestAnimatedFeature;
   }
 
-  public void setBestCinematography(Long bestCinematography) {
+  public void setBestCinematography(Movie bestCinematography) {
     this.bestCinematography = bestCinematography;
   }
 
-  public void setBestDocumentaryFeature(Long bestDocumentaryFeature) {
+  public void setBestDocumentaryFeature(Movie bestDocumentaryFeature) {
     this.bestDocumentaryFeature = bestDocumentaryFeature;
   }
 
-  public void setBestFilmEditing(Long bestFilmEditing) {
+  public void setBestFilmEditing(Movie bestFilmEditing) {
     this.bestFilmEditing = bestFilmEditing;
   }
 
@@ -45,23 +45,33 @@ public class OscarWinnerSet {
     return year;
   }
 
-  public Long getBestPicture() {
+  @ManyToOne
+  @JoinColumn(name = "bestPicture")
+  public Movie getBestPicture() {
     return bestPicture;
   }
 
-  public Long getBestAnimatedFeature() {
+  @ManyToOne
+  @JoinColumn(name = "bestAnimatedFeature")
+  public Movie getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
-  public Long getBestCinematography() {
+  @ManyToOne
+  @JoinColumn(name = "bestCinematography")
+  public Movie getBestCinematography() {
     return bestCinematography;
   }
 
-  public Long getBestDocumentaryFeature() {
+  @ManyToOne
+  @JoinColumn(name = "bestDocumentaryFeature")
+  public Movie getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
-  public Long getBestFilmEditing() {
+  @ManyToOne
+  @JoinColumn(name = "bestFilmEditing")
+  public Movie getBestFilmEditing() {
     return bestFilmEditing;
   }
 }

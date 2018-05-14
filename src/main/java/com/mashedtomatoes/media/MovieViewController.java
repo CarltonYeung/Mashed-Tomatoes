@@ -136,33 +136,6 @@ public class MovieViewController {
       year = Calendar.getInstance().get(Calendar.YEAR)-1;
     }
     OscarWinnerSet oscarWinnerSet = movieService.getOscarWinnerByYear(year.intValue());
-    m.addAttribute("year",year);
-    System.out.println(oscarWinnerSet.getBestPicture());
-    if (oscarWinnerSet.getBestPicture() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestPicture());
-      m.addAttribute("bestPicture", new MovieViewModel(filesUri, smashThreshold, movie));
-    }
-
-    if (oscarWinnerSet.getBestCinematography() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestCinematography());
-      m.addAttribute("bestCinema", new MovieViewModel(filesUri, smashThreshold, movie));
-    }
-
-    if (oscarWinnerSet.getBestAnimatedFeature() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestAnimatedFeature());
-      m.addAttribute("bestAnimated", new MovieViewModel(filesUri, smashThreshold, movie));
-    }
-
-    if (oscarWinnerSet.getBestDocumentaryFeature() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestDocumentaryFeature());
-      m.addAttribute("bestDocumentary", new MovieViewModel(filesUri, smashThreshold, movie));
-    }
-
-    if (oscarWinnerSet.getBestFilmEditing() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestFilmEditing());
-      m.addAttribute("bestEditing", new MovieViewModel(filesUri, smashThreshold, movie));
-    }
-
     m.addAttribute("academyAward",oscarWinnerSet);
     return "media/academyfilter";
   }
