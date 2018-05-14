@@ -24,7 +24,7 @@
             <div class="col-sm">
                 <select id="tv-sort-select" class="form-control filter">
                     <option disabled selected>Sort</option>
-                    <option th:each="entry: ${sortFilters}"
+                    <option th:each="entry: ${tvShowSortFilters}"
                             th:value="${entry.value}" th:text="${entry.key}">
                     </option>
                 </select>

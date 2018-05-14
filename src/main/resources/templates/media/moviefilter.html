@@ -18,7 +18,7 @@
         <div class="col-sm">
           <select id="movie-category-select" class="form-control filter">
                         <option disabled selected>Category</option>
-                        <option th:each="entry: ${categories}"
+                        <option th:each="entry: ${movieCategoryFilters}"
                                 th:value="${entry.value}" th:text="${entry.key}">
                     </select>
         </div>
@@ -33,7 +33,7 @@
         <div class="col-sm">
           <select id="movie-sort-select" class="form-control filter">
                         <option disabled selected>Sort</option>
-                        <option th:each="entry: ${sortFilters}"
+                        <option th:each="entry: ${movieSortFilters}"
                                 th:value="${entry.value}" th:text="${entry.key}">
                         </option>
                     </select>

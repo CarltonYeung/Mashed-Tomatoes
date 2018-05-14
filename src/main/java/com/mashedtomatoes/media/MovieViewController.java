@@ -139,27 +139,32 @@ public class MovieViewController {
     m.addAttribute("year",year);
     System.out.println(oscarWinnerSet.getBestPicture());
     if (oscarWinnerSet.getBestPicture() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestPicture());
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestPicture());
+      Movie movie = oscarWinnerSet.getBestPicture();
       m.addAttribute("bestPicture", new MovieViewModel(filesUri, smashThreshold, movie));
     }
 
     if (oscarWinnerSet.getBestCinematography() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestCinematography());
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestCinematography());
+      Movie movie = oscarWinnerSet.getBestCinematography();
       m.addAttribute("bestCinema", new MovieViewModel(filesUri, smashThreshold, movie));
     }
 
     if (oscarWinnerSet.getBestAnimatedFeature() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestAnimatedFeature());
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestAnimatedFeature());
+      Movie movie = oscarWinnerSet.getBestAnimatedFeature();
       m.addAttribute("bestAnimated", new MovieViewModel(filesUri, smashThreshold, movie));
     }
 
     if (oscarWinnerSet.getBestDocumentaryFeature() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestDocumentaryFeature());
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestDocumentaryFeature());
+      Movie movie = oscarWinnerSet.getBestDocumentaryFeature();
       m.addAttribute("bestDocumentary", new MovieViewModel(filesUri, smashThreshold, movie));
     }
 
     if (oscarWinnerSet.getBestFilmEditing() != null) {
-      Movie movie = movieService.getMovieById(oscarWinnerSet.getBestFilmEditing());
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestFilmEditing());
+      Movie movie = oscarWinnerSet.getBestFilmEditing();
       m.addAttribute("bestEditing", new MovieViewModel(filesUri, smashThreshold, movie));
     }
 

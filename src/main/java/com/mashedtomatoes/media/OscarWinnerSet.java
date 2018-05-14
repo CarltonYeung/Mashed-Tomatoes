@@ -1,5 +1,8 @@
 package com.mashedtomatoes.media;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -7,11 +10,11 @@ import javax.persistence.*;
 @Table(name = "OscarWinnerSet")
 public class OscarWinnerSet {
   private Date year;
-  private Long bestPicture;
-  private Long bestAnimatedFeature;
-  private Long bestCinematography;
-  private Long bestDocumentaryFeature;
-  private Long bestFilmEditing;
+  private Movie bestPicture;
+  private Movie bestAnimatedFeature;
+  private Movie bestCinematography;
+  private Movie bestDocumentaryFeature;
+  private Movie bestFilmEditing;
 
   public OscarWinnerSet() {}
 
@@ -19,23 +22,23 @@ public class OscarWinnerSet {
     this.year = year;
   }
 
-  public void setBestPicture(Long bestPicture) {
+  public void setBestPicture(Movie bestPicture) {
     this.bestPicture = bestPicture;
   }
 
-  public void setBestAnimatedFeature(Long bestAnimatedFeature) {
+  public void setBestAnimatedFeature(Movie bestAnimatedFeature) {
     this.bestAnimatedFeature = bestAnimatedFeature;
   }
 
-  public void setBestCinematography(Long bestCinematography) {
+  public void setBestCinematography(Movie bestCinematography) {
     this.bestCinematography = bestCinematography;
   }
 
-  public void setBestDocumentaryFeature(Long bestDocumentaryFeature) {
+  public void setBestDocumentaryFeature(Movie bestDocumentaryFeature) {
     this.bestDocumentaryFeature = bestDocumentaryFeature;
   }
 
-  public void setBestFilmEditing(Long bestFilmEditing) {
+  public void setBestFilmEditing(Movie bestFilmEditing) {
     this.bestFilmEditing = bestFilmEditing;
   }
 
@@ -45,23 +48,38 @@ public class OscarWinnerSet {
     return year;
   }
 
-  public Long getBestPicture() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "bestPictureId")
+  public Movie getBestPicture() {
     return bestPicture;
   }
 
-  public Long getBestAnimatedFeature() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "bestAnimatedFeatureId")
+  public Movie getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
-  public Long getBestCinematography() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "bestCinematographyId")
+  public Movie getBestCinematography() {
     return bestCinematography;
   }
 
-  public Long getBestDocumentaryFeature() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "bestDocumetaryFeatureId")
+  public Movie getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
-  public Long getBestFilmEditing() {
+  @ManyToOne(fetch = FetchType.EAGER)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "bestFilmEditingId")
+  public Movie getBestFilmEditing() {
     return bestFilmEditing;
   }
 }
