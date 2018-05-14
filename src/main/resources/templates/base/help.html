@@ -3,51 +3,40 @@
 
 <head>
   <div th:replace="partials/meta :: meta"></div>
-  <title>Mashed Tomatoes | Help</title>
+  <title>Mashed Tomatoes | About</title>
   <div th:replace="partials/style :: style"></div>
 </head>
 
 <body>
-<div th:replace="partials/header :: header"></div>
-<div class="container my-3 vertical-center">
-  <div class="m-5">
-    <h1>
-      <a href="index.html">
-        <img src="/img/base/logo.png" class="help-logo">
-      </a>Help
-    </h1>
+  <div th:replace="partials/header :: header"></div>
+  <div class="container my-3 vertical-center">
+    <div class="m-5">
+      <h1>
+        <a href="index.html">
+                    <img src="/img/base/logo.png" class="help-logo">
+                </a>Help
+      </h1>
+    </div>
+    <h2>Contact Us</h2>
+    <br>
+    <a class="help-contact-mailto" href="mailto:aarin.chase@stonybrook.edu">
+      <h3 class="help-contact-h3"><img src="/img/base/aarin.jpg" class="member-logo">Aarin Chase</h3>
+    </a>
+    <a class="help-contact-mailto" href="mailto:yaneury.fermin@stonybrook.edu">
+      <h3 class="help-contact-h3"><img src="/img/base/yaneury.png" class="member-logo">Yaneury Fermin</h3>
+    </a>
+    <a class="help-contact-mailto" href="mailto:carlton.yeung@stonybrook.edu">
+      <h3 class="help-contact-h3"><img src="/img/base/carlton.jpg" class="member-logo">Carlton Yeung</h3>
+    </a>
+    <a class="help-contact-mailto" href="mailto:gyunam.park@stonybrook.edu">
+      <h3 class="help-contact-h3"><img src="/img/base/gyunam.png" class="member-logo">Gyunam Park</h3>
+    </a>
+    <br>
+    <br>
+    <br>
   </div>
-  <br>
-  <p>Navigate using the navigation bar on the top of the page.</p>
-  <p>The footer also contains useful links.</p>
-  <p>Register an account by clicking the Login button on the top right and find the link to create an account.</p>
-  <br>
-  <br>
-  <h2>FAQs</h2>
-  <br>
-  <h3>What is this?</h3>
-  <p>Mashed Tomatoes is Spring 2018 CSE 308's final project.</p>
-  <br>
-  <h3>How long did it take to make this?</h3>
-  <p>4 months.</p>
-  <br>
-  <h3>What technologies were used?</h3>
-  <p>Java, Spring framework, MySQL, jQuery, CSS, HTML, JavaScript</p>
-  <br>
-  <h3>Are you affiliated with Rotten Tomatoes?</h3>
-  <p>No, we have no affiliation with Rotten Tomatoes.</p>
-  <br>
-  <h3>How do I become a critic?</h3>
-  <p>You must first register a new account. Then you can apply to become a critic by clicking the link at the footer.</p>
-  <br>
-  <h3>Is there a mobile app I can download?</h3>
-  <p>No. We have no plans to make a mobile app for MashedTomatoes.</p>
-  <br>
-  <br>
-  <br>
-</div>
-<div th:replace="partials/footer :: footer"></div>
-<div th:replace="partials/script :: script"></div>
+  <div th:replace="partials/footer :: footer"></div>
+  <div th:replace="partials/script :: script"></div>
 </body>
 
 </html>

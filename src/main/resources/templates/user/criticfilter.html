@@ -32,55 +32,12 @@
         <li th:each="critic: ${critics}">
           <a class="filtered-content" th:href="@{/user/{id}(id=${critic.id})}">
             <div class="row">
-              <<<<<<< HEAD <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel2.jpg">
+              <div class="col-9 filtered-title" th:text="${critic.fullName}">
+              </div>
             </div>
-            <div class="col-9 filtered-title">
-              Ready Player One
-              <p class="subcontent">subcontent</p>
-            </div>
-    </div>
-    </a>
-    </li>
-    <li>
-      <a class="filtered-content" href="#">
-        <div class="row">
-          <div class="col-3">
-            <img class="filtered-img" src="/img/carousel/carousel7.jpg">
-          </div>
-          <div class="col-9 filtered-title">
-            Dead Pool2
-          </div>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a class="filtered-content" href="#">
-        <div class="row">
-          <div class="col-3">
-            <img class="filtered-img" src="/img/carousel/carousel17.jpg">
-          </div>
-          <div class="col-9 filtered-title">
-            EQ2
-          </div>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a class="filtered-content" href="#">
-        <div class="row">
-          <div class="col-3">
-            <img class="filtered-img" src="/img/carousel/carousel8.jpg">
-          </div>
-          <div class="col-9 filtered-title">
-            A Drift =======
-            <div class="col-9 filtered-title" th:text="${critic.fullName}">
-              >>>>>>> 609a31cc6455eacab7599813cf0b4ad151e46891
-            </div>
-          </div>
-      </a>
-    </li>
-    </ul>
+          </a>
+        </li>
+      </ul>
     </div>
 
 

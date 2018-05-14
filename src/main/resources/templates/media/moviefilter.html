@@ -46,58 +46,17 @@
 
     <div class="filtered-list-container">
       <ul class="filtered-list">
-        <<<<<<< HEAD <li>
-          <a class="filtered-content" href="#">
+        <li th:each="movie: ${movies}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${movie.id})}">
             <div class="row">
               <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel2.jpg">
+                <img class="filtered-img" th:src="${movie.posterPath}">
               </div>
-              <div class="col-9 filtered-title">
-                Ready Player One
-                <p class="subcontent">subcontent</p>
+              <div class="col-9 filtered-title" th:text="${movie.title}">
               </div>
             </div>
           </a>
-          </li>
-          <li>
-            <a class="filtered-content" href="#">
-              <div class="row">
-                <div class="col-3">
-                  <img class="filtered-img" src="/img/carousel/carousel7.jpg">
-                </div>
-                <div class="col-9 filtered-title">
-                  Dead Pool2
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="filtered-content" href="#">
-              <div class="row">
-                <div class="col-3">
-                  <img class="filtered-img" src="/img/carousel/carousel17.jpg">
-                </div>
-                <div class="col-9 filtered-title">
-                  EQ2
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="filtered-content" href="#">
-=======
-            <li th:each="movie: ${movies}">
-                <a class="filtered-content" th:href="@{/movie/{id}(id=${movie.id})}">
->>>>>>> 609a31cc6455eacab7599813cf0b4ad151e46891
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" th:src="${movie.posterPath}">
-                        </div>
-                        <div class="col-9 filtered-title" th:text="${movie.title}">
-                        </div>
-                    </div>
-                </a>
-          </li>
+        </li>
       </ul>
     </div>
 
