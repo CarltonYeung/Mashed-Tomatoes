@@ -7,7 +7,5 @@ import java.util.Date;
 
 @Repository
 public interface OscarWinnerSetRepository extends CrudRepository<OscarWinnerSet, Long> {
-
-    public OscarWinnerSet findFirstByYear(Date year);
-
+    OscarWinnerSet findFirstByYear(Date year);
 }

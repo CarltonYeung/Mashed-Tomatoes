@@ -7,11 +7,11 @@ import javax.persistence.*;
 @Table(name = "OscarWinnerSet")
 public class OscarWinnerSet {
   private Date year;
-  private Movie bestPicture;
-  private Movie bestAnimatedFeature;
-  private Movie bestCinematography;
-  private Movie bestDocumentaryFeature;
-  private Movie bestFilmEditing;
+  private Long bestPicture;
+  private Long bestAnimatedFeature;
+  private Long bestCinematography;
+  private Long bestDocumentaryFeature;
+  private Long bestFilmEditing;
 
   public OscarWinnerSet() {}
 
@@ -19,23 +19,23 @@ public class OscarWinnerSet {
     this.year = year;
   }
 
-  public void setBestPicture(Movie bestPicture) {
+  public void setBestPicture(Long bestPicture) {
     this.bestPicture = bestPicture;
   }
 
-  public void setBestAnimatedFeature(Movie bestAnimatedFeature) {
+  public void setBestAnimatedFeature(Long bestAnimatedFeature) {
     this.bestAnimatedFeature = bestAnimatedFeature;
   }
 
-  public void setBestCinematography(Movie bestCinematography) {
+  public void setBestCinematography(Long bestCinematography) {
     this.bestCinematography = bestCinematography;
   }
 
-  public void setBestDocumentaryFeature(Movie bestDocumentaryFeature) {
+  public void setBestDocumentaryFeature(Long bestDocumentaryFeature) {
     this.bestDocumentaryFeature = bestDocumentaryFeature;
   }
 
-  public void setBestFilmEditing(Movie bestFilmEditing) {
+  public void setBestFilmEditing(Long bestFilmEditing) {
     this.bestFilmEditing = bestFilmEditing;
   }
 
@@ -45,33 +45,23 @@ public class OscarWinnerSet {
     return year;
   }
 
-  @ManyToOne(fetch= FetchType.LAZY)
-  @JoinColumn(name = "bestPictureId")
-  public Movie getBestPicture() {
+  public Long getBestPicture() {
     return bestPicture;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestAnimatedFeatureId")
-  public Movie getBestAnimatedFeature() {
+  public Long getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestCinematographyId")
-  public Movie getBestCinematography() {
+  public Long getBestCinematography() {
     return bestCinematography;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestDocumetaryFeatureId")
-  public Movie getBestDocumentaryFeature() {
+  public Long getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestFilmEditingId")
-  public Movie getBestFilmEditing() {
+  public Long getBestFilmEditing() {
     return bestFilmEditing;
   }
 }
