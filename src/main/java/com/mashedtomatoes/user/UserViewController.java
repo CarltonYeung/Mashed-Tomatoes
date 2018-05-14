@@ -78,7 +78,8 @@ public class UserViewController {
       dbUser = userService.getUserById(id);
     } catch (NoSuchElementException e) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      return "error/404";
+      model.addAttribute("notFound", true);
+      return "user/user";
     }
 
     User sessionUser = null;
@@ -113,6 +114,7 @@ public class UserViewController {
       model.addAttribute("user", new AdministratorViewModel((Administrator) dbUser, filesUri));
     }
 
+    model.addAttribute("notFound", false);
     return "user/user";
   }
 
