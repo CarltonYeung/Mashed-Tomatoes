@@ -142,7 +142,8 @@ public class UserViewController {
                            @RequestParam(required = false, value = "page") Integer pageInt,
                            Model m){
     if(!filter.equals("all") && !filter.equals("top")){
-      return "user/criticfilter";
+      filter = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){

@@ -30,7 +30,8 @@ public class RatingViewController {
                              @RequestParam(required = false, value = "page") Integer pageInt,
                              Model m){
         if(!filter.equals("all") && !filter.equals("latest")){
-            return "ratings/reviewfilter";
+            filter = "all";
+            pageInt = 0;
         }
         int page;
         if(pageInt == null || pageInt.intValue() < 0){
