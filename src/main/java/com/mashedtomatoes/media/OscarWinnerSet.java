@@ -50,36 +50,31 @@ public class OscarWinnerSet {
   }
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name = "bestPictureId")
+  @JoinColumn(name = "bestPictureId", referencedColumnName = "id")
   public Movie getBestPicture() {
     return bestPicture;
   }
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name = "bestAnimatedFeatureId")
+  @JoinColumn(name = "bestAnimatedFeatureId", referencedColumnName = "id")
   public Movie getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name = "bestCinematographyId")
+  @JoinColumn(name = "bestCinematographyId", referencedColumnName = "id")
   public Movie getBestCinematography() {
     return bestCinematography;
   }
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name = "bestDocumetaryFeatureId")
+  @JoinColumn(name = "bestDocumetaryFeatureId", referencedColumnName = "id")
   public Movie getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name = "bestFilmEditingId")
+  @JoinColumn(name = "bestFilmEditingId", referencedColumnName = "id")
   public Movie getBestFilmEditing() {
     return bestFilmEditing;
   }

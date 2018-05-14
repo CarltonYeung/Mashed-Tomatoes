@@ -61,7 +61,7 @@
     </div>
 
 
-    <div class="page">
+    <div th:if="${page != null}" class="page">
       <ul class="pagination pagination-lg">
         <li th:if="${page > 0}" class="page-item">
           <a class="page-link" th:href="@{/movie(page=${page - 1},sort=${sort},genre=${genre},category=${category})}">Previous</a>

@@ -4,6 +4,7 @@ import com.mashedtomatoes.celebrity.Celebrity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,13 @@ public class Movie extends Media {
   private Set<OscarWinnerSet> bestDocumentaryFeature;
   private Set<OscarWinnerSet> bestFilmEditing;
 
-  public Movie() {}
+public Movie() {
+    bestPicture = new HashSet<>();
+    bestAnimatedFeature = new HashSet<>();
+    bestCinematography = new HashSet<>();
+    bestDocumentaryFeature = new HashSet<>();
+    bestFilmEditing = new HashSet<>();
+  }
 
   public void setBoxOffice(double boxOffice) {
     this.boxOffice = boxOffice;
