@@ -80,7 +80,10 @@ public class MovieViewController {
           Model m) {
     genre = genre.toUpperCase();
     if(!validateReqParam(category, genre, sort)){
-      return "media/moviefilter";
+      category = movieCategoryFilter.get("All");
+      sort = movieSortFilter.get("Release Date");
+      genre = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){

@@ -142,7 +142,8 @@ public class UserViewController {
                            @RequestParam(required = false, value = "page") Integer pageInt,
                            Model m){
     if(!filter.equals("all") && !filter.equals("top")){
-      return "user/criticfilter";
+      filter = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){
@@ -160,5 +161,15 @@ public class UserViewController {
     m.addAttribute("critics", criticViewModelList);
     m.addAttribute("criticFilters", criticFilter);
     return "user/criticfilter";
+  }
+
+  @GetMapping("/verify")
+  public String verify(
+          @RequestParam("email") String email,
+          @RequestParam("key") String key,
+          Model model) {
+
+    model.addAttribute("success", userService.verifyEmail(email, key));
+    return "user/verify";
   }
 }

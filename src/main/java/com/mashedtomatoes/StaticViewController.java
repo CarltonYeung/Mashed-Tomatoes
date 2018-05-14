@@ -18,4 +18,9 @@ public class StaticViewController {
 
   @GetMapping("/help")
   public String getHelp() { return "base/help"; }
+
+  @GetMapping("/terms")
+  public String getTerms() {
+    return "base/terms";
+  }
 }
