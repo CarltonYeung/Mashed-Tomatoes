@@ -128,21 +128,23 @@
     <section class="mt-5 media-section">
       <h1 class="media-section -title">Critic Reviews</h1>
       <div class="card-columns" th:if="${not #lists.isEmpty(movie.criticRatings)}">
-        <div class="card bg-light" th:each="rating: ${movie.criticRatings}">
+        <div th:each="rating: ${movie.criticRatings}" class="bg-dark card">
           <div class="card-body">
-            <img class="review-card -tomato" src="/img/rating/mashometer-tomato.png">
-            <p class="pt-2 card-text review-card -text" th:text="${rating.review}"></p>
-            <footer class="blockquote-footer">
-              <small class="text-muted">
-                        <p>Last updated on
-                            <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
-                        </p>
-                        <a th:href="@{/user/{id}(id=${rating.author.id})}" th:text="${rating.author.displayName}"></a>
-                        in
-                        <a th:href="${rating.source.link}" th:text="${rating.source.title}"></a>
-                    </small>
-            </footer>
+            <h2 class="my-4" th:text="${rating.media.title}"></h2>
+            <div class="my-4 d-flex justify-content-between">
+              <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
+            </div>
+            <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+            <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
+            <a class="mt-4 text-lg-center" th:href="@{/user/{id}(id=${rating.author.id})}" th:text="${rating.author.fullName}"></a>
           </div>
+          <footer class="py-2 blockquote-footer text-center">
+            <small class="text-muted">
+                    <p>Last updated on
+                        <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
+                    </p>
+                </small>
+          </footer>
         </div>
       </div>
       <a class="float-right" th:if="${not #lists.isEmpty(movie.criticRatings) && #lists.size(movie.criticRatings) > 8}" th:href="@{/movie/{id}/critic-rating(id=${movie.id})}">See more</a>

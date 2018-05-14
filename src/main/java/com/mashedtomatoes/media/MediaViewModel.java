@@ -4,6 +4,7 @@ import com.mashedtomatoes.celebrity.Celebrity;
 import com.mashedtomatoes.celebrity.Character;
 import com.mashedtomatoes.rating.AudienceRating;
 import com.mashedtomatoes.rating.CriticRating;
+import com.mashedtomatoes.rating.CriticRatingViewModel;
 import com.mashedtomatoes.util.Util;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public class MediaViewModel extends Media {
   private final Double averageAudienceRating;
   private final Long totalAudienceRating;
   private final Set<AudienceRating> audienceRatings;
-  private final Set<CriticRating> criticRatings;
+  private final Set<CriticRatingViewModel> criticRatings;
 
   public MediaViewModel(String fileUri, Integer smashThreshold, Media base) {
     super.setId(base.getId());
@@ -55,6 +56,7 @@ public class MediaViewModel extends Media {
               .stream()
               .filter(rating -> rating instanceof CriticRating)
               .map(rating -> (CriticRating) rating)
+              .map(rating -> new CriticRatingViewModel(rating, fileUri))
               .collect(Collectors.toSet());
       audienceRatings =
           getRatings()
@@ -62,7 +64,7 @@ public class MediaViewModel extends Media {
               .filter(rating -> rating instanceof AudienceRating)
               .map(rating -> (AudienceRating) rating)
               .collect(Collectors.toSet());
-      OptionalDouble optionalAvgCriticRating = criticRatings.stream().mapToInt(CriticRating::getScore).average();
+      OptionalDouble optionalAvgCriticRating = criticRatings.stream().mapToInt(CriticRatingViewModel::getScore).average();
       if (optionalAvgCriticRating.isPresent()) {
         this.averageCriticRating = optionalAvgCriticRating.getAsDouble();
       } else {
@@ -103,7 +105,7 @@ public class MediaViewModel extends Media {
     return audienceRatings;
   }
 
-  public Set<CriticRating> getCriticRatings() {
+  public Set<CriticRatingViewModel> getCriticRatings() {
     return criticRatings;
   }
 

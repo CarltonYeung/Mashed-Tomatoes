@@ -33614,7 +33614,9 @@ const components = [
     __webpack_require__(35),
     __webpack_require__(36),
     __webpack_require__(37),
-    __webpack_require__(38)
+    __webpack_require__(38),
+    __webpack_require__(39),
+    __webpack_require__(40)
 ];
 
 const areDepsMet = deps => {
@@ -44036,6 +44038,31 @@ module.exports.init = () => {
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
+
+module.exports.deps = [
+    '#review-filter-btn',
+    '#review-filter-select',
+];
+
+module.exports.init = () => {
+    $('#review-filter-btn').on('click', () => {
+        let filter = $('[data-filter]').attr('data-filter');
+        const page = $('[data-page]').attr('data-page');
+        const filterSelect = $('#review-filter-select > option:selected');
+        if (!filterSelect.prop('disabled')) {
+            filter = filterSelect.val();
+        }
+
+        window.location.href = `/review?filter=${filter}&page=${page}`;
+    });
+};
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
 const _ = __webpack_require__(1);
 const urlBuilder = __webpack_require__(3);
 const alert = __webpack_require__(2);
@@ -44083,7 +44110,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44145,7 +44172,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44173,7 +44200,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44221,7 +44248,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44269,7 +44296,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44317,7 +44344,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44366,7 +44393,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44407,7 +44434,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44452,7 +44479,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44496,7 +44523,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44577,7 +44604,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44618,7 +44645,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44693,7 +44720,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44742,7 +44769,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44794,7 +44821,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44840,7 +44867,32 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0);
+
+module.exports.deps = [
+    '#critic-filter-btn',
+    '#critic-filter-select',
+];
+
+module.exports.init = () => {
+    $('#critic-filter-btn').on('click', () => {
+        let filter = $('[data-filter]').attr('data-filter');
+        const page = $('[data-page]').attr('data-page');
+        const filterSelect = $('#critic-filter-select > option:selected');
+        if (!filterSelect.prop('disabled')) {
+            filter = filterSelect.val();
+        }
+
+        window.location.href = `/critic?filter=${filter}&page=${page}`;
+    });
+};
+
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);

@@ -46,10 +46,8 @@ public class RatingViewController {
         for (Iterator criticRatingIterator = criticRatings.iterator(); criticRatingIterator.hasNext();) {
             criticRatingViewModels.add(new CriticRatingViewModel((CriticRating) criticRatingIterator.next(), filesUri));
         }
-        for (CriticRatingViewModel criticRatingViewModel : criticRatingViewModels) {
-            System.out.println(criticRatingViewModel.getReview());
-        }
-        System.out.println(criticRatingViewModels.size());
+        m.addAttribute("page", page);
+        m.addAttribute("filter", filter);
         m.addAttribute("reviews", criticRatingViewModels);
         m.addAttribute("reviewFilters", reviewFilter);
         return "ratings/reviewfilter";

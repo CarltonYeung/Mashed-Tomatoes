@@ -158,6 +158,8 @@ public class UserViewController {
     for(Iterator criticsIterator = critics.iterator(); criticsIterator.hasNext();){
       criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
     }
+    m.addAttribute("page", page);
+    m.addAttribute("filter", filter);
     m.addAttribute("critics", criticViewModelList);
     m.addAttribute("criticFilters", criticFilter);
     return "user/criticfilter";

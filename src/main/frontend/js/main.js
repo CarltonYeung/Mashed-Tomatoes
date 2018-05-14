@@ -20,6 +20,7 @@ const components = [
     require('./media/tv-filter-btn'),
     require('./rating/rating-form'),
     require('./rating/report-rating-btn'),
+    require('./rating/review-filter-btn'),
     require('./user/login-form'),
     require('./user/registration-form'),
     require('./user/logout-btn'),
@@ -36,6 +37,7 @@ const components = [
     require('./user/critic-apply-form'),
     require('./user/report-user-form'),
     require('./user/delete-application-btn'),
+    require('./user/critic-filter-btn'),
     require('./base/carousel')
 ];
 
