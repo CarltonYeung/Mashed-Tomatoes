@@ -52,8 +52,6 @@ public class TVShowViewController {
   }
 
   private boolean validateReqParam(String genre, String sort){
-    System.out.println(sort);
-    System.out.println(tvShowSortFilter.get("Airing Today"));
     if(!validGenre(genre)){
       return false;
     }
@@ -72,7 +70,9 @@ public class TVShowViewController {
           Model m) {
     genre = genre.toUpperCase();
     if(!validateReqParam(genre, sort)){
-      return "media/tvfilter";
+      sort = tvShowSortFilter.get("All");
+      genre = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){
