@@ -28,43 +28,6 @@
     </div>
 
     <div class="filtered-list-container">
-<<<<<<< HEAD
-        <ul class="filtered-list">
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel2.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            Ready Player One
-                            <p class="subcontent">subcontent</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel7.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            Dead Pool2
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a class="filtered-content" href="#">
-                    <div class="row">
-                        <div class="col-3">
-                            <img class="filtered-img" src="/img/carousel/carousel17.jpg">
-                        </div>
-                        <div class="col-9 filtered-title">
-                            EQ2
-                        </div>
-=======
         <ul class="filtered-list mx-auto d-flex flex-wrap">
             <li th:each="rating: ${reviews}" class="bg-dark review-card">
                 <div class="card-body">
@@ -74,7 +37,6 @@
                     </a>
                     <div class="my-4 d-flex justify-content-between">
                         <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
->>>>>>> 609a31cc6455eacab7599813cf0b4ad151e46891
                     </div>
                     <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
                     <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}" >No review text posted ... :(</p>
