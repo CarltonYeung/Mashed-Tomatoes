@@ -1,107 +1,98 @@
-<<<<<<< HEAD
-<div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane"
-     id="pills-ratings" role="tabpanel">
-    <h2 th:if="${#lists.isEmpty(user.ratings)}" class="my-4 text-center">So much empty...</h2>
-    <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap">
+<div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane" id="pills-ratings" role="tabpanel" xmlns:th="http://www.w3.org/1999/html">
+  <h2 th:if="${#lists.isEmpty(user.ratings)}" class="my-4 text-center">So much empty...</h2>
+  <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap">
+    <th:block th:if="${user.isAudience()}">
+      <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap">
         <div th:each="rating: ${user.ratings}" class="bg-dark review-card">
-            <div class="card-body">
-                <h2 class="my-4" th:text="${rating.media.title}"></h2>
-                <a th:href="@{/media/{id}(id=${rating.media.id})}">
+          <div class="card-body">
+            <h2 class="my-4" th:text="${rating.media.title}"></h2>
+            <a th:href="@{/media/{id}(id=${rating.media.id})}">
                     <img class="card-img-top user-pane -rating-img" th:src="${rating.media.posterPath}">
                 </a>
-                <div class="my-4 d-flex justify-content-between">
-                    <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
-                </div>
-                <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
-                <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}" >No review text posted ... :(</p>
+            <div class="my-4 d-flex justify-content-between">
+              <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
             </div>
-            <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
-                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
-                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
-            </div>
-            <footer class="py-2 blockquote-footer text-center">
-                <small class="text-muted">
+            <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+            <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
+          </div>
+          <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
+            <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
+            <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
+          </div>
+          <footer class="py-2 blockquote-footer text-center">
+            <small class="text-muted">
                     <p class="text-center">Last updated on
                         <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
                     </p>
                 </small>
-            </footer>
+          </footer>
         </div>
-    </div>
-    <div th:replace="user/modals/editrating :: modal"></div>
-</div>
-=======
-<div th:fragment="pane" th:classappend="${!viewingOwnProfile} ? 'show active' : ''" class="tab-pane fade user-pane"
-     id="pills-ratings" role="tabpanel" xmlns:th="http://www.w3.org/1999/html">
-    <h2 th:if="${#lists.isEmpty(user.ratings)}" class="my-4 text-center">So much empty...</h2>
-    <div th:if="${!#lists.isEmpty(user.ratings)}" class="mt-4 d-flex flex-wrap">
-        <th:block th:if="${user.isAudience()}">
-        </th:block>
-        <th:block th:if="${user.isCritic()}">
-            <div class="d-flex mx-auto">
-                <div class="col-md-6">
-                    <h2 class="my-4 text-center">Best Reviewed</h2>
-                    <p th:if="${#lists.isEmpty(user.bestReviewed)}" class="text-center">So much empty...</p>
-                    <div th:if="${!#lists.isEmpty(user.bestReviewed)}"  class="d-flex flex-wrap">
-                        <div th:each="rating: ${user.bestReviewed}" class="bg-dark review-card">
-                            <div class="card-body">
-                                <h2 class="my-4" th:text="${rating.media.title}"></h2>
-                                <a th:href="@{/media/{id}(id=${rating.media.id})}">
+      </div>
+    </th:block>
+    <th:block th:if="${user.isCritic()}">
+      <div class="d-flex mx-auto">
+        <div class="col-md-6">
+          <h2 class="my-4 text-center">Best Reviewed</h2>
+          <p th:if="${#lists.isEmpty(user.bestReviewed)}" class="text-center">So much empty...</p>
+          <div th:if="${!#lists.isEmpty(user.bestReviewed)}" class="d-flex flex-wrap">
+            <div th:each="rating: ${user.bestReviewed}" class="bg-dark review-card">
+              <div class="card-body">
+                <h2 class="my-4" th:text="${rating.media.title}"></h2>
+                <a th:href="@{/media/{id}(id=${rating.media.id})}">
                                     <img class="card-img-top user-pane -rating-img" th:src="${rating.media.posterPath}">
                                 </a>
-                                <div class="my-4 d-flex justify-content-between">
-                                    <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
-                                </div>
-                                <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
-                                <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}" >No review text posted ... :(</p>
-                            </div>
-                            <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
-                                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
-                                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
-                            </div>
-                            <footer class="py-2 blockquote-footer text-center">
-                                <small class="text-muted">
+                <div class="my-4 d-flex justify-content-between">
+                  <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
+                </div>
+                <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+                <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
+              </div>
+              <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
+                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
+                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
+              </div>
+              <footer class="py-2 blockquote-footer text-center">
+                <small class="text-muted">
                                     <p class="text-center">Last updated on
                                         <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
                                     </p>
                                 </small>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h2 class="my-4 text-center">Worst Reviewed</h2>
-                    <p th:if="${#lists.isEmpty(user.worstReviewed)}" class="text-center">So much empty...</p>
-                    <div th:if="${!#lists.isEmpty(user.worstReviewed)}"  class="list-group">
-                        <div th:each="rating: ${user.worstReviewed}" class="bg-dark review-card">
-                            <div class="card-body">
-                                <h2 class="my-4" th:text="${rating.media.title}"></h2>
-                                <a th:href="@{/media/{id}(id=${rating.media.id})}">
-                                    <img class="card-img-top user-pane -rating-img" th:src="${rating.media.posterPath}">
-                                </a>
-                                <div class="my-4 d-flex justify-content-between">
-                                    <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
-                                </div>
-                                <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
-                                <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}" >No review text posted ... :(</p>
-                            </div>
-                            <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
-                                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
-                                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
-                            </div>
-                            <footer class="py-2 blockquote-footer text-center">
-                                <small class="text-muted">
-                                    <p class="text-center">Last updated on
-                                        <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
-                                    </p>
-                                </small>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
+              </footer>
             </div>
-        </th:block>
-    </div>
-    <div th:replace="user/modals/editrating :: modal"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2 class="my-4 text-center">Worst Reviewed</h2>
+          <p th:if="${#lists.isEmpty(user.worstReviewed)}" class="text-center">So much empty...</p>
+          <div th:if="${!#lists.isEmpty(user.worstReviewed)}" class="list-group">
+            <div th:each="rating: ${user.worstReviewed}" class="bg-dark review-card">
+              <div class="card-body">
+                <h2 class="my-4" th:text="${rating.media.title}"></h2>
+                <a th:href="@{/media/{id}(id=${rating.media.id})}">
+                                    <img class="card-img-top user-pane -rating-img" th:src="${rating.media.posterPath}">
+                                </a>
+                <div class="my-4 d-flex justify-content-between">
+                  <div th:each="i: ${#numbers.sequence(1, rating.score)}" class="star"></div>
+                </div>
+                <p class="pb-2 card-text" th:if="${!#strings.isEmpty(rating.review)}" th:text="${rating.review}"></p>
+                <p class="pb-2 card-text" th:if="${#strings.isEmpty(rating.review)}">No review text posted ... :(</p>
+              </div>
+              <div th:if="${viewingOwnProfile}" class="d-flex justify-content-between w-75 mx-auto py-2">
+                <button class="edit-rating-btn btn btn-primary" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}, data-rating-score=${rating.score}, data-rating-review=${rating.review}">Edit</button>
+                <button class="delete-rating-btn btn btn-danger" th:attr="data-rating-id=${rating.id}, data-media-id=${rating.media.id}">Delete</button>
+              </div>
+              <footer class="py-2 blockquote-footer text-center">
+                <small class="text-muted">
+                                    <p class="text-center">Last updated on
+                                        <span th:text="${#calendars.format(rating.updated, 'MMM dd, yyyy')}"></span>
+                                    </p>
+                                </small>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </th:block>
+  </div>
+  <div th:replace="user/modals/editrating :: modal"></div>
 </div>
->>>>>>> ba6e3eebfaacf72977facf025edb2f576b51a94d

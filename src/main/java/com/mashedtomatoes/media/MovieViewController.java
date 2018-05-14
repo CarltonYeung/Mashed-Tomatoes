@@ -78,8 +78,12 @@ public class MovieViewController {
           @RequestParam(required = false, defaultValue = "release-date", value = "sort") String sort,
           @RequestParam(required = false, value = "page") Integer pageInt,
           Model m) {
+    genre = genre.toUpperCase();
     if(!validateReqParam(category, genre, sort)){
-      return "media/moviefilter";
+      category = movieCategoryFilter.get("All");
+      sort = movieSortFilter.get("Release Date");
+      genre = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){
@@ -116,6 +120,11 @@ public class MovieViewController {
     for(Genre g: Genre.values()){
       genres.add(g.name());
     }
+
+    m.addAttribute("genre", genre);
+    m.addAttribute("sort", sort);
+    m.addAttribute("category", category);
+    m.addAttribute("page", page);
     m.addAttribute("movies", movieViewModelList);
     m.addAttribute("movieCategoryFilters", movieCategoryFilter);
     m.addAttribute("movieSortFilters", movieSortFilter);
@@ -131,6 +140,38 @@ public class MovieViewController {
       year = Calendar.getInstance().get(Calendar.YEAR)-1;
     }
     OscarWinnerSet oscarWinnerSet = movieService.getOscarWinnerByYear(year.intValue());
+    m.addAttribute("year",year);
+    System.out.println(oscarWinnerSet.getBestPicture());
+    if (oscarWinnerSet.getBestPicture() != null) {
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestPicture());
+      Movie movie = oscarWinnerSet.getBestPicture();
+      m.addAttribute("bestPicture", new MovieViewModel(filesUri, smashThreshold, movie));
+    }
+
+    if (oscarWinnerSet.getBestCinematography() != null) {
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestCinematography());
+      Movie movie = oscarWinnerSet.getBestCinematography();
+      m.addAttribute("bestCinema", new MovieViewModel(filesUri, smashThreshold, movie));
+    }
+
+    if (oscarWinnerSet.getBestAnimatedFeature() != null) {
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestAnimatedFeature());
+      Movie movie = oscarWinnerSet.getBestAnimatedFeature();
+      m.addAttribute("bestAnimated", new MovieViewModel(filesUri, smashThreshold, movie));
+    }
+
+    if (oscarWinnerSet.getBestDocumentaryFeature() != null) {
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestDocumentaryFeature());
+      Movie movie = oscarWinnerSet.getBestDocumentaryFeature();
+      m.addAttribute("bestDocumentary", new MovieViewModel(filesUri, smashThreshold, movie));
+    }
+
+    if (oscarWinnerSet.getBestFilmEditing() != null) {
+      // Movie movie = movieService.getMovieById(oscarWinnerSet.getBestFilmEditing());
+      Movie movie = oscarWinnerSet.getBestFilmEditing();
+      m.addAttribute("bestEditing", new MovieViewModel(filesUri, smashThreshold, movie));
+    }
+
     m.addAttribute("academyAward",oscarWinnerSet);
     return "media/academyfilter";
   }

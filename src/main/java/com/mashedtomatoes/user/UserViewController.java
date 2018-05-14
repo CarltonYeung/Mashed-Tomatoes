@@ -78,7 +78,8 @@ public class UserViewController {
       dbUser = userService.getUserById(id);
     } catch (NoSuchElementException e) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      return "error/404";
+      model.addAttribute("notFound", true);
+      return "user/user";
     }
 
     User sessionUser = null;
@@ -113,6 +114,7 @@ public class UserViewController {
       model.addAttribute("user", new AdministratorViewModel((Administrator) dbUser, filesUri));
     }
 
+    model.addAttribute("notFound", false);
     return "user/user";
   }
 
@@ -142,7 +144,8 @@ public class UserViewController {
                            @RequestParam(required = false, value = "page") Integer pageInt,
                            Model m){
     if(!filter.equals("all") && !filter.equals("top")){
-      return "user/criticfilter";
+      filter = "all";
+      pageInt = 0;
     }
     int page;
     if(pageInt == null || pageInt.intValue() < 0){
@@ -157,8 +160,20 @@ public class UserViewController {
     for(Iterator criticsIterator = critics.iterator(); criticsIterator.hasNext();){
       criticViewModelList.add(new CriticViewModel((Critic) criticsIterator.next(),filesUri));
     }
+    m.addAttribute("page", page);
+    m.addAttribute("filter", filter);
     m.addAttribute("critics", criticViewModelList);
     m.addAttribute("criticFilters", criticFilter);
     return "user/criticfilter";
+  }
+
+  @GetMapping("/verify")
+  public String verify(
+          @RequestParam("email") String email,
+          @RequestParam("key") String key,
+          Model model) {
+
+    model.addAttribute("success", userService.verifyEmail(email, key));
+    return "user/verify";
   }
 }

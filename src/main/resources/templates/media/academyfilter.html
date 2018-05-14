@@ -13,79 +13,88 @@
 
     <h1 class="filter-heading">Academy Award Winner</h1>
 
-    <div class="filter-container">
-      <select class="form-control filter">
-            <option value="" disabled selected>Year</option>
-            <option th:each="year: ${#numbers.sequence(1950, 2018)}" value="${year}" th:text="${year}"></option>
-        </select>
+    <div class="filter-container" th:attr="data-year=${year}">
+      <div class="d-flex justify-content-center">
+        <div class="w-75 mr-2">
+          <select id="oscar-year-select" class="form-control filter">
+                    <option disabled selected>Year</option>
+                    <option th:each="year: ${#numbers.sequence(1950, 2018)}" th:value="${year}" th:text="${year}"></option>
+                </select>
+        </div>
+        <button id="oscar-filter-btn" class="btn btn-lg btn-success">Filter</button>
+      </div>
     </div>
 
+    <h1 th:text="${year}" class="mt-5 text-center"></h1>
     <div class="filtered-list-container">
       <ul class="filtered-list">
-        <li>
-          <a class="filtered-content" href="#">
+        <li th:if="${bestPicture != null}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${bestPicture.id})}">
             <div class="row">
               <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel2.jpg">
+                <img class="filtered-img" th:src="${bestPicture.posterPath}">
               </div>
               <div class="col-9 filtered-title">
+<<<<<<< HEAD
                 Ready Player One
                 <p class="subcontent">subcontent</p>
+=======
+                <span th:text="${bestPicture.title}"></span> (Best Picture)
+>>>>>>> 609a31cc6455eacab7599813cf0b4ad151e46891
               </div>
             </div>
           </a>
         </li>
-        <li>
-          <a class="filtered-content" href="#">
+        <li th:if="${bestCinema != null}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${bestCinema.id})}">
             <div class="row">
               <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel7.jpg">
+                <img class="filtered-img" th:src="${bestCinema.posterPath}">
               </div>
               <div class="col-9 filtered-title">
-                Dead Pool2
+                <span th:text="${bestCinema.title}"></span> (Best Cinematography)
               </div>
             </div>
           </a>
         </li>
-        <li>
-          <a class="filtered-content" href="#">
+        <li th:if="${bestAnimated != null}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${bestAnimated.id})}">
             <div class="row">
               <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel17.jpg">
+                <img class="filtered-img" th:src="${bestAnimated.posterPath}">
               </div>
               <div class="col-9 filtered-title">
-                EQ2
+                <span th:text="${bestAnimated.title}"></span> (Best Animated Feature)
               </div>
             </div>
           </a>
         </li>
-        <li>
-          <a class="filtered-content" href="#">
+        <li th:if="${bestDocumentary != null}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${bestDocumentary.id})}">
             <div class="row">
               <div class="col-3">
-                <img class="filtered-img" src="/img/carousel/carousel8.jpg">
+                <img class="filtered-img" th:src="${bestDocumentary.posterPath}">
               </div>
               <div class="col-9 filtered-title">
-                A Drift
+                <span th:text="${bestDocumentary.title}"></span> (Best Documentary Feature)
+              </div>
+            </div>
+          </a>
+        </li>
+        <li th:if="${bestEditing != null}">
+          <a class="filtered-content" th:href="@{/movie/{id}(id=${bestEditing.id})}">
+            <div class="row">
+              <div class="col-3">
+                <img class="filtered-img" th:src="${bestEditing.posterPath}">
+              </div>
+              <div class="col-9 filtered-title">
+                <span th:text="${bestEditing.title}"></span> (Best Film Editing)
               </div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-
-
-    <!-- <div class="page">
-      <ul class="pagination pagination-lg">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </div>   -->
-
-
   </div>
   <br />
   <br />

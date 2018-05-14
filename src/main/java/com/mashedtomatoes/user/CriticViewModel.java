@@ -20,7 +20,7 @@ public class CriticViewModel extends UserViewModel {
   public CriticViewModel(Critic base, String fileUri) {
     super(base, fileUri);
     firstName = base.getFirstName();
-    lastName = base.getFirstName();
+    lastName = base.getLastName();
     fullName = String.format("%s %s", firstName, lastName);
     topCritic = base.isTopCritic();
     bestReviewed = sortRatings(true);

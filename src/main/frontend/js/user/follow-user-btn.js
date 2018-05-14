@@ -18,11 +18,6 @@ const updateIsFollowing = (isFollowing) => {
             contentType: "application/json",
             success: (body, status, xhr) => {
                 if (_.isEqual(xhr.status, 200)) {
-                    if (isFollowing) {
-                        console.log('User unfollowed');
-                    } else {
-                        console.log('User followed');
-                    }
                     window.location.reload(true);
                 }
             },

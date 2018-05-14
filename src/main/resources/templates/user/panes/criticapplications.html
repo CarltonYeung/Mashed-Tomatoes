@@ -1,4 +1,3 @@
-private String firstName; private String lastName; private String body; private Date applied;
 <div th:fragment="pane" class="tab-pane fade user-pane" id="pills-critic-applications" role="tabpanel">
   <h2 th:if="${#lists.isEmpty(applications)}" class="my-4 text-center">So much empty...</h2>
   <div th:if="${!#lists.isEmpty(applications)}" class="mt-4 mx-auto d-flex flex-wrap">

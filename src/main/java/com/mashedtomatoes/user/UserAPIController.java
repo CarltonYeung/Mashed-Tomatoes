@@ -62,19 +62,6 @@ public class UserAPIController {
     return "";
   }
 
-  @GetMapping("/verify")
-  public void verify(
-      @RequestParam("email") String email,
-      @RequestParam("key") String key,
-      HttpServletResponse response) {
-
-    if (userService.verifyEmail(email, key)) {
-      response.setStatus(HttpServletResponse.SC_OK);
-    } else {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-    }
-  }
-
   @PostMapping("/resendVerificationEmail")
   public String resendVerificationEmail(
       @Valid @RequestBody ResendVerificationEmailRequest request, HttpServletResponse response) {

@@ -16,6 +16,14 @@ public class StaticViewController {
     return "base/newsletter";
   }
 
+  @GetMapping("/contactus")
+  public String getContactUs() { return "base/contactus"; }
+
   @GetMapping("/help")
   public String getHelp() { return "base/help"; }
+
+  @GetMapping("/terms")
+  public String getTerms() {
+    return "base/terms";
+  }
 }

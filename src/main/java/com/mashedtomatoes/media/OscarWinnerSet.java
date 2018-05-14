@@ -1,7 +1,11 @@
 package com.mashedtomatoes.media;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "OscarWinnerSet")
@@ -45,32 +49,32 @@ public class OscarWinnerSet {
     return year;
   }
 
-  @ManyToOne(fetch= FetchType.LAZY)
-  @JoinColumn(name = "bestPictureId")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "bestPictureId", referencedColumnName = "id")
   public Movie getBestPicture() {
     return bestPicture;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestAnimatedFeatureId")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "bestAnimatedFeatureId", referencedColumnName = "id")
   public Movie getBestAnimatedFeature() {
     return bestAnimatedFeature;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestCinematographyId")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "bestCinematographyId", referencedColumnName = "id")
   public Movie getBestCinematography() {
     return bestCinematography;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestDocumetaryFeatureId")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "bestDocumetaryFeatureId", referencedColumnName = "id")
   public Movie getBestDocumentaryFeature() {
     return bestDocumentaryFeature;
   }
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name = "bestFilmEditingId")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "bestFilmEditingId", referencedColumnName = "id")
   public Movie getBestFilmEditing() {
     return bestFilmEditing;
   }

@@ -38,9 +38,7 @@ module.exports.init = () => {
               success: (body, status, xhr) => {
                   if (_.isEqual(xhr.status, 200)) {
                       alert.display('Review added', false);
-                      setTimeout(() => {
-                          window.location.reload(true);
-                      }, 1000);
+                      window.location.reload(true);
                   }
               },
               error: (xhr, status, err) => {

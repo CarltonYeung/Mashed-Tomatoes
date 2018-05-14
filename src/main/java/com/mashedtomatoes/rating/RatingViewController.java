@@ -30,7 +30,8 @@ public class RatingViewController {
                              @RequestParam(required = false, value = "page") Integer pageInt,
                              Model m){
         if(!filter.equals("all") && !filter.equals("latest")){
-            return "ratings/reviewfilter";
+            filter = "all";
+            pageInt = 0;
         }
         int page;
         if(pageInt == null || pageInt.intValue() < 0){
@@ -45,10 +46,8 @@ public class RatingViewController {
         for (Iterator criticRatingIterator = criticRatings.iterator(); criticRatingIterator.hasNext();) {
             criticRatingViewModels.add(new CriticRatingViewModel((CriticRating) criticRatingIterator.next(), filesUri));
         }
-        for (CriticRatingViewModel criticRatingViewModel : criticRatingViewModels) {
-            System.out.println(criticRatingViewModel.getReview());
-        }
-        System.out.println(criticRatingViewModels.size());
+        m.addAttribute("page", page);
+        m.addAttribute("filter", filter);
         m.addAttribute("reviews", criticRatingViewModels);
         m.addAttribute("reviewFilters", reviewFilter);
         return "ratings/reviewfilter";

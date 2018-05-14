@@ -17,9 +17,7 @@ module.exports.init = () => {
                 success: (body, status, xhr) => {
                     if (_.isEqual(xhr.status, 200)) {
                         alert.display('User deleted!', false);
-                        setTimeout(() => {
-                            window.location.href = "/";
-                        }, 1000);
+                        window.location.href = "/";
                     }
                 },
                 error: (xhr, status, err) => {
