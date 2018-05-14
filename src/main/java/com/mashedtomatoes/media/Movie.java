@@ -1,14 +1,10 @@
 package com.mashedtomatoes.media;
 
 import com.mashedtomatoes.celebrity.Celebrity;
+
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "Movies")
@@ -21,6 +17,12 @@ public class Movie extends Media {
   private Celebrity producer;
   private Celebrity writer;
   private MovieTrailer movieTrailer;
+
+  private Set<OscarWinnerSet> bestPicture;
+  private Set<OscarWinnerSet> bestAnimatedFeature;
+  private Set<OscarWinnerSet> bestCinematography;
+  private Set<OscarWinnerSet> bestDocumentaryFeature;
+  private Set<OscarWinnerSet> bestFilmEditing;
 
   public Movie() {}
 
@@ -98,5 +100,50 @@ public class Movie extends Media {
   )
   public MovieTrailer getMovieTrailer() {
     return movieTrailer;
+  }
+
+  @OneToMany(mappedBy = "bestPicture", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  public Set<OscarWinnerSet> getBestPicture() {
+    return bestPicture;
+  }
+
+  public void setBestPicture(Set<OscarWinnerSet> bestPicture) {
+    this.bestPicture = bestPicture;
+  }
+
+  @OneToMany(mappedBy = "bestAnimatedFeature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  public Set<OscarWinnerSet> getBestAnimatedFeature() {
+    return bestAnimatedFeature;
+  }
+
+  public void setBestAnimatedFeature(Set<OscarWinnerSet> bestAnimatedFeature) {
+    this.bestAnimatedFeature = bestAnimatedFeature;
+  }
+
+  @OneToMany(mappedBy = "bestCinematography", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  public Set<OscarWinnerSet> getBestCinematography() {
+    return bestCinematography;
+  }
+
+  public void setBestCinematography(Set<OscarWinnerSet> bestCinematography) {
+    this.bestCinematography = bestCinematography;
+  }
+
+  @OneToMany(mappedBy = "bestDocumentaryFeature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  public Set<OscarWinnerSet> getBestDocumentaryFeature() {
+    return bestDocumentaryFeature;
+  }
+
+  public void setBestDocumentaryFeature(Set<OscarWinnerSet> bestDocumentaryFeature) {
+    this.bestDocumentaryFeature = bestDocumentaryFeature;
+  }
+
+  @OneToMany(mappedBy = "bestFilmEditing", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  public Set<OscarWinnerSet> getBestFilmEditing() {
+    return bestFilmEditing;
+  }
+
+  public void setBestFilmEditing(Set<OscarWinnerSet> bestFilmEditing) {
+    this.bestFilmEditing = bestFilmEditing;
   }
 }

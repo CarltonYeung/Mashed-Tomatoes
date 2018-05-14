@@ -5,6 +5,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "OscarWinnerSet")
