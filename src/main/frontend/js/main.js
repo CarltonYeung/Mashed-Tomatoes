@@ -1,11 +1,4 @@
-require('bootstrap');
-
-const $ = require('jquery');
-window.jQuery = $;
-window.jqeury = $;
-window.$ = $;
-require('slick-carousel');
-require('flip');
+require('./vendor');
 
 const _ = require('lodash');
 
@@ -43,7 +36,7 @@ const components = [
 
 const areDepsMet = deps => {
     const missingDeps = _.filter(deps, dep => {
-        return $(dep).length == 0;
+        return _.isEqual($(dep).length, 0);
     });
 
     if (!_.isEmpty(missingDeps)) {

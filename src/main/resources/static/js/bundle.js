@@ -27545,7 +27545,7 @@ return jQuery;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(11)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(12)(module)))
 
 /***/ }),
 /* 2 */
@@ -33578,17 +33578,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
 __webpack_require__(7);
 
-const $ = __webpack_require__(0);
-window.jQuery = $;
-window.jqeury = $;
-window.$ = $;
-__webpack_require__(9);
-__webpack_require__(10);
-
 const _ = __webpack_require__(1);
 
 const components = [
-    __webpack_require__(12),
     __webpack_require__(13),
     __webpack_require__(14),
     __webpack_require__(15),
@@ -33616,12 +33608,13 @@ const components = [
     __webpack_require__(37),
     __webpack_require__(38),
     __webpack_require__(39),
-    __webpack_require__(40)
+    __webpack_require__(40),
+    __webpack_require__(41)
 ];
 
 const areDepsMet = deps => {
     const missingDeps = _.filter(deps, dep => {
-        return $(dep).length == 0;
+        return _.isEqual($(dep).length, 0);
     });
 
     if (!_.isEmpty(missingDeps)) {
@@ -33668,13 +33661,28 @@ $(document).ready(function () {
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(8);
+
+const $ = __webpack_require__(0);
+window.jQuery = $;
+window.jquery = $;
+window.$ = $;
+
+__webpack_require__(10);
+__webpack_require__(11);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /*!
   * Bootstrap v4.1.1 (https://getbootstrap.com/)
   * Copyright 2011-2018 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(0), __webpack_require__(8)) :
+   true ? factory(exports, __webpack_require__(0), __webpack_require__(9)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -37598,7 +37606,7 @@ $(document).ready(function () {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40127,7 +40135,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -43147,7 +43155,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*! flip - v1.1.2 - 2016-10-20
@@ -43522,7 +43530,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -43550,7 +43558,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43660,7 +43668,7 @@ window.onscroll = function() {
 */
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43684,7 +43692,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43780,7 +43788,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43799,7 +43807,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43818,7 +43826,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43858,7 +43866,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43882,7 +43890,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43914,7 +43922,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -43973,7 +43981,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44029,7 +44037,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44054,7 +44062,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44103,7 +44111,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44160,7 +44168,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44188,7 +44196,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44234,7 +44242,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44280,7 +44288,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44326,7 +44334,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44373,7 +44381,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44412,7 +44420,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44457,7 +44465,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44501,7 +44509,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44577,7 +44585,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44616,7 +44624,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44689,7 +44697,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44736,7 +44744,7 @@ module.exports.init = () => {
 };
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44786,7 +44794,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44830,7 +44838,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44855,7 +44863,7 @@ module.exports.init = () => {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0);
@@ -44982,4 +44990,3 @@ $(document).ready(function(){
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
