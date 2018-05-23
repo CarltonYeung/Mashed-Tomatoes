@@ -1,6 +1,9 @@
 # Mashed Tomatoes 
 A [Rotten Tomatoes](https://www.rottentomatoes.com/) clone built as a group project for CSE 308 (Software Engineering) at Stony Brook University.
 
+## Tech Stack
+The project is built using Java (Spring Boot) for the backend language, MySQL as the database, and Bootstrap, jQuery, and KnockoutJS for the frontend.
+
 ## Installation
 This project requires Java and Maven to run.
 Optionally, frontend development work uses NodeJS.
